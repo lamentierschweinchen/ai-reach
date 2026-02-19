@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Reach — When Does AI Reach Your Profession?</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0A0C12;
+  --text: #E2DED4;
+  --muted: #6B6A72;
+  --gold: #C4A45A;
+  --border: rgba(255,255,255,0.07);
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  background: rgba(10,12,18,0.88);
+}
+.wordmark { font-family: var(--font-serif); font-weight: 300; font-size: 20px; letter-spacing: 0.04em; }
+.wordmark em { font-style: italic; color: var(--gold); }
+.tagline { font-size: 9px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin-top: 1px; }
+
+.search-wrap { position: relative; flex: 0 0 240px; }
+.search-wrap input {
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--text); font-family: var(--font-mono); font-size: 11px;
+  padding: 6px 10px 6px 28px; outline: none; letter-spacing: 0.04em; transition: border-color 0.25s;
+}
+.search-wrap input:focus { border-color: rgba(196,164,90,0.4); }
+.search-wrap input::placeholder { color: var(--muted); }
+.search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 12px; }
+.search-results {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: rgba(15,17,32,0.98); border: 1px solid var(--border);
+  z-index: 200; display: none; max-height: 280px; overflow-y: auto;
+}
+.search-results.visible { display: block; }
+.search-result-item {
+  padding: 7px 10px; font-size: 10.5px; letter-spacing: 0.03em;
+  cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.15s;
+}
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: rgba(196,164,90,0.07); }
+.search-result-item .job-territory { color: var(--muted); font-size: 8.5px; margin-top: 1px; }
+
+.header-right { display: flex; align-items: center; gap: 16px; }
+.scenario-wrap { display: flex; gap: 3px; align-items: center; }
+.scenario-label { font-size: 8px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-right: 5px; }
+.scenario-btn {
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em;
+  padding: 4px 9px; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+}
+.scenario-btn:hover { border-color: rgba(196,164,90,0.3); color: var(--text); }
+.scenario-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(196,164,90,0.06); }
+
+/* ── CANVAS ── */
+#main-canvas {
+  position: fixed; top: 46px; left: 0; right: 0; bottom: 88px;
+  cursor: default;
+}
+
+/* ── TOOLTIP ── */
+#tooltip {
+  position: fixed; pointer-events: none; z-index: 90;
+  background: rgba(10,12,18,0.94); border: 1px solid var(--border);
+  padding: 8px 12px; opacity: 0; transition: opacity 0.15s;
+  backdrop-filter: blur(12px); max-width: 220px;
+}
+#tooltip.visible { opacity: 1; }
+#tooltip .tt-name {
+  font-family: var(--font-serif); font-size: 16px; font-weight: 300; margin-bottom: 2px;
+}
+#tooltip .tt-stats {
+  font-size: 9px; letter-spacing: 0.06em; color: var(--muted); line-height: 1.5;
+}
+#tooltip .tt-hint {
+  font-size: 8px; color: rgba(196,164,90,0.5); margin-top: 4px; letter-spacing: 0.08em;
+}
+
+/* ── DETAIL PANEL (for zoomed view) ── */
+#detail-panel {
+  position: fixed; right: 0; top: 46px; bottom: 88px; width: 340px;
+  background: rgba(10,12,18,0.96); border-left: 1px solid var(--border);
+  padding: 20px 18px; transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+  overflow-y: auto; backdrop-filter: blur(20px); z-index: 80;
+}
+#detail-panel.open { transform: translateX(0); }
+#detail-panel::-webkit-scrollbar { width: 3px; }
+#detail-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); }
+
+.panel-close {
+  position: absolute; top: 10px; right: 10px; background: transparent; border: none;
+  color: var(--muted); cursor: pointer; font-size: 15px; font-family: var(--font-mono);
+  padding: 4px 8px; transition: color 0.2s;
+}
+.panel-close:hover { color: var(--text); }
+.panel-territory-name { font-family: var(--font-serif); font-weight: 300; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
+.panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+.panel-description { font-family: var(--font-serif); font-weight: 300; font-size: 14px; line-height: 1.6; color: rgba(226,222,212,0.68); margin-bottom: 18px; }
+
+.panel-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.panel-stat-label { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.panel-stat-value { font-family: var(--font-serif); font-size: 28px; font-weight: 300; line-height: 1; }
+
+.reach-bar-wrap { height: 2px; background: rgba(255,255,255,0.06); margin-top: 6px; grid-column: 1 / -1; }
+.reach-bar-fill { height: 100%; transition: width 0.4s ease, background 0.4s ease; }
+
+.panel-section { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+.panel-section .panel-stat-label { margin-bottom: 8px; }
+#mini-chart { width: 100%; height: 70px; }
+
+.job-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.job-group-name { flex: 1; font-size: 10.5px; color: rgba(226,222,212,0.75); }
+.job-group-bar-wrap { flex: 0 0 100px; height: 3px; background: rgba(255,255,255,0.05); }
+.job-group-bar { height: 100%; transition: width 0.4s ease; }
+.job-group-score { flex: 0 0 32px; text-align: right; font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.panel-barrier {
+  margin-top: 12px; padding: 7px 10px; background: rgba(255,255,255,0.02);
+  border-left: 2px solid var(--gold); font-size: 10px; line-height: 1.45; color: rgba(226,222,212,0.55);
+}
+.panel-barrier strong { color: var(--gold); font-weight: 400; }
+
+/* ── GLOBAL OVERLAY STATS ── */
+#global-stats {
+  position: fixed; left: 24px; bottom: 100px; z-index: 50;
+  display: flex; align-items: flex-end; gap: 24px;
+}
+.global-stat-num { font-family: var(--font-serif); font-size: 24px; font-weight: 300; line-height: 1; }
+.global-stat-label { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+
+#era-label { position: fixed; right: 24px; bottom: 100px; text-align: right; z-index: 50; }
+#era-label .era-name { font-family: var(--font-serif); font-size: 14px; font-weight: 300; color: rgba(226,222,212,0.4); font-style: italic; }
+#era-label .era-detail { font-size: 7.5px; letter-spacing: 0.08em; color: var(--muted); margin-top: 1px; }
+
+/* ── TIMELINE ── */
+#timeline {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 88px;
+  background: rgba(10,12,18,0.95); border-top: 1px solid var(--border);
+  padding: 0 24px; display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  backdrop-filter: blur(16px); z-index: 100;
+}
+.timeline-top { display: flex; align-items: center; gap: 14px; }
+.play-btn {
+  width: 28px; height: 28px; border: 1px solid var(--border); background: transparent;
+  color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; transition: all 0.2s; flex-shrink: 0;
+}
+.play-btn:hover { border-color: var(--gold); color: var(--gold); }
+.year-display { font-family: var(--font-serif); font-size: 24px; font-weight: 300; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; }
+.year-display.projected { color: var(--gold); }
+
+.timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; }
+.timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
+.timeline-historical { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(255,255,255,0.1); }
+.timeline-progress { position: absolute; left: 0; top: 0; bottom: 0; background: var(--gold); transition: width 0.05s linear; }
+.timeline-split { position: absolute; top: -7px; bottom: -7px; width: 1px; background: rgba(196,164,90,0.3); }
+.timeline-scrubber {
+  position: absolute; top: 50%; width: 11px; height: 11px;
+  background: var(--gold); border: 2px solid var(--bg); border-radius: 50%;
+  transform: translate(-50%, -50%); cursor: grab; transition: width 0.15s, height 0.15s; z-index: 10;
+}
+.timeline-scrubber:hover, .timeline-scrubber.dragging { width: 15px; height: 15px; }
+
+.milestone-dot {
+  position: absolute; top: 50%; width: 3px; height: 3px;
+  background: rgba(255,255,255,0.18); border-radius: 50%;
+  transform: translate(-50%, -50%); cursor: pointer; transition: all 0.2s; z-index: 5;
+}
+.milestone-dot:hover { background: rgba(255,255,255,0.6); width: 5px; height: 5px; }
+.milestone-dot:hover .milestone-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+.milestone-tooltip {
+  position: absolute; bottom: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(15,17,32,0.97); border: 1px solid var(--border);
+  padding: 5px 9px; font-size: 8.5px; letter-spacing: 0.05em;
+  color: var(--text); white-space: nowrap; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 200;
+}
+.milestone-year { color: var(--gold); display: block; margin-bottom: 1px; font-size: 9.5px; }
+
+.timeline-years { display: flex; position: relative; height: 12px; font-size: 8px; color: var(--muted); letter-spacing: 0.05em; }
+.timeline-years span { position: absolute; transform: translateX(-50%); }
+.zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); top: -14px; }
+.zone-label.projected { right: 0; color: rgba(196,164,90,0.4); }
+
+/* ── INTRO ── */
+#intro-overlay {
+  position: fixed; inset: 0; z-index: 500; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  transition: opacity 1s ease;
+}
+#intro-overlay.fade-out { opacity: 0; pointer-events: none; }
+.intro-title { font-family: var(--font-serif); font-size: 44px; font-weight: 300; letter-spacing: 0.03em; margin-bottom: 6px; }
+.intro-title em { color: var(--gold); font-style: italic; }
+.intro-question { font-family: var(--font-serif); font-size: 17px; font-weight: 300; color: rgba(226,222,212,0.45); font-style: italic; margin-bottom: 28px; }
+.intro-enter {
+  font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+  border: 1px solid rgba(196,164,90,0.35); padding: 9px 24px; cursor: pointer;
+  background: transparent; font-family: var(--font-mono); transition: all 0.3s;
+}
+.intro-enter:hover { background: rgba(196,164,90,0.07); border-color: var(--gold); }
+
+/* Back button for zoom */
+#back-btn {
+  position: fixed; top: 56px; left: 24px; z-index: 85;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  background: transparent; border: 1px solid var(--border); padding: 5px 12px;
+  cursor: pointer; font-family: var(--font-mono); transition: all 0.2s; display: none;
+}
+#back-btn:hover { border-color: var(--gold); color: var(--gold); }
+#back-btn.visible { display: block; }
+</style>
+</head>
+<body>
+
+<div id="intro-overlay">
+  <div class="intro-title"><em>AI Reach</em></div>
+  <div class="intro-question">When does AI reach your profession?</div>
+  <button class="intro-enter" onclick="enterSite()">Enter</button>
+</div>
+
+<header>
+  <div>
+    <div class="wordmark"><em>AI Reach</em> — A Map of Work</div>
+    <div class="tagline">When does artificial intelligence reach your profession?</div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="job-search" placeholder="Search your profession..." autocomplete="off" spellcheck="false">
+    <div class="search-results" id="search-results"></div>
+  </div>
+  <div class="header-right">
+    <div class="scenario-wrap">
+      <span class="scenario-label">Scenario</span>
+      <button class="scenario-btn" data-scenario="conservative">Conservative</button>
+      <button class="scenario-btn active" data-scenario="moderate">Moderate</button>
+      <button class="scenario-btn" data-scenario="accelerated">Accelerated</button>
+    </div>
+  </div>
+</header>
+
+<canvas id="main-canvas"></canvas>
+
+<div id="tooltip">
+  <div class="tt-name" id="tt-name"></div>
+  <div class="tt-stats" id="tt-stats"></div>
+  <div class="tt-hint">Click to explore</div>
+</div>
+
+<button id="back-btn" onclick="zoomOut()">← Back to map</button>
+
+<div id="detail-panel">
+  <button class="panel-close" id="panel-close">✕</button>
+  <div class="panel-territory-name" id="panel-name">—</div>
+  <div class="panel-isic" id="panel-isic">—</div>
+  <div class="panel-description" id="panel-desc">—</div>
+  <div class="panel-stats">
+    <div><div class="panel-stat-label">Replaceability</div><div class="panel-stat-value" id="panel-reach-num">—</div></div>
+    <div><div class="panel-stat-label">Workforce Share</div><div class="panel-stat-value" id="panel-share-num">—</div></div>
+    <div class="reach-bar-wrap"><div class="reach-bar-fill" id="panel-reach-bar"></div></div>
+  </div>
+  <div class="panel-section">
+    <div class="panel-stat-label">Replaceability over time</div>
+    <svg id="mini-chart" viewBox="0 0 300 70" preserveAspectRatio="none"></svg>
+  </div>
+  <div class="panel-section">
+    <div class="panel-stat-label" style="margin-bottom:10px">Job groups within territory</div>
+    <div id="panel-job-groups"></div>
+  </div>
+  <div class="panel-barrier" id="panel-barrier"></div>
+</div>
+
+<div id="global-stats">
+  <div><div class="global-stat-num" id="global-reach-num">0%</div><div class="global-stat-label">Avg Replaceability</div></div>
+  <div><div class="global-stat-num" id="global-workforce-num">—</div><div class="global-stat-label">Global Workforce</div></div>
+</div>
+<div id="era-label"><div class="era-name" id="era-name"></div><div class="era-detail" id="era-detail"></div></div>
+
+<div id="timeline">
+  <div class="timeline-top">
+    <button class="play-btn" id="play-btn">▶</button>
+    <div class="year-display" id="year-display">1800</div>
+    <div class="timeline-track-wrap">
+      <div class="zone-label" style="left:0">Historical</div>
+      <div class="zone-label projected">Projected ›</div>
+      <div class="timeline-track" id="timeline-track">
+        <div class="timeline-historical" id="timeline-historical"></div>
+        <div class="timeline-progress" id="timeline-progress"></div>
+        <div class="timeline-split" id="timeline-split"></div>
+        <div id="milestones-container"></div>
+        <div class="timeline-scrubber" id="timeline-scrubber"></div>
+      </div>
+    </div>
+  </div>
+  <div class="timeline-years" id="timeline-years"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════
+const START_YEAR = 1800, END_YEAR = 2040, SPLIT_YEAR = 2026;
+
+const GLOBAL_WORKFORCE = { 1800:650,1850:730,1900:980,1950:1350,1973:1980,1990:2450,2001:2780,2024:3520,2030:3750,2040:4050 };
+
+const ISIC_SHARES = {
+  A:{1950:50.5,1960:45,1970:40,1980:35,1990:31,2000:30.5,2010:28.5,2015:27.2,2020:26.5,2024:26.1},
+  B:{1950:1.5,1960:1.7,1970:2,1980:1.8,1990:1.5,2000:1.2,2010:1.0,2015:0.9,2020:0.8,2024:0.7},
+  C:{1950:18.2,1960:17,1970:16.5,1980:16,1990:16.5,2000:15,2010:13.5,2015:13,2020:12.9,2024:12.8},
+  D:{1950:0.1,1960:0.2,1970:0.5,1980:0.7,1990:1.0,2000:1.2,2010:1.4,2015:1.5,2020:1.6,2024:1.8},
+  E:{1950:0.05,1960:0.1,1970:0.2,1980:0.3,1990:0.5,2000:0.6,2010:0.8,2015:0.9,2020:0.95,2024:1.0},
+  F:{1950:3,1960:5,1970:5.5,1980:8,1990:8,2000:7.2,2010:6.8,2015:6.5,2020:6.2,2024:5.8},
+  G:{1950:5,1960:6,1970:7,1980:8,1990:12.5,2000:15,2010:17,2015:17.5,2020:18,2024:18.2},
+  H:{1950:1.9,1960:2.5,1970:3,1980:3,1990:4.5,2000:5,2010:5.5,2015:5.5,2020:6,2024:6},
+  I:{1950:0.5,1960:1,1970:2,1980:3,1990:4,2000:4,2010:5,2015:6,2020:6.5,2024:6.5},
+  J:{1950:0.2,1960:0.3,1970:0.5,1980:0.8,1990:1.2,2000:2,2010:2.8,2015:3,2020:3.2,2024:3.4},
+  K:{1950:0.3,1960:0.4,1970:0.7,1980:1.0,1990:1.5,2000:2,2010:3.5,2015:4,2020:4.5,2024:5},
+  L:{1950:0.5,1960:0.6,1970:1,1980:1.2,1990:1.5,2000:2,2010:2,2015:3,2020:3,2024:3},
+  M:{1950:0.5,1960:0.8,1970:1.2,1980:2,1990:3,2000:5,2010:6,2015:7,2020:7.5,2024:8},
+  N:{1950:1,1960:1.2,1970:1.5,1980:1.8,1990:2,2000:4,2010:4.5,2015:5.5,2020:5,2024:5.5},
+  O:{1950:2.5,1960:3,1970:3.5,1980:3.8,1990:4,2000:4,2010:3.5,2015:3,2020:3,2024:3},
+  P:{1950:1.5,1960:2,1970:2.5,1980:3,1990:4.5,2000:5,2010:5.5,2015:5.8,2020:6,2024:6.1},
+  Q:{1950:1,1960:1.5,1970:2,1980:2.5,1990:3.8,2000:4.5,2010:5.5,2015:6,2020:7,2024:7.4},
+  R:{1950:0.5,1960:0.6,1970:0.8,1980:1,1990:1.5,2000:2,2010:1.7,2015:2,2020:2,2024:2},
+  S:{1950:1,1960:1.2,1970:1.5,1980:1.8,1990:2,2000:4,2010:4.2,2015:3.5,2020:4,2024:4},
+};
+
+const ISIC_PROJECTED = {
+  moderate: {
+    A:{2026:25.5,2030:23.5,2035:20.5,2040:17},B:{2026:0.65,2030:0.55,2035:0.45,2040:0.35},
+    C:{2026:12.2,2030:10.8,2035:8.5,2040:6},D:{2026:1.85,2030:2.0,2035:2.1,2040:2.0},
+    E:{2026:1.05,2030:1.1,2035:1.15,2040:1.1},F:{2026:5.6,2030:5.0,2035:4.0,2040:3.0},
+    G:{2026:18.0,2030:16.5,2035:14.0,2040:11.5},H:{2026:5.9,2030:5.2,2035:4.0,2040:3.0},
+    I:{2026:6.4,2030:6.0,2035:5.5,2040:5.0},J:{2026:3.5,2030:3.8,2035:4.0,2040:4.2},
+    K:{2026:5.1,2030:5.0,2035:4.5,2040:4.0},L:{2026:3.0,2030:3.0,2035:2.8,2040:2.5},
+    M:{2026:8.2,2030:9.0,2035:10.0,2040:11.0},N:{2026:5.6,2030:5.8,2035:6.2,2040:6.5},
+    O:{2026:2.9,2030:2.8,2035:2.7,2040:2.5},P:{2026:6.15,2030:6.5,2035:7.0,2040:7.5},
+    Q:{2026:7.6,2030:8.2,2035:9.0,2040:10.0},R:{2026:2.0,2030:1.9,2035:1.7,2040:1.5},
+    S:{2026:4.0,2030:3.8,2035:3.5,2040:3.2},
+  },
+  conservative: {
+    A:{2026:25.8,2030:24.5,2035:22.8,2040:21},B:{2026:0.68,2030:0.6,2035:0.5,2040:0.45},
+    C:{2026:12.5,2030:11.5,2035:10.2,2040:9},D:{2026:1.85,2030:2.0,2035:2.1,2040:2.1},
+    E:{2026:1.05,2030:1.1,2035:1.15,2040:1.2},F:{2026:5.7,2030:5.4,2035:5.0,2040:4.5},
+    G:{2026:18.1,2030:17.8,2035:17.2,2040:16.5},H:{2026:5.95,2030:5.7,2035:5.3,2040:5.0},
+    I:{2026:6.45,2030:6.3,2035:6.1,2040:6.0},J:{2026:3.45,2030:3.6,2035:3.7,2040:3.8},
+    K:{2026:5.05,2030:5.1,2035:5.0,2040:4.8},L:{2026:3.0,2030:3.0,2035:3.0,2040:2.8},
+    M:{2026:8.1,2030:8.5,2035:9.0,2040:9.5},N:{2026:5.55,2030:5.6,2035:5.8,2040:6.0},
+    O:{2026:2.95,2030:2.9,2035:2.85,2040:2.8},P:{2026:6.12,2030:6.3,2035:6.5,2040:6.8},
+    Q:{2026:7.5,2030:7.8,2035:8.2,2040:8.5},R:{2026:2.0,2030:2.0,2035:1.9,2040:1.8},
+    S:{2026:4.0,2030:3.9,2035:3.8,2040:3.6},
+  },
+  accelerated: {
+    A:{2026:25.0,2030:22.0,2035:17.5,2040:13},B:{2026:0.6,2030:0.45,2035:0.3,2040:0.2},
+    C:{2026:11.8,2030:9.5,2035:6.0,2040:3.5},D:{2026:1.85,2030:2.0,2035:2.0,2040:1.8},
+    E:{2026:1.05,2030:1.1,2035:1.1,2040:1.0},F:{2026:5.4,2030:4.2,2035:2.8,2040:1.8},
+    G:{2026:17.8,2030:15.0,2035:11.0,2040:8.0},H:{2026:5.8,2030:4.5,2035:3.0,2040:2.0},
+    I:{2026:6.3,2030:5.5,2035:4.5,2040:3.5},J:{2026:3.55,2030:4.0,2035:4.5,2040:5.0},
+    K:{2026:5.15,2030:4.8,2035:4.0,2040:3.2},L:{2026:3.0,2030:2.8,2035:2.5,2040:2.0},
+    M:{2026:8.3,2030:9.5,2035:11.5,2040:13.0},N:{2026:5.65,2030:6.2,2035:7.0,2040:7.5},
+    O:{2026:2.85,2030:2.6,2035:2.3,2040:2.0},P:{2026:6.2,2030:6.8,2035:7.5,2040:8.5},
+    Q:{2026:7.7,2030:8.8,2035:10.0,2040:12.0},R:{2026:2.0,2030:1.8,2035:1.5,2040:1.2},
+    S:{2026:4.0,2030:3.6,2035:3.0,2040:2.5},
+  }
+};
+
+// Territory definitions with layout positions (normalized 0-1)
+// Grouped: primary (top-left), physical (left), trade (center), knowledge (upper-right), human (right), other (bottom)
+const TERRITORIES = [
+  { id:'land-sea', name:'Land & Sea', isic:['A','B'], color:'#2D8A5F',
+    baseX:0.14, baseY:0.22, rotation:-8,
+    desc:'Agriculture, forestry, fishing. The oldest human work. Precision agriculture and autonomous machinery are transforming high-capital farming; subsistence agriculture holds by sheer scale.',
+    barrier:'Capital deployment lag — frontier farms are highly automated, but 70% of global agriculture is smallholder.',
+    reach:{2020:20,2024:28,2026:38,2030:58,2035:70,2040:80},
+    jobs:[{name:'Crop farming',score2026:55},{name:'Livestock farming',score2026:35},{name:'Fishing & aquaculture',score2026:25},{name:'Forestry',score2026:30}]
+  },
+  { id:'making', name:'Making Things', isic:['C'], color:'#D4923B',
+    baseX:0.33, baseY:0.16, rotation:12,
+    desc:'Manufacturing. The frontier is fully dark. The global average is decades behind it.',
+    barrier:'Capital deployment lag — Xiaomi runs lights-out factories, but global average varies 10x between countries.',
+    reach:{2020:25,2024:30,2026:35,2030:62,2035:75,2040:85},
+    jobs:[{name:'Assembly line workers',score2026:95},{name:'Quality control',score2026:90},{name:'Factory logistics',score2026:80},{name:'Maintenance techs',score2026:45},{name:'Plant management',score2026:50}]
+  },
+  { id:'building', name:'Building Things', isic:['F'], color:'#C85A3A',
+    baseX:0.14, baseY:0.48, rotation:-5,
+    desc:'Construction. Unstructured environments remain the hardest for robotics.',
+    barrier:'Unstructured environments — every site is different. Humanoid robots at $10–15k would change this.',
+    reach:{2020:15,2024:30,2026:48,2030:73,2035:83,2040:90},
+    jobs:[{name:'Bricklaying / masonry',score2026:70},{name:'Site surveying',score2026:80},{name:'Excavation',score2026:60},{name:'Electrical / plumbing',score2026:25},{name:'Site management',score2026:35}]
+  },
+  { id:'moving', name:'Moving Things', isic:['H'], color:'#4A7AB5',
+    baseX:0.32, baseY:0.42, rotation:7,
+    desc:'Transport, logistics, warehousing. Highway autonomy is operational. Last-mile is not.',
+    barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.',
+    reach:{2020:20,2024:35,2026:48,2030:73,2035:83,2040:90},
+    jobs:[{name:'Long-haul trucking',score2026:70},{name:'Warehouse picking',score2026:85},{name:'Delivery (last mile)',score2026:35},{name:'Air traffic / pilots',score2026:30},{name:'Rail',score2026:55}]
+  },
+  { id:'buying-selling', name:'Buying & Selling', isic:['G'], color:'#E07060',
+    baseX:0.50, baseY:0.30, rotation:-4,
+    desc:'Retail and wholesale trade. The largest employer by headcount.',
+    barrier:'Scale of existing employment — 18% of global workforce.',
+    reach:{2020:20,2024:35,2026:45,2030:65,2035:78,2040:87},
+    jobs:[{name:'Cashiers / checkout',score2026:85},{name:'Shelf stocking',score2026:60},{name:'Sales reps',score2026:50},{name:'Logistics coordinators',score2026:70}]
+  },
+  { id:'money-data', name:'Money & Data', isic:['J','K','L'], color:'#8B6CC0',
+    baseX:0.68, baseY:0.17, rotation:10,
+    desc:'Finance, insurance, real estate, information. LLMs accelerated decades of quiet automation.',
+    barrier:'Regulatory and liability frameworks. Technically replaceable, legally complicated.',
+    reach:{2020:30,2024:55,2026:75,2030:87,2035:93,2040:96},
+    jobs:[{name:'Data entry / processing',score2026:95},{name:'Junior financial analysis',score2026:85},{name:'Paralegal / legal research',score2026:80},{name:'Accounting',score2026:75},{name:'Senior finance / strategy',score2026:40}]
+  },
+  { id:'thinking', name:'Thinking & Leading', isic:['M','N'], color:'#3AB0D4',
+    baseX:0.84, baseY:0.30, rotation:-7,
+    desc:'Professional, scientific, technical, management. SWE-bench: 4.4% → 71.7% in one year.',
+    barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.',
+    reach:{2020:25,2024:50,2026:70,2030:87,2035:93,2040:96},
+    jobs:[{name:'Junior software engineers',score2026:80},{name:'Code review',score2026:70},{name:'Data analysis',score2026:75},{name:'Senior architects',score2026:30},{name:'Management / strategy',score2026:25}]
+  },
+  { id:'care-health', name:'Care & Health', isic:['Q'], color:'#3BA89A',
+    baseX:0.82, baseY:0.56, rotation:5,
+    desc:'Human health and social work. Radiologist salaries rose 48% since 2015 despite AI matching diagnostic accuracy.',
+    barrier:'Legal liability, credentialing, and deep human preference.',
+    reach:{2020:20,2024:40,2026:60,2030:77,2035:85,2040:90},
+    jobs:[{name:'Medical imaging',score2026:75},{name:'Administrative / billing',score2026:90},{name:'Nursing',score2026:20},{name:'General practice',score2026:35},{name:'Elderly care',score2026:15}]
+  },
+  { id:'learning', name:'Learning & Teaching', isic:['P'], color:'#D4B03A',
+    baseX:0.68, baseY:0.68, rotation:-10,
+    desc:'Education. AI tutors work. But lead teaching and mentorship resist automation.',
+    barrier:'Human preference and trust. Parents and students want human teachers.',
+    reach:{2020:5,2024:10,2026:15,2030:28,2035:40,2040:55},
+    jobs:[{name:'Administrative staff',score2026:80},{name:'Teaching assistants',score2026:35},{name:'Subject tutoring',score2026:45},{name:'Lead teachers',score2026:15},{name:'Curriculum design',score2026:40}]
+  },
+  { id:'meaning', name:'Making Meaning', isic:['R'], color:'#D45090',
+    baseX:0.50, baseY:0.64, rotation:8,
+    desc:'Arts, media, creative industries. Generative AI arrived suddenly, not gradually.',
+    barrier:'Identity and authorship — the barrier is whether audiences value human-made work.',
+    reach:{2020:15,2024:30,2026:40,2030:55,2035:65,2040:72},
+    jobs:[{name:'Stock photography',score2026:95},{name:'Copywriting / content',score2026:75},{name:'Graphic design (routine)',score2026:70},{name:'Journalism (research)',score2026:60},{name:'Original art / authorship',score2026:20}]
+  },
+  { id:'governing', name:'Governing & Protecting', isic:['O'], color:'#3A5A8F',
+    baseX:0.50, baseY:0.84, rotation:-3,
+    desc:'Public administration, defense. The slowest territory. Government moves at government speed.',
+    barrier:'Institutional inertia and political accountability.',
+    reach:{2020:10,2024:20,2026:30,2030:45,2035:58,2040:68},
+    jobs:[{name:'Administrative processing',score2026:80},{name:'Police / security',score2026:20},{name:'Military',score2026:15},{name:'Policy analysis',score2026:45}]
+  },
+  { id:'feeding', name:'Feeding & Hosting', isic:['I'], color:'#E8943A',
+    baseX:0.32, baseY:0.72, rotation:6,
+    desc:'Accommodation, food service. Fast food is automating. Hospitality is not.',
+    barrier:'Human preference. Hospitality is a performance.',
+    reach:{2020:10,2024:18,2026:25,2030:52,2035:68,2040:78},
+    jobs:[{name:'Fast food prep',score2026:60},{name:'Wait staff',score2026:25},{name:'Hotel front desk',score2026:55},{name:'Chefs',score2026:20}]
+  },
+  { id:'maintaining', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#6B8A9D',
+    baseX:0.16, baseY:0.76, rotation:-9,
+    desc:'Utilities, repair, personal services. Humanoid robots at $10–15k are the unlock.',
+    barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.',
+    reach:{2020:10,2024:15,2026:20,2030:50,2035:68,2040:78},
+    jobs:[{name:'HVAC technicians',score2026:20},{name:'Electricians',score2026:15},{name:'Plumbers',score2026:15},{name:'IT support',score2026:65},{name:'Personal services',score2026:10}]
+  },
+];
+
+const MILESTONES = [
+  {year:1764,label:'Spinning Jenny',desc:'Mechanization begins'},
+  {year:1830,label:'Steam Railways',desc:'First freight and passenger rail'},
+  {year:1870,label:'Steel & Electricity',desc:'Second Industrial Revolution'},
+  {year:1913,label:'Ford Assembly Line',desc:'Mass production begins'},
+  {year:1969,label:'Unimate',desc:'First industrial robot'},
+  {year:1980,label:'Personal Computing',desc:'PCs enter the workplace'},
+  {year:1991,label:'World Wide Web',desc:'Information work transforms'},
+  {year:1997,label:'Deep Blue',desc:'AI beats chess champion'},
+  {year:2012,label:'AlexNet',desc:'Deep learning breakthrough'},
+  {year:2016,label:'AlphaGo',desc:'Foxconn replaces 60k workers'},
+  {year:2020,label:'GPT-3',desc:'Language AI arrives'},
+  {year:2022,label:'ChatGPT',desc:'Generative AI goes mainstream'},
+  {year:2024,label:'SWE-bench 72%',desc:'AI solves real engineering'},
+  {year:2026,label:'Optimus Ships',desc:'Humanoid mass production'},
+  {year:2028,label:'Humanoids ~$15k',desc:'Physical protection erodes'},
+  {year:2030,label:'Scenarios Diverge',desc:'Structural paths split'},
+];
+
+const ERAS = [
+  {start:1800,end:1850,name:'Pre-Industrial',detail:'Hand tools and animal power'},
+  {start:1850,end:1913,name:'First Industrial Revolution',detail:'Steam, textiles, railways'},
+  {start:1913,end:1945,name:'Mass Production Era',detail:'Assembly line, electrification'},
+  {start:1945,end:1980,name:'Post-War Expansion',detail:'Manufacturing boom, global trade'},
+  {start:1980,end:2000,name:'Digital Revolution',detail:'Computing, early internet'},
+  {start:2000,end:2012,name:'Information Age',detail:'Web economy, smartphones'},
+  {start:2012,end:2022,name:'Deep Learning Era',detail:'Neural networks, computer vision'},
+  {start:2022,end:2026,name:'Generative AI Arrives',detail:'LLMs, multimodal, humanoid robots'},
+  {start:2026,end:2041,name:'The Transition',detail:'AI + robotics reshape labor'},
+];
+
+// Search data
+const JOB_SEARCH_DATA = [];
+TERRITORIES.forEach(t => t.jobs.forEach(j => JOB_SEARCH_DATA.push({job:j.name,territory:t.id,territoryName:t.name,score:j.score2026})));
+[['Nurse','care-health'],['Doctor','care-health'],['Radiologist','care-health'],['Therapist','care-health'],
+ ['Teacher','learning'],['Professor','learning'],['Software Engineer','thinking'],['Developer','thinking'],
+ ['Data Scientist','thinking'],['Accountant','money-data'],['Banker','money-data'],['Lawyer','money-data'],
+ ['Journalist','meaning'],['Writer','meaning'],['Photographer','meaning'],['Graphic Designer','meaning'],
+ ['Truck Driver','moving'],['Pilot','moving'],['Factory Worker','making'],['Welder','making'],
+ ['Construction Worker','building'],['Carpenter','building'],['Electrician','maintaining'],['Plumber','maintaining'],
+ ['Barber','maintaining'],['Chef','feeding'],['Waiter','feeding'],['Farmer','land-sea'],
+ ['Police Officer','governing'],['Cashier','buying-selling'],['Salesperson','buying-selling'],
+].forEach(([job,tid]) => {
+  if (!JOB_SEARCH_DATA.find(j=>j.job===job)) {
+    const t = TERRITORIES.find(x=>x.id===tid);
+    JOB_SEARCH_DATA.push({job,territory:tid,territoryName:t?t.name:'',score:null});
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let currentYear = 1800;
+let isPlaying = false;
+let scenario = 'moderate';
+let animFrame = null;
+let playSpeed = 0.1;
+
+// Zoom state
+let zoomedTerritory = null;
+let zoomProgress = 0; // 0 = map view, 1 = fully zoomed
+let zoomTarget = 0;
+
+// Animation state for smooth transitions
+let shapeStates = {}; // current animated positions/sizes
+
+// Particles for migration
+let particles = [];
+let prevShares = {};
+
+// Hover
+let hoveredTerritory = null;
+
+// ═══════════════════════════════════════════════════════════════
+// INTERPOLATION
+// ═══════════════════════════════════════════════════════════════
+function interp(obj, year) {
+  const keys = Object.keys(obj).map(Number).sort((a,b)=>a-b);
+  if (year <= keys[0]) return obj[keys[0]];
+  if (year >= keys[keys.length-1]) return obj[keys[keys.length-1]];
+  for (let i=0; i<keys.length-1; i++) {
+    if (year >= keys[i] && year <= keys[i+1]) {
+      const t = (year - keys[i]) / (keys[i+1] - keys[i]);
+      return obj[keys[i]] + t * (obj[keys[i+1]] - obj[keys[i]]);
+    }
+  }
+  return obj[keys[keys.length-1]];
+}
+
+function getISICShare(section, year) {
+  if (year <= 2024) return interp(ISIC_SHARES[section], Math.max(1950, year));
+  const proj = ISIC_PROJECTED[scenario][section];
+  return interp({2024: ISIC_SHARES[section][2024], ...proj}, year);
+}
+
+function getTerritoryShare(t, year) {
+  let s = 0; t.isic.forEach(i => s += getISICShare(i, year)); return s;
+}
+
+function getTerritoryReach(t, year) {
+  return Math.max(0, Math.min(100, interp(t.reach, year)));
+}
+
+function getWorkforce(year) { return interp(GLOBAL_WORKFORCE, year); }
+
+// ═══════════════════════════════════════════════════════════════
+// SHAPE GENERATION — Matisse cut-out style
+// ═══════════════════════════════════════════════════════════════
+// Each shape is a slightly irregular quadrilateral, like hand-cut paper
+// Seed-based randomness for consistency
+
+function seededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 16807 + 0) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+function generateShapePath(cx, cy, w, h, rotation, seed) {
+  const rng = seededRandom(seed);
+  const wobble = 0.08; // how much corners deviate
+
+  // Base corners of a rectangle
+  const hw = w/2, hh = h/2;
+  const corners = [
+    [-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]
+  ];
+
+  // Perturb corners
+  const pts = corners.map(([x,y]) => [
+    x + (rng()-0.5) * w * wobble,
+    y + (rng()-0.5) * h * wobble,
+  ]);
+
+  // Rotate
+  const rad = rotation * Math.PI / 180;
+  const cos = Math.cos(rad), sin = Math.sin(rad);
+  const rotated = pts.map(([x,y]) => [
+    cx + x*cos - y*sin,
+    cy + x*sin + y*cos
+  ]);
+
+  // Add midpoint perturbations for organic edges
+  const path = [];
+  for (let i=0; i<rotated.length; i++) {
+    const [x1,y1] = rotated[i];
+    const [x2,y2] = rotated[(i+1)%rotated.length];
+    const mx = (x1+x2)/2 + (rng()-0.5) * Math.max(w,h) * 0.04;
+    const my = (y1+y2)/2 + (rng()-0.5) * Math.max(w,h) * 0.04;
+    path.push([x1,y1], [mx,my]);
+  }
+
+  return path;
+}
+
+function drawShape(ctx, points, color, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(points[0][0], points[0][1]);
+  for (let i=1; i<points.length; i++) {
+    // Use quadratic curves through midpoints for organic feel
+    if (i % 2 === 1 && i+1 < points.length) {
+      ctx.quadraticCurveTo(points[i][0], points[i][1], points[(i+1)%points.length][0], points[(i+1)%points.length][1]);
+      i++;
+    } else {
+      ctx.lineTo(points[i][0], points[i][1]);
+    }
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawShapeOutline(ctx, points, color, alpha, lineWidth) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = lineWidth;
+  ctx.beginPath();
+  ctx.moveTo(points[0][0], points[0][1]);
+  for (let i=1; i<points.length; i++) {
+    if (i % 2 === 1 && i+1 < points.length) {
+      ctx.quadraticCurveTo(points[i][0], points[i][1], points[(i+1)%points.length][0], points[(i+1)%points.length][1]);
+      i++;
+    } else {
+      ctx.lineTo(points[i][0], points[i][1]);
+    }
+  }
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+}
+
+function pointInShape(px, py, points) {
+  // Ray casting for polygon hit test
+  let inside = false;
+  const verts = points.filter((_,i) => i%2===0); // use corner points only
+  for (let i=0, j=verts.length-1; i<verts.length; j=i++) {
+    const [xi,yi] = verts[i], [xj,yj] = verts[j];
+    if (((yi > py) !== (yj > py)) && (px < (xj-xi)*(py-yi)/(yj-yi)+xi)) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// COLOR
+// ═══════════════════════════════════════════════════════════════
+function hexToRGB(hex) {
+  return { r: parseInt(hex.slice(1,3),16), g: parseInt(hex.slice(3,5),16), b: parseInt(hex.slice(5,7),16) };
+}
+
+function getShapeColor(baseHex, reach) {
+  const {r,g,b} = hexToRGB(baseHex);
+  // Low reach: desaturated and dimmed. High reach: full color, brighter.
+  const t = Math.pow(reach/100, 0.7); // slightly non-linear for drama
+  const grey = 25;
+  const rr = Math.round(grey + t * (r - grey));
+  const gg = Math.round(grey + t * (g - grey));
+  const bb = Math.round(grey + t * (b - grey));
+  return `rgb(${rr},${gg},${bb})`;
+}
+
+function getBarColor(score) {
+  if (score < 25) return '#3A6A8A';
+  if (score < 50) return '#8A7A3A';
+  if (score < 75) return '#C47A3A';
+  return '#C44A3A';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CANVAS SETUP
+// ═══════════════════════════════════════════════════════════════
+const canvas = document.getElementById('main-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+
+function resizeCanvas() {
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = rect.height + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  W = rect.width;
+  H = rect.height;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PARTICLE SYSTEM
+// ═══════════════════════════════════════════════════════════════
+function updateParticles() {
+  // Calculate current shares
+  const shares = {};
+  TERRITORIES.forEach(t => shares[t.id] = getTerritoryShare(t, currentYear));
+
+  // Only emit particles during playback and when year > 1950
+  if (isPlaying && currentYear > 1950) {
+    TERRITORIES.forEach(src => {
+      const delta = (prevShares[src.id] || shares[src.id]) - shares[src.id];
+      if (delta > 0.02) {
+        // Find growing territories
+        const growing = TERRITORIES.filter(t =>
+          t.id !== src.id && shares[t.id] > (prevShares[t.id] || shares[t.id]) + 0.01
+        );
+        if (growing.length > 0 && Math.random() < 0.3) {
+          const dst = growing[Math.floor(Math.random() * growing.length)];
+          const srcState = shapeStates[src.id] || { cx: src.baseX*W, cy: src.baseY*H };
+          const dstState = shapeStates[dst.id] || { cx: dst.baseX*W, cy: dst.baseY*H };
+          particles.push({
+            x: srcState.cx + (Math.random()-0.5)*30,
+            y: srcState.cy + (Math.random()-0.5)*30,
+            tx: dstState.cx + (Math.random()-0.5)*30,
+            ty: dstState.cy + (Math.random()-0.5)*30,
+            color: src.color,
+            life: 0, maxLife: 60 + Math.random()*40,
+            size: 3 + Math.random()*4,
+            rotation: Math.random() * 360,
+          });
+        }
+      }
+    });
+  }
+
+  Object.assign(prevShares, shares);
+
+  // Update existing particles
+  particles = particles.filter(p => {
+    p.life++;
+    return p.life < p.maxLife;
+  });
+}
+
+function drawParticles() {
+  particles.forEach(p => {
+    const t = p.life / p.maxLife;
+    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // ease in-out
+    const x = p.x + (p.tx - p.x) * ease;
+    const y = p.y + (p.ty - p.y) * ease;
+    const alpha = t < 0.1 ? t/0.1 : t > 0.8 ? (1-t)/0.2 : 1;
+    const s = p.size * (1 - t*0.5);
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate((p.rotation + t * 90) * Math.PI / 180);
+    ctx.globalAlpha = alpha * 0.6 * (1 - zoomProgress);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-s/2, -s/2, s, s);
+    ctx.restore();
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MAIN RENDER LOOP
+// ═══════════════════════════════════════════════════════════════
+function render() {
+  if (!W) resizeCanvas();
+
+  // Smooth zoom animation
+  zoomProgress += (zoomTarget - zoomProgress) * 0.08;
+  if (Math.abs(zoomProgress - zoomTarget) < 0.001) zoomProgress = zoomTarget;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Subtle background gradient
+  const bgGrad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.7);
+  bgGrad.addColorStop(0, '#0E1018');
+  bgGrad.addColorStop(1, '#08090E');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  updateParticles();
+  drawParticles();
+
+  // Pre-1950 mode: show as 3 large shapes
+  const pre1950 = currentYear < 1950;
+
+  if (pre1950 && zoomProgress < 0.01) {
+    drawThreeSectorView();
+  } else {
+    drawTerritoryView();
+  }
+
+  requestAnimationFrame(render);
+}
+
+function drawThreeSectorView() {
+  const sectors = [
+    { id:'agriculture', name:'Agriculture', share: getAgriShare(), color:'#2D8A5F', bx:0.35, by:0.45, rot:-6 },
+    { id:'industry', name:'Industry', share: getIndShare(), color:'#D4923B', bx:0.62, by:0.32, rot:10 },
+    { id:'services', name:'Services', share: getSvcShare(), color:'#6B7CC0', bx:0.62, by:0.68, rot:-4 },
+  ];
+
+  // Total area budget: fill ~70% of canvas
+  const canvasArea = W * H * 0.65;
+  const totalShare = sectors.reduce((s,x) => s + x.share, 0);
+
+  sectors.forEach(s => {
+    const areaFrac = s.share / totalShare;
+    const area = canvasArea * areaFrac;
+    const aspect = 1.15 + (hashStr(s.id) % 30) / 100; // slight variation
+    const h = Math.sqrt(area / aspect);
+    const w = h * aspect;
+    const cx = s.bx * W;
+    const cy = s.by * H;
+
+    const pts = generateShapePath(cx, cy, w, h, s.rot, hashStr(s.id));
+    const color = getShapeColor(s.color, 30 + s.share * 0.5);
+    drawShape(ctx, pts, color, 0.9);
+
+    // Label
+    const fontSize = Math.max(12, Math.min(16, w * 0.06));
+    const scoreSize = Math.max(24, Math.min(44, w * 0.12));
+    ctx.save();
+    ctx.globalAlpha = 0.75;
+    ctx.fillStyle = '#E2DED4';
+    ctx.font = `300 ${fontSize}px "DM Mono"`;
+    ctx.textAlign = 'center';
+    ctx.fillText(s.name.toUpperCase(), cx, cy - scoreSize * 0.3);
+    ctx.font = `300 ${scoreSize}px "Cormorant Garamond"`;
+    ctx.fillText(Math.round(s.share) + '%', cx, cy + scoreSize * 0.5);
+    ctx.font = `300 ${Math.max(8, fontSize * 0.6)}px "DM Mono"`;
+    ctx.globalAlpha = 0.3;
+    ctx.fillText('of global workforce', cx, cy + scoreSize * 0.5 + fontSize + 4);
+    ctx.restore();
+  });
+
+  if (currentYear > 1920) {
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, (currentYear - 1920) / 30) * 0.35;
+    ctx.fillStyle = '#E2DED4';
+    ctx.font = '300 italic 14px "Cormorant Garamond"';
+    ctx.textAlign = 'center';
+    ctx.fillText('Approaching the modern labor landscape...', W/2, H - 16);
+    ctx.restore();
+  }
+}
+
+function getAgriShare() {
+  const shares = {1800:85,1850:80,1900:72,1920:65,1940:58,1950:52};
+  return interp(shares, currentYear);
+}
+function getIndShare() {
+  const shares = {1800:10,1850:14,1900:18,1920:22,1940:25,1950:22.8};
+  return interp(shares, currentYear);
+}
+function getSvcShare() {
+  const shares = {1800:5,1850:6,1900:10,1920:13,1940:17,1950:25.2};
+  return interp(shares, currentYear);
+}
+
+function drawTerritoryView() {
+  const totalReachWeighted = {sum:0, weight:0};
+
+  // Build territory data for this frame
+  const tData = TERRITORIES.map(t => {
+    const share = Math.max(0.3, getTerritoryShare(t, Math.max(1950, currentYear)));
+    const reach = currentYear >= 1960 ? getTerritoryReach(t, currentYear) : 0;
+    return { t, share, reach };
+  });
+
+  // Area-based sizing: shapes collectively fill ~55% of canvas
+  const canvasArea = W * H * 0.55;
+  const totalShare = tData.reduce((s,x) => s + x.share, 0);
+
+  const items = tData.map(({t, share, reach}) => {
+    const areaFrac = share / totalShare;
+    const area = canvasArea * areaFrac;
+    const aspect = 1.1 + (hashStr(t.id) % 20) / 100;
+    const baseH = Math.sqrt(area / aspect);
+    const baseW = baseH * aspect;
+
+    totalReachWeighted.sum += reach * share;
+    totalReachWeighted.weight += share;
+
+    let targetCx = t.baseX * W;
+    let targetCy = t.baseY * H;
+    let targetW = Math.max(45, baseW);
+    let targetH = Math.max(35, baseH);
+    let targetAlpha = 0.88;
+
+    // Zoom: selected territory moves to center and grows, others fade
+    if (zoomProgress > 0.01) {
+      if (t.id === zoomedTerritory) {
+        const zCx = W * 0.38;
+        const zCy = H * 0.5;
+        targetCx = t.baseX * W + (zCx - t.baseX * W) * zoomProgress;
+        targetCy = t.baseY * H + (zCy - t.baseY * H) * zoomProgress;
+        targetW = baseW + (W * 0.42 - baseW) * zoomProgress;
+        targetH = baseH + (H * 0.55 - baseH) * zoomProgress;
+        targetAlpha = 0.92;
+      } else {
+        targetAlpha = 0.88 * (1 - zoomProgress * 0.85);
+        const dx = targetCx - W*0.5;
+        const dy = targetCy - H*0.5;
+        targetCx += dx * zoomProgress * 0.15;
+        targetCy += dy * zoomProgress * 0.15;
+        targetW *= (1 - zoomProgress * 0.2);
+        targetH *= (1 - zoomProgress * 0.2);
+      }
+    }
+
+    return { t, share, reach, targetCx, targetCy, targetW, targetH, targetAlpha };
+  });
+
+  // Smoothly animate shape states
+  items.forEach(({t, targetCx, targetCy, targetW, targetH, targetAlpha}) => {
+    if (!shapeStates[t.id]) {
+      shapeStates[t.id] = { cx:targetCx, cy:targetCy, w:targetW, h:targetH, alpha:targetAlpha };
+    }
+    const s = shapeStates[t.id];
+    const lerp = 0.06;
+    s.cx += (targetCx - s.cx) * lerp;
+    s.cy += (targetCy - s.cy) * lerp;
+    s.w += (targetW - s.w) * lerp;
+    s.h += (targetH - s.h) * lerp;
+    s.alpha += (targetAlpha - s.alpha) * lerp;
+  });
+
+  // Draw shapes (larger first for z-order)
+  items.sort((a,b) => b.share - a.share);
+
+  items.forEach(({t, reach}) => {
+    const s = shapeStates[t.id];
+    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
+    const color = getShapeColor(t.color, reach);
+
+    drawShape(ctx, pts, color, s.alpha);
+
+    // Hover highlight
+    if (hoveredTerritory === t.id && zoomProgress < 0.5) {
+      drawShapeOutline(ctx, pts, '#E2DED4', 0.25, 1.5);
+    }
+
+    // Selected outline
+    if (zoomedTerritory === t.id && zoomProgress > 0.1) {
+      drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
+    }
+
+    // Labels — scale with shape size
+    const minDim = Math.min(s.w, s.h);
+    if (minDim > 30 && s.alpha > 0.15) {
+      ctx.save();
+      ctx.globalAlpha = s.alpha * 0.85;
+
+      // Name
+      const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
+      ctx.fillStyle = '#E2DED4';
+      ctx.font = `300 ${nameSize}px "DM Mono"`;
+      ctx.textAlign = 'center';
+      const words = t.name.split(' ');
+      if (minDim > 80 && s.w > 100) {
+        ctx.fillText(t.name.toUpperCase(), s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
+      } else if (minDim > 50) {
+        words.forEach((w, i) => {
+          ctx.fillText(w.toUpperCase(), s.cx, s.cy - minDim * 0.12 + i * (nameSize + 3));
+        });
+      }
+
+      // Score
+      if (reach > 0 && minDim > 40) {
+        ctx.fillStyle = '#E2DED4';
+        ctx.globalAlpha = s.alpha * 0.6;
+        const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
+        ctx.font = `300 ${scoreSize}px "Cormorant Garamond"`;
+        ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.14);
+      }
+
+      ctx.restore();
+    }
+  });
+
+  // Draw sub-shapes for zoomed territory
+  if (zoomProgress > 0.3 && zoomedTerritory) {
+    drawJobSubShapes();
+  }
+
+  // Update global stats
+  const avgReach = totalReachWeighted.weight > 0 ?
+    Math.round(totalReachWeighted.sum / totalReachWeighted.weight) : 0;
+  document.getElementById('global-reach-num').textContent =
+    currentYear < 1960 ? '—' : avgReach + '%';
+}
+
+function drawJobSubShapes() {
+  const t = TERRITORIES.find(x => x.id === zoomedTerritory);
+  if (!t) return;
+  const s = shapeStates[t.id];
+  if (!s) return;
+
+  const reach2026 = getTerritoryReach(t, 2026);
+  const reachNow = getTerritoryReach(t, currentYear);
+  const alpha = Math.min(1, (zoomProgress - 0.3) / 0.5);
+
+  const jobs = t.jobs;
+  const n = jobs.length;
+
+  // Arrange sub-shapes in an organic scatter within the parent shape
+  jobs.forEach((j, i) => {
+    let rawScore = j.score2026;
+    if (currentYear <= 2026 && reach2026 > 0) {
+      rawScore = Math.round(rawScore * (reachNow / reach2026));
+    } else if (currentYear > 2026) {
+      rawScore = Math.min(99, Math.round(rawScore * (reachNow / reach2026)));
+    }
+    rawScore = Math.max(0, Math.min(99, rawScore));
+
+    // Position within parent — spread wider
+    const angle = (i / n) * Math.PI * 2 - Math.PI/2;
+    const radius = Math.min(s.w, s.h) * 0.32;
+    const jcx = s.cx + Math.cos(angle) * radius;
+    const jcy = s.cy + Math.sin(angle) * radius;
+
+    // Size proportional to parent and score
+    const baseJobSize = Math.min(s.w, s.h) * 0.18;
+    const jw = baseJobSize + rawScore * 0.15;
+    const jh = jw * 0.82;
+
+    const pts = generateShapePath(jcx, jcy, jw, jh,
+      t.rotation + 15 * (i - n/2), hashStr(t.id + j.name));
+
+    const jobColor = getShapeColor(t.color, rawScore);
+    drawShape(ctx, pts, jobColor, alpha * 0.85);
+
+    // Job label
+    if (alpha > 0.3 && jw > 20) {
+      ctx.save();
+      ctx.globalAlpha = alpha * 0.8;
+      ctx.fillStyle = '#E2DED4';
+      const labelSize = Math.max(7, Math.min(10, jw * 0.15));
+      ctx.font = `300 ${labelSize}px "DM Mono"`;
+      ctx.textAlign = 'center';
+
+      let label = j.name;
+      if (label.length > 18) label = label.substring(0, 16) + '…';
+      ctx.fillText(label, jcx, jcy - jh * 0.08);
+
+      ctx.font = `300 ${Math.max(12, jw * 0.22)}px "Cormorant Garamond"`;
+      ctx.globalAlpha = alpha * 0.6;
+      ctx.fillText(rawScore + '%', jcx, jcy + jh * 0.22);
+      ctx.restore();
+    }
+  });
+}
+
+function hashStr(str) {
+  let hash = 0;
+  for (let i=0; i<str.length; i++) hash = ((hash << 5) - hash) + str.charCodeAt(i);
+  return Math.abs(hash);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INTERACTION
+// ═══════════════════════════════════════════════════════════════
+const tooltip = document.getElementById('tooltip');
+
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  if (currentYear < 1950 || zoomProgress > 0.3) {
+    hoveredTerritory = null;
+    tooltip.classList.remove('visible');
+    canvas.style.cursor = 'default';
+    return;
+  }
+
+  let found = null;
+  // Check territories (reverse draw order for proper z-ordering)
+  for (let i = TERRITORIES.length - 1; i >= 0; i--) {
+    const t = TERRITORIES[i];
+    const s = shapeStates[t.id];
+    if (!s || s.alpha < 0.15) continue;
+    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
+    if (pointInShape(mx, my, pts)) { found = t; break; }
+  }
+
+  if (found) {
+    hoveredTerritory = found.id;
+    canvas.style.cursor = 'pointer';
+    const reach = Math.round(getTerritoryReach(found, currentYear));
+    const share = getTerritoryShare(found, Math.max(1950, currentYear));
+    const wf = getWorkforce(currentYear);
+    const workers = Math.round(share / 100 * wf);
+
+    document.getElementById('tt-name').textContent = found.name;
+    document.getElementById('tt-name').style.color = found.color;
+    document.getElementById('tt-stats').innerHTML =
+      `Replaceability: ${reach}%<br>` +
+      `Workforce: ${workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M'} (${share.toFixed(1)}%)`;
+
+    tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - 230) + 'px';
+    tooltip.style.top = (e.clientY - 10) + 'px';
+    tooltip.classList.add('visible');
+  } else {
+    hoveredTerritory = null;
+    tooltip.classList.remove('visible');
+    canvas.style.cursor = 'default';
+  }
+});
+
+canvas.addEventListener('click', e => {
+  if (currentYear < 1950) return;
+
+  if (zoomProgress > 0.3) {
+    // Clicking in zoomed view — zoom out
+    zoomOut();
+    return;
+  }
+
+  if (hoveredTerritory) {
+    zoomIn(hoveredTerritory);
+  }
+});
+
+function zoomIn(id) {
+  zoomedTerritory = id;
+  zoomTarget = 1;
+  tooltip.classList.remove('visible');
+  document.getElementById('back-btn').classList.add('visible');
+  document.getElementById('detail-panel').classList.add('open');
+  updatePanel(id);
+}
+
+function zoomOut() {
+  zoomTarget = 0;
+  zoomedTerritory = null;
+  document.getElementById('back-btn').classList.remove('visible');
+  document.getElementById('detail-panel').classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DETAIL PANEL
+// ═══════════════════════════════════════════════════════════════
+function updatePanel(id) {
+  const t = TERRITORIES.find(x => x.id === id);
+  if (!t) return;
+
+  const reach = Math.round(getTerritoryReach(t, currentYear));
+  const share = getTerritoryShare(t, Math.max(1950, currentYear));
+  const wf = getWorkforce(currentYear);
+  const workers = Math.round(share / 100 * wf);
+
+  document.getElementById('panel-name').textContent = t.name;
+  document.getElementById('panel-name').style.color = t.color;
+  document.getElementById('panel-isic').textContent = 'ISIC ' + t.isic.join(', ') + ' · ' + share.toFixed(1) + '% of workforce';
+  document.getElementById('panel-desc').textContent = t.desc;
+  document.getElementById('panel-reach-num').textContent = reach + '%';
+  document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
+
+  const bar = document.getElementById('panel-reach-bar');
+  bar.style.width = reach + '%';
+  bar.style.background = getBarColor(reach);
+  document.getElementById('panel-barrier').innerHTML = `<strong>Key barrier:</strong> ${t.barrier}`;
+
+  drawMiniChart(t);
+  drawJobGroups(t);
+}
+
+function drawMiniChart(t) {
+  const svg = document.getElementById('mini-chart');
+  svg.innerHTML = '';
+  const W=300, H=70, s=2000, e=2040, r=e-s;
+
+  // Grid
+  [25,50,75].forEach(v => {
+    const y = H-(v/100)*H;
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',0);l.setAttribute('y1',y);l.setAttribute('x2',W);l.setAttribute('y2',y);
+    l.setAttribute('stroke','rgba(255,255,255,0.05)');
+    svg.appendChild(l);
+  });
+
+  // Split
+  const sx = ((SPLIT_YEAR-s)/r)*W;
+  const sl = document.createElementNS('http://www.w3.org/2000/svg','line');
+  sl.setAttribute('x1',sx);sl.setAttribute('y1',0);sl.setAttribute('x2',sx);sl.setAttribute('y2',H);
+  sl.setAttribute('stroke','rgba(196,164,90,0.2)');
+  svg.appendChild(sl);
+
+  const pts = [];
+  for (let yr=s;yr<=e;yr++) { const x=((yr-s)/r)*W; const y=H-(getTerritoryReach(t,yr)/100)*H; pts.push([x,y]); }
+
+  const ad = 'M '+pts.map(p=>p.join(',')).join(' L ')+` L ${W},${H} L 0,${H} Z`;
+  const a = document.createElementNS('http://www.w3.org/2000/svg','path');
+  a.setAttribute('d',ad); a.setAttribute('fill',t.color+'18'); svg.appendChild(a);
+
+  const ld = 'M '+pts.map(p=>p.join(',')).join(' L ');
+  const ln = document.createElementNS('http://www.w3.org/2000/svg','path');
+  ln.setAttribute('d',ld); ln.setAttribute('fill','none'); ln.setAttribute('stroke',t.color);
+  ln.setAttribute('stroke-width','1.5'); ln.setAttribute('opacity','0.7'); svg.appendChild(ln);
+
+  const cy = Math.max(s,Math.min(e,currentYear));
+  const cx = ((cy-s)/r)*W;
+  const cReach = getTerritoryReach(t,cy);
+  const cY = H-(cReach/100)*H;
+  const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  dot.setAttribute('cx',cx);dot.setAttribute('cy',cY);dot.setAttribute('r','3.5');dot.setAttribute('fill',t.color);
+  svg.appendChild(dot);
+}
+
+function drawJobGroups(t) {
+  const jg = document.getElementById('panel-job-groups');
+  jg.innerHTML = '';
+  const reach2026 = getTerritoryReach(t,2026);
+  const reachNow = getTerritoryReach(t,currentYear);
+
+  t.jobs.forEach(j => {
+    let s = j.score2026;
+    if (currentYear<=2026 && reach2026>0) s = Math.round(s*(reachNow/reach2026));
+    else if (currentYear>2026) s = Math.min(99,Math.round(s*(reachNow/reach2026)));
+    s = Math.max(0,Math.min(99,s));
+
+    const row = document.createElement('div');
+    row.className = 'job-group';
+    row.innerHTML = `
+      <div class="job-group-name">${j.name}</div>
+      <div class="job-group-bar-wrap"><div class="job-group-bar" style="width:${s}%;background:${getBarColor(s)}"></div></div>
+      <div class="job-group-score">${s}%</div>`;
+    jg.appendChild(row);
+  });
+}
+
+document.getElementById('panel-close').addEventListener('click', zoomOut);
+
+// ═══════════════════════════════════════════════════════════════
+// TIMELINE
+// ═══════════════════════════════════════════════════════════════
+const TOTAL_YEARS = END_YEAR - START_YEAR;
+function yearToPercent(y) { return ((y-START_YEAR)/TOTAL_YEARS)*100; }
+
+function buildTimeline() {
+  const ye = document.getElementById('timeline-years');
+  [1800,1850,1900,1950,2000,2026,2040].forEach(y => {
+    const s = document.createElement('span');
+    s.textContent = y; s.style.left = yearToPercent(y)+'%';
+    if (y===2026) s.style.color = 'rgba(196,164,90,0.5)';
+    ye.appendChild(s);
+  });
+
+  document.getElementById('timeline-historical').style.width = yearToPercent(SPLIT_YEAR)+'%';
+  document.getElementById('timeline-split').style.left = yearToPercent(SPLIT_YEAR)+'%';
+
+  const mc = document.getElementById('milestones-container');
+  MILESTONES.forEach(m => {
+    const d = document.createElement('div');
+    d.className = 'milestone-dot';
+    d.style.left = yearToPercent(m.year)+'%';
+    d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}<div style="color:#6b6a72;font-size:7.5px;margin-top:2px;max-width:160px;white-space:normal">${m.desc}</div></div>`;
+    mc.appendChild(d);
+  });
+
+  const track = document.getElementById('timeline-track');
+  const scrubber = document.getElementById('timeline-scrubber');
+  let dragging = false;
+
+  function setYear(clientX) {
+    const r = track.getBoundingClientRect();
+    const pct = Math.max(0,Math.min(1,(clientX-r.left)/r.width));
+    currentYear = START_YEAR + pct * TOTAL_YEARS;
+    updateTimelineUI();
+    if (zoomedTerritory) updatePanel(zoomedTerritory);
+  }
+
+  track.addEventListener('click', e => { if (!dragging) setYear(e.clientX); });
+  scrubber.addEventListener('mousedown', e => { dragging=true; scrubber.classList.add('dragging'); e.preventDefault(); });
+  document.addEventListener('mousemove', e => { if (dragging) setYear(e.clientX); });
+  document.addEventListener('mouseup', () => { if (dragging) { dragging=false; scrubber.classList.remove('dragging'); }});
+}
+
+function updateTimelineUI() {
+  const p = yearToPercent(currentYear);
+  document.getElementById('timeline-progress').style.width = p+'%';
+  document.getElementById('timeline-scrubber').style.left = p+'%';
+  const yr = Math.round(currentYear);
+  const ye = document.getElementById('year-display');
+  ye.textContent = yr;
+  ye.className = currentYear >= SPLIT_YEAR ? 'year-display projected' : 'year-display';
+
+  const wf = getWorkforce(currentYear);
+  document.getElementById('global-workforce-num').textContent = wf>=1000?(wf/1000).toFixed(1)+'B':Math.round(wf)+'M';
+
+  const era = ERAS.find(e=>currentYear>=e.start&&currentYear<e.end)||ERAS[ERAS.length-1];
+  document.getElementById('era-name').textContent = era.name;
+  document.getElementById('era-detail').textContent = era.detail;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PLAYBACK
+// ═══════════════════════════════════════════════════════════════
+function play() {
+  if (currentYear >= END_YEAR) currentYear = START_YEAR;
+  isPlaying = true;
+  document.getElementById('play-btn').textContent = '⏸';
+  function frame() {
+    if (!isPlaying) return;
+    let spd = playSpeed;
+    if (currentYear < 1900) spd *= 3.5;
+    else if (currentYear < 1950) spd *= 2;
+    else if (currentYear >= SPLIT_YEAR) spd *= 1.2;
+    currentYear += spd;
+    if (currentYear >= END_YEAR) { currentYear=END_YEAR; isPlaying=false; document.getElementById('play-btn').textContent='▶'; }
+    updateTimelineUI();
+    if (zoomedTerritory) updatePanel(zoomedTerritory);
+    if (isPlaying) animFrame = requestAnimationFrame(frame);
+  }
+  animFrame = requestAnimationFrame(frame);
+}
+
+function pause() {
+  isPlaying=false; document.getElementById('play-btn').textContent='▶';
+  if (animFrame) cancelAnimationFrame(animFrame);
+}
+
+document.getElementById('play-btn').addEventListener('click', ()=> isPlaying?pause():play());
+
+// ═══════════════════════════════════════════════════════════════
+// SCENARIO
+// ═══════════════════════════════════════════════════════════════
+document.querySelectorAll('.scenario-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    scenario = btn.dataset.scenario;
+    document.querySelectorAll('.scenario-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    if (zoomedTerritory) updatePanel(zoomedTerritory);
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════════════════════════════
+const searchInput = document.getElementById('job-search');
+const searchResultsEl = document.getElementById('search-results');
+
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  if (q.length < 2) { searchResultsEl.classList.remove('visible'); return; }
+  const matches = JOB_SEARCH_DATA.filter(j=>j.job.toLowerCase().includes(q))
+    .sort((a,b)=> (a.job.toLowerCase().startsWith(q)?0:1) - (b.job.toLowerCase().startsWith(q)?0:1))
+    .slice(0,8);
+  searchResultsEl.innerHTML = '';
+  if (!matches.length) { searchResultsEl.classList.remove('visible'); return; }
+  matches.forEach(m => {
+    const t = TERRITORIES.find(x=>x.id===m.territory);
+    const reach = t ? Math.round(getTerritoryReach(t,currentYear)) : 0;
+    const div = document.createElement('div');
+    div.className = 'search-result-item';
+    div.innerHTML = `<div>${m.job}</div><div class="job-territory">${m.territoryName} · ${reach}% replaceability</div>`;
+    div.addEventListener('click',()=>{ zoomIn(m.territory); searchInput.value=m.job; searchResultsEl.classList.remove('visible'); });
+    searchResultsEl.appendChild(div);
+  });
+  searchResultsEl.classList.add('visible');
+});
+document.addEventListener('click', e => { if (!e.target.closest('.search-wrap')) searchResultsEl.classList.remove('visible'); });
+
+// ═══════════════════════════════════════════════════════════════
+// KEYBOARD
+// ═══════════════════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.target.tagName==='INPUT') return;
+  if (e.key===' '||e.key==='k') { e.preventDefault(); isPlaying?pause():play(); }
+  if (e.key==='ArrowLeft') { currentYear=Math.max(START_YEAR,currentYear-5); updateTimelineUI(); }
+  if (e.key==='ArrowRight') { currentYear=Math.min(END_YEAR,currentYear+5); updateTimelineUI(); }
+  if (e.key==='Escape') zoomOut();
+});
+
+// ═══════════════════════════════════════════════════════════════
+// INTRO + INIT
+// ═══════════════════════════════════════════════════════════════
+function enterSite() {
+  document.getElementById('intro-overlay').classList.add('fade-out');
+  setTimeout(()=> document.getElementById('intro-overlay').style.display='none', 1000);
+  setTimeout(()=>{ currentYear=1800; updateTimelineUI(); setTimeout(play, 500); }, 300);
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+buildTimeline();
+updateTimelineUI();
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
