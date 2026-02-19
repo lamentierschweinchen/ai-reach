@@ -1342,15 +1342,15 @@ function updateTimelineUI() {
 // PLAYBACK
 // ═══════════════════════════════════════════════════════════════
 function getPlaySpeed(year) {
-  // Fast through history, dramatically slower in recent/future periods
-  if (year < 1900) return 0.72;      // ~139 frames through 1800-1900
-  if (year < 1950) return 0.36;      // ~139 frames through 1900-1950
-  if (year < 1980) return 0.14;      // ~214 frames through 1950-1980
-  if (year < 2000) return 0.08;      // ~250 frames through 1980-2000
-  if (year < 2010) return 0.04;      // ~250 frames through 2000-2010
-  if (year < 2020) return 0.028;     // ~357 frames through 2010-2020
-  if (year < 2026) return 0.016;     // ~375 frames through 2020-2026
-  return 0.012;                      // slowest for 2026+ projected
+  // Fast through history, ~1.5s per year by 2024 (0.011 yrs/frame @ 60fps)
+  if (year < 1900) return 0.29;      // ~345 frames through 1800-1900
+  if (year < 1950) return 0.14;      // ~357 frames through 1900-1950
+  if (year < 1980) return 0.056;     // ~536 frames through 1950-1980
+  if (year < 2000) return 0.032;     // ~625 frames through 1980-2000
+  if (year < 2010) return 0.018;     // ~556 frames through 2000-2010
+  if (year < 2020) return 0.013;     // ~769 frames through 2010-2020
+  if (year < 2026) return 0.012;     // ~500 frames through 2020-2026
+  return 0.011;                      // ~1.5s/year for 2026+ projected
 }
 
 function play() {
