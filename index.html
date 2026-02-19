@@ -724,15 +724,18 @@ const ctx = canvas.getContext('2d');
 let W, H;
 
 function resizeCanvas() {
-  const rect = canvas.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  canvas.style.width = rect.width + 'px';
-  canvas.style.height = rect.height + 'px';
+  const cw = window.innerWidth;
+  const ch = window.innerHeight - 46 - 88; // subtract header (46px) and timeline (88px)
+  canvas.width = cw * dpr;
+  canvas.height = ch * dpr;
+  canvas.style.width = cw + 'px';
+  canvas.style.height = ch + 'px';
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  W = rect.width;
-  H = rect.height;
+  W = cw;
+  H = ch;
+  // Reset shape states so positions recalculate for new dimensions
+  shapeStates = {};
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1338,17 +1341,25 @@ function updateTimelineUI() {
 // ═══════════════════════════════════════════════════════════════
 // PLAYBACK
 // ═══════════════════════════════════════════════════════════════
+function getPlaySpeed(year) {
+  // Fast through history, dramatically slower in recent/future periods
+  if (year < 1900) return 1.8;       // ~83 frames through 1800-1900
+  if (year < 1950) return 0.9;       // ~56 frames through 1900-1950
+  if (year < 1980) return 0.35;      // ~86 frames through 1950-1980
+  if (year < 2000) return 0.20;      // ~100 frames through 1980-2000
+  if (year < 2010) return 0.10;      // ~100 frames through 2000-2010
+  if (year < 2020) return 0.07;      // ~143 frames through 2010-2020
+  if (year < 2026) return 0.04;      // ~150 frames through 2020-2026
+  return 0.03;                       // slowest for 2026+ projected
+}
+
 function play() {
   if (currentYear >= END_YEAR) currentYear = START_YEAR;
   isPlaying = true;
   document.getElementById('play-btn').textContent = '⏸';
   function frame() {
     if (!isPlaying) return;
-    let spd = playSpeed;
-    if (currentYear < 1900) spd *= 3.5;
-    else if (currentYear < 1950) spd *= 2;
-    else if (currentYear >= SPLIT_YEAR) spd *= 1.2;
-    currentYear += spd;
+    currentYear += getPlaySpeed(currentYear);
     if (currentYear >= END_YEAR) { currentYear=END_YEAR; isPlaying=false; document.getElementById('play-btn').textContent='▶'; }
     updateTimelineUI();
     if (zoomedTerritory) updatePanel(zoomedTerritory);
