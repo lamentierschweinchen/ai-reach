@@ -216,6 +216,28 @@ header {
 .timeline-years span { position: absolute; transform: translateX(-50%); }
 .zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); top: -14px; }
 .zone-label.projected { right: 0; color: rgba(196,164,90,0.4); }
+.timeline-projected-zone {
+  position: absolute; top: -5px; bottom: -5px; right: 0;
+  background: rgba(196,164,90,0.04);
+  border-left: 1px solid rgba(196,164,90,0.25);
+  pointer-events: none;
+}
+
+/* ── MILESTONE TOAST ── */
+#milestone-toast {
+  position: fixed; left: 50%; bottom: 108px;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(12,14,22,0.96); border: 1px solid rgba(196,164,90,0.35);
+  padding: 8px 18px; z-index: 150; pointer-events: none;
+  opacity: 0; transition: opacity 0.25s ease, transform 0.25s ease;
+  text-align: center; backdrop-filter: blur(12px);
+}
+#milestone-toast.visible {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
+.toast-year { font-family: var(--font-serif); font-size: 11px; color: var(--gold); letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
+.toast-label { font-family: var(--font-serif); font-size: 15px; font-weight: 300; color: var(--text); }
+.toast-desc { font-size: 8.5px; color: var(--muted); letter-spacing: 0.05em; margin-top: 1px; display: block; }
 
 /* ── INTRO ── */
 #intro-overlay {
@@ -319,6 +341,7 @@ header {
       <div class="zone-label projected">Projected ›</div>
       <div class="timeline-track" id="timeline-track">
         <div class="timeline-historical" id="timeline-historical"></div>
+        <div class="timeline-projected-zone" id="timeline-projected-zone"></div>
         <div class="timeline-progress" id="timeline-progress"></div>
         <div class="timeline-split" id="timeline-split"></div>
         <div id="milestones-container"></div>
@@ -327,6 +350,12 @@ header {
     </div>
   </div>
   <div class="timeline-years" id="timeline-years"></div>
+</div>
+
+<div id="milestone-toast">
+  <span class="toast-year" id="toast-year"></span>
+  <span class="toast-label" id="toast-label"></span>
+  <span class="toast-desc" id="toast-desc"></span>
 </div>
 
 <script>
@@ -551,6 +580,8 @@ let isPlaying = false;
 let scenario = 'moderate';
 let animFrame = null;
 let playSpeed = 0.1;
+let lastMilestoneYear = -1;
+let toastTimeout = null;
 
 // Zoom state
 let zoomedTerritory = null;
@@ -1452,6 +1483,10 @@ function buildTimeline() {
 
   document.getElementById('timeline-historical').style.width = yearToPercent(SPLIT_YEAR)+'%';
   document.getElementById('timeline-split').style.left = yearToPercent(SPLIT_YEAR)+'%';
+  // Projected zone: from SPLIT_YEAR to END_YEAR
+  const projZone = document.getElementById('timeline-projected-zone');
+  projZone.style.left = yearToPercent(SPLIT_YEAR)+'%';
+  projZone.style.width = (100 - yearToPercent(SPLIT_YEAR))+'%';
 
   const mc = document.getElementById('milestones-container');
   const featured = new Set([1913, 1969, 1980, 1997, 2012, 2020, 2022, 2024]);
@@ -1499,36 +1534,39 @@ function updateTimelineUI() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// MILESTONE TOAST
+// ═══════════════════════════════════════════════════════════════
+const toast = document.getElementById('milestone-toast');
+function checkMilestoneToast(prevYear, newYear) {
+  const hit = MILESTONES.find(m => m.year > prevYear && m.year <= newYear && m.year !== lastMilestoneYear);
+  if (!hit) return;
+  lastMilestoneYear = hit.year;
+  document.getElementById('toast-year').textContent = hit.year;
+  document.getElementById('toast-label').textContent = hit.label;
+  document.getElementById('toast-desc').textContent = hit.desc;
+  toast.classList.add('visible');
+  if (toastTimeout) clearTimeout(toastTimeout);
+  // Show longer for featured milestones
+  const featured = new Set([1913,1969,1997,2012,2020,2022,2024]);
+  toastTimeout = setTimeout(() => toast.classList.remove('visible'), featured.has(hit.year) ? 3000 : 1800);
+}
+
+// ═══════════════════════════════════════════════════════════════
 // PLAYBACK
 // ═══════════════════════════════════════════════════════════════
 function getPlaySpeed(year) {
-  // Target pacing (~90s total at 60fps):
-  // 1800→1950: ~10s  (little to see, rush through)
-  // 1950→2000: ~20s  (AI reach warming up, slow down)
-  // 2000→2020: ~25s  (acceleration visible, slow more)
-  // 2020→2026: ~15s  (~1.5s/yr — critical years)
-  // 2026→2040: ~15s  (projected, comfortable pace)
-  if (year < 1950) {
-    // Fast exponential decay: 0.95 at 1800 → ~0.10 at 1950
-    const t = (year - 1800) / 150;
-    return 0.10 + 0.85 * Math.exp(-2.8 * t);
-  }
-  if (year < 2000) {
-    // Moderate: ~0.042 yrs/frame average
-    const t = (year - 1950) / 50;
-    return 0.014 + 0.07 * Math.exp(-2.5 * t);
-  }
-  if (year < 2020) {
-    // Slow: decelerates from ~0.014 to ~0.007
-    const t = (year - 2000) / 20;
-    return 0.007 + 0.007 * Math.exp(-2.0 * t);
-  }
-  if (year < 2026) {
-    // Very slow: ~0.007 yrs/frame = ~1.5s/yr at 60fps
-    return 0.007;
-  }
-  // Projected era: comfortable ~1.5s/yr
-  return 0.007;
+  // Exact pacing — total 90s at 60fps (5400 frames).
+  // Verified: frames = years/speed; segments sum to 5400.
+  // 1800→1950 (150yr / 600fr  = 10s): 0.250 yrs/frame
+  // 1950→2000  (50yr / 1200fr = 20s): 0.0417
+  // 2000→2020  (20yr / 1200fr = 20s): 0.0167
+  // 2020→2026   (6yr /  900fr = 15s): 0.00667
+  // 2026→2040  (14yr /  900fr = 15s): 0.01556
+  if (year < 1950) return 0.250;
+  if (year < 2000) return 0.0417;
+  if (year < 2020) return 0.0167;
+  if (year < 2026) return 0.00667;
+  return 0.01556;
 }
 
 function play() {
@@ -1537,7 +1575,9 @@ function play() {
   document.getElementById('play-btn').textContent = '⏸';
   function frame() {
     if (!isPlaying) return;
+    const prevYear = currentYear;
     currentYear += getPlaySpeed(currentYear);
+    checkMilestoneToast(prevYear, currentYear);
     if (currentYear >= END_YEAR) { currentYear=END_YEAR; isPlaying=false; document.getElementById('play-btn').textContent='▶'; }
     updateTimelineUI();
     if (zoomedTerritory) updatePanel(zoomedTerritory);
