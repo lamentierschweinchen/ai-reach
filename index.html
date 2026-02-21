@@ -712,10 +712,10 @@ function hexToRGB(hex) {
 
 function getShapeColor(baseHex, reach) {
   const {r,g,b} = hexToRGB(baseHex);
-  // At 0% reach: tiles show at ~30% of their hue (identifiable but muted).
-  // At 100% reach: full color. Non-linear for drama in the middle range.
-  const minBrightness = 0.28; // floor — never fully black
-  const t = minBrightness + (1 - minBrightness) * Math.pow(reach / 100, 0.6);
+  // At 0%: tiles show at 45% brightness (clearly colored, clearly not "reached").
+  // At 100%: full vivid color. Curve accelerates in the 20-80% band.
+  const minBrightness = 0.45;
+  const t = minBrightness + (1 - minBrightness) * Math.pow(reach / 100, 0.55);
   const rr = Math.round(t * r);
   const gg = Math.round(t * g);
   const bb = Math.round(t * b);
@@ -891,9 +891,9 @@ function render() {
 
 function drawThreeSectorView() {
   const sectors = [
-    { id:'agriculture', name:'Agriculture', share: getAgriShare(), color:'#2D8A5F', bx:0.35, by:0.45, rot:-6 },
-    { id:'industry', name:'Industry', share: getIndShare(), color:'#D4923B', bx:0.62, by:0.32, rot:10 },
-    { id:'services', name:'Services', share: getSvcShare(), color:'#6B7CC0', bx:0.62, by:0.68, rot:-4 },
+    { id:'agriculture', name:'Agriculture', share: getAgriShare(), color:'#2D8A5F', bx:0.22, by:0.46, rot:-5 },
+    { id:'industry',    name:'Industry',    share: getIndShare(),  color:'#D4923B', bx:0.56, by:0.38, rot:8  },
+    { id:'services',    name:'Services',    share: getSvcShare(),  color:'#6B7CC0', bx:0.80, by:0.54, rot:-4 },
   ];
 
   // Total area budget: fill canvas proportionally, capped so no tile overflows
@@ -949,9 +949,9 @@ const SECTOR_ORIGINS = {
   'governing':'services', 'feeding':'services',
 };
 const SECTOR_POS = {
-  agriculture: { x:0.35, y:0.45 },
-  industry:    { x:0.62, y:0.32 },
-  services:    { x:0.62, y:0.68 },
+  agriculture: { x:0.22, y:0.46 },
+  industry:    { x:0.56, y:0.38 },
+  services:    { x:0.80, y:0.54 },
 };
 const SECTOR_COLOR = { agriculture:'#2D8A5F', industry:'#D4923B', services:'#6B7CC0' };
 
@@ -1154,13 +1154,27 @@ function drawTerritoryView() {
         });
       }
 
-      // Score
+      // AI Reach %
       if (reach >= 1 && minDim > 40) {
         ctx.fillStyle = '#E2DED4';
         ctx.globalAlpha = s.alpha * 0.6;
         const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
         ctx.font = `300 ${scoreSize}px "Cormorant Garamond"`;
-        ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.14);
+        ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
+      }
+
+      // Workforce count
+      if (minDim > 55) {
+        const wfYear = Math.max(1950, currentYear);
+        const wf = getWorkforce(wfYear);
+        const share = getTerritoryShare(t, wfYear);
+        const workers = Math.round(share / 100 * wf);
+        const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
+        const wfSize = Math.max(7, Math.min(10, minDim * 0.055));
+        ctx.fillStyle = '#E2DED4';
+        ctx.globalAlpha = s.alpha * 0.28;
+        ctx.font = `300 ${wfSize}px "DM Mono"`;
+        ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.26);
       }
 
       ctx.restore();
@@ -1488,14 +1502,33 @@ function updateTimelineUI() {
 // PLAYBACK
 // ═══════════════════════════════════════════════════════════════
 function getPlaySpeed(year) {
-  // Smooth exponential deceleration toward ~1.5s/year by 2024.
-  // Target: ~20s total to reach year 2000 (at 60fps = ~1200 frames).
-  // Formula: speed = base + A * exp(-k * t)  where t = (year-1800)/(2024-1800)
-  // At t=0 (1800): ~0.36 yrs/frame.  At t=1 (2024): ~0.011 yrs/frame.
-  // From 2024 onward: fixed at 0.011 (~1.5s/year at 60fps).
-  if (year >= 2024) return 0.011;
-  const t = (year - 1800) / (2024 - 1800);
-  return 0.011 + 0.35 * Math.exp(-4.0 * t);
+  // Target pacing (~90s total at 60fps):
+  // 1800→1950: ~10s  (little to see, rush through)
+  // 1950→2000: ~20s  (AI reach warming up, slow down)
+  // 2000→2020: ~25s  (acceleration visible, slow more)
+  // 2020→2026: ~15s  (~1.5s/yr — critical years)
+  // 2026→2040: ~15s  (projected, comfortable pace)
+  if (year < 1950) {
+    // Fast exponential decay: 0.95 at 1800 → ~0.10 at 1950
+    const t = (year - 1800) / 150;
+    return 0.10 + 0.85 * Math.exp(-2.8 * t);
+  }
+  if (year < 2000) {
+    // Moderate: ~0.042 yrs/frame average
+    const t = (year - 1950) / 50;
+    return 0.014 + 0.07 * Math.exp(-2.5 * t);
+  }
+  if (year < 2020) {
+    // Slow: decelerates from ~0.014 to ~0.007
+    const t = (year - 2000) / 20;
+    return 0.007 + 0.007 * Math.exp(-2.0 * t);
+  }
+  if (year < 2026) {
+    // Very slow: ~0.007 yrs/frame = ~1.5s/yr at 60fps
+    return 0.007;
+  }
+  // Projected era: comfortable ~1.5s/yr
+  return 0.007;
 }
 
 function play() {
