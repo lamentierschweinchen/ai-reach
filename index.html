@@ -712,12 +712,13 @@ function hexToRGB(hex) {
 
 function getShapeColor(baseHex, reach) {
   const {r,g,b} = hexToRGB(baseHex);
-  // Low reach: desaturated and dimmed. High reach: full color, brighter.
-  const t = Math.pow(reach/100, 0.7); // slightly non-linear for drama
-  const grey = 25;
-  const rr = Math.round(grey + t * (r - grey));
-  const gg = Math.round(grey + t * (g - grey));
-  const bb = Math.round(grey + t * (b - grey));
+  // At 0% reach: tiles show at ~30% of their hue (identifiable but muted).
+  // At 100% reach: full color. Non-linear for drama in the middle range.
+  const minBrightness = 0.28; // floor — never fully black
+  const t = minBrightness + (1 - minBrightness) * Math.pow(reach / 100, 0.6);
+  const rr = Math.round(t * r);
+  const gg = Math.round(t * g);
+  const bb = Math.round(t * b);
   return `rgb(${rr},${gg},${bb})`;
 }
 
@@ -895,16 +896,16 @@ function drawThreeSectorView() {
     { id:'services', name:'Services', share: getSvcShare(), color:'#6B7CC0', bx:0.62, by:0.68, rot:-4 },
   ];
 
-  // Total area budget: fill ~70% of canvas
-  const canvasArea = W * H * 0.65;
+  // Total area budget: fill canvas proportionally, capped so no tile overflows
+  const canvasArea = W * H * 0.55;
   const totalShare = sectors.reduce((s,x) => s + x.share, 0);
 
   sectors.forEach(s => {
     const areaFrac = s.share / totalShare;
     const area = canvasArea * areaFrac;
     const aspect = 1.15 + (hashStr(s.id) % 30) / 100; // slight variation
-    const h = Math.sqrt(area / aspect);
-    const w = h * aspect;
+    const h = Math.min(H * 0.72, Math.sqrt(area / aspect));
+    const w = Math.min(W * 0.55, h * aspect);
     const cx = s.bx * W;
     const cy = s.by * H;
 
