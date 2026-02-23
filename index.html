@@ -393,7 +393,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v2_fixed.json');
+  const resp = await fetch('ai_reach_v2.1.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -495,27 +495,26 @@ function buildLookupTables() {
     occupationsByTerritory[tid].sort((a,b) => b.replaceability_2026 - a.replaceability_2026);
   });
 
-  // ── Job search data ──
+  // ── Job search data (deduplicated) ──
+  const titleMap = new Map();
   V2.occupations.forEach(occ => {
-    JOB_SEARCH_DATA.push({
-      job: occ.occupation_name,
-      territory: occ.territory_id,
-      territoryName: occ.territory,
-      score: occ.replaceability_2026,
-      isco: occ.isco_code
-    });
-    if (occ.common_titles) {
-      occ.common_titles.forEach(title => {
-        JOB_SEARCH_DATA.push({
+    const entries = [occ.occupation_name, ...(occ.common_titles || [])];
+    entries.forEach(title => {
+      const key = title.toLowerCase().trim();
+      const existing = titleMap.get(key);
+      if (!existing || occ.replaceability_2026 > existing.score) {
+        titleMap.set(key, {
           job: title,
           territory: occ.territory_id,
           territoryName: occ.territory,
           score: occ.replaceability_2026,
-          isco: occ.isco_code
+          isco: occ.isco_code,
+          occupationName: occ.occupation_name
         });
-      });
-    }
+      }
+    });
   });
+  JOB_SEARCH_DATA = Array.from(titleMap.values());
 
   // ── Technology events → Milestones ──
   ALL_EVENTS = V2.technology_events.map(ev => ({
@@ -622,21 +621,70 @@ const ERAS = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// SECTOR ORIGIN MAPPING (for 3→13 morph)
+// PROGRESSIVE DISAGGREGATION — macro shapes & emergence timing
 // ═══════════════════════════════════════════════════════════════
-const SECTOR_ORIGINS = {
-  'land_sea':'agriculture', 'making_things':'industry', 'building_things':'industry',
-  'moving_things':'industry', 'maintaining_fixing':'industry',
-  'buying_selling':'services', 'money_data':'services', 'thinking_leading':'services',
-  'care_health':'services', 'learning_teaching':'services', 'making_meaning':'services',
-  'governing_protecting':'services', 'feeding_hosting':'services',
+const MACRO_SHAPES = [
+  {
+    id: 'macro_industry',
+    name: 'Industry',
+    color: '#7A6F5D',
+    rotation: -5,
+    children: ['making_things', 'building_things'],
+  },
+  {
+    id: 'macro_services',
+    name: 'Services',
+    color: '#5D6B7A',
+    rotation: 3,
+    children: ['buying_selling', 'money_data', 'care_health', 'learning_teaching',
+               'feeding_hosting', 'maintaining_fixing', 'making_meaning', 'thinking_leading',
+               'moving_things', 'governing_protecting'],
+  },
+];
+
+// Year each territory first appears as an independent shape (data-driven)
+const TERRITORY_EMERGENCE = {
+  'land_sea': 1800,
+  'making_things': 1900,
+  'building_things': 1900,
+  'moving_things': 1900,
+  'governing_protecting': 1900,
+  'buying_selling': 1950,
+  'care_health': 1960,
+  'learning_teaching': 1960,
+  'money_data': 1970,
+  'feeding_hosting': 1980,
+  'maintaining_fixing': 1980,
+  'making_meaning': 1980,
+  'thinking_leading': 1980,
 };
-const SECTOR_POS = {
-  agriculture: { x:0.22, y:0.46 },
-  industry:    { x:0.56, y:0.38 },
-  services:    { x:0.80, y:0.54 },
+
+// Year each macro fully dissolves (last children emerged)
+const MACRO_DISSOLVE = {
+  'macro_industry': 1900,
+  'macro_services': 1980,
 };
-const SECTOR_COLOR = { agriculture:'#2D8A5F', industry:'#D4923B', services:'#6B7CC0' };
+
+// Morph half-width: ±3 years around emergence year
+const MORPH_HALF_WIDTH = 3;
+
+function smoothstep(t) {
+  t = Math.max(0, Math.min(1, t));
+  return t * t * (3 - 2 * t);
+}
+
+// Parent macro for each territory
+const TERRITORY_PARENT = {};
+MACRO_SHAPES.forEach(m => {
+  m.children.forEach(cid => { TERRITORY_PARENT[cid] = m.id; });
+});
+
+// Compute macro baseX/baseY as centroid of children
+MACRO_SHAPES.forEach(m => {
+  const children = m.children.map(id => TERRITORIES.find(t => t.id === id)).filter(Boolean);
+  m.baseX = children.reduce((s, t) => s + t.baseX, 0) / children.length;
+  m.baseY = children.reduce((s, t) => s + t.baseY, 0) / children.length;
+});
 
 // ═══════════════════════════════════════════════════════════════
 // STATE
@@ -701,9 +749,11 @@ function getTerritoryShare(t, year) {
 
 function getTerritoryReach(t, year) {
   const tid = typeof t === 'string' ? t : t.id;
-  if (year < 2015) return 0;
   if (year <= 2026) {
     if (replLookup[tid]) {
+      // Return 0 before the territory's first replaceability data year
+      const firstYear = Math.min(...Object.keys(replLookup[tid]).map(Number));
+      if (year < firstYear) return 0;
       return Math.max(0, Math.min(100, interp(replLookup[tid], year)));
     }
     return 0;
@@ -723,29 +773,12 @@ function getWorkforce(year) {
   return interp(workforceLookup, year);
 }
 
-// Three-sector shares from V2 macro data
-function getAgriShare() {
-  if (macroLookup['land_sea']) {
-    return interp(macroLookup['land_sea'], currentYear);
+// Get share for any shape ID (territory or macro)
+function getShareForId(id, year) {
+  if (laborLookup[id]) {
+    return interp(laborLookup[id], year);
   }
-  return 50; // fallback
-}
-
-function getIndShare() {
-  if (macroLookup['macro_industry']) {
-    // For years where we also have territory-level industry data,
-    // sum making_things + building_things + moving_things + maintaining_fixing
-    // But pre-1950, macro_industry is the aggregate
-    return interp(macroLookup['macro_industry'], currentYear);
-  }
-  return 25;
-}
-
-function getSvcShare() {
-  if (macroLookup['macro_services']) {
-    return interp(macroLookup['macro_services'], currentYear);
-  }
-  return 25;
+  return 0;
 }
 
 // Occupation score interpolation
@@ -917,12 +950,6 @@ function render() {
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, W, H);
 
-  // 3→13 transition window
-  const TRANS_START = 1948, TRANS_END = 1954;
-  const morphT = currentYear < TRANS_START ? 0
-    : currentYear > TRANS_END ? 1
-    : (currentYear - TRANS_START) / (TRANS_END - TRANS_START);
-
   // Liquid glass transition (post-2026)
   const GLASS_START = 2025.5, GLASS_END = 2027;
   const rawGlass = currentYear <= GLASS_START ? 0
@@ -930,168 +957,117 @@ function render() {
     : (currentYear - GLASS_START) / (GLASS_END - GLASS_START);
   const glassProgress = rawGlass * rawGlass * (3 - 2 * rawGlass); // smoothstep
 
-  if (morphT <= 0 && zoomProgress < 0.01) {
-    drawThreeSectorView();
-  } else if (morphT >= 1) {
-    drawTerritoryView(glassProgress);
-  } else {
-    drawMorphFrame(morphT);
-  }
+  drawAllShapes(glassProgress);
 
   requestAnimationFrame(render);
 }
 
-function drawThreeSectorView() {
-  const sectors = [
-    { id:'agriculture', name:'Agriculture', share: getAgriShare(), color:'#2D8A5F', bx:0.22, by:0.46, rot:-5 },
-    { id:'industry',    name:'Industry',    share: getIndShare(),  color:'#D4923B', bx:0.56, by:0.38, rot:8  },
-    { id:'services',    name:'Services',    share: getSvcShare(),  color:'#6B7CC0', bx:0.80, by:0.54, rot:-4 },
-  ];
-
-  const canvasArea = W * H * 0.55;
-  const totalShare = sectors.reduce((s,x) => s + x.share, 0);
-
-  sectors.forEach(s => {
-    const areaFrac = s.share / totalShare;
-    const area = canvasArea * areaFrac;
-    const aspect = 1.15 + (hashStr(s.id) % 30) / 100;
-    const h = Math.min(H * 0.72, Math.sqrt(area / aspect));
-    const w = Math.min(W * 0.55, h * aspect);
-    const cx = s.bx * W;
-    const cy = s.by * H;
-
-    const pts = generateShapePath(cx, cy, w, h, s.rot, hashStr(s.id));
-    const color = getShapeColor(s.color, 15);
-    drawShape(ctx, pts, color, 0.9);
-
-    const fontSize = Math.max(12, Math.min(16, w * 0.06));
-    ctx.save();
-    ctx.globalAlpha = 0.75;
-    ctx.fillStyle = '#E2DED4';
-    ctx.font = `400 ${fontSize}px "Inter"`;
-    ctx.textAlign = 'center';
-    ctx.fillText(s.name.toUpperCase(), cx, cy - fontSize * 0.6);
-    ctx.font = `400 ${Math.max(8, fontSize * 0.7)}px "Inter"`;
-    ctx.globalAlpha = 0.22;
-    ctx.fillText('AI REACH: 0%', cx, cy + fontSize + 2);
-    ctx.restore();
-  });
-
-  if (currentYear > 1920) {
-    ctx.save();
-    ctx.globalAlpha = Math.min(1, (currentYear - 1920) / 30) * 0.35;
-    ctx.fillStyle = '#E2DED4';
-    ctx.font = 'italic 700 14px "GT Super Display"';
-    ctx.textAlign = 'center';
-    ctx.fillText('Approaching the modern labor landscape...', W/2, H - 16);
-    ctx.restore();
-  }
-}
-
 // ═══════════════════════════════════════════════════════════════
-// 3 → 13 MORPH TRANSITION
+// UNIFIED SHAPE DRAWING — progressive disaggregation
 // ═══════════════════════════════════════════════════════════════
-function drawMorphFrame(morphT) {
-  const ease = 1 - Math.pow(1 - morphT, 3);
-
-  const sectorShapes = [
-    { id:'agriculture', color:'#2D8A5F', bx:0.35, by:0.45, rot:-6, area: W*H*0.65*(getAgriShare()/100) },
-    { id:'industry',    color:'#D4923B', bx:0.62, by:0.32, rot:10,  area: W*H*0.65*(getIndShare()/100) },
-    { id:'services',    color:'#6B7CC0', bx:0.62, by:0.68, rot:-4,  area: W*H*0.65*(getSvcShare()/100) },
-  ];
-  sectorShapes.forEach(s => {
-    const aspect = 1.15 + (hashStr(s.id) % 30) / 100;
-    const sh = Math.sqrt(s.area / aspect);
-    const sw = sh * aspect;
-    const cx = s.bx * W;
-    const cy = s.by * H;
-    const scale = 1 - morphT * 0.35;
-    const pts = generateShapePath(cx, cy, sw * scale, sh * scale, s.rot, hashStr(s.id));
-    drawShape(ctx, pts, getShapeColor(s.color, 15), (1 - morphT) * 0.88);
-  });
-
-  const canvasArea = W * H * 0.55;
-  const tData = TERRITORIES.map(t => {
-    const share = Math.max(0.3, getTerritoryShare(t, 1950));
-    const reach = getTerritoryReach(t, currentYear);
-    return { t, share, reach };
-  });
-  const totalShare = tData.reduce((s,x) => s+x.share, 0);
-
-  tData.forEach(({t, share, reach}, i) => {
-    const areaFrac = share / totalShare;
-    const area = canvasArea * areaFrac;
-    const aspect = 1.1 + (hashStr(t.id) % 20) / 100;
-    const baseH = Math.sqrt(area / aspect);
-    const baseW = baseH * aspect;
-
-    const origin = SECTOR_ORIGINS[t.id] || 'services';
-    const op = SECTOR_POS[origin];
-
-    const stagger = i * 0.04;
-    const localT = Math.max(0, Math.min(1, (morphT - stagger) / (1 - stagger)));
-    const localEase = 1 - Math.pow(1 - localT, 2.5);
-
-    const startCx = op.x * W;
-    const startCy = op.y * H;
-    const endCx = t.baseX * W;
-    const endCy = t.baseY * H;
-
-    const cx = startCx + (endCx - startCx) * localEase;
-    const cy = startCy + (endCy - startCy) * localEase;
-    const w = Math.max(20, baseW) * localEase;
-    const h = Math.max(15, baseH) * localEase;
-    const alpha = localT * 0.88;
-
-    shapeStates[t.id] = { cx, cy, w, h, alpha };
-
-    if (alpha < 0.02) return;
-    const pts = generateShapePath(cx, cy, w, h, t.rotation, hashStr(t.id));
-    drawShape(ctx, pts, getShapeColor(t.color, reach), alpha);
-
-    const minDim = Math.min(w, h);
-    if (minDim > 40 && alpha > 0.4) {
-      ctx.save();
-      ctx.globalAlpha = alpha * 0.8;
-      ctx.fillStyle = '#E2DED4';
-      ctx.font = `400 ${Math.max(8, Math.min(11, minDim * 0.07))}px "Inter"`;
-      ctx.textAlign = 'center';
-      ctx.fillText(t.name.toUpperCase(), cx, cy);
-      ctx.restore();
-    }
-  });
-}
-
-function drawTerritoryView(glassProgress) {
+function drawAllShapes(glassProgress) {
   glassProgress = glassProgress || 0;
+  const year = currentYear;
   const totalReachWeighted = {sum:0, weight:0};
 
-  const tData = TERRITORIES.map(t => {
-    const share = Math.max(0.3, getTerritoryShare(t, Math.max(1950, currentYear)));
-    const reach = getTerritoryReach(t, currentYear);
-    return { t, share, reach };
-  });
+  // Collect all shapes to draw: real territories + macros
+  const shapesToDraw = [];
 
-  const canvasArea = W * H * 0.55;
-  const totalShare = tData.reduce((s,x) => s + x.share, 0);
+  // 1. Real territories — check emergence
+  TERRITORIES.forEach(t => {
+    const emergeYear = TERRITORY_EMERGENCE[t.id];
+    if (emergeYear === undefined) return;
 
-  const items = tData.map(({t, share, reach}) => {
-    const areaFrac = share / totalShare;
-    const area = canvasArea * areaFrac;
-    const aspect = 1.1 + (hashStr(t.id) % 20) / 100;
-    const baseH = Math.sqrt(area / aspect);
-    const baseW = baseH * aspect;
+    const morphStart = emergeYear - MORPH_HALF_WIDTH;
+    const morphEnd = emergeYear + MORPH_HALF_WIDTH;
+
+    if (year < morphStart) return; // not yet emerged
+
+    let morphProgress = 1;
+    if (year < morphEnd) {
+      morphProgress = smoothstep((year - morphStart) / (morphEnd - morphStart));
+    }
+
+    const share = Math.max(0.3, getShareForId(t.id, year));
+    const reach = getTerritoryReach(t, year);
 
     totalReachWeighted.sum += reach * share;
     totalReachWeighted.weight += share;
+
+    shapesToDraw.push({
+      territory: t,
+      share,
+      reach,
+      morphProgress,
+      isMacro: false,
+    });
+  });
+
+  // 2. Macro shapes — visible until fully dissolved
+  MACRO_SHAPES.forEach(m => {
+    const dissolveYear = MACRO_DISSOLVE[m.id];
+    if (year > dissolveYear + MORPH_HALF_WIDTH) return; // fully dissolved
+
+    const macroShare = getShareForId(m.id, year);
+    if (macroShare <= 0.1) return;
+
+    // Fade out as the LAST children in this batch emerge
+    const lastChildEmergence = Math.max(...m.children.map(c => TERRITORY_EMERGENCE[c] || 1800));
+    const fadeStart = lastChildEmergence - MORPH_HALF_WIDTH;
+    const fadeEnd = lastChildEmergence + MORPH_HALF_WIDTH;
+
+    let morphProgress = 1;
+    if (year > fadeStart && year <= fadeEnd) {
+      morphProgress = 1 - smoothstep((year - fadeStart) / (fadeEnd - fadeStart));
+    }
+    if (year > fadeEnd) morphProgress = 0;
+
+    if (morphProgress > 0.01) {
+      shapesToDraw.push({
+        territory: m,
+        share: macroShare,
+        reach: 0,
+        morphProgress,
+        isMacro: true,
+      });
+    }
+  });
+
+  // 3. Compute sizes and positions
+  const canvasArea = W * H * 0.55;
+  const totalShare = shapesToDraw.reduce((s,x) => s + x.share, 0) || 1;
+
+  const items = shapesToDraw.map(s => {
+    const t = s.territory;
+    const areaFrac = s.share / totalShare;
+    const area = canvasArea * areaFrac;
+    const aspect = 1.1 + (hashStr(t.id) % 20) / 100;
+    const baseH = Math.sqrt(area / aspect);
+    const baseW = baseH * aspect;
 
     let targetCx = t.baseX * W;
     let targetCy = t.baseY * H;
     let targetW = Math.max(45, baseW);
     let targetH = Math.max(35, baseH);
-    let targetAlpha = 0.88;
+    let targetAlpha = 0.88 * s.morphProgress;
 
-    if (zoomProgress > 0.01) {
+    // Emergence animation: interpolate from parent macro position
+    if (s.morphProgress < 1 && !s.isMacro) {
+      const parentId = TERRITORY_PARENT[t.id];
+      const parentMacro = parentId ? MACRO_SHAPES.find(m => m.id === parentId) : null;
+      if (parentMacro) {
+        const pm = s.morphProgress;
+        const parentCx = parentMacro.baseX * W;
+        const parentCy = parentMacro.baseY * H;
+        targetCx = parentCx + (targetCx - parentCx) * pm;
+        targetCy = parentCy + (targetCy - parentCy) * pm;
+        targetW *= (0.3 + 0.7 * pm);
+        targetH *= (0.3 + 0.7 * pm);
+      }
+    }
+
+    // Zoom handling (only for real territories)
+    if (!s.isMacro && zoomProgress > 0.01) {
       if (t.id === zoomedTerritory) {
         const zCx = W * 0.38;
         const zCy = H * 0.5;
@@ -1101,7 +1077,7 @@ function drawTerritoryView(glassProgress) {
         targetH = baseH + (H * 0.55 - baseH) * zoomProgress;
         targetAlpha = 0.92;
       } else {
-        targetAlpha = 0.88 * (1 - zoomProgress * 0.85);
+        targetAlpha = 0.88 * s.morphProgress * (1 - zoomProgress * 0.85);
         const dx = targetCx - W*0.5;
         const dy = targetCy - H*0.5;
         targetCx += dx * zoomProgress * 0.15;
@@ -1111,63 +1087,75 @@ function drawTerritoryView(glassProgress) {
       }
     }
 
-    return { t, share, reach, targetCx, targetCy, targetW, targetH, targetAlpha };
+    return { t, share: s.share, reach: s.reach, isMacro: s.isMacro, morphProgress: s.morphProgress,
+             targetCx, targetCy, targetW, targetH, targetAlpha };
   });
 
+  // 4. Smooth-lerp shape states
   items.forEach(({t, targetCx, targetCy, targetW, targetH, targetAlpha}) => {
     if (!shapeStates[t.id]) {
       shapeStates[t.id] = { cx:targetCx, cy:targetCy, w:targetW, h:targetH, alpha:targetAlpha };
     }
     const s = shapeStates[t.id];
-    const lerp = 0.06;
-    s.cx += (targetCx - s.cx) * lerp;
-    s.cy += (targetCy - s.cy) * lerp;
-    s.w += (targetW - s.w) * lerp;
-    s.h += (targetH - s.h) * lerp;
-    s.alpha += (targetAlpha - s.alpha) * lerp;
+    const lerpRate = 0.06;
+    s.cx += (targetCx - s.cx) * lerpRate;
+    s.cy += (targetCy - s.cy) * lerpRate;
+    s.w += (targetW - s.w) * lerpRate;
+    s.h += (targetH - s.h) * lerpRate;
+    s.alpha += (targetAlpha - s.alpha) * lerpRate;
+  });
+
+  // Clean up shape states for shapes that are no longer drawn
+  Object.keys(shapeStates).forEach(id => {
+    if (!items.find(i => i.t.id === id)) {
+      const s = shapeStates[id];
+      s.alpha *= 0.9; // fade out
+      if (s.alpha < 0.01) delete shapeStates[id];
+    }
   });
 
   items.sort((a,b) => b.share - a.share);
 
-  items.forEach(({t, reach}) => {
+  items.forEach(({t, reach, isMacro, share}) => {
     const s = shapeStates[t.id];
+    if (!s || s.alpha < 0.01) return;
 
-    // Hover scale boost for glass tiles
     let drawW = s.w, drawH = s.h;
-    if (hoveredTerritory === t.id && glassProgress > 0 && zoomProgress < 0.5) {
+
+    // Hover scale boost for glass tiles (real territories only)
+    if (!isMacro && hoveredTerritory === t.id && glassProgress > 0 && zoomProgress < 0.5) {
       const hoverScale = 1 + 0.03 * glassProgress;
       drawW *= hoverScale;
       drawH *= hoverScale;
     }
 
-    // Draw shape: crossfade between cut-out and glass
-    if (glassProgress <= 0) {
-      // Pure Matisse cut-out
+    // Draw shape: macros are always cut-outs; territories crossfade to glass
+    if (isMacro || glassProgress <= 0) {
       const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
-      drawShape(ctx, pts, getShapeColor(t.color, reach), s.alpha);
+      const color = isMacro ? getShapeColor(t.color, 15) : getShapeColor(t.color, reach);
+      drawShape(ctx, pts, color, s.alpha);
     } else if (glassProgress >= 1) {
-      // Pure glass
       drawGlassTile(ctx, s.cx, s.cy, drawW, drawH, t.color, reach, s.alpha, 1);
     } else {
-      // Crossfade: cut-out fading out, glass fading in
       const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
       drawShape(ctx, pts, getShapeColor(t.color, reach), s.alpha * (1 - glassProgress));
       drawGlassTile(ctx, s.cx, s.cy, drawW, drawH, t.color, reach, s.alpha * glassProgress, glassProgress);
     }
 
-    // Hover outline (only for cut-out mode)
-    if (hoveredTerritory === t.id && zoomProgress < 0.5 && glassProgress <= 0) {
+    // Hover outline (cut-out mode, real territories only)
+    if (!isMacro && hoveredTerritory === t.id && zoomProgress < 0.5 && glassProgress <= 0) {
       const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
       drawShapeOutline(ctx, pts, '#E2DED4', 0.25, 1.5);
     }
 
-    if (zoomedTerritory === t.id && zoomProgress > 0.1) {
+    if (!isMacro && zoomedTerritory === t.id && zoomProgress > 0.1) {
       if (glassProgress <= 0) {
         const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
         drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
       }
     }
 
+    // Labels
     const minDim = Math.min(drawW, drawH);
     if (minDim > 30 && s.alpha > 0.15) {
       ctx.save();
@@ -1186,7 +1174,7 @@ function drawTerritoryView(glassProgress) {
         });
       }
 
-      if (reach >= 1 && minDim > 40) {
+      if (!isMacro && reach >= 1 && minDim > 40) {
         ctx.fillStyle = '#E2DED4';
         ctx.globalAlpha = s.alpha * 0.6;
         const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
@@ -1195,9 +1183,7 @@ function drawTerritoryView(glassProgress) {
       }
 
       if (minDim > 55) {
-        const wfYear = Math.max(1950, currentYear);
-        const wf = getWorkforce(wfYear);
-        const share = getTerritoryShare(t, wfYear);
+        const wf = getWorkforce(year);
         const workers = Math.round(share / 100 * wf);
         const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
         const wfSize = Math.max(7, Math.min(10, minDim * 0.055));
@@ -1365,14 +1351,18 @@ canvas.addEventListener('mousemove', e => {
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
 
-  if (currentYear < 1950 || zoomProgress > 0.3) {
+  if (zoomProgress > 0.3) {
     hoveredTerritory = null;
     tooltip.classList.remove('visible');
     canvas.style.cursor = 'default';
     return;
   }
 
+  // Check all visible shapes (territories + macros)
   let found = null;
+  let foundIsMacro = false;
+
+  // Check real territories first (higher priority)
   for (let i = TERRITORIES.length - 1; i >= 0; i--) {
     const t = TERRITORIES[i];
     const s = shapeStates[t.id];
@@ -1381,19 +1371,36 @@ canvas.addEventListener('mousemove', e => {
     if (pointInShape(mx, my, pts)) { found = t; break; }
   }
 
+  // If not on a real territory, check macro shapes
+  if (!found) {
+    for (const m of MACRO_SHAPES) {
+      const s = shapeStates[m.id];
+      if (!s || s.alpha < 0.15) continue;
+      const pts = generateShapePath(s.cx, s.cy, s.w, s.h, m.rotation, hashStr(m.id));
+      if (pointInShape(mx, my, pts)) { found = m; foundIsMacro = true; break; }
+    }
+  }
+
   if (found) {
     hoveredTerritory = found.id;
-    canvas.style.cursor = 'pointer';
-    const reach = Math.round(getTerritoryReach(found, currentYear));
-    const share = getTerritoryShare(found, Math.max(1950, currentYear));
+    canvas.style.cursor = foundIsMacro ? 'default' : 'pointer';
+
+    const share = getShareForId(found.id, currentYear);
     const wf = getWorkforce(currentYear);
     const workers = Math.round(share / 100 * wf);
 
     document.getElementById('tt-name').textContent = found.name;
     document.getElementById('tt-name').style.color = found.color;
-    document.getElementById('tt-stats').innerHTML =
-      `Replaceability: ${reach}%<br>` +
-      `Workforce: ${workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M'} (${share.toFixed(1)}%)`;
+
+    if (foundIsMacro) {
+      document.getElementById('tt-stats').innerHTML =
+        `Workforce: ${workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M'} (${share.toFixed(1)}%)`;
+    } else {
+      const reach = Math.round(getTerritoryReach(found, currentYear));
+      document.getElementById('tt-stats').innerHTML =
+        `Replaceability: ${reach}%<br>` +
+        `Workforce: ${workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M'} (${share.toFixed(1)}%)`;
+    }
 
     tooltip.style.left = Math.min(e.clientX + 14, window.innerWidth - 230) + 'px';
     tooltip.style.top = (e.clientY - 10) + 'px';
@@ -1406,9 +1413,11 @@ canvas.addEventListener('mousemove', e => {
 });
 
 canvas.addEventListener('click', e => {
-  if (currentYear < 1950) return;
   if (zoomProgress > 0.3) { zoomOut(); return; }
-  if (hoveredTerritory) { zoomIn(hoveredTerritory); }
+  // Only zoom into real territories, not macros
+  if (hoveredTerritory && TERRITORIES.find(t => t.id === hoveredTerritory)) {
+    zoomIn(hoveredTerritory);
+  }
 });
 
 function zoomIn(id) {
