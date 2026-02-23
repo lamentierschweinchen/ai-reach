@@ -4,8 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Reach — When Does AI Reach Your Profession?</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+@font-face {
+  font-family: 'GT Super Display';
+  src: url('fonts/GT-Super-Display-Bold-Italic-Trial.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('fonts/Inter-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -14,15 +28,15 @@
   --muted: #6B6A72;
   --gold: #C4A45A;
   --border: rgba(255,255,255,0.07);
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-mono: 'DM Mono', 'Courier New', monospace;
+  --font-display: 'GT Super Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 html, body {
   width: 100%; height: 100%;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -36,14 +50,14 @@ header {
   backdrop-filter: blur(16px);
   background: rgba(10,12,18,0.88);
 }
-.wordmark { font-family: var(--font-serif); font-weight: 300; font-size: 20px; letter-spacing: 0.04em; }
+.wordmark { font-family: var(--font-display); font-weight: 700; font-style: italic; font-size: 20px; letter-spacing: 0.04em; }
 .wordmark em { font-style: italic; color: var(--gold); }
 .tagline { font-size: 9px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin-top: 1px; }
 
 .search-wrap { position: relative; flex: 0 0 240px; }
 .search-wrap input {
   width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-  color: var(--text); font-family: var(--font-mono); font-size: 11px;
+  color: var(--text); font-family: var(--font-body); font-size: 11px;
   padding: 6px 10px 6px 28px; outline: none; letter-spacing: 0.04em; transition: border-color 0.25s;
 }
 .search-wrap input:focus { border-color: rgba(196,164,90,0.4); }
@@ -68,7 +82,7 @@ header {
 .scenario-label { font-size: 8px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-right: 5px; }
 .scenario-btn {
   background: transparent; border: 1px solid var(--border); color: var(--muted);
-  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em;
+  font-family: var(--font-body); font-size: 9px; letter-spacing: 0.06em;
   padding: 4px 9px; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
 }
 .scenario-btn:hover { border-color: rgba(196,164,90,0.3); color: var(--text); }
@@ -89,7 +103,7 @@ header {
 }
 #tooltip.visible { opacity: 1; }
 #tooltip .tt-name {
-  font-family: var(--font-serif); font-size: 16px; font-weight: 300; margin-bottom: 2px;
+  font-family: var(--font-display); font-size: 16px; font-weight: 700; font-style: italic; margin-bottom: 2px;
 }
 #tooltip .tt-stats {
   font-size: 9px; letter-spacing: 0.06em; color: var(--muted); line-height: 1.5;
@@ -112,17 +126,17 @@ header {
 
 .panel-close {
   position: absolute; top: 10px; right: 10px; background: transparent; border: none;
-  color: var(--muted); cursor: pointer; font-size: 15px; font-family: var(--font-mono);
+  color: var(--muted); cursor: pointer; font-size: 15px; font-family: var(--font-body);
   padding: 4px 8px; transition: color 0.2s;
 }
 .panel-close:hover { color: var(--text); }
-.panel-territory-name { font-family: var(--font-serif); font-weight: 300; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
+.panel-territory-name { font-family: var(--font-display); font-weight: 700; font-style: italic; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
 .panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
-.panel-description { font-family: var(--font-serif); font-weight: 300; font-size: 14px; line-height: 1.6; color: rgba(226,222,212,0.68); margin-bottom: 18px; }
+.panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(226,222,212,0.68); margin-bottom: 18px; }
 
 .panel-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .panel-stat-label { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.panel-stat-value { font-family: var(--font-serif); font-size: 28px; font-weight: 300; line-height: 1; }
+.panel-stat-value { font-family: var(--font-display); font-size: 28px; font-weight: 700; font-style: italic; line-height: 1; }
 
 .reach-bar-wrap { height: 2px; background: rgba(255,255,255,0.06); margin-top: 6px; grid-column: 1 / -1; }
 .reach-bar-fill { height: 100%; transition: width 0.4s ease, background 0.4s ease; }
@@ -148,11 +162,11 @@ header {
   position: fixed; left: 24px; bottom: 100px; z-index: 50;
   display: flex; align-items: flex-end; gap: 24px;
 }
-.global-stat-num { font-family: var(--font-serif); font-size: 24px; font-weight: 300; line-height: 1; }
+.global-stat-num { font-family: var(--font-display); font-size: 24px; font-weight: 700; font-style: italic; line-height: 1; }
 .global-stat-label { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 
 #era-label { position: fixed; right: 24px; bottom: 100px; text-align: right; z-index: 50; }
-#era-label .era-name { font-family: var(--font-serif); font-size: 14px; font-weight: 300; color: rgba(226,222,212,0.4); font-style: italic; }
+#era-label .era-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(226,222,212,0.4); font-style: italic; }
 #era-label .era-detail { font-size: 7.5px; letter-spacing: 0.08em; color: var(--muted); margin-top: 1px; }
 
 /* ── TIMELINE ── */
@@ -169,7 +183,7 @@ header {
   font-size: 11px; transition: all 0.2s; flex-shrink: 0;
 }
 .play-btn:hover { border-color: var(--gold); color: var(--gold); }
-.year-display { font-family: var(--font-serif); font-size: 24px; font-weight: 300; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; }
+.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; font-style: italic; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; }
 .year-display.projected { color: var(--gold); }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; }
@@ -235,8 +249,8 @@ header {
 #milestone-toast.visible {
   opacity: 1; transform: translateX(-50%) translateY(0);
 }
-.toast-year { font-family: var(--font-serif); font-size: 11px; color: var(--gold); letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
-.toast-label { font-family: var(--font-serif); font-size: 15px; font-weight: 300; color: var(--text); }
+.toast-year { font-family: var(--font-body); font-size: 11px; color: var(--gold); letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
+.toast-label { font-family: var(--font-display); font-size: 15px; font-weight: 700; font-style: italic; color: var(--text); }
 .toast-desc { font-size: 8.5px; color: var(--muted); letter-spacing: 0.05em; margin-top: 1px; display: block; }
 
 /* ── INTRO ── */
@@ -246,13 +260,13 @@ header {
   transition: opacity 1s ease;
 }
 #intro-overlay.fade-out { opacity: 0; pointer-events: none; }
-.intro-title { font-family: var(--font-serif); font-size: 44px; font-weight: 300; letter-spacing: 0.03em; margin-bottom: 6px; }
+.intro-title { font-family: var(--font-display); font-size: 44px; font-weight: 700; font-style: italic; letter-spacing: 0.03em; margin-bottom: 6px; }
 .intro-title em { color: var(--gold); font-style: italic; }
-.intro-question { font-family: var(--font-serif); font-size: 17px; font-weight: 300; color: rgba(226,222,212,0.45); font-style: italic; margin-bottom: 28px; }
+.intro-question { font-family: var(--font-body); font-size: 17px; font-weight: 400; color: rgba(226,222,212,0.45); font-style: italic; margin-bottom: 28px; }
 .intro-enter {
   font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
   border: 1px solid rgba(196,164,90,0.35); padding: 9px 24px; cursor: pointer;
-  background: transparent; font-family: var(--font-mono); transition: all 0.3s;
+  background: transparent; font-family: var(--font-body); transition: all 0.3s;
 }
 .intro-enter:hover { background: rgba(196,164,90,0.07); border-color: var(--gold); }
 
@@ -261,7 +275,7 @@ header {
   position: fixed; top: 56px; left: 24px; z-index: 85;
   font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
   background: transparent; border: 1px solid var(--border); padding: 5px 12px;
-  cursor: pointer; font-family: var(--font-mono); transition: all 0.2s; display: none;
+  cursor: pointer; font-family: var(--font-body); transition: all 0.2s; display: none;
 }
 #back-btn:hover { border-color: var(--gold); color: var(--gold); }
 #back-btn.visible { display: block; }
@@ -360,186 +374,239 @@ header {
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// DATA
+// V2 DATA — loaded from JSON at startup
+// ═══════════════════════════════════════════════════════════════
+let V2 = null;
+
+// Lookup tables built from V2 data
+let laborLookup = {};       // laborLookup[territory_id][year] = share_pct (historical/interpolated)
+let laborProjected = {};    // laborProjected[scenario][territory_id][year] = share_pct
+let replLookup = {};        // replLookup[territory_id][year] = score (2015-2026)
+let replProjected = {};     // replProjected[scenario][territory_id][year] = score (2027-2040)
+let workforceLookup = {};   // workforceLookup[year] = total_millions
+let occupationsByTerritory = {}; // occupationsByTerritory[territory_id] = [occ, ...]
+let JOB_SEARCH_DATA = [];
+let MILESTONES = [];        // filtered ~20-25 events for timeline
+let ALL_EVENTS = [];        // all events for toast during playback
+
+// Three-sector macro lookups for pre-1950
+let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
+
+async function loadData() {
+  const resp = await fetch('ai_reach_v2_fixed.json');
+  V2 = await resp.json();
+  buildLookupTables();
+  initApp();
+}
+
+function buildLookupTables() {
+  // ── Labor data ──
+  // Initialize structures
+  ['conservative','moderate','accelerated'].forEach(s => { laborProjected[s] = {}; });
+
+  V2.labor.forEach(rec => {
+    const tid = rec.territory_id;
+    const year = rec.year;
+
+    if (rec.data_type === 'historical' || rec.data_type === 'historical_macro' || rec.data_type === 'interpolated') {
+      // For macro categories, store in macroLookup
+      if (tid === 'macro_industry' || tid === 'macro_services') {
+        if (!macroLookup[tid]) macroLookup[tid] = {};
+        macroLookup[tid][year] = rec.global_workforce_share_pct;
+      }
+      // For territory-level (including land_sea which exists back to 1800)
+      if (!laborLookup[tid]) laborLookup[tid] = {};
+      laborLookup[tid][year] = rec.global_workforce_share_pct;
+
+      // Also track workforce totals
+      if (rec.global_workers_millions != null) {
+        if (!workforceLookup[year]) workforceLookup[year] = 0;
+        // Only add if this is the first pass; we'll compute totals after
+      }
+    } else if (rec.data_type === 'projected' && rec.scenario) {
+      const scen = rec.scenario;
+      if (!laborProjected[scen][tid]) laborProjected[scen][tid] = {};
+      laborProjected[scen][tid][year] = rec.share_of_employed_pct;
+    }
+  });
+
+  // Also store land_sea in macroLookup for the three-sector agriculture view
+  if (laborLookup['land_sea']) {
+    macroLookup['land_sea'] = { ...laborLookup['land_sea'] };
+  }
+
+  // ── Global workforce totals ──
+  // For each year, sum global_workers_millions from non-overlapping records
+  const yearWorkers = {};
+  V2.labor.forEach(rec => {
+    if (rec.data_type === 'projected') return; // handle projected separately
+    const year = rec.year;
+    if (!yearWorkers[year]) yearWorkers[year] = { territories: {}, macros: {} };
+    if (rec.territory_id === 'macro_industry' || rec.territory_id === 'macro_services') {
+      yearWorkers[year].macros[rec.territory_id] = rec.global_workers_millions || 0;
+    } else {
+      yearWorkers[year].territories[rec.territory_id] = rec.global_workers_millions || 0;
+    }
+  });
+  Object.keys(yearWorkers).forEach(year => {
+    const yw = yearWorkers[year];
+    let total = 0;
+    // Sum all territory-level + macro records (they don't overlap — macros cover what territories don't)
+    Object.values(yw.territories).forEach(v => total += v);
+    Object.values(yw.macros).forEach(v => total += v);
+    workforceLookup[Number(year)] = total;
+  });
+  // Add projected workforce from moderate scenario as default reference
+  V2.labor.forEach(rec => {
+    if (rec.data_type === 'projected' && rec.scenario === 'moderate') {
+      const year = rec.year;
+      if (!workforceLookup[year]) workforceLookup[year] = 0;
+      workforceLookup[year] += (rec.global_workers_millions || 0);
+    }
+  });
+
+  // ── Replaceability data ──
+  V2.replaceability.forEach(rec => {
+    const tid = rec.territory_id;
+    const year = rec.year;
+    const score = rec.replaceability_score;
+
+    if (!rec.scenario) {
+      // Historical / scenario-independent (≤2026)
+      if (!replLookup[tid]) replLookup[tid] = {};
+      replLookup[tid][year] = score;
+    } else {
+      // Scenario-dependent (2027+)
+      const scen = rec.scenario;
+      if (!replProjected[scen]) replProjected[scen] = {};
+      if (!replProjected[scen][tid]) replProjected[scen][tid] = {};
+      replProjected[scen][tid][year] = score;
+    }
+  });
+
+  // ── Occupations grouped by territory ──
+  V2.occupations.forEach(occ => {
+    const tid = occ.territory_id;
+    if (!occupationsByTerritory[tid]) occupationsByTerritory[tid] = [];
+    occupationsByTerritory[tid].push(occ);
+  });
+  // Sort each territory's occupations by replaceability_2026 descending
+  Object.keys(occupationsByTerritory).forEach(tid => {
+    occupationsByTerritory[tid].sort((a,b) => b.replaceability_2026 - a.replaceability_2026);
+  });
+
+  // ── Job search data ──
+  V2.occupations.forEach(occ => {
+    JOB_SEARCH_DATA.push({
+      job: occ.occupation_name,
+      territory: occ.territory_id,
+      territoryName: occ.territory,
+      score: occ.replaceability_2026,
+      isco: occ.isco_code
+    });
+    if (occ.common_titles) {
+      occ.common_titles.forEach(title => {
+        JOB_SEARCH_DATA.push({
+          job: title,
+          territory: occ.territory_id,
+          territoryName: occ.territory,
+          score: occ.replaceability_2026,
+          isco: occ.isco_code
+        });
+      });
+    }
+  });
+
+  // ── Technology events → Milestones ──
+  ALL_EVENTS = V2.technology_events.map(ev => ({
+    year: ev.year,
+    label: ev.event_name,
+    desc: ev.impact_description,
+    type: ev.impact_type,
+    confidence: ev.confidence,
+    territory: ev.primary_territory_id
+  }));
+
+  // Filter to ~20-25 for timeline display
+  const highConfStructural = ALL_EVENTS.filter(ev =>
+    ev.confidence === 'HIGH' &&
+    (ev.type === 'INVENTION' || ev.type === 'DEPLOYMENT' || ev.type === 'BENCHMARK')
+  );
+  // Deduplicate by year (keep first per year), prioritize spread
+  const byYear = {};
+  highConfStructural.forEach(ev => {
+    if (!byYear[ev.year]) byYear[ev.year] = ev;
+  });
+  MILESTONES = Object.values(byYear).sort((a,b) => a.year - b.year);
+
+  // If we have more than 25, thin out pre-1900 events
+  if (MILESTONES.length > 25) {
+    const pre1900 = MILESTONES.filter(m => m.year < 1900);
+    const post1900 = MILESTONES.filter(m => m.year >= 1900);
+    // Keep every other pre-1900 event
+    const thinned = pre1900.filter((_, i) => i % 2 === 0);
+    MILESTONES = [...thinned, ...post1900];
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CONSTANTS & TERRITORY DEFINITIONS
 // ═══════════════════════════════════════════════════════════════
 const START_YEAR = 1800, END_YEAR = 2040, SPLIT_YEAR = 2026;
 
-const GLOBAL_WORKFORCE = { 1800:650,1850:730,1900:980,1950:1350,1973:1980,1990:2450,2001:2780,2024:3520,2030:3750,2040:4050 };
-
-const ISIC_SHARES = {
-  A:{1950:50.5,1960:45,1970:40,1980:35,1990:31,2000:30.5,2010:28.5,2015:27.2,2020:26.5,2024:26.1},
-  B:{1950:1.5,1960:1.7,1970:2,1980:1.8,1990:1.5,2000:1.2,2010:1.0,2015:0.9,2020:0.8,2024:0.7},
-  C:{1950:18.2,1960:17,1970:16.5,1980:16,1990:16.5,2000:15,2010:13.5,2015:13,2020:12.9,2024:12.8},
-  D:{1950:0.1,1960:0.2,1970:0.5,1980:0.7,1990:1.0,2000:1.2,2010:1.4,2015:1.5,2020:1.6,2024:1.8},
-  E:{1950:0.05,1960:0.1,1970:0.2,1980:0.3,1990:0.5,2000:0.6,2010:0.8,2015:0.9,2020:0.95,2024:1.0},
-  F:{1950:3,1960:5,1970:5.5,1980:8,1990:8,2000:7.2,2010:6.8,2015:6.5,2020:6.2,2024:5.8},
-  G:{1950:5,1960:6,1970:7,1980:8,1990:12.5,2000:15,2010:17,2015:17.5,2020:18,2024:18.2},
-  H:{1950:1.9,1960:2.5,1970:3,1980:3,1990:4.5,2000:5,2010:5.5,2015:5.5,2020:6,2024:6},
-  I:{1950:0.5,1960:1,1970:2,1980:3,1990:4,2000:4,2010:5,2015:6,2020:6.5,2024:6.5},
-  J:{1950:0.2,1960:0.3,1970:0.5,1980:0.8,1990:1.2,2000:2,2010:2.8,2015:3,2020:3.2,2024:3.4},
-  K:{1950:0.3,1960:0.4,1970:0.7,1980:1.0,1990:1.5,2000:2,2010:3.5,2015:4,2020:4.5,2024:5},
-  L:{1950:0.5,1960:0.6,1970:1,1980:1.2,1990:1.5,2000:2,2010:2,2015:3,2020:3,2024:3},
-  M:{1950:0.5,1960:0.8,1970:1.2,1980:2,1990:3,2000:5,2010:6,2015:7,2020:7.5,2024:8},
-  N:{1950:1,1960:1.2,1970:1.5,1980:1.8,1990:2,2000:4,2010:4.5,2015:5.5,2020:5,2024:5.5},
-  O:{1950:2.5,1960:3,1970:3.5,1980:3.8,1990:4,2000:4,2010:3.5,2015:3,2020:3,2024:3},
-  P:{1950:1.5,1960:2,1970:2.5,1980:3,1990:4.5,2000:5,2010:5.5,2015:5.8,2020:6,2024:6.1},
-  Q:{1950:1,1960:1.5,1970:2,1980:2.5,1990:3.8,2000:4.5,2010:5.5,2015:6,2020:7,2024:7.4},
-  R:{1950:0.5,1960:0.6,1970:0.8,1980:1,1990:1.5,2000:2,2010:1.7,2015:2,2020:2,2024:2},
-  S:{1950:1,1960:1.2,1970:1.5,1980:1.8,1990:2,2000:4,2010:4.2,2015:3.5,2020:4,2024:4},
-};
-
-const ISIC_PROJECTED = {
-  moderate: {
-    A:{2026:25.5,2030:23.5,2035:20.5,2040:17},B:{2026:0.65,2030:0.55,2035:0.45,2040:0.35},
-    C:{2026:12.2,2030:10.8,2035:8.5,2040:6},D:{2026:1.85,2030:2.0,2035:2.1,2040:2.0},
-    E:{2026:1.05,2030:1.1,2035:1.15,2040:1.1},F:{2026:5.6,2030:5.0,2035:4.0,2040:3.0},
-    G:{2026:18.0,2030:16.5,2035:14.0,2040:11.5},H:{2026:5.9,2030:5.2,2035:4.0,2040:3.0},
-    I:{2026:6.4,2030:6.0,2035:5.5,2040:5.0},J:{2026:3.5,2030:3.8,2035:4.0,2040:4.2},
-    K:{2026:5.1,2030:5.0,2035:4.5,2040:4.0},L:{2026:3.0,2030:3.0,2035:2.8,2040:2.5},
-    M:{2026:8.2,2030:9.0,2035:10.0,2040:11.0},N:{2026:5.6,2030:5.8,2035:6.2,2040:6.5},
-    O:{2026:2.9,2030:2.8,2035:2.7,2040:2.5},P:{2026:6.15,2030:6.5,2035:7.0,2040:7.5},
-    Q:{2026:7.6,2030:8.2,2035:9.0,2040:10.0},R:{2026:2.0,2030:1.9,2035:1.7,2040:1.5},
-    S:{2026:4.0,2030:3.8,2035:3.5,2040:3.2},
-  },
-  conservative: {
-    A:{2026:25.8,2030:24.5,2035:22.8,2040:21},B:{2026:0.68,2030:0.6,2035:0.5,2040:0.45},
-    C:{2026:12.5,2030:11.5,2035:10.2,2040:9},D:{2026:1.85,2030:2.0,2035:2.1,2040:2.1},
-    E:{2026:1.05,2030:1.1,2035:1.15,2040:1.2},F:{2026:5.7,2030:5.4,2035:5.0,2040:4.5},
-    G:{2026:18.1,2030:17.8,2035:17.2,2040:16.5},H:{2026:5.95,2030:5.7,2035:5.3,2040:5.0},
-    I:{2026:6.45,2030:6.3,2035:6.1,2040:6.0},J:{2026:3.45,2030:3.6,2035:3.7,2040:3.8},
-    K:{2026:5.05,2030:5.1,2035:5.0,2040:4.8},L:{2026:3.0,2030:3.0,2035:3.0,2040:2.8},
-    M:{2026:8.1,2030:8.5,2035:9.0,2040:9.5},N:{2026:5.55,2030:5.6,2035:5.8,2040:6.0},
-    O:{2026:2.95,2030:2.9,2035:2.85,2040:2.8},P:{2026:6.12,2030:6.3,2035:6.5,2040:6.8},
-    Q:{2026:7.5,2030:7.8,2035:8.2,2040:8.5},R:{2026:2.0,2030:2.0,2035:1.9,2040:1.8},
-    S:{2026:4.0,2030:3.9,2035:3.8,2040:3.6},
-  },
-  accelerated: {
-    A:{2026:25.0,2030:22.0,2035:17.5,2040:13},B:{2026:0.6,2030:0.45,2035:0.3,2040:0.2},
-    C:{2026:11.8,2030:9.5,2035:6.0,2040:3.5},D:{2026:1.85,2030:2.0,2035:2.0,2040:1.8},
-    E:{2026:1.05,2030:1.1,2035:1.1,2040:1.0},F:{2026:5.4,2030:4.2,2035:2.8,2040:1.8},
-    G:{2026:17.8,2030:15.0,2035:11.0,2040:8.0},H:{2026:5.8,2030:4.5,2035:3.0,2040:2.0},
-    I:{2026:6.3,2030:5.5,2035:4.5,2040:3.5},J:{2026:3.55,2030:4.0,2035:4.5,2040:5.0},
-    K:{2026:5.15,2030:4.8,2035:4.0,2040:3.2},L:{2026:3.0,2030:2.8,2035:2.5,2040:2.0},
-    M:{2026:8.3,2030:9.5,2035:11.5,2040:13.0},N:{2026:5.65,2030:6.2,2035:7.0,2040:7.5},
-    O:{2026:2.85,2030:2.6,2035:2.3,2040:2.0},P:{2026:6.2,2030:6.8,2035:7.5,2040:8.5},
-    Q:{2026:7.7,2030:8.8,2035:10.0,2040:12.0},R:{2026:2.0,2030:1.8,2035:1.5,2040:1.2},
-    S:{2026:4.0,2030:3.6,2035:3.0,2040:2.5},
-  }
-};
-
-// Territory definitions with layout positions (normalized 0-1)
-// Grouped: primary (top-left), physical (left), trade (center), knowledge (upper-right), human (right), other (bottom)
 const TERRITORIES = [
-  { id:'land-sea', name:'Land & Sea', isic:['A','B'], color:'#2D8A5F',
+  { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#2D8A5F',
     baseX:0.14, baseY:0.22, rotation:-8,
     desc:'Agriculture, forestry, fishing. The oldest human work. Precision agriculture and autonomous machinery are transforming high-capital farming; subsistence agriculture holds by sheer scale.',
-    barrier:'Capital deployment lag — frontier farms are highly automated, but 70% of global agriculture is smallholder.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:2,2000:5,2010:10,2020:20,2024:28,2026:38,2030:58,2035:70,2040:80},
-    jobs:[{name:'Crop farming',score2026:55},{name:'Livestock farming',score2026:35},{name:'Fishing & aquaculture',score2026:25},{name:'Forestry',score2026:30}]
-  },
-  { id:'making', name:'Making Things', isic:['C'], color:'#D4923B',
+    barrier:'Capital deployment lag — frontier farms are highly automated, but 70% of global agriculture is smallholder.' },
+  { id:'making_things', name:'Making Things', isic:['C'], color:'#D4923B',
     baseX:0.33, baseY:0.16, rotation:12,
     desc:'Manufacturing. The frontier is fully dark. The global average is decades behind it.',
-    barrier:'Capital deployment lag — Xiaomi runs lights-out factories, but global average varies 10x between countries.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:1,1980:3,1990:6,2000:10,2010:16,2020:25,2024:30,2026:35,2030:62,2035:75,2040:85},
-    jobs:[{name:'Assembly line workers',score2026:95},{name:'Quality control',score2026:90},{name:'Factory logistics',score2026:80},{name:'Maintenance techs',score2026:45},{name:'Plant management',score2026:50}]
-  },
-  { id:'building', name:'Building Things', isic:['F'], color:'#C85A3A',
+    barrier:'Capital deployment lag — Xiaomi runs lights-out factories, but global average varies 10x between countries.' },
+  { id:'building_things', name:'Building Things', isic:['F'], color:'#C85A3A',
     baseX:0.14, baseY:0.48, rotation:-5,
     desc:'Construction. Unstructured environments remain the hardest for robotics.',
-    barrier:'Unstructured environments — every site is different. Humanoid robots at $10–15k would change this.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:2,2000:5,2010:9,2020:15,2024:30,2026:48,2030:73,2035:83,2040:90},
-    jobs:[{name:'Bricklaying / masonry',score2026:70},{name:'Site surveying',score2026:80},{name:'Excavation',score2026:60},{name:'Electrical / plumbing',score2026:25},{name:'Site management',score2026:35}]
-  },
-  { id:'moving', name:'Moving Things', isic:['H'], color:'#4A7AB5',
+    barrier:'Unstructured environments — every site is different. Humanoid robots at $10–15k would change this.' },
+  { id:'moving_things', name:'Moving Things', isic:['H'], color:'#4A7AB5',
     baseX:0.32, baseY:0.42, rotation:7,
     desc:'Transport, logistics, warehousing. Highway autonomy is operational. Last-mile is not.',
-    barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:3,2000:6,2010:12,2020:20,2024:35,2026:48,2030:73,2035:83,2040:90},
-    jobs:[{name:'Long-haul trucking',score2026:70},{name:'Warehouse picking',score2026:85},{name:'Delivery (last mile)',score2026:35},{name:'Air traffic / pilots',score2026:30},{name:'Rail',score2026:55}]
-  },
-  { id:'buying-selling', name:'Buying & Selling', isic:['G'], color:'#E07060',
+    barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.' },
+  { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#E07060',
     baseX:0.50, baseY:0.30, rotation:-4,
     desc:'Retail and wholesale trade. The largest employer by headcount.',
-    barrier:'Scale of existing employment — 18% of global workforce.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:3,2000:7,2010:12,2020:20,2024:35,2026:45,2030:65,2035:78,2040:87},
-    jobs:[{name:'Cashiers / checkout',score2026:85},{name:'Shelf stocking',score2026:60},{name:'Sales reps',score2026:50},{name:'Logistics coordinators',score2026:70}]
-  },
-  { id:'money-data', name:'Money & Data', isic:['J','K','L'], color:'#8B6CC0',
+    barrier:'Scale of existing employment — 18% of global workforce.' },
+  { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#8B6CC0',
     baseX:0.68, baseY:0.17, rotation:10,
     desc:'Finance, insurance, real estate, information. LLMs accelerated decades of quiet automation.',
-    barrier:'Regulatory and liability frameworks. Technically replaceable, legally complicated.',
-    reach:{1800:0,1900:0,1950:0,1960:1,1970:3,1980:8,1990:12,2000:18,2010:24,2020:30,2024:55,2026:75,2030:87,2035:93,2040:96},
-    jobs:[{name:'Data entry / processing',score2026:95},{name:'Junior financial analysis',score2026:85},{name:'Paralegal / legal research',score2026:80},{name:'Accounting',score2026:75},{name:'Senior finance / strategy',score2026:40}]
-  },
-  { id:'thinking', name:'Thinking & Leading', isic:['M','N'], color:'#3AB0D4',
+    barrier:'Regulatory and liability frameworks. Technically replaceable, legally complicated.' },
+  { id:'thinking_leading', name:'Thinking & Leading', isic:['M','N'], color:'#3AB0D4',
     baseX:0.84, baseY:0.30, rotation:-7,
     desc:'Professional, scientific, technical, management. SWE-bench: 4.4% → 71.7% in one year.',
-    barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.',
-    reach:{1800:0,1900:0,1950:0,1960:1,1970:2,1980:5,1990:10,2000:15,2010:20,2020:25,2024:50,2026:70,2030:87,2035:93,2040:96},
-    jobs:[{name:'Junior software engineers',score2026:80},{name:'Code review',score2026:70},{name:'Data analysis',score2026:75},{name:'Senior architects',score2026:30},{name:'Management / strategy',score2026:25}]
-  },
-  { id:'care-health', name:'Care & Health', isic:['Q'], color:'#3BA89A',
+    barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.' },
+  { id:'care_health', name:'Care & Health', isic:['Q'], color:'#3BA89A',
     baseX:0.82, baseY:0.56, rotation:5,
     desc:'Human health and social work. Radiologist salaries rose 48% since 2015 despite AI matching diagnostic accuracy.',
-    barrier:'Legal liability, credentialing, and deep human preference.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:1,1980:2,1990:4,2000:8,2010:13,2020:20,2024:40,2026:60,2030:77,2035:85,2040:90},
-    jobs:[{name:'Medical imaging',score2026:75},{name:'Administrative / billing',score2026:90},{name:'Nursing',score2026:20},{name:'General practice',score2026:35},{name:'Elderly care',score2026:15}]
-  },
-  { id:'learning', name:'Learning & Teaching', isic:['P'], color:'#D4B03A',
+    barrier:'Legal liability, credentialing, and deep human preference.' },
+  { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#D4B03A',
     baseX:0.68, baseY:0.68, rotation:-10,
     desc:'Education. AI tutors work. But lead teaching and mentorship resist automation.',
-    barrier:'Human preference and trust. Parents and students want human teachers.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:1,2000:2,2010:4,2020:5,2024:10,2026:15,2030:28,2035:40,2040:55},
-    jobs:[{name:'Administrative staff',score2026:80},{name:'Teaching assistants',score2026:35},{name:'Subject tutoring',score2026:45},{name:'Lead teachers',score2026:15},{name:'Curriculum design',score2026:40}]
-  },
-  { id:'meaning', name:'Making Meaning', isic:['R'], color:'#D45090',
+    barrier:'Human preference and trust. Parents and students want human teachers.' },
+  { id:'making_meaning', name:'Making Meaning', isic:['R'], color:'#D45090',
     baseX:0.50, baseY:0.64, rotation:8,
     desc:'Arts, media, creative industries. Generative AI arrived suddenly, not gradually.',
-    barrier:'Identity and authorship — the barrier is whether audiences value human-made work.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:2,2000:4,2010:8,2020:15,2024:30,2026:40,2030:55,2035:65,2040:72},
-    jobs:[{name:'Stock photography',score2026:95},{name:'Copywriting / content',score2026:75},{name:'Graphic design (routine)',score2026:70},{name:'Journalism (research)',score2026:60},{name:'Original art / authorship',score2026:20}]
-  },
-  { id:'governing', name:'Governing & Protecting', isic:['O'], color:'#3A5A8F',
+    barrier:'Identity and authorship — the barrier is whether audiences value human-made work.' },
+  { id:'governing_protecting', name:'Governing & Protecting', isic:['O'], color:'#3A5A8F',
     baseX:0.50, baseY:0.84, rotation:-3,
     desc:'Public administration, defense. The slowest territory. Government moves at government speed.',
-    barrier:'Institutional inertia and political accountability.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:2,2000:4,2010:7,2020:10,2024:20,2026:30,2030:45,2035:58,2040:68},
-    jobs:[{name:'Administrative processing',score2026:80},{name:'Police / security',score2026:20},{name:'Military',score2026:15},{name:'Policy analysis',score2026:45}]
-  },
-  { id:'feeding', name:'Feeding & Hosting', isic:['I'], color:'#E8943A',
+    barrier:'Institutional inertia and political accountability.' },
+  { id:'feeding_hosting', name:'Feeding & Hosting', isic:['I'], color:'#E8943A',
     baseX:0.32, baseY:0.72, rotation:6,
     desc:'Accommodation, food service. Fast food is automating. Hospitality is not.',
-    barrier:'Human preference. Hospitality is a performance.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:2,2000:4,2010:7,2020:10,2024:18,2026:25,2030:52,2035:68,2040:78},
-    jobs:[{name:'Fast food prep',score2026:60},{name:'Wait staff',score2026:25},{name:'Hotel front desk',score2026:55},{name:'Chefs',score2026:20}]
-  },
-  { id:'maintaining', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#6B8A9D',
+    barrier:'Human preference. Hospitality is a performance.' },
+  { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#6B8A9D',
     baseX:0.16, baseY:0.76, rotation:-9,
     desc:'Utilities, repair, personal services. Humanoid robots at $10–15k are the unlock.',
-    barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.',
-    reach:{1800:0,1900:0,1950:0,1960:0,1970:0,1980:1,1990:1,2000:3,2010:6,2020:10,2024:15,2026:20,2030:50,2035:68,2040:78},
-    jobs:[{name:'HVAC technicians',score2026:20},{name:'Electricians',score2026:15},{name:'Plumbers',score2026:15},{name:'IT support',score2026:65},{name:'Personal services',score2026:10}]
-  },
-];
-
-const MILESTONES = [
-  {year:1764,label:'Spinning Jenny',desc:'Mechanization begins'},
-  {year:1830,label:'Steam Railways',desc:'First freight and passenger rail'},
-  {year:1870,label:'Steel & Electricity',desc:'Second Industrial Revolution'},
-  {year:1913,label:'Ford Assembly Line',desc:'Mass production begins'},
-  {year:1969,label:'Unimate',desc:'First industrial robot'},
-  {year:1980,label:'Personal Computing',desc:'PCs enter the workplace'},
-  {year:1991,label:'World Wide Web',desc:'Information work transforms'},
-  {year:1997,label:'Deep Blue',desc:'AI beats chess champion'},
-  {year:2012,label:'AlexNet',desc:'Deep learning breakthrough'},
-  {year:2016,label:'AlphaGo',desc:'Foxconn replaces 60k workers'},
-  {year:2020,label:'GPT-3',desc:'Language AI arrives'},
-  {year:2022,label:'ChatGPT',desc:'Generative AI goes mainstream'},
-  {year:2024,label:'SWE-bench 72%',desc:'AI solves real engineering'},
-  {year:2026,label:'Optimus Ships',desc:'Humanoid mass production'},
-  {year:2028,label:'Humanoids ~$15k',desc:'Physical protection erodes'},
-  {year:2030,label:'Scenarios Diverge',desc:'Structural paths split'},
+    barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.' },
 ];
 
 const ERAS = [
@@ -554,23 +621,22 @@ const ERAS = [
   {start:2026,end:2041,name:'The Transition',detail:'AI + robotics reshape labor'},
 ];
 
-// Search data
-const JOB_SEARCH_DATA = [];
-TERRITORIES.forEach(t => t.jobs.forEach(j => JOB_SEARCH_DATA.push({job:j.name,territory:t.id,territoryName:t.name,score:j.score2026})));
-[['Nurse','care-health'],['Doctor','care-health'],['Radiologist','care-health'],['Therapist','care-health'],
- ['Teacher','learning'],['Professor','learning'],['Software Engineer','thinking'],['Developer','thinking'],
- ['Data Scientist','thinking'],['Accountant','money-data'],['Banker','money-data'],['Lawyer','money-data'],
- ['Journalist','meaning'],['Writer','meaning'],['Photographer','meaning'],['Graphic Designer','meaning'],
- ['Truck Driver','moving'],['Pilot','moving'],['Factory Worker','making'],['Welder','making'],
- ['Construction Worker','building'],['Carpenter','building'],['Electrician','maintaining'],['Plumber','maintaining'],
- ['Barber','maintaining'],['Chef','feeding'],['Waiter','feeding'],['Farmer','land-sea'],
- ['Police Officer','governing'],['Cashier','buying-selling'],['Salesperson','buying-selling'],
-].forEach(([job,tid]) => {
-  if (!JOB_SEARCH_DATA.find(j=>j.job===job)) {
-    const t = TERRITORIES.find(x=>x.id===tid);
-    JOB_SEARCH_DATA.push({job,territory:tid,territoryName:t?t.name:'',score:null});
-  }
-});
+// ═══════════════════════════════════════════════════════════════
+// SECTOR ORIGIN MAPPING (for 3→13 morph)
+// ═══════════════════════════════════════════════════════════════
+const SECTOR_ORIGINS = {
+  'land_sea':'agriculture', 'making_things':'industry', 'building_things':'industry',
+  'moving_things':'industry', 'maintaining_fixing':'industry',
+  'buying_selling':'services', 'money_data':'services', 'thinking_leading':'services',
+  'care_health':'services', 'learning_teaching':'services', 'making_meaning':'services',
+  'governing_protecting':'services', 'feeding_hosting':'services',
+};
+const SECTOR_POS = {
+  agriculture: { x:0.22, y:0.46 },
+  industry:    { x:0.56, y:0.38 },
+  services:    { x:0.80, y:0.54 },
+};
+const SECTOR_COLOR = { agriculture:'#2D8A5F', industry:'#D4923B', services:'#6B7CC0' };
 
 // ═══════════════════════════════════════════════════════════════
 // STATE
@@ -585,15 +651,11 @@ let toastTimeout = null;
 
 // Zoom state
 let zoomedTerritory = null;
-let zoomProgress = 0; // 0 = map view, 1 = fully zoomed
+let zoomProgress = 0;
 let zoomTarget = 0;
 
 // Animation state for smooth transitions
-let shapeStates = {}; // current animated positions/sizes
-
-// Particles for migration
-let particles = [];
-let prevShares = {};
+let shapeStates = {};
 
 // Hover
 let hoveredTerritory = null;
@@ -614,28 +676,103 @@ function interp(obj, year) {
   return obj[keys[keys.length-1]];
 }
 
-function getISICShare(section, year) {
-  if (year <= 2024) return interp(ISIC_SHARES[section], Math.max(1950, year));
-  const proj = ISIC_PROJECTED[scenario][section];
-  return interp({2024: ISIC_SHARES[section][2024], ...proj}, year);
-}
-
 function getTerritoryShare(t, year) {
-  let s = 0; t.isic.forEach(i => s += getISICShare(i, year)); return s;
+  const tid = t.id;
+  if (year <= 2025) {
+    // Historical / interpolated
+    if (laborLookup[tid]) {
+      return interp(laborLookup[tid], year);
+    }
+    return 0;
+  }
+  // Projected: bridge from last historical to projected
+  const hist = laborLookup[tid];
+  const proj = laborProjected[scenario] && laborProjected[scenario][tid];
+  if (!proj) {
+    // Fallback: use last historical value
+    return hist ? interp(hist, year) : 0;
+  }
+  // Merge last historical point with projected points
+  const lastHistYear = hist ? Math.max(...Object.keys(hist).map(Number)) : 2024;
+  const lastHistVal = hist ? hist[lastHistYear] : 0;
+  const merged = { [lastHistYear]: lastHistVal, ...proj };
+  return interp(merged, year);
 }
 
 function getTerritoryReach(t, year) {
-  return Math.max(0, Math.min(100, interp(t.reach, year)));
+  const tid = typeof t === 'string' ? t : t.id;
+  if (year < 2015) return 0;
+  if (year <= 2026) {
+    if (replLookup[tid]) {
+      return Math.max(0, Math.min(100, interp(replLookup[tid], year)));
+    }
+    return 0;
+  }
+  // 2027+: use scenario-dependent data, bridging from 2026
+  const base = replLookup[tid] || {};
+  const proj = (replProjected[scenario] && replProjected[scenario][tid]) || {};
+  // Merge 2026 anchor with projected points
+  const merged = {};
+  if (base[2026] != null) merged[2026] = base[2026];
+  Object.assign(merged, proj);
+  if (Object.keys(merged).length === 0) return 0;
+  return Math.max(0, Math.min(100, interp(merged, year)));
 }
 
-function getWorkforce(year) { return interp(GLOBAL_WORKFORCE, year); }
+function getWorkforce(year) {
+  return interp(workforceLookup, year);
+}
+
+// Three-sector shares from V2 macro data
+function getAgriShare() {
+  if (macroLookup['land_sea']) {
+    return interp(macroLookup['land_sea'], currentYear);
+  }
+  return 50; // fallback
+}
+
+function getIndShare() {
+  if (macroLookup['macro_industry']) {
+    // For years where we also have territory-level industry data,
+    // sum making_things + building_things + moving_things + maintaining_fixing
+    // But pre-1950, macro_industry is the aggregate
+    return interp(macroLookup['macro_industry'], currentYear);
+  }
+  return 25;
+}
+
+function getSvcShare() {
+  if (macroLookup['macro_services']) {
+    return interp(macroLookup['macro_services'], currentYear);
+  }
+  return 25;
+}
+
+// Occupation score interpolation
+function getOccupationScore(occ, year) {
+  const tid = occ.territory_id;
+  const terrReach2026 = replLookup[tid] && replLookup[tid][2026] ? replLookup[tid][2026] : 0;
+
+  if (year <= 2026) {
+    const terrReachNow = getTerritoryReach(tid, year);
+    if (terrReach2026 === 0) return 0;
+    return Math.round(occ.replaceability_2026 * (terrReachNow / terrReach2026));
+  }
+  // For 2026-2030: interpolate between 2026 base and 2030 scenario score
+  const score2030 = occ[`replaceability_2030_${scenario}`] || occ.replaceability_2026;
+  if (year <= 2030) {
+    return Math.round(interp({2026: occ.replaceability_2026, 2030: score2030}, year));
+  }
+  // Beyond 2030: extrapolate using territory curve shape
+  const terrReach2030 = getTerritoryReach(tid, 2030);
+  const terrReachNow = getTerritoryReach(tid, year);
+  if (terrReach2030 === 0) return score2030;
+  return Math.min(99, Math.round(score2030 * (terrReachNow / terrReach2030)));
+}
 
 // ═══════════════════════════════════════════════════════════════
 // SHAPE GENERATION — Matisse cut-out style
 // ═══════════════════════════════════════════════════════════════
-// Each shape is a slightly irregular quadrilateral, like hand-cut paper
-// Seed-based randomness for consistency
-
 function seededRandom(seed) {
   let s = seed;
   return function() {
@@ -646,29 +783,19 @@ function seededRandom(seed) {
 
 function generateShapePath(cx, cy, w, h, rotation, seed) {
   const rng = seededRandom(seed);
-  const wobble = 0.08; // how much corners deviate
-
-  // Base corners of a rectangle
+  const wobble = 0.08;
   const hw = w/2, hh = h/2;
-  const corners = [
-    [-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]
-  ];
-
-  // Perturb corners
+  const corners = [[-hw, -hh], [hw, -hh], [hw, hh], [-hw, hh]];
   const pts = corners.map(([x,y]) => [
     x + (rng()-0.5) * w * wobble,
     y + (rng()-0.5) * h * wobble,
   ]);
-
-  // Rotate
   const rad = rotation * Math.PI / 180;
   const cos = Math.cos(rad), sin = Math.sin(rad);
   const rotated = pts.map(([x,y]) => [
     cx + x*cos - y*sin,
     cy + x*sin + y*cos
   ]);
-
-  // Add midpoint perturbations for organic edges
   const path = [];
   for (let i=0; i<rotated.length; i++) {
     const [x1,y1] = rotated[i];
@@ -677,7 +804,6 @@ function generateShapePath(cx, cy, w, h, rotation, seed) {
     const my = (y1+y2)/2 + (rng()-0.5) * Math.max(w,h) * 0.04;
     path.push([x1,y1], [mx,my]);
   }
-
   return path;
 }
 
@@ -688,7 +814,6 @@ function drawShape(ctx, points, color, alpha) {
   ctx.beginPath();
   ctx.moveTo(points[0][0], points[0][1]);
   for (let i=1; i<points.length; i++) {
-    // Use quadratic curves through midpoints for organic feel
     if (i % 2 === 1 && i+1 < points.length) {
       ctx.quadraticCurveTo(points[i][0], points[i][1], points[(i+1)%points.length][0], points[(i+1)%points.length][1]);
       i++;
@@ -722,9 +847,8 @@ function drawShapeOutline(ctx, points, color, alpha, lineWidth) {
 }
 
 function pointInShape(px, py, points) {
-  // Ray casting for polygon hit test
   let inside = false;
-  const verts = points.filter((_,i) => i%2===0); // use corner points only
+  const verts = points.filter((_,i) => i%2===0);
   for (let i=0, j=verts.length-1; i<verts.length; j=i++) {
     const [xi,yi] = verts[i], [xj,yj] = verts[j];
     if (((yi > py) !== (yj > py)) && (px < (xj-xi)*(py-yi)/(yj-yi)+xi)) {
@@ -743,14 +867,9 @@ function hexToRGB(hex) {
 
 function getShapeColor(baseHex, reach) {
   const {r,g,b} = hexToRGB(baseHex);
-  // At 0%: tiles show at 45% brightness (clearly colored, clearly not "reached").
-  // At 100%: full vivid color. Curve accelerates in the 20-80% band.
   const minBrightness = 0.45;
   const t = minBrightness + (1 - minBrightness) * Math.pow(reach / 100, 0.55);
-  const rr = Math.round(t * r);
-  const gg = Math.round(t * g);
-  const bb = Math.round(t * b);
-  return `rgb(${rr},${gg},${bb})`;
+  return `rgb(${Math.round(t*r)},${Math.round(t*g)},${Math.round(t*b)})`;
 }
 
 function getBarColor(score) {
@@ -770,7 +889,7 @@ let W, H;
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
   const cw = window.innerWidth;
-  const ch = window.innerHeight - 46 - 88; // subtract header (46px) and timeline (88px)
+  const ch = window.innerHeight - 46 - 88;
   canvas.width = cw * dpr;
   canvas.height = ch * dpr;
   canvas.style.width = cw + 'px';
@@ -778,107 +897,7 @@ function resizeCanvas() {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   W = cw;
   H = ch;
-  // Reset shape states so positions recalculate for new dimensions
   shapeStates = {};
-}
-
-// ═══════════════════════════════════════════════════════════════
-// PARTICLE SYSTEM — arcing labor migration dots with bezier trails
-// ═══════════════════════════════════════════════════════════════
-function updateParticles() {
-  const shares = {};
-  TERRITORIES.forEach(t => shares[t.id] = getTerritoryShare(t, currentYear));
-
-  if (isPlaying && particles.length < 100) {
-    TERRITORIES.forEach(src => {
-      const delta = (prevShares[src.id] || shares[src.id]) - shares[src.id];
-      if (delta > 0.008) {
-        const growing = TERRITORIES.filter(t =>
-          t.id !== src.id && shares[t.id] > (prevShares[t.id] || shares[t.id]) + 0.005
-        );
-        if (growing.length > 0 && Math.random() < 0.55) {
-          const dst = growing[Math.floor(Math.random() * growing.length)];
-          const srcCx = (shapeStates[src.id] || {cx: src.baseX*W}).cx;
-          const srcCy = (shapeStates[src.id] || {cy: src.baseY*H}).cy;
-          const dstCx = (shapeStates[dst.id] || {cx: dst.baseX*W}).cx;
-          const dstCy = (shapeStates[dst.id] || {cy: dst.baseY*H}).cy;
-          const dist = Math.hypot(dstCx - srcCx, dstCy - srcCy);
-          const mx = (srcCx + dstCx) / 2;
-          const my = (srcCy + dstCy) / 2;
-          // Perpendicular arc control point — curves away from midpoint
-          const perp = { x: -(dstCy - srcCy), y: dstCx - srcCx };
-          const pLen = Math.hypot(perp.x, perp.y) || 1;
-          const arcBow = (0.25 + Math.random() * 0.2) * (Math.random() < 0.5 ? 1 : -1);
-          particles.push({
-            x: srcCx + (Math.random()-0.5)*20,
-            y: srcCy + (Math.random()-0.5)*20,
-            tx: dstCx + (Math.random()-0.5)*20,
-            ty: dstCy + (Math.random()-0.5)*20,
-            cpx: mx + (perp.x / pLen) * dist * arcBow,
-            cpy: my + (perp.y / pLen) * dist * arcBow,
-            srcColor: src.color,
-            dstColor: dst.color,
-            life: 0,
-            maxLife: 100 + Math.random() * 60,
-            size: 2 + Math.random() * 2,
-            trail: [],
-          });
-        }
-      }
-    });
-  }
-
-  Object.assign(prevShares, shares);
-  particles = particles.filter(p => { p.life++; return p.life < p.maxLife; });
-}
-
-function drawParticles() {
-  if (zoomProgress > 0.5) return;
-  const fade = 1 - zoomProgress * 2;
-  particles.forEach(p => {
-    const t = p.life / p.maxLife;
-    const mt = 1 - t;
-    // Quadratic bezier position
-    const x = mt*mt*p.x + 2*mt*t*p.cpx + t*t*p.tx;
-    const y = mt*mt*p.y + 2*mt*t*p.cpy + t*t*p.ty;
-    // Fade in/out
-    const alpha = (t < 0.12 ? t/0.12 : t > 0.82 ? (1-t)/0.18 : 1) * fade;
-    // Color cross-fades at midpoint
-    const color = t < 0.5 ? p.srcColor : p.dstColor;
-
-    p.trail.push([x, y]);
-    if (p.trail.length > 6) p.trail.shift();
-
-    // Trail
-    if (p.trail.length > 1) {
-      ctx.save();
-      for (let i = 1; i < p.trail.length; i++) {
-        ctx.beginPath();
-        ctx.moveTo(p.trail[i-1][0], p.trail[i-1][1]);
-        ctx.lineTo(p.trail[i][0], p.trail[i][1]);
-        ctx.strokeStyle = color;
-        ctx.globalAlpha = (i / p.trail.length) * alpha * 0.3;
-        ctx.lineWidth = p.size * 0.7;
-        ctx.lineCap = 'round';
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    // Glow halo
-    ctx.save();
-    ctx.globalAlpha = alpha * 0.18;
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x, y, p.size * 2.5, 0, Math.PI*2);
-    ctx.fill();
-    // Core dot
-    ctx.globalAlpha = alpha * 0.9;
-    ctx.beginPath();
-    ctx.arc(x, y, p.size, 0, Math.PI*2);
-    ctx.fill();
-    ctx.restore();
-  });
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -887,21 +906,16 @@ function drawParticles() {
 function render() {
   if (!W) resizeCanvas();
 
-  // Smooth zoom animation
   zoomProgress += (zoomTarget - zoomProgress) * 0.08;
   if (Math.abs(zoomProgress - zoomTarget) < 0.001) zoomProgress = zoomTarget;
 
   ctx.clearRect(0, 0, W, H);
 
-  // Subtle background gradient
   const bgGrad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.7);
   bgGrad.addColorStop(0, '#0E1018');
   bgGrad.addColorStop(1, '#08090E');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, W, H);
-
-  updateParticles();
-  drawParticles();
 
   // 3→13 transition window
   const TRANS_START = 1948, TRANS_END = 1954;
@@ -909,10 +923,17 @@ function render() {
     : currentYear > TRANS_END ? 1
     : (currentYear - TRANS_START) / (TRANS_END - TRANS_START);
 
+  // Liquid glass transition (post-2026)
+  const GLASS_START = 2025.5, GLASS_END = 2027;
+  const rawGlass = currentYear <= GLASS_START ? 0
+    : currentYear >= GLASS_END ? 1
+    : (currentYear - GLASS_START) / (GLASS_END - GLASS_START);
+  const glassProgress = rawGlass * rawGlass * (3 - 2 * rawGlass); // smoothstep
+
   if (morphT <= 0 && zoomProgress < 0.01) {
     drawThreeSectorView();
   } else if (morphT >= 1) {
-    drawTerritoryView();
+    drawTerritoryView(glassProgress);
   } else {
     drawMorphFrame(morphT);
   }
@@ -927,14 +948,13 @@ function drawThreeSectorView() {
     { id:'services',    name:'Services',    share: getSvcShare(),  color:'#6B7CC0', bx:0.80, by:0.54, rot:-4 },
   ];
 
-  // Total area budget: fill canvas proportionally, capped so no tile overflows
   const canvasArea = W * H * 0.55;
   const totalShare = sectors.reduce((s,x) => s + x.share, 0);
 
   sectors.forEach(s => {
     const areaFrac = s.share / totalShare;
     const area = canvasArea * areaFrac;
-    const aspect = 1.15 + (hashStr(s.id) % 30) / 100; // slight variation
+    const aspect = 1.15 + (hashStr(s.id) % 30) / 100;
     const h = Math.min(H * 0.72, Math.sqrt(area / aspect));
     const w = Math.min(W * 0.55, h * aspect);
     const cx = s.bx * W;
@@ -944,15 +964,14 @@ function drawThreeSectorView() {
     const color = getShapeColor(s.color, 15);
     drawShape(ctx, pts, color, 0.9);
 
-    // Label — name only, AI Reach = 0 pre-automation
     const fontSize = Math.max(12, Math.min(16, w * 0.06));
     ctx.save();
     ctx.globalAlpha = 0.75;
     ctx.fillStyle = '#E2DED4';
-    ctx.font = `300 ${fontSize}px "DM Mono"`;
+    ctx.font = `400 ${fontSize}px "Inter"`;
     ctx.textAlign = 'center';
     ctx.fillText(s.name.toUpperCase(), cx, cy - fontSize * 0.6);
-    ctx.font = `300 ${Math.max(8, fontSize * 0.7)}px "DM Mono"`;
+    ctx.font = `400 ${Math.max(8, fontSize * 0.7)}px "Inter"`;
     ctx.globalAlpha = 0.22;
     ctx.fillText('AI REACH: 0%', cx, cy + fontSize + 2);
     ctx.restore();
@@ -962,7 +981,7 @@ function drawThreeSectorView() {
     ctx.save();
     ctx.globalAlpha = Math.min(1, (currentYear - 1920) / 30) * 0.35;
     ctx.fillStyle = '#E2DED4';
-    ctx.font = '300 italic 14px "Cormorant Garamond"';
+    ctx.font = 'italic 700 14px "GT Super Display"';
     ctx.textAlign = 'center';
     ctx.fillText('Approaching the modern labor landscape...', W/2, H - 16);
     ctx.restore();
@@ -972,33 +991,15 @@ function drawThreeSectorView() {
 // ═══════════════════════════════════════════════════════════════
 // 3 → 13 MORPH TRANSITION
 // ═══════════════════════════════════════════════════════════════
-const SECTOR_ORIGINS = {
-  'land-sea':'agriculture', 'making':'industry', 'building':'industry',
-  'moving':'industry', 'maintaining':'industry',
-  'buying-selling':'services', 'money-data':'services', 'thinking':'services',
-  'care-health':'services', 'learning':'services', 'meaning':'services',
-  'governing':'services', 'feeding':'services',
-};
-const SECTOR_POS = {
-  agriculture: { x:0.22, y:0.46 },
-  industry:    { x:0.56, y:0.38 },
-  services:    { x:0.80, y:0.54 },
-};
-const SECTOR_COLOR = { agriculture:'#2D8A5F', industry:'#D4923B', services:'#6B7CC0' };
-
 function drawMorphFrame(morphT) {
-  // Ease out cubic for smooth deceleration into final positions
   const ease = 1 - Math.pow(1 - morphT, 3);
 
-  // 1. Draw fading 3-sector shapes
   const sectorShapes = [
     { id:'agriculture', color:'#2D8A5F', bx:0.35, by:0.45, rot:-6, area: W*H*0.65*(getAgriShare()/100) },
     { id:'industry',    color:'#D4923B', bx:0.62, by:0.32, rot:10,  area: W*H*0.65*(getIndShare()/100) },
     { id:'services',    color:'#6B7CC0', bx:0.62, by:0.68, rot:-4,  area: W*H*0.65*(getSvcShare()/100) },
   ];
-  const totalSec = getAgriShare() + getIndShare() + getSvcShare();
   sectorShapes.forEach(s => {
-    const area = W * H * 0.65 * (s.area / (W*H*0.65)); // already computed
     const aspect = 1.15 + (hashStr(s.id) % 30) / 100;
     const sh = Math.sqrt(s.area / aspect);
     const sw = sh * aspect;
@@ -1009,7 +1010,6 @@ function drawMorphFrame(morphT) {
     drawShape(ctx, pts, getShapeColor(s.color, 15), (1 - morphT) * 0.88);
   });
 
-  // 2. Draw emerging 13 territory tiles
   const canvasArea = W * H * 0.55;
   const tData = TERRITORIES.map(t => {
     const share = Math.max(0.3, getTerritoryShare(t, 1950));
@@ -1028,7 +1028,6 @@ function drawMorphFrame(morphT) {
     const origin = SECTOR_ORIGINS[t.id] || 'services';
     const op = SECTOR_POS[origin];
 
-    // Stagger each tile's emergence slightly
     const stagger = i * 0.04;
     const localT = Math.max(0, Math.min(1, (morphT - stagger) / (1 - stagger)));
     const localEase = 1 - Math.pow(1 - localT, 2.5);
@@ -1044,7 +1043,6 @@ function drawMorphFrame(morphT) {
     const h = Math.max(15, baseH) * localEase;
     const alpha = localT * 0.88;
 
-    // Seed shape states for smooth handoff to drawTerritoryView
     shapeStates[t.id] = { cx, cy, w, h, alpha };
 
     if (alpha < 0.02) return;
@@ -1056,7 +1054,7 @@ function drawMorphFrame(morphT) {
       ctx.save();
       ctx.globalAlpha = alpha * 0.8;
       ctx.fillStyle = '#E2DED4';
-      ctx.font = `300 ${Math.max(8, Math.min(11, minDim * 0.07))}px "DM Mono"`;
+      ctx.font = `400 ${Math.max(8, Math.min(11, minDim * 0.07))}px "Inter"`;
       ctx.textAlign = 'center';
       ctx.fillText(t.name.toUpperCase(), cx, cy);
       ctx.restore();
@@ -1064,30 +1062,16 @@ function drawMorphFrame(morphT) {
   });
 }
 
-function getAgriShare() {
-  const shares = {1800:85,1850:80,1900:72,1920:65,1940:58,1950:52};
-  return interp(shares, currentYear);
-}
-function getIndShare() {
-  const shares = {1800:10,1850:14,1900:18,1920:22,1940:25,1950:22.8};
-  return interp(shares, currentYear);
-}
-function getSvcShare() {
-  const shares = {1800:5,1850:6,1900:10,1920:13,1940:17,1950:25.2};
-  return interp(shares, currentYear);
-}
-
-function drawTerritoryView() {
+function drawTerritoryView(glassProgress) {
+  glassProgress = glassProgress || 0;
   const totalReachWeighted = {sum:0, weight:0};
 
-  // Build territory data for this frame
   const tData = TERRITORIES.map(t => {
     const share = Math.max(0.3, getTerritoryShare(t, Math.max(1950, currentYear)));
     const reach = getTerritoryReach(t, currentYear);
     return { t, share, reach };
   });
 
-  // Area-based sizing: shapes collectively fill ~55% of canvas
   const canvasArea = W * H * 0.55;
   const totalShare = tData.reduce((s,x) => s + x.share, 0);
 
@@ -1107,7 +1091,6 @@ function drawTerritoryView() {
     let targetH = Math.max(35, baseH);
     let targetAlpha = 0.88;
 
-    // Zoom: selected territory moves to center and grows, others fade
     if (zoomProgress > 0.01) {
       if (t.id === zoomedTerritory) {
         const zCx = W * 0.38;
@@ -1131,7 +1114,6 @@ function drawTerritoryView() {
     return { t, share, reach, targetCx, targetCy, targetW, targetH, targetAlpha };
   });
 
-  // Smoothly animate shape states
   items.forEach(({t, targetCx, targetCy, targetW, targetH, targetAlpha}) => {
     if (!shapeStates[t.id]) {
       shapeStates[t.id] = { cx:targetCx, cy:targetCy, w:targetW, h:targetH, alpha:targetAlpha };
@@ -1145,39 +1127,58 @@ function drawTerritoryView() {
     s.alpha += (targetAlpha - s.alpha) * lerp;
   });
 
-  // Draw shapes (larger first for z-order)
   items.sort((a,b) => b.share - a.share);
 
   items.forEach(({t, reach}) => {
     const s = shapeStates[t.id];
-    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
-    const color = getShapeColor(t.color, reach);
 
-    drawShape(ctx, pts, color, s.alpha);
+    // Hover scale boost for glass tiles
+    let drawW = s.w, drawH = s.h;
+    if (hoveredTerritory === t.id && glassProgress > 0 && zoomProgress < 0.5) {
+      const hoverScale = 1 + 0.03 * glassProgress;
+      drawW *= hoverScale;
+      drawH *= hoverScale;
+    }
 
-    // Hover highlight
-    if (hoveredTerritory === t.id && zoomProgress < 0.5) {
+    // Draw shape: crossfade between cut-out and glass
+    if (glassProgress <= 0) {
+      // Pure Matisse cut-out
+      const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
+      drawShape(ctx, pts, getShapeColor(t.color, reach), s.alpha);
+    } else if (glassProgress >= 1) {
+      // Pure glass
+      drawGlassTile(ctx, s.cx, s.cy, drawW, drawH, t.color, reach, s.alpha, 1);
+    } else {
+      // Crossfade: cut-out fading out, glass fading in
+      const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
+      drawShape(ctx, pts, getShapeColor(t.color, reach), s.alpha * (1 - glassProgress));
+      drawGlassTile(ctx, s.cx, s.cy, drawW, drawH, t.color, reach, s.alpha * glassProgress, glassProgress);
+    }
+
+    // Hover outline (only for cut-out mode)
+    if (hoveredTerritory === t.id && zoomProgress < 0.5 && glassProgress <= 0) {
+      const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
       drawShapeOutline(ctx, pts, '#E2DED4', 0.25, 1.5);
     }
 
-    // Selected outline
     if (zoomedTerritory === t.id && zoomProgress > 0.1) {
-      drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
+      if (glassProgress <= 0) {
+        const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
+        drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
+      }
     }
 
-    // Labels — scale with shape size
-    const minDim = Math.min(s.w, s.h);
+    const minDim = Math.min(drawW, drawH);
     if (minDim > 30 && s.alpha > 0.15) {
       ctx.save();
       ctx.globalAlpha = s.alpha * 0.85;
 
-      // Name
       const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
       ctx.fillStyle = '#E2DED4';
-      ctx.font = `300 ${nameSize}px "DM Mono"`;
+      ctx.font = `400 ${nameSize}px "Inter"`;
       ctx.textAlign = 'center';
       const words = t.name.split(' ');
-      if (minDim > 80 && s.w > 100) {
+      if (minDim > 80 && drawW > 100) {
         ctx.fillText(t.name.toUpperCase(), s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
       } else if (minDim > 50) {
         words.forEach((w, i) => {
@@ -1185,16 +1186,14 @@ function drawTerritoryView() {
         });
       }
 
-      // AI Reach %
       if (reach >= 1 && minDim > 40) {
         ctx.fillStyle = '#E2DED4';
         ctx.globalAlpha = s.alpha * 0.6;
         const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
-        ctx.font = `300 ${scoreSize}px "Cormorant Garamond"`;
+        ctx.font = `italic 700 ${scoreSize}px "GT Super Display"`;
         ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
       }
 
-      // Workforce count
       if (minDim > 55) {
         const wfYear = Math.max(1950, currentYear);
         const wf = getWorkforce(wfYear);
@@ -1204,7 +1203,7 @@ function drawTerritoryView() {
         const wfSize = Math.max(7, Math.min(10, minDim * 0.055));
         ctx.fillStyle = '#E2DED4';
         ctx.globalAlpha = s.alpha * 0.28;
-        ctx.font = `300 ${wfSize}px "DM Mono"`;
+        ctx.font = `400 ${wfSize}px "Inter"`;
         ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.26);
       }
 
@@ -1212,77 +1211,142 @@ function drawTerritoryView() {
     }
   });
 
-  // Draw sub-shapes for zoomed territory
   if (zoomProgress > 0.3 && zoomedTerritory) {
-    drawJobSubShapes();
+    drawJobSubShapes(glassProgress);
   }
 
-  // Update global stats
   const avgReach = totalReachWeighted.weight > 0 ?
     Math.round(totalReachWeighted.sum / totalReachWeighted.weight) : 0;
   document.getElementById('global-reach-num').textContent =
     currentYear < 1960 ? '—' : avgReach + '%';
 }
 
-function drawJobSubShapes() {
+function drawJobSubShapes(glassProgress) {
+  glassProgress = glassProgress || 0;
   const t = TERRITORIES.find(x => x.id === zoomedTerritory);
   if (!t) return;
   const s = shapeStates[t.id];
   if (!s) return;
 
-  const reach2026 = getTerritoryReach(t, 2026);
-  const reachNow = getTerritoryReach(t, currentYear);
   const alpha = Math.min(1, (zoomProgress - 0.3) / 0.5);
 
-  const jobs = t.jobs;
-  const n = jobs.length;
+  // Get top 8 occupations for this territory
+  const occs = (occupationsByTerritory[t.id] || []).slice(0, 8);
+  const n = occs.length;
+  if (n === 0) return;
 
-  // Arrange sub-shapes in an organic scatter within the parent shape
-  jobs.forEach((j, i) => {
-    let rawScore = j.score2026;
-    if (currentYear <= 2026 && reach2026 > 0) {
-      rawScore = Math.round(rawScore * (reachNow / reach2026));
-    } else if (currentYear > 2026) {
-      rawScore = Math.min(99, Math.round(rawScore * (reachNow / reach2026)));
-    }
-    rawScore = Math.max(0, Math.min(99, rawScore));
+  occs.forEach((occ, i) => {
+    const rawScore = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
 
-    // Position within parent — spread wider
     const angle = (i / n) * Math.PI * 2 - Math.PI/2;
     const radius = Math.min(s.w, s.h) * 0.32;
     const jcx = s.cx + Math.cos(angle) * radius;
     const jcy = s.cy + Math.sin(angle) * radius;
 
-    // Size proportional to parent and score
     const baseJobSize = Math.min(s.w, s.h) * 0.18;
     const jw = baseJobSize + rawScore * 0.15;
     const jh = jw * 0.82;
 
-    const pts = generateShapePath(jcx, jcy, jw, jh,
-      t.rotation + 15 * (i - n/2), hashStr(t.id + j.name));
+    // Draw sub-shape: glass or cut-out based on glassProgress
+    if (glassProgress <= 0) {
+      const pts = generateShapePath(jcx, jcy, jw, jh,
+        t.rotation + 15 * (i - n/2), hashStr(t.id + occ.occupation_name));
+      const jobColor = getShapeColor(t.color, rawScore);
+      drawShape(ctx, pts, jobColor, alpha * 0.85);
+    } else if (glassProgress >= 1) {
+      drawGlassTile(ctx, jcx, jcy, jw, jh, t.color, rawScore, alpha * 0.85, 1);
+    } else {
+      const pts = generateShapePath(jcx, jcy, jw, jh,
+        t.rotation + 15 * (i - n/2), hashStr(t.id + occ.occupation_name));
+      const jobColor = getShapeColor(t.color, rawScore);
+      drawShape(ctx, pts, jobColor, alpha * 0.85 * (1 - glassProgress));
+      drawGlassTile(ctx, jcx, jcy, jw, jh, t.color, rawScore, alpha * 0.85 * glassProgress, glassProgress);
+    }
 
-    const jobColor = getShapeColor(t.color, rawScore);
-    drawShape(ctx, pts, jobColor, alpha * 0.85);
-
-    // Job label
     if (alpha > 0.3 && jw > 20) {
       ctx.save();
       ctx.globalAlpha = alpha * 0.8;
       ctx.fillStyle = '#E2DED4';
       const labelSize = Math.max(7, Math.min(10, jw * 0.15));
-      ctx.font = `300 ${labelSize}px "DM Mono"`;
+      ctx.font = `400 ${labelSize}px "Inter"`;
       ctx.textAlign = 'center';
 
-      let label = j.name;
+      let label = occ.occupation_name;
       if (label.length > 18) label = label.substring(0, 16) + '…';
       ctx.fillText(label, jcx, jcy - jh * 0.08);
 
-      ctx.font = `300 ${Math.max(12, jw * 0.22)}px "Cormorant Garamond"`;
+      ctx.font = `italic 700 ${Math.max(12, jw * 0.22)}px "GT Super Display"`;
       ctx.globalAlpha = alpha * 0.6;
       ctx.fillText(rawScore + '%', jcx, jcy + jh * 0.22);
       ctx.restore();
     }
   });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LIQUID GLASS — Post-2026 visual treatment
+// ═══════════════════════════════════════════════════════════════
+function drawGlassTile(ctx, cx, cy, w, h, baseColor, reach, alpha, glassProgress) {
+  const minDim = Math.min(w, h);
+  const cornerRadius = minDim * 0.22;
+
+  ctx.save();
+
+  // 1. Soft drop shadow
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
+  ctx.shadowBlur = 24 * glassProgress;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 6 * glassProgress;
+
+  // 2. Base fill (semi-translucent)
+  const baseOpacity = 0.75 + 0.10 * (reach / 100);
+  const {r, g, b} = hexToRGB(baseColor);
+  const brightness = 0.45 + 0.55 * Math.pow(reach / 100, 0.55);
+  ctx.fillStyle = `rgba(${Math.round(r*brightness)}, ${Math.round(g*brightness)}, ${Math.round(b*brightness)}, ${baseOpacity * alpha})`;
+
+  const path = new Path2D();
+  path.roundRect(cx - w/2, cy - h/2, w, h, cornerRadius);
+  ctx.fill(path);
+
+  // Reset shadow for overlay layers
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+  ctx.shadowOffsetY = 0;
+
+  // 3. Internal gradient (subtle depth)
+  const grad = ctx.createLinearGradient(cx, cy - h/2, cx, cy + h/2);
+  grad.addColorStop(0, `rgba(255, 255, 255, ${0.08 * alpha * glassProgress})`);
+  grad.addColorStop(0.5, `rgba(255, 255, 255, 0)`);
+  grad.addColorStop(1, `rgba(0, 0, 0, ${0.06 * alpha * glassProgress})`);
+  ctx.fillStyle = grad;
+  ctx.fill(path);
+
+  // 4. Specular highlight (top edge gloss)
+  ctx.save();
+  ctx.clip(path);
+  const highlightGrad = ctx.createLinearGradient(cx, cy - h/2, cx, cy - h/2 + h * 0.35);
+  highlightGrad.addColorStop(0, `rgba(255, 255, 255, ${0.14 * alpha * glassProgress})`);
+  highlightGrad.addColorStop(1, `rgba(255, 255, 255, 0)`);
+  ctx.fillStyle = highlightGrad;
+  ctx.fillRect(cx - w/2, cy - h/2, w, h * 0.35);
+  ctx.restore();
+
+  // 5. Subtle border
+  ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * alpha * glassProgress})`;
+  ctx.lineWidth = 1;
+  ctx.stroke(path);
+
+  // 6. Very subtle inner glow
+  ctx.save();
+  ctx.clip(path);
+  const innerGlow = ctx.createRadialGradient(cx, cy, minDim * 0.1, cx, cy, minDim * 0.6);
+  innerGlow.addColorStop(0, `rgba(255, 255, 255, ${0.03 * alpha * glassProgress})`);
+  innerGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  ctx.fillStyle = innerGlow;
+  ctx.fillRect(cx - w/2, cy - h/2, w, h);
+  ctx.restore();
+
+  ctx.restore();
 }
 
 function hashStr(str) {
@@ -1309,7 +1373,6 @@ canvas.addEventListener('mousemove', e => {
   }
 
   let found = null;
-  // Check territories (reverse draw order for proper z-ordering)
   for (let i = TERRITORIES.length - 1; i >= 0; i--) {
     const t = TERRITORIES[i];
     const s = shapeStates[t.id];
@@ -1344,16 +1407,8 @@ canvas.addEventListener('mousemove', e => {
 
 canvas.addEventListener('click', e => {
   if (currentYear < 1950) return;
-
-  if (zoomProgress > 0.3) {
-    // Clicking in zoomed view — zoom out
-    zoomOut();
-    return;
-  }
-
-  if (hoveredTerritory) {
-    zoomIn(hoveredTerritory);
-  }
+  if (zoomProgress > 0.3) { zoomOut(); return; }
+  if (hoveredTerritory) { zoomIn(hoveredTerritory); }
 });
 
 function zoomIn(id) {
@@ -1394,7 +1449,11 @@ function updatePanel(id) {
   const bar = document.getElementById('panel-reach-bar');
   bar.style.width = reach + '%';
   bar.style.background = getBarColor(reach);
-  document.getElementById('panel-barrier').innerHTML = `<strong>Key barrier:</strong> ${t.barrier}`;
+
+  // Barrier from V2 replaceability data or territory definition
+  const replRec = V2.replaceability.find(r => r.territory_id === id && r.year === 2026 && !r.scenario);
+  const barrierText = replRec ? `${replRec.primary_barrier}: ${replRec.key_barrier_note}` : t.barrier;
+  document.getElementById('panel-barrier').innerHTML = `<strong>Key barrier:</strong> ${barrierText}`;
 
   drawMiniChart(t);
   drawJobGroups(t);
@@ -1403,28 +1462,26 @@ function updatePanel(id) {
 function drawMiniChart(t) {
   const svg = document.getElementById('mini-chart');
   svg.innerHTML = '';
-  const W=300, H=70, s=2000, e=2040, r=e-s;
+  const CW=300, CH=70, s=2000, e=2040, r=e-s;
 
-  // Grid
   [25,50,75].forEach(v => {
-    const y = H-(v/100)*H;
+    const y = CH-(v/100)*CH;
     const l = document.createElementNS('http://www.w3.org/2000/svg','line');
-    l.setAttribute('x1',0);l.setAttribute('y1',y);l.setAttribute('x2',W);l.setAttribute('y2',y);
+    l.setAttribute('x1',0);l.setAttribute('y1',y);l.setAttribute('x2',CW);l.setAttribute('y2',y);
     l.setAttribute('stroke','rgba(255,255,255,0.05)');
     svg.appendChild(l);
   });
 
-  // Split
-  const sx = ((SPLIT_YEAR-s)/r)*W;
+  const sx = ((SPLIT_YEAR-s)/r)*CW;
   const sl = document.createElementNS('http://www.w3.org/2000/svg','line');
-  sl.setAttribute('x1',sx);sl.setAttribute('y1',0);sl.setAttribute('x2',sx);sl.setAttribute('y2',H);
+  sl.setAttribute('x1',sx);sl.setAttribute('y1',0);sl.setAttribute('x2',sx);sl.setAttribute('y2',CH);
   sl.setAttribute('stroke','rgba(196,164,90,0.2)');
   svg.appendChild(sl);
 
   const pts = [];
-  for (let yr=s;yr<=e;yr++) { const x=((yr-s)/r)*W; const y=H-(getTerritoryReach(t,yr)/100)*H; pts.push([x,y]); }
+  for (let yr=s;yr<=e;yr++) { const x=((yr-s)/r)*CW; const y=CH-(getTerritoryReach(t,yr)/100)*CH; pts.push([x,y]); }
 
-  const ad = 'M '+pts.map(p=>p.join(',')).join(' L ')+` L ${W},${H} L 0,${H} Z`;
+  const ad = 'M '+pts.map(p=>p.join(',')).join(' L ')+` L ${CW},${CH} L 0,${CH} Z`;
   const a = document.createElementNS('http://www.w3.org/2000/svg','path');
   a.setAttribute('d',ad); a.setAttribute('fill',t.color+'18'); svg.appendChild(a);
 
@@ -1434,9 +1491,9 @@ function drawMiniChart(t) {
   ln.setAttribute('stroke-width','1.5'); ln.setAttribute('opacity','0.7'); svg.appendChild(ln);
 
   const cy = Math.max(s,Math.min(e,currentYear));
-  const cx = ((cy-s)/r)*W;
+  const cx = ((cy-s)/r)*CW;
   const cReach = getTerritoryReach(t,cy);
-  const cY = H-(cReach/100)*H;
+  const cY = CH-(cReach/100)*CH;
   const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
   dot.setAttribute('cx',cx);dot.setAttribute('cy',cY);dot.setAttribute('r','3.5');dot.setAttribute('fill',t.color);
   svg.appendChild(dot);
@@ -1445,19 +1502,19 @@ function drawMiniChart(t) {
 function drawJobGroups(t) {
   const jg = document.getElementById('panel-job-groups');
   jg.innerHTML = '';
-  const reach2026 = getTerritoryReach(t,2026);
-  const reachNow = getTerritoryReach(t,currentYear);
 
-  t.jobs.forEach(j => {
-    let s = j.score2026;
-    if (currentYear<=2026 && reach2026>0) s = Math.round(s*(reachNow/reach2026));
-    else if (currentYear>2026) s = Math.min(99,Math.round(s*(reachNow/reach2026)));
-    s = Math.max(0,Math.min(99,s));
+  // Show top 8 occupations
+  const occs = (occupationsByTerritory[t.id] || []).slice(0, 8);
+
+  occs.forEach(occ => {
+    const s = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
 
     const row = document.createElement('div');
     row.className = 'job-group';
+    let name = occ.occupation_name;
+    if (name.length > 28) name = name.substring(0, 26) + '…';
     row.innerHTML = `
-      <div class="job-group-name">${j.name}</div>
+      <div class="job-group-name">${name}</div>
       <div class="job-group-bar-wrap"><div class="job-group-bar" style="width:${s}%;background:${getBarColor(s)}"></div></div>
       <div class="job-group-score">${s}%</div>`;
     jg.appendChild(row);
@@ -1483,18 +1540,25 @@ function buildTimeline() {
 
   document.getElementById('timeline-historical').style.width = yearToPercent(SPLIT_YEAR)+'%';
   document.getElementById('timeline-split').style.left = yearToPercent(SPLIT_YEAR)+'%';
-  // Projected zone: from SPLIT_YEAR to END_YEAR
   const projZone = document.getElementById('timeline-projected-zone');
   projZone.style.left = yearToPercent(SPLIT_YEAR)+'%';
   projZone.style.width = (100 - yearToPercent(SPLIT_YEAR))+'%';
 
+  // Featured milestones: INVENTION or BENCHMARK from 2012+
+  const featuredYears = new Set(
+    MILESTONES.filter(m => m.year >= 2012 && (m.type === 'INVENTION' || m.type === 'BENCHMARK'))
+      .slice(0, 10).map(m => m.year)
+  );
+
   const mc = document.getElementById('milestones-container');
-  const featured = new Set([1913, 1969, 1980, 1997, 2012, 2020, 2022, 2024]);
   MILESTONES.forEach(m => {
     const d = document.createElement('div');
-    d.className = 'milestone-dot' + (featured.has(m.year) ? ' milestone-featured' : '');
+    d.className = 'milestone-dot' + (featuredYears.has(m.year) ? ' milestone-featured' : '');
     d.style.left = yearToPercent(m.year)+'%';
-    d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}<div style="color:#6b6a72;font-size:9px;margin-top:3px;max-width:180px;white-space:normal">${m.desc}</div></div>`;
+    // Truncate desc for tooltip
+    let desc = m.desc || '';
+    if (desc.length > 80) desc = desc.substring(0, 77) + '…';
+    d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}<div style="color:#6b6a72;font-size:9px;margin-top:3px;max-width:180px;white-space:normal">${desc}</div></div>`;
     mc.appendChild(d);
   });
 
@@ -1538,30 +1602,25 @@ function updateTimelineUI() {
 // ═══════════════════════════════════════════════════════════════
 const toast = document.getElementById('milestone-toast');
 function checkMilestoneToast(prevYear, newYear) {
-  const hit = MILESTONES.find(m => m.year > prevYear && m.year <= newYear && m.year !== lastMilestoneYear);
+  // Check ALL events for toast, not just timeline-filtered ones
+  const hit = ALL_EVENTS.find(m => m.year > prevYear && m.year <= newYear && m.year !== lastMilestoneYear);
   if (!hit) return;
   lastMilestoneYear = hit.year;
   document.getElementById('toast-year').textContent = hit.year;
   document.getElementById('toast-label').textContent = hit.label;
-  document.getElementById('toast-desc').textContent = hit.desc;
+  let desc = hit.desc || '';
+  if (desc.length > 80) desc = desc.substring(0, 77) + '…';
+  document.getElementById('toast-desc').textContent = desc;
   toast.classList.add('visible');
   if (toastTimeout) clearTimeout(toastTimeout);
-  // Show longer for featured milestones
-  const featured = new Set([1913,1969,1997,2012,2020,2022,2024]);
-  toastTimeout = setTimeout(() => toast.classList.remove('visible'), featured.has(hit.year) ? 3000 : 1800);
+  const isFeatured = hit.type === 'INVENTION' || hit.type === 'BENCHMARK';
+  toastTimeout = setTimeout(() => toast.classList.remove('visible'), isFeatured ? 3000 : 1800);
 }
 
 // ═══════════════════════════════════════════════════════════════
 // PLAYBACK
 // ═══════════════════════════════════════════════════════════════
 function getPlaySpeed(year) {
-  // Exact pacing — total 90s at 60fps (5400 frames).
-  // Verified: frames = years/speed; segments sum to 5400.
-  // 1800→1950 (150yr / 600fr  = 10s): 0.250 yrs/frame
-  // 1950→2000  (50yr / 1200fr = 20s): 0.0417
-  // 2000→2020  (20yr / 1200fr = 20s): 0.0167
-  // 2020→2026   (6yr /  900fr = 15s): 0.00667
-  // 2026→2040  (14yr /  900fr = 15s): 0.01556
   if (year < 1950) return 0.250;
   if (year < 2000) return 0.0417;
   if (year < 2020) return 0.0167;
@@ -1644,7 +1703,7 @@ document.addEventListener('keydown', e => {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// INTRO + INIT
+// INIT — waits for V2 data
 // ═══════════════════════════════════════════════════════════════
 function enterSite() {
   document.getElementById('intro-overlay').classList.add('fade-out');
@@ -1652,11 +1711,17 @@ function enterSite() {
   setTimeout(()=>{ currentYear=1800; updateTimelineUI(); setTimeout(play, 500); }, 300);
 }
 
+function initApp() {
+  resizeCanvas();
+  buildTimeline();
+  updateTimelineUI();
+  requestAnimationFrame(render);
+}
+
 window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-buildTimeline();
-updateTimelineUI();
-requestAnimationFrame(render);
+
+// Start loading data
+loadData();
 </script>
 </body>
 </html>
