@@ -28,7 +28,7 @@
   --muted: #6B6A72;
   --gold: #C4A45A;
   --border: rgba(255,255,255,0.07);
-  --font-display: 'GT Super Display', Georgia, serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -50,8 +50,8 @@ header {
   backdrop-filter: blur(16px);
   background: rgba(10,12,18,0.88);
 }
-.wordmark { font-family: var(--font-display); font-weight: 700; font-style: italic; font-size: 20px; letter-spacing: 0.04em; }
-.wordmark em { font-style: italic; color: var(--gold); }
+.wordmark { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; }
+.wordmark em { font-style: normal; color: var(--gold); }
 .tagline { font-size: 9px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin-top: 1px; }
 
 .search-wrap { position: relative; flex: 0 0 240px; }
@@ -103,7 +103,7 @@ header {
 }
 #tooltip.visible { opacity: 1; }
 #tooltip .tt-name {
-  font-family: var(--font-display); font-size: 16px; font-weight: 700; font-style: italic; margin-bottom: 2px;
+  font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 2px;
 }
 #tooltip .tt-stats {
   font-size: 9px; letter-spacing: 0.06em; color: var(--muted); line-height: 1.5;
@@ -130,13 +130,13 @@ header {
   padding: 4px 8px; transition: color 0.2s;
 }
 .panel-close:hover { color: var(--text); }
-.panel-territory-name { font-family: var(--font-display); font-weight: 700; font-style: italic; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
+.panel-territory-name { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
 .panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
 .panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(226,222,212,0.68); margin-bottom: 18px; }
 
 .panel-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .panel-stat-label { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.panel-stat-value { font-family: var(--font-display); font-size: 28px; font-weight: 700; font-style: italic; line-height: 1; }
+.panel-stat-value { font-family: var(--font-display); font-size: 28px; font-weight: 700; line-height: 1; }
 
 .reach-bar-wrap { height: 2px; background: rgba(255,255,255,0.06); margin-top: 6px; grid-column: 1 / -1; }
 .reach-bar-fill { height: 100%; transition: width 0.4s ease, background 0.4s ease; }
@@ -162,11 +162,11 @@ header {
   position: fixed; left: 24px; bottom: 100px; z-index: 50;
   display: flex; align-items: flex-end; gap: 24px;
 }
-.global-stat-num { font-family: var(--font-display); font-size: 24px; font-weight: 700; font-style: italic; line-height: 1; }
+.global-stat-num { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1; }
 .global-stat-label { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 
 #era-label { position: fixed; right: 24px; bottom: 100px; text-align: right; z-index: 50; }
-#era-label .era-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(226,222,212,0.4); font-style: italic; }
+#era-label .era-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(226,222,212,0.4); }
 #era-label .era-detail { font-size: 7.5px; letter-spacing: 0.08em; color: var(--muted); margin-top: 1px; }
 
 /* ── TIMELINE ── */
@@ -183,7 +183,7 @@ header {
   font-size: 11px; transition: all 0.2s; flex-shrink: 0;
 }
 .play-btn:hover { border-color: var(--gold); color: var(--gold); }
-.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; font-style: italic; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; }
+.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; }
 .year-display.projected { color: var(--gold); }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; }
@@ -250,7 +250,7 @@ header {
   opacity: 1; transform: translateX(-50%) translateY(0);
 }
 .toast-year { font-family: var(--font-body); font-size: 11px; color: var(--gold); letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
-.toast-label { font-family: var(--font-display); font-size: 15px; font-weight: 700; font-style: italic; color: var(--text); }
+.toast-label { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text); }
 .toast-desc { font-size: 8.5px; color: var(--muted); letter-spacing: 0.05em; margin-top: 1px; display: block; }
 
 /* ── INTRO ── */
@@ -260,9 +260,9 @@ header {
   transition: opacity 1s ease;
 }
 #intro-overlay.fade-out { opacity: 0; pointer-events: none; }
-.intro-title { font-family: var(--font-display); font-size: 44px; font-weight: 700; font-style: italic; letter-spacing: 0.03em; margin-bottom: 6px; }
-.intro-title em { color: var(--gold); font-style: italic; }
-.intro-question { font-family: var(--font-body); font-size: 17px; font-weight: 400; color: rgba(226,222,212,0.45); font-style: italic; margin-bottom: 28px; }
+.intro-title { font-family: var(--font-display); font-size: 44px; font-weight: 700; letter-spacing: 0.03em; margin-bottom: 6px; }
+.intro-title em { color: var(--gold); font-style: normal; }
+.intro-question { font-family: var(--font-body); font-size: 17px; font-weight: 400; color: rgba(226,222,212,0.45); margin-bottom: 28px; }
 .intro-enter {
   font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
   border: 1px solid rgba(196,164,90,0.35); padding: 9px 24px; cursor: pointer;
@@ -950,14 +950,7 @@ function render() {
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, W, H);
 
-  // Liquid glass transition (post-2026)
-  const GLASS_START = 2025.5, GLASS_END = 2027;
-  const rawGlass = currentYear <= GLASS_START ? 0
-    : currentYear >= GLASS_END ? 1
-    : (currentYear - GLASS_START) / (GLASS_END - GLASS_START);
-  const glassProgress = rawGlass * rawGlass * (3 - 2 * rawGlass); // smoothstep
-
-  drawAllShapes(glassProgress);
+  drawAllShapes();
 
   requestAnimationFrame(render);
 }
@@ -965,8 +958,7 @@ function render() {
 // ═══════════════════════════════════════════════════════════════
 // UNIFIED SHAPE DRAWING — progressive disaggregation
 // ═══════════════════════════════════════════════════════════════
-function drawAllShapes(glassProgress) {
-  glassProgress = glassProgress || 0;
+function drawAllShapes() {
   const year = currentYear;
   const totalReachWeighted = {sum:0, weight:0};
 
@@ -1034,7 +1026,7 @@ function drawAllShapes(glassProgress) {
   });
 
   // 3. Compute sizes and positions
-  const canvasArea = W * H * 0.55;
+  const canvasArea = W * H * 0.75;
   const totalShare = shapesToDraw.reduce((s,x) => s + x.share, 0) || 1;
 
   const items = shapesToDraw.map(s => {
@@ -1122,37 +1114,18 @@ function drawAllShapes(glassProgress) {
 
     let drawW = s.w, drawH = s.h;
 
-    // Hover scale boost for glass tiles (real territories only)
-    if (!isMacro && hoveredTerritory === t.id && glassProgress > 0 && zoomProgress < 0.5) {
-      const hoverScale = 1 + 0.03 * glassProgress;
-      drawW *= hoverScale;
-      drawH *= hoverScale;
-    }
+    // Draw shape (always cut-out style)
+    const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
+    const color = isMacro ? getShapeColor(t.color, 15) : getShapeColor(t.color, reach);
+    drawShape(ctx, pts, color, s.alpha);
 
-    // Draw shape: macros are always cut-outs; territories crossfade to glass
-    if (isMacro || glassProgress <= 0) {
-      const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
-      const color = isMacro ? getShapeColor(t.color, 15) : getShapeColor(t.color, reach);
-      drawShape(ctx, pts, color, s.alpha);
-    } else if (glassProgress >= 1) {
-      drawGlassTile(ctx, s.cx, s.cy, drawW, drawH, t.color, reach, s.alpha, 1);
-    } else {
-      const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
-      drawShape(ctx, pts, getShapeColor(t.color, reach), s.alpha * (1 - glassProgress));
-      drawGlassTile(ctx, s.cx, s.cy, drawW, drawH, t.color, reach, s.alpha * glassProgress, glassProgress);
-    }
-
-    // Hover outline (cut-out mode, real territories only)
-    if (!isMacro && hoveredTerritory === t.id && zoomProgress < 0.5 && glassProgress <= 0) {
-      const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
+    // Hover outline (real territories only)
+    if (!isMacro && hoveredTerritory === t.id && zoomProgress < 0.5) {
       drawShapeOutline(ctx, pts, '#E2DED4', 0.25, 1.5);
     }
 
     if (!isMacro && zoomedTerritory === t.id && zoomProgress > 0.1) {
-      if (glassProgress <= 0) {
-        const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
-        drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
-      }
+      drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
     }
 
     // Labels
@@ -1178,7 +1151,7 @@ function drawAllShapes(glassProgress) {
         ctx.fillStyle = '#E2DED4';
         ctx.globalAlpha = s.alpha * 0.6;
         const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
-        ctx.font = `italic 700 ${scoreSize}px "GT Super Display"`;
+        ctx.font = `700 ${scoreSize}px "Inter"`;
         ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
       }
 
@@ -1198,7 +1171,7 @@ function drawAllShapes(glassProgress) {
   });
 
   if (zoomProgress > 0.3 && zoomedTerritory) {
-    drawJobSubShapes(glassProgress);
+    drawJobSubShapes();
   }
 
   const avgReach = totalReachWeighted.weight > 0 ?
@@ -1207,8 +1180,7 @@ function drawAllShapes(glassProgress) {
     currentYear < 1960 ? '—' : avgReach + '%';
 }
 
-function drawJobSubShapes(glassProgress) {
-  glassProgress = glassProgress || 0;
+function drawJobSubShapes() {
   const t = TERRITORIES.find(x => x.id === zoomedTerritory);
   if (!t) return;
   const s = shapeStates[t.id];
@@ -1233,21 +1205,11 @@ function drawJobSubShapes(glassProgress) {
     const jw = baseJobSize + rawScore * 0.15;
     const jh = jw * 0.82;
 
-    // Draw sub-shape: glass or cut-out based on glassProgress
-    if (glassProgress <= 0) {
-      const pts = generateShapePath(jcx, jcy, jw, jh,
-        t.rotation + 15 * (i - n/2), hashStr(t.id + occ.occupation_name));
-      const jobColor = getShapeColor(t.color, rawScore);
-      drawShape(ctx, pts, jobColor, alpha * 0.85);
-    } else if (glassProgress >= 1) {
-      drawGlassTile(ctx, jcx, jcy, jw, jh, t.color, rawScore, alpha * 0.85, 1);
-    } else {
-      const pts = generateShapePath(jcx, jcy, jw, jh,
-        t.rotation + 15 * (i - n/2), hashStr(t.id + occ.occupation_name));
-      const jobColor = getShapeColor(t.color, rawScore);
-      drawShape(ctx, pts, jobColor, alpha * 0.85 * (1 - glassProgress));
-      drawGlassTile(ctx, jcx, jcy, jw, jh, t.color, rawScore, alpha * 0.85 * glassProgress, glassProgress);
-    }
+    // Draw sub-shape (always cut-out style)
+    const pts = generateShapePath(jcx, jcy, jw, jh,
+      t.rotation + 15 * (i - n/2), hashStr(t.id + occ.occupation_name));
+    const jobColor = getShapeColor(t.color, rawScore);
+    drawShape(ctx, pts, jobColor, alpha * 0.85);
 
     if (alpha > 0.3 && jw > 20) {
       ctx.save();
@@ -1261,7 +1223,7 @@ function drawJobSubShapes(glassProgress) {
       if (label.length > 18) label = label.substring(0, 16) + '…';
       ctx.fillText(label, jcx, jcy - jh * 0.08);
 
-      ctx.font = `italic 700 ${Math.max(12, jw * 0.22)}px "GT Super Display"`;
+      ctx.font = `700 ${Math.max(12, jw * 0.22)}px "Inter"`;
       ctx.globalAlpha = alpha * 0.6;
       ctx.fillText(rawScore + '%', jcx, jcy + jh * 0.22);
       ctx.restore();
@@ -1269,71 +1231,6 @@ function drawJobSubShapes(glassProgress) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════
-// LIQUID GLASS — Post-2026 visual treatment
-// ═══════════════════════════════════════════════════════════════
-function drawGlassTile(ctx, cx, cy, w, h, baseColor, reach, alpha, glassProgress) {
-  const minDim = Math.min(w, h);
-  const cornerRadius = minDim * 0.22;
-
-  ctx.save();
-
-  // 1. Soft drop shadow
-  ctx.shadowColor = 'rgba(0, 0, 0, 0.25)';
-  ctx.shadowBlur = 24 * glassProgress;
-  ctx.shadowOffsetX = 0;
-  ctx.shadowOffsetY = 6 * glassProgress;
-
-  // 2. Base fill (semi-translucent)
-  const baseOpacity = 0.75 + 0.10 * (reach / 100);
-  const {r, g, b} = hexToRGB(baseColor);
-  const brightness = 0.45 + 0.55 * Math.pow(reach / 100, 0.55);
-  ctx.fillStyle = `rgba(${Math.round(r*brightness)}, ${Math.round(g*brightness)}, ${Math.round(b*brightness)}, ${baseOpacity * alpha})`;
-
-  const path = new Path2D();
-  path.roundRect(cx - w/2, cy - h/2, w, h, cornerRadius);
-  ctx.fill(path);
-
-  // Reset shadow for overlay layers
-  ctx.shadowColor = 'transparent';
-  ctx.shadowBlur = 0;
-  ctx.shadowOffsetY = 0;
-
-  // 3. Internal gradient (subtle depth)
-  const grad = ctx.createLinearGradient(cx, cy - h/2, cx, cy + h/2);
-  grad.addColorStop(0, `rgba(255, 255, 255, ${0.08 * alpha * glassProgress})`);
-  grad.addColorStop(0.5, `rgba(255, 255, 255, 0)`);
-  grad.addColorStop(1, `rgba(0, 0, 0, ${0.06 * alpha * glassProgress})`);
-  ctx.fillStyle = grad;
-  ctx.fill(path);
-
-  // 4. Specular highlight (top edge gloss)
-  ctx.save();
-  ctx.clip(path);
-  const highlightGrad = ctx.createLinearGradient(cx, cy - h/2, cx, cy - h/2 + h * 0.35);
-  highlightGrad.addColorStop(0, `rgba(255, 255, 255, ${0.14 * alpha * glassProgress})`);
-  highlightGrad.addColorStop(1, `rgba(255, 255, 255, 0)`);
-  ctx.fillStyle = highlightGrad;
-  ctx.fillRect(cx - w/2, cy - h/2, w, h * 0.35);
-  ctx.restore();
-
-  // 5. Subtle border
-  ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * alpha * glassProgress})`;
-  ctx.lineWidth = 1;
-  ctx.stroke(path);
-
-  // 6. Very subtle inner glow
-  ctx.save();
-  ctx.clip(path);
-  const innerGlow = ctx.createRadialGradient(cx, cy, minDim * 0.1, cx, cy, minDim * 0.6);
-  innerGlow.addColorStop(0, `rgba(255, 255, 255, ${0.03 * alpha * glassProgress})`);
-  innerGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
-  ctx.fillStyle = innerGlow;
-  ctx.fillRect(cx - w/2, cy - h/2, w, h);
-  ctx.restore();
-
-  ctx.restore();
-}
 
 function hashStr(str) {
   let hash = 0;
