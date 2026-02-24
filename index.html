@@ -679,11 +679,11 @@ MACRO_SHAPES.forEach(m => {
   m.children.forEach(cid => { TERRITORY_PARENT[cid] = m.id; });
 });
 
-// Compute macro baseX/baseY as centroid of children
+// Explicit macro positions: Industry center, Services right
+// (land_sea is already left at 0.14, 0.22)
 MACRO_SHAPES.forEach(m => {
-  const children = m.children.map(id => TERRITORIES.find(t => t.id === id)).filter(Boolean);
-  m.baseX = children.reduce((s, t) => s + t.baseX, 0) / children.length;
-  m.baseY = children.reduce((s, t) => s + t.baseY, 0) / children.length;
+  if (m.id === 'macro_industry')  { m.baseX = 0.42; m.baseY = 0.35; }
+  if (m.id === 'macro_services')  { m.baseX = 0.72; m.baseY = 0.42; }
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -1026,7 +1026,7 @@ function drawAllShapes() {
   });
 
   // 3. Compute sizes and positions
-  const canvasArea = W * H * 0.75;
+  const canvasArea = W * H * 0.88;
   const totalShare = shapesToDraw.reduce((s,x) => s + x.share, 0) || 1;
 
   const items = shapesToDraw.map(s => {
@@ -1039,8 +1039,8 @@ function drawAllShapes() {
 
     let targetCx = t.baseX * W;
     let targetCy = t.baseY * H;
-    let targetW = Math.max(45, baseW);
-    let targetH = Math.max(35, baseH);
+    let targetW = Math.max(80, baseW);
+    let targetH = Math.max(65, baseH);
     let targetAlpha = 0.88 * s.morphProgress;
 
     // Emergence animation: interpolate from parent macro position
