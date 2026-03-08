@@ -3,15 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Reach — When Does AI Reach Your Profession?</title>
+<title>Large Labour Model — When Will AI Reach Your Profession?</title>
 <style>
-@font-face {
-  font-family: 'GT Super Display';
-  src: url('fonts/GT-Super-Display-Bold-Italic-Trial.otf') format('opentype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
 @font-face {
   font-family: 'Inter';
   src: url('fonts/Inter-Variable.ttf') format('truetype');
@@ -23,11 +16,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0A0C12;
-  --text: #E2DED4;
-  --muted: #6B6A72;
-  --gold: #C4A45A;
+  --bg: #000000;
+  --text: #FFFFFF;
+  --muted: #666666;
+  --accent: #FF0000;
   --border: rgba(255,255,255,0.07);
+  --surface: #111111;
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -48,10 +42,9 @@ header {
   padding: 12px 24px;
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(16px);
-  background: rgba(10,12,18,0.88);
+  background: rgba(0,0,0,0.88);
 }
-.wordmark { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; }
-.wordmark em { font-style: normal; color: var(--gold); }
+.wordmark { font-family: var(--font-body); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; }
 .tagline { font-size: 9px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin-top: 1px; }
 
 .search-wrap { position: relative; flex: 0 0 240px; }
@@ -59,13 +52,14 @@ header {
   width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
   color: var(--text); font-family: var(--font-body); font-size: 11px;
   padding: 6px 10px 6px 28px; outline: none; letter-spacing: 0.04em; transition: border-color 0.25s;
+  border-radius: 6px;
 }
-.search-wrap input:focus { border-color: rgba(196,164,90,0.4); }
+.search-wrap input:focus { border-color: rgba(255,0,0,0.4); }
 .search-wrap input::placeholder { color: var(--muted); }
 .search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 12px; }
 .search-results {
   position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-  background: rgba(15,17,32,0.98); border: 1px solid var(--border);
+  background: rgba(0,0,0,0.98); border: 1px solid var(--border);
   z-index: 200; display: none; max-height: 280px; overflow-y: auto;
 }
 .search-results.visible { display: block; }
@@ -74,7 +68,7 @@ header {
   cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.15s;
 }
 .search-result-item:last-child { border-bottom: none; }
-.search-result-item:hover { background: rgba(196,164,90,0.07); }
+.search-result-item:hover { background: rgba(255,0,0,0.07); }
 .search-result-item .job-territory { color: var(--muted); font-size: 8.5px; margin-top: 1px; }
 
 .header-right { display: flex; align-items: center; gap: 16px; }
@@ -84,9 +78,10 @@ header {
   background: transparent; border: 1px solid var(--border); color: var(--muted);
   font-family: var(--font-body); font-size: 9px; letter-spacing: 0.06em;
   padding: 4px 9px; cursor: pointer; transition: all 0.2s; text-transform: uppercase;
+  border-radius: 6px;
 }
-.scenario-btn:hover { border-color: rgba(196,164,90,0.3); color: var(--text); }
-.scenario-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(196,164,90,0.06); }
+.scenario-btn:hover { border-color: #555555; color: #999999; }
+.scenario-btn.active { border-color: #FF0000; color: #FF0000; background: transparent; }
 
 /* ── CANVAS ── */
 #main-canvas {
@@ -97,7 +92,7 @@ header {
 /* ── TOOLTIP ── */
 #tooltip {
   position: fixed; pointer-events: none; z-index: 90;
-  background: rgba(10,12,18,0.94); border: 1px solid var(--border);
+  background: rgba(0,0,0,0.94); border: 1px solid var(--border);
   padding: 8px 12px; opacity: 0; transition: opacity 0.15s;
   backdrop-filter: blur(12px); max-width: 220px;
 }
@@ -109,13 +104,13 @@ header {
   font-size: 9px; letter-spacing: 0.06em; color: var(--muted); line-height: 1.5;
 }
 #tooltip .tt-hint {
-  font-size: 8px; color: rgba(196,164,90,0.5); margin-top: 4px; letter-spacing: 0.08em;
+  font-size: 8px; color: rgba(255,0,0,0.5); margin-top: 4px; letter-spacing: 0.08em;
 }
 
 /* ── DETAIL PANEL (for zoomed view) ── */
 #detail-panel {
   position: fixed; right: 0; top: 46px; bottom: 88px; width: 340px;
-  background: rgba(10,12,18,0.96); border-left: 1px solid var(--border);
+  background: rgba(0,0,0,0.96); border-left: 1px solid var(--border);
   padding: 20px 18px; transform: translateX(100%);
   transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
   overflow-y: auto; backdrop-filter: blur(20px); z-index: 80;
@@ -132,7 +127,7 @@ header {
 .panel-close:hover { color: var(--text); }
 .panel-territory-name { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
 .panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
-.panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(226,222,212,0.68); margin-bottom: 18px; }
+.panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.68); margin-bottom: 18px; }
 
 .panel-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .panel-stat-label { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
@@ -146,16 +141,16 @@ header {
 #mini-chart { width: 100%; height: 70px; }
 
 .job-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.job-group-name { flex: 1; font-size: 10.5px; color: rgba(226,222,212,0.75); }
+.job-group-name { flex: 1; font-size: 10.5px; color: rgba(255,255,255,0.75); }
 .job-group-bar-wrap { flex: 0 0 100px; height: 3px; background: rgba(255,255,255,0.05); }
 .job-group-bar { height: 100%; transition: width 0.4s ease; }
 .job-group-score { flex: 0 0 32px; text-align: right; font-size: 10px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .panel-barrier {
   margin-top: 12px; padding: 7px 10px; background: rgba(255,255,255,0.02);
-  border-left: 2px solid var(--gold); font-size: 10px; line-height: 1.45; color: rgba(226,222,212,0.55);
+  border-left: 2px solid var(--accent); font-size: 10px; line-height: 1.45; color: rgba(255,255,255,0.55);
 }
-.panel-barrier strong { color: var(--gold); font-weight: 400; }
+.panel-barrier strong { color: var(--accent); font-weight: 400; }
 
 /* ── GLOBAL OVERLAY STATS ── */
 #global-stats {
@@ -166,13 +161,13 @@ header {
 .global-stat-label { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 
 #era-label { position: fixed; right: 24px; bottom: 100px; text-align: right; z-index: 50; }
-#era-label .era-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(226,222,212,0.4); }
+#era-label .era-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.4); }
 #era-label .era-detail { font-size: 7.5px; letter-spacing: 0.08em; color: var(--muted); margin-top: 1px; }
 
 /* ── TIMELINE ── */
 #timeline {
   position: fixed; bottom: 0; left: 0; right: 0; height: 88px;
-  background: rgba(10,12,18,0.95); border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.95); border-top: 1px solid var(--border);
   padding: 0 24px; display: flex; flex-direction: column; justify-content: center; gap: 6px;
   backdrop-filter: blur(16px); z-index: 100;
 }
@@ -182,18 +177,18 @@ header {
   color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center;
   font-size: 11px; transition: all 0.2s; flex-shrink: 0;
 }
-.play-btn:hover { border-color: var(--gold); color: var(--gold); }
+.play-btn:hover { border-color: var(--accent); color: var(--accent); }
 .year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; }
-.year-display.projected { color: var(--gold); }
+.year-display.projected { color: #FF0000; }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; }
 .timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
 .timeline-historical { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(255,255,255,0.1); }
-.timeline-progress { position: absolute; left: 0; top: 0; bottom: 0; background: var(--gold); transition: width 0.05s linear; }
-.timeline-split { position: absolute; top: -7px; bottom: -7px; width: 1px; background: rgba(196,164,90,0.3); }
+.timeline-progress { position: absolute; left: 0; top: 0; bottom: 0; background: #FF0000; transition: width 0.05s linear; }
+.timeline-split { position: absolute; top: -7px; bottom: -7px; width: 1px; background: rgba(255,0,0,0.3); }
 .timeline-scrubber {
   position: absolute; top: 50%; width: 11px; height: 11px;
-  background: var(--gold); border: 2px solid var(--bg); border-radius: 50%;
+  background: #FFFFFF; border: 2px solid var(--bg); border-radius: 50%;
   transform: translate(-50%, -50%); cursor: grab; transition: width 0.15s, height 0.15s; z-index: 10;
 }
 .timeline-scrubber:hover, .timeline-scrubber.dragging { width: 15px; height: 15px; }
@@ -209,31 +204,31 @@ header {
   transform: translateX(-50%); width: 1px; height: 7px;
   background: rgba(255,255,255,0.12); margin-bottom: 2px;
 }
-.milestone-dot:hover { background: var(--gold); border-color: var(--gold); width: 11px; height: 11px; box-shadow: 0 0 10px rgba(196,164,90,0.45); }
-.milestone-dot:hover::before { background: rgba(196,164,90,0.5); }
+.milestone-dot:hover { background: #FF0000; border-color: #FF0000; width: 11px; height: 11px; box-shadow: 0 0 10px rgba(255,0,0,0.45); }
+.milestone-dot:hover::before { background: rgba(255,0,0,0.5); }
 .milestone-dot:hover .milestone-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
 .milestone-featured {
   width: 9px; height: 9px;
-  background: rgba(196,164,90,0.35); border-color: rgba(196,164,90,0.45);
+  background: rgba(255,0,0,0.25); border-color: rgba(255,0,0,0.4);
 }
 .milestone-featured:hover { width: 13px; height: 13px; }
 .milestone-tooltip {
   position: absolute; bottom: calc(100% + 14px); left: 50%;
   transform: translateX(-50%) translateY(4px);
-  background: rgba(15,17,32,0.97); border: 1px solid var(--border);
+  background: rgba(0,0,0,0.97); border: 1px solid var(--border);
   padding: 7px 12px; font-size: 10px; letter-spacing: 0.04em; min-width: 150px;
   color: var(--text); white-space: nowrap; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 200;
 }
-.milestone-year { color: var(--gold); display: block; margin-bottom: 2px; font-size: 11px; }
+.milestone-year { color: var(--accent); display: block; margin-bottom: 2px; font-size: 11px; }
 
 .timeline-years { display: flex; position: relative; height: 12px; font-size: 8px; color: var(--muted); letter-spacing: 0.05em; }
 .timeline-years span { position: absolute; transform: translateX(-50%); }
 .zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); top: -14px; }
-.zone-label.projected { right: 0; color: rgba(196,164,90,0.4); }
+.zone-label.projected { right: 0; color: rgba(255,0,0,0.4); }
 .timeline-projected-zone {
   position: absolute; top: -5px; bottom: -5px; right: 0;
-  background: rgba(196,164,90,0.04);
-  border-left: 1px solid rgba(196,164,90,0.25);
+  background: rgba(255,0,0,0.04);
+  border-left: 1px solid rgba(255,0,0,0.25);
   pointer-events: none;
 }
 
@@ -241,7 +236,7 @@ header {
 #milestone-toast {
   position: fixed; left: 50%; bottom: 108px;
   transform: translateX(-50%) translateY(12px);
-  background: rgba(12,14,22,0.96); border: 1px solid rgba(196,164,90,0.35);
+  background: rgba(0,0,0,0.96); border: 1px solid #FF0000;
   padding: 8px 18px; z-index: 150; pointer-events: none;
   opacity: 0; transition: opacity 0.25s ease, transform 0.25s ease;
   text-align: center; backdrop-filter: blur(12px);
@@ -249,26 +244,47 @@ header {
 #milestone-toast.visible {
   opacity: 1; transform: translateX(-50%) translateY(0);
 }
-.toast-year { font-family: var(--font-body); font-size: 11px; color: var(--gold); letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
+.toast-year { font-family: var(--font-body); font-size: 11px; color: #FF0000; letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
 .toast-label { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text); }
 .toast-desc { font-size: 8.5px; color: var(--muted); letter-spacing: 0.05em; margin-top: 1px; display: block; }
 
 /* ── INTRO ── */
 #intro-overlay {
-  position: fixed; inset: 0; z-index: 500; background: var(--bg);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: opacity 1s ease;
+  position: fixed; inset: 0; z-index: 500; background: #000000;
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
+  padding: 15vh 8vw;
+  transition: opacity 0.8s ease;
 }
 #intro-overlay.fade-out { opacity: 0; pointer-events: none; }
-.intro-title { font-family: var(--font-display); font-size: 44px; font-weight: 700; letter-spacing: 0.03em; margin-bottom: 6px; }
-.intro-title em { color: var(--gold); font-style: normal; }
-.intro-question { font-family: var(--font-body); font-size: 17px; font-weight: 400; color: rgba(226,222,212,0.45); margin-bottom: 28px; }
-.intro-enter {
-  font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
-  border: 1px solid rgba(196,164,90,0.35); padding: 9px 24px; cursor: pointer;
-  background: transparent; font-family: var(--font-body); transition: all 0.3s;
+.intro-title {
+  font-family: 'Inter', sans-serif; font-weight: 700;
+  font-size: clamp(48px, 6vw, 80px); color: #FFFFFF;
+  line-height: 1.05; margin-bottom: 24px;
 }
-.intro-enter:hover { background: rgba(196,164,90,0.07); border-color: var(--gold); }
+.intro-subtitle {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: 18px; letter-spacing: 0.15em; color: #FFFFFF;
+  text-transform: uppercase; margin-bottom: 32px;
+}
+.intro-body {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: 16px; line-height: 1.6; color: #888888;
+  max-width: 600px; margin-bottom: 48px;
+}
+.intro-enter {
+  font-family: 'Inter', sans-serif; font-weight: 500;
+  font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: #FFFFFF; background: #2042E3; border: none;
+  padding: 16px 48px; cursor: pointer; transition: filter 0.2s;
+}
+.intro-enter:hover { filter: brightness(1.1); }
+.intro-methodology {
+  position: fixed; bottom: 32px; right: 32px;
+  font-family: 'Inter', sans-serif; font-weight: 400; font-size: 20px;
+  color: #FFFFFF; cursor: pointer; opacity: 0.6; transition: opacity 0.2s;
+  z-index: 501; background: none; border: none;
+}
+.intro-methodology:hover { opacity: 1; }
 
 /* Back button for zoom */
 #back-btn {
@@ -277,22 +293,24 @@ header {
   background: transparent; border: 1px solid var(--border); padding: 5px 12px;
   cursor: pointer; font-family: var(--font-body); transition: all 0.2s; display: none;
 }
-#back-btn:hover { border-color: var(--gold); color: var(--gold); }
+#back-btn:hover { border-color: var(--accent); color: var(--accent); }
 #back-btn.visible { display: block; }
 </style>
 </head>
 <body>
 
 <div id="intro-overlay">
-  <div class="intro-title"><em>AI Reach</em></div>
-  <div class="intro-question">When does AI reach your profession?</div>
-  <button class="intro-enter" onclick="enterSite()">Enter</button>
+  <div class="intro-title">Large Labour Model</div>
+  <div class="intro-subtitle">WHEN WILL AI REACH YOUR PROFESSION?</div>
+  <div class="intro-body">Large Labour Model maps the development — and subsequent replaceability — of human labour from 1800 to 2040. Taking a deliberately crude approach of charting a numerical trend, the piece encourages viewers to consider their emotional reaction to a rational expression.</div>
+  <button class="intro-enter" onclick="enterSite()">ENTER</button>
+  <button class="intro-methodology" id="methodology-btn">+</button>
 </div>
 
 <header>
   <div>
-    <div class="wordmark"><em>AI Reach</em> — A Map of Work</div>
-    <div class="tagline">When does artificial intelligence reach your profession?</div>
+    <div class="wordmark">Large Labour Model</div>
+    <div class="tagline">WHEN WILL AI REACH YOUR PROFESSION?</div>
   </div>
   <div class="search-wrap">
     <span class="search-icon">⌕</span>
@@ -554,55 +572,55 @@ function buildLookupTables() {
 const START_YEAR = 1800, END_YEAR = 2040, SPLIT_YEAR = 2026;
 
 const TERRITORIES = [
-  { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#2D8A5F',
+  { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#1A7A2E',
     baseX:0.14, baseY:0.22, rotation:-8,
     desc:'Agriculture, forestry, fishing. The oldest human work. Precision agriculture and autonomous machinery are transforming high-capital farming; subsistence agriculture holds by sheer scale.',
     barrier:'Capital deployment lag — frontier farms are highly automated, but 70% of global agriculture is smallholder.' },
-  { id:'making_things', name:'Making Things', isic:['C'], color:'#D4923B',
+  { id:'making_things', name:'Making Things', isic:['C'], color:'#FF5C00',
     baseX:0.33, baseY:0.16, rotation:12,
     desc:'Manufacturing. The frontier is fully dark. The global average is decades behind it.',
     barrier:'Capital deployment lag — Xiaomi runs lights-out factories, but global average varies 10x between countries.' },
-  { id:'building_things', name:'Building Things', isic:['F'], color:'#C85A3A',
+  { id:'building_things', name:'Building Things', isic:['F'], color:'#FF8C00',
     baseX:0.14, baseY:0.48, rotation:-5,
     desc:'Construction. Unstructured environments remain the hardest for robotics.',
     barrier:'Unstructured environments — every site is different. Humanoid robots at $10–15k would change this.' },
-  { id:'moving_things', name:'Moving Things', isic:['H'], color:'#4A7AB5',
+  { id:'moving_things', name:'Moving Things', isic:['H'], color:'#00E5FF',
     baseX:0.32, baseY:0.42, rotation:7,
     desc:'Transport, logistics, warehousing. Highway autonomy is operational. Last-mile is not.',
     barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.' },
-  { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#E07060',
+  { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#FFE000',
     baseX:0.50, baseY:0.30, rotation:-4,
     desc:'Retail and wholesale trade. The largest employer by headcount.',
     barrier:'Scale of existing employment — 18% of global workforce.' },
-  { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#8B6CC0',
+  { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#0047FF',
     baseX:0.68, baseY:0.17, rotation:10,
     desc:'Finance, insurance, real estate, information. LLMs accelerated decades of quiet automation.',
     barrier:'Regulatory and liability frameworks. Technically replaceable, legally complicated.' },
-  { id:'thinking_leading', name:'Thinking & Leading', isic:['M','N'], color:'#3AB0D4',
+  { id:'thinking_leading', name:'Thinking & Leading', isic:['M','N'], color:'#4400FF',
     baseX:0.84, baseY:0.30, rotation:-7,
     desc:'Professional, scientific, technical, management. SWE-bench: 4.4% → 71.7% in one year.',
     barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.' },
-  { id:'care_health', name:'Care & Health', isic:['Q'], color:'#3BA89A',
+  { id:'care_health', name:'Care & Health', isic:['Q'], color:'#FF2D78',
     baseX:0.82, baseY:0.56, rotation:5,
     desc:'Human health and social work. Radiologist salaries rose 48% since 2015 despite AI matching diagnostic accuracy.',
     barrier:'Legal liability, credentialing, and deep human preference.' },
-  { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#D4B03A',
+  { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#00CFFF',
     baseX:0.68, baseY:0.68, rotation:-10,
     desc:'Education. AI tutors work. But lead teaching and mentorship resist automation.',
     barrier:'Human preference and trust. Parents and students want human teachers.' },
-  { id:'making_meaning', name:'Making Meaning', isic:['R'], color:'#D45090',
+  { id:'making_meaning', name:'Making Meaning', isic:['R'], color:'#FF00AA',
     baseX:0.50, baseY:0.64, rotation:8,
     desc:'Arts, media, creative industries. Generative AI arrived suddenly, not gradually.',
     barrier:'Identity and authorship — the barrier is whether audiences value human-made work.' },
-  { id:'governing_protecting', name:'Governing & Protecting', isic:['O'], color:'#3A5A8F',
+  { id:'governing_protecting', name:'Governing & Protecting', isic:['O'], color:'#7B00FF',
     baseX:0.50, baseY:0.84, rotation:-3,
     desc:'Public administration, defense. The slowest territory. Government moves at government speed.',
     barrier:'Institutional inertia and political accountability.' },
-  { id:'feeding_hosting', name:'Feeding & Hosting', isic:['I'], color:'#E8943A',
+  { id:'feeding_hosting', name:'Feeding & Hosting', isic:['I'], color:'#FFAA00',
     baseX:0.32, baseY:0.72, rotation:6,
     desc:'Accommodation, food service. Fast food is automating. Hospitality is not.',
     barrier:'Human preference. Hospitality is a performance.' },
-  { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#6B8A9D',
+  { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#00FF66',
     baseX:0.16, baseY:0.76, rotation:-9,
     desc:'Utilities, repair, personal services. Humanoid robots at $10–15k are the unlock.',
     barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.' },
@@ -627,14 +645,14 @@ const MACRO_SHAPES = [
   {
     id: 'macro_industry',
     name: 'Industry',
-    color: '#7A6F5D',
+    color: '#FF5C00',
     rotation: -5,
     children: ['making_things', 'building_things'],
   },
   {
     id: 'macro_services',
     name: 'Services',
-    color: '#5D6B7A',
+    color: '#0047FF',
     rotation: 3,
     children: ['buying_selling', 'money_data', 'care_health', 'learning_teaching',
                'feeding_hosting', 'maintaining_fixing', 'making_meaning', 'thinking_leading',
@@ -899,10 +917,9 @@ function hexToRGB(hex) {
 }
 
 function getShapeColor(baseHex, reach) {
-  const {r,g,b} = hexToRGB(baseHex);
-  const minBrightness = 0.45;
-  const t = minBrightness + (1 - minBrightness) * Math.pow(reach / 100, 0.55);
-  return `rgb(${Math.round(t*r)},${Math.round(t*g)},${Math.round(t*b)})`;
+  // Return the base color at full saturation always.
+  // Opacity is controlled separately via shape alpha.
+  return baseHex;
 }
 
 function getBarColor(score) {
@@ -944,10 +961,7 @@ function render() {
 
   ctx.clearRect(0, 0, W, H);
 
-  const bgGrad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, W*0.7);
-  bgGrad.addColorStop(0, '#0E1018');
-  bgGrad.addColorStop(1, '#08090E');
-  ctx.fillStyle = bgGrad;
+  ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, W, H);
 
   drawAllShapes();
@@ -1041,7 +1055,13 @@ function drawAllShapes() {
     let targetCy = t.baseY * H;
     let targetW = Math.max(80, baseW);
     let targetH = Math.max(65, baseH);
-    let targetAlpha = 0.88 * s.morphProgress;
+    // Alpha encodes replaceability: 0.30 at score 0, up to 0.95 at score 100
+    const reachAlpha = 0.30 + (s.reach / 100) * 0.65;
+    let targetAlpha = reachAlpha * s.morphProgress;
+    // For macros, keep a visible baseline
+    if (s.isMacro) {
+      targetAlpha = 0.40 * s.morphProgress;
+    }
 
     // Emergence animation: interpolate from parent macro position
     if (s.morphProgress < 1 && !s.isMacro) {
@@ -1069,7 +1089,7 @@ function drawAllShapes() {
         targetH = baseH + (H * 0.55 - baseH) * zoomProgress;
         targetAlpha = 0.92;
       } else {
-        targetAlpha = 0.88 * s.morphProgress * (1 - zoomProgress * 0.85);
+        targetAlpha = reachAlpha * s.morphProgress * (1 - zoomProgress * 0.85);
         const dx = targetCx - W*0.5;
         const dy = targetCy - H*0.5;
         targetCx += dx * zoomProgress * 0.15;
@@ -1121,25 +1141,37 @@ function drawAllShapes() {
 
     // Hover outline (real territories only)
     if (!isMacro && hoveredTerritory === t.id && zoomProgress < 0.5) {
-      drawShapeOutline(ctx, pts, '#E2DED4', 0.25, 1.5);
+      drawShapeOutline(ctx, pts, '#FFFFFF', 0.25, 1.5);
     }
 
     if (!isMacro && zoomedTerritory === t.id && zoomProgress > 0.1) {
       drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
     }
 
-    // Labels
-    const minDim = Math.min(drawW, drawH);
+    // Projected data shimmer — subtle pulsing border for post-2026
+    if (!isMacro && currentYear > 2026 && reach > 0) {
+      const shimmerPhase = (Date.now() % 3000) / 3000;
+      const shimmerAlpha = 0.15 + 0.15 * Math.sin(shimmerPhase * Math.PI * 2);
+      drawShapeOutline(ctx, pts, t.color, shimmerAlpha, 1);
+    }
+
+    // Labels with minimum padding
+    const paddingX = Math.max(16, drawW * 0.08);
+    const paddingY = Math.max(12, drawH * 0.08);
+    const availW = drawW - paddingX * 2;
+    const availH = drawH - paddingY * 2;
+    const minDim = Math.min(availW, availH);
+
     if (minDim > 30 && s.alpha > 0.15) {
       ctx.save();
       ctx.globalAlpha = s.alpha * 0.85;
 
       const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
-      ctx.fillStyle = '#E2DED4';
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = `400 ${nameSize}px "Inter"`;
       ctx.textAlign = 'center';
       const words = t.name.split(' ');
-      if (minDim > 80 && drawW > 100) {
+      if (minDim > 80 && availW > 100) {
         ctx.fillText(t.name.toUpperCase(), s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
       } else if (minDim > 50) {
         words.forEach((w, i) => {
@@ -1148,7 +1180,7 @@ function drawAllShapes() {
       }
 
       if (!isMacro && reach >= 1 && minDim > 40) {
-        ctx.fillStyle = '#E2DED4';
+        ctx.fillStyle = '#FFFFFF';
         ctx.globalAlpha = s.alpha * 0.6;
         const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
         ctx.font = `700 ${scoreSize}px "Inter"`;
@@ -1160,7 +1192,7 @@ function drawAllShapes() {
         const workers = Math.round(share / 100 * wf);
         const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
         const wfSize = Math.max(7, Math.min(10, minDim * 0.055));
-        ctx.fillStyle = '#E2DED4';
+        ctx.fillStyle = '#FFFFFF';
         ctx.globalAlpha = s.alpha * 0.28;
         ctx.font = `400 ${wfSize}px "Inter"`;
         ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.26);
@@ -1214,7 +1246,7 @@ function drawJobSubShapes() {
     if (alpha > 0.3 && jw > 20) {
       ctx.save();
       ctx.globalAlpha = alpha * 0.8;
-      ctx.fillStyle = '#E2DED4';
+      ctx.fillStyle = '#FFFFFF';
       const labelSize = Math.max(7, Math.min(10, jw * 0.15));
       ctx.font = `400 ${labelSize}px "Inter"`;
       ctx.textAlign = 'center';
@@ -1381,7 +1413,7 @@ function drawMiniChart(t) {
   const sx = ((SPLIT_YEAR-s)/r)*CW;
   const sl = document.createElementNS('http://www.w3.org/2000/svg','line');
   sl.setAttribute('x1',sx);sl.setAttribute('y1',0);sl.setAttribute('x2',sx);sl.setAttribute('y2',CH);
-  sl.setAttribute('stroke','rgba(196,164,90,0.2)');
+  sl.setAttribute('stroke','rgba(255,0,0,0.2)');
   svg.appendChild(sl);
 
   const pts = [];
@@ -1440,7 +1472,7 @@ function buildTimeline() {
   [1800,1850,1900,1950,2000,2026,2040].forEach(y => {
     const s = document.createElement('span');
     s.textContent = y; s.style.left = yearToPercent(y)+'%';
-    if (y===2026) s.style.color = 'rgba(196,164,90,0.5)';
+    if (y===2026) s.style.color = 'rgba(255,0,0,0.5)';
     ye.appendChild(s);
   });
 
@@ -1488,7 +1520,13 @@ function buildTimeline() {
 
 function updateTimelineUI() {
   const p = yearToPercent(currentYear);
-  document.getElementById('timeline-progress').style.width = p+'%';
+  const progressBar = document.getElementById('timeline-progress');
+  progressBar.style.width = p+'%';
+  const progressRatio = (currentYear - START_YEAR) / (END_YEAR - START_YEAR);
+  const r = Math.round(51 + (255 - 51) * progressRatio);
+  const g = Math.round(51 + (0 - 51) * progressRatio);
+  const b = Math.round(51 + (0 - 51) * progressRatio);
+  progressBar.style.background = `rgb(${r},${g},${b})`;
   document.getElementById('timeline-scrubber').style.left = p+'%';
   const yr = Math.round(currentYear);
   const ye = document.getElementById('year-display');
