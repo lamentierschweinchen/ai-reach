@@ -54,7 +54,7 @@ header {
   padding: 6px 10px 6px 28px; outline: none; letter-spacing: 0.04em; transition: border-color 0.25s;
   border-radius: 6px;
 }
-.search-wrap input:focus { border-color: rgba(255,0,0,0.4); }
+.search-wrap input:focus { border-color: #FFFFFF; outline: none; }
 .search-wrap input::placeholder { color: var(--muted); }
 .search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 12px; }
 .search-results {
@@ -174,23 +174,23 @@ header {
 /* ── TIMELINE ── */
 #timeline {
   position: fixed; bottom: 0; left: 0; right: 0; height: 88px;
-  background: #FFFFFF; border-top: 1px solid rgba(0,0,0,0.10);
+  background: #000000; border-top: 1px solid rgba(255,255,255,0.07);
   padding: 0 24px; display: flex; flex-direction: column; justify-content: center; gap: 6px;
   z-index: 100;
 }
 .timeline-top { display: flex; align-items: center; gap: 14px; }
 .play-btn {
-  width: 28px; height: 28px; border: 1px solid rgba(0,0,0,0.18); background: transparent;
-  color: #111111; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.07); background: transparent;
+  color: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center;
   font-size: 11px; transition: all 0.2s; flex-shrink: 0; border-radius: 6px;
 }
 .play-btn:hover { border-color: var(--accent); color: var(--accent); }
-.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #111111; background: #FFFFFF; position: relative; z-index: 2; padding-right: 6px; }
+.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #FFFFFF; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
 .year-display.projected { color: #FF0000; }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; }
-.timeline-track { width: 100%; height: 2px; background: rgba(0,0,0,0.10); position: relative; cursor: pointer; }
-.timeline-historical { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(0,0,0,0.18); }
+.timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
+.timeline-historical { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(255,255,255,0.1); }
 .timeline-progress { position: absolute; left: 0; top: 0; bottom: 0; background: #FF0000; transition: width 0.05s linear; }
 .timeline-split { position: absolute; top: -7px; bottom: -7px; width: 1px; background: rgba(255,0,0,0.3); }
 .timeline-scrubber {
@@ -198,18 +198,18 @@ header {
   background: #FFFFFF; border: 2px solid var(--bg); border-radius: 50%;
   transform: translate(-50%, -50%); cursor: grab; transition: width 0.15s, height 0.15s; z-index: 10;
 }
-.timeline-scrubber:hover, .timeline-scrubber.dragging { width: 15px; height: 15px; }
+.timeline-scrubber:hover, .timeline-scrubber.dragging { width: 18px; height: 18px; }
 
 .milestone-dot {
   position: absolute; top: 50%; width: 7px; height: 7px;
-  background: rgba(0,0,0,0.22); border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.28); border: 1px solid rgba(255,255,255,0.12);
   border-radius: 50%;
   transform: translate(-50%, -50%); cursor: pointer; transition: all 0.2s; z-index: 5;
 }
 .milestone-dot::before {
   content: ''; position: absolute; bottom: 100%; left: 50%;
   transform: translateX(-50%); width: 1px; height: 7px;
-  background: rgba(0,0,0,0.15); margin-bottom: 2px;
+  background: rgba(255,255,255,0.12); margin-bottom: 2px;
 }
 .milestone-dot:hover { background: #FF0000; border-color: #FF0000; width: 11px; height: 11px; box-shadow: 0 0 10px rgba(255,0,0,0.45); }
 .milestone-dot:hover::before { background: rgba(255,0,0,0.5); }
@@ -226,12 +226,12 @@ header {
   padding: 7px 12px; font-size: 10px; letter-spacing: 0.04em; min-width: 150px;
   color: var(--text); white-space: nowrap; opacity: 0; transition: all 0.2s; pointer-events: none; z-index: 200;
 }
-.milestone-year { color: var(--accent); display: block; margin-bottom: 2px; font-size: 11px; }
+.milestone-year { color: #FFFFFF; display: block; margin-bottom: 2px; font-size: 11px; }
 
-.timeline-years { display: flex; position: relative; height: 12px; font-size: 8px; color: #888888; letter-spacing: 0.05em; }
+.timeline-years { display: flex; position: relative; height: 12px; font-size: 8px; color: #666666; letter-spacing: 0.05em; }
 .timeline-years span { position: absolute; transform: translateX(-50%); }
-.zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; text-transform: uppercase; color: #888888; top: -14px; }
-.zone-label.projected { right: 0; color: rgba(255,0,0,0.55); }
+.zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; text-transform: uppercase; color: #666666; top: -14px; }
+.zone-label.projected { right: 0; color: rgba(255,0,0,0.4); }
 .timeline-projected-zone {
   position: absolute; top: -5px; bottom: -5px; right: 0;
   background: rgba(255,0,0,0.04);
@@ -251,7 +251,7 @@ header {
 #milestone-toast.visible {
   opacity: 1; transform: translateX(-50%) translateY(0);
 }
-.toast-year { font-family: var(--font-body); font-size: 11px; color: #FF0000; letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
+.toast-year { font-family: var(--font-body); font-size: 11px; color: #FFFFFF; letter-spacing: 0.08em; display: block; margin-bottom: 1px; }
 .toast-label { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text); }
 .toast-desc { font-size: 8.5px; color: var(--muted); letter-spacing: 0.05em; margin-top: 1px; display: block; }
 
@@ -574,55 +574,55 @@ function buildLookupTables() {
 const START_YEAR = 1800, END_YEAR = 2040, SPLIT_YEAR = 2026;
 
 const TERRITORIES = [
-  { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#1A7A2E',
+  { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#004D1A',
     baseX:0.14, baseY:0.22, rotation:-8,
     desc:'Agriculture, forestry, fishing. The oldest human work. Precision agriculture and autonomous machinery are transforming high-capital farming; subsistence agriculture holds by sheer scale.',
     barrier:'Capital deployment lag — frontier farms are highly automated, but 70% of global agriculture is smallholder.' },
-  { id:'making_things', name:'Making Things', isic:['C'], color:'#FF5C00',
+  { id:'making_things', name:'Making Things', isic:['C'], color:'#FF6600',
     baseX:0.33, baseY:0.16, rotation:12,
     desc:'Manufacturing. The frontier is fully dark. The global average is decades behind it.',
     barrier:'Capital deployment lag — Xiaomi runs lights-out factories, but global average varies 10x between countries.' },
-  { id:'building_things', name:'Building Things', isic:['F'], color:'#FF8C00',
+  { id:'building_things', name:'Building Things', isic:['F'], color:'#FF3D00',
     baseX:0.14, baseY:0.48, rotation:-5,
     desc:'Construction. Unstructured environments remain the hardest for robotics.',
     barrier:'Unstructured environments — every site is different. Humanoid robots at $10–15k would change this.' },
-  { id:'moving_things', name:'Moving Things', isic:['H'], color:'#00E5FF',
+  { id:'moving_things', name:'Moving Things', isic:['H'], color:'#00A36C',
     baseX:0.32, baseY:0.42, rotation:7,
     desc:'Transport, logistics, warehousing. Highway autonomy is operational. Last-mile is not.',
     barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.' },
-  { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#FFE000',
+  { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#FFD700',
     baseX:0.50, baseY:0.30, rotation:-4,
     desc:'Retail and wholesale trade. The largest employer by headcount.',
     barrier:'Scale of existing employment — 18% of global workforce.' },
-  { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#0047FF',
+  { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#0033CC',
     baseX:0.68, baseY:0.17, rotation:10,
     desc:'Finance, insurance, real estate, information. LLMs accelerated decades of quiet automation.',
     barrier:'Regulatory and liability frameworks. Technically replaceable, legally complicated.' },
-  { id:'thinking_leading', name:'Thinking & Leading', isic:['M','N'], color:'#4400FF',
+  { id:'thinking_leading', name:'Thinking & Leading', isic:['M','N'], color:'#7B1FA2',
     baseX:0.84, baseY:0.30, rotation:-7,
     desc:'Professional, scientific, technical, management. SWE-bench: 4.4% → 71.7% in one year.',
     barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.' },
-  { id:'care_health', name:'Care & Health', isic:['Q'], color:'#FF2D78',
+  { id:'care_health', name:'Care & Health', isic:['Q'], color:'#E60073',
     baseX:0.82, baseY:0.56, rotation:5,
     desc:'Human health and social work. Radiologist salaries rose 48% since 2015 despite AI matching diagnostic accuracy.',
     barrier:'Legal liability, credentialing, and deep human preference.' },
-  { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#00CFFF',
+  { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#00E5FF',
     baseX:0.68, baseY:0.68, rotation:-10,
     desc:'Education. AI tutors work. But lead teaching and mentorship resist automation.',
     barrier:'Human preference and trust. Parents and students want human teachers.' },
-  { id:'making_meaning', name:'Making Meaning', isic:['R'], color:'#FF00AA',
+  { id:'making_meaning', name:'Making Meaning', isic:['R'], color:'#FF99CC',
     baseX:0.50, baseY:0.64, rotation:8,
     desc:'Arts, media, creative industries. Generative AI arrived suddenly, not gradually.',
     barrier:'Identity and authorship — the barrier is whether audiences value human-made work.' },
-  { id:'governing_protecting', name:'Governing & Protecting', isic:['O'], color:'#7B00FF',
+  { id:'governing_protecting', name:'Governing & Protecting', isic:['O'], color:'#A100FF',
     baseX:0.50, baseY:0.84, rotation:-3,
     desc:'Public administration, defense. The slowest territory. Government moves at government speed.',
     barrier:'Institutional inertia and political accountability.' },
-  { id:'feeding_hosting', name:'Feeding & Hosting', isic:['I'], color:'#FFAA00',
+  { id:'feeding_hosting', name:'Feeding & Hosting', isic:['I'], color:'#C28A00',
     baseX:0.32, baseY:0.72, rotation:6,
     desc:'Accommodation, food service. Fast food is automating. Hospitality is not.',
     barrier:'Human preference. Hospitality is a performance.' },
-  { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#00FF66',
+  { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#39FF14',
     baseX:0.16, baseY:0.76, rotation:-9,
     desc:'Utilities, repair, personal services. Humanoid robots at $10–15k are the unlock.',
     barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.' },
@@ -647,14 +647,14 @@ const MACRO_SHAPES = [
   {
     id: 'macro_industry',
     name: 'Industry',
-    color: '#FF5C00',
+    color: '#FF6600',
     rotation: -5,
     children: ['making_things', 'building_things'],
   },
   {
     id: 'macro_services',
     name: 'Services',
-    color: '#0047FF',
+    color: '#0033CC',
     rotation: 3,
     children: ['buying_selling', 'money_data', 'care_health', 'learning_teaching',
                'feeding_hosting', 'maintaining_fixing', 'making_meaning', 'thinking_leading',
@@ -1055,8 +1055,8 @@ function drawAllShapes() {
 
     let targetCx = t.baseX * W;
     let targetCy = t.baseY * H;
-    let targetW = Math.max(80, baseW);
-    let targetH = Math.max(65, baseH);
+    let targetW = Math.max(110, baseW);
+    let targetH = Math.max(90, baseH);
     const reachAlpha = 0.88;
     let targetAlpha = reachAlpha * s.morphProgress;
     if (s.isMacro) {
@@ -1467,6 +1467,27 @@ document.getElementById('panel-close').addEventListener('click', zoomOut);
 const TOTAL_YEARS = END_YEAR - START_YEAR;
 function yearToPercent(y) { return ((y-START_YEAR)/TOTAL_YEARS)*100; }
 
+let activeMilestone = null;
+
+function showMilestonePanel(m) {
+  const toast = document.getElementById('milestone-toast');
+  document.getElementById('toast-year').textContent = m.year;
+  document.getElementById('toast-label').textContent = m.label;
+  let desc = m.desc || '';
+  if (desc.length > 80) desc = desc.substring(0, 77) + '\u2026';
+  document.getElementById('toast-desc').textContent = desc;
+  toast.classList.add('visible');
+  toast.style.pointerEvents = 'auto';
+  if (toastTimeout) { clearTimeout(toastTimeout); toastTimeout = null; }
+}
+
+function hideMilestonePanel() {
+  const toast = document.getElementById('milestone-toast');
+  toast.classList.remove('visible');
+  toast.style.pointerEvents = 'none';
+  activeMilestone = null;
+}
+
 function buildTimeline() {
   const ye = document.getElementById('timeline-years');
   [1800,1850,1900,1950,2000,2026,2040].forEach(y => {
@@ -1497,6 +1518,12 @@ function buildTimeline() {
     let desc = m.desc || '';
     if (desc.length > 80) desc = desc.substring(0, 77) + '…';
     d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}<div style="color:#6b6a72;font-size:9px;margin-top:3px;max-width:180px;white-space:normal">${desc}</div></div>`;
+    d.addEventListener('click', e => {
+      e.stopPropagation();
+      if (activeMilestone === m) return;
+      activeMilestone = m;
+      showMilestonePanel(m);
+    });
     mc.appendChild(d);
   });
 
@@ -1522,11 +1549,17 @@ function updateTimelineUI() {
   const p = yearToPercent(currentYear);
   const progressBar = document.getElementById('timeline-progress');
   progressBar.style.width = p+'%';
-  const progressRatio = (currentYear - START_YEAR) / (END_YEAR - START_YEAR);
-  const r = Math.round(51 + (255 - 51) * progressRatio);
-  const g = Math.round(51 + (0 - 51) * progressRatio);
-  const b = Math.round(51 + (0 - 51) * progressRatio);
+  const progressRatio = Math.min(1, (currentYear - START_YEAR) / (SPLIT_YEAR - START_YEAR));
+  const grey = 68;
+  const r = Math.round(grey + (255 - grey) * progressRatio);
+  const g = Math.round(grey + (255 - grey) * progressRatio);
+  const b = Math.round(grey + (255 - grey) * progressRatio);
   progressBar.style.background = `rgb(${r},${g},${b})`;
+  if (currentYear > SPLIT_YEAR) {
+    progressBar.style.opacity = '0.45';
+  } else {
+    progressBar.style.opacity = '1';
+  }
   document.getElementById('timeline-scrubber').style.left = p+'%';
   const yr = Math.round(currentYear);
   const ye = document.getElementById('year-display');
@@ -1546,6 +1579,7 @@ function updateTimelineUI() {
 // ═══════════════════════════════════════════════════════════════
 const toast = document.getElementById('milestone-toast');
 function checkMilestoneToast(prevYear, newYear) {
+  if (activeMilestone) return;
   // Check ALL events for toast, not just timeline-filtered ones
   const hit = ALL_EVENTS.find(m => m.year > prevYear && m.year <= newYear && m.year !== lastMilestoneYear);
   if (!hit) return;
@@ -1575,6 +1609,8 @@ function getPlaySpeed(year) {
 function play() {
   if (currentYear >= END_YEAR) currentYear = START_YEAR;
   isPlaying = true;
+  activeMilestone = null;
+  hideMilestonePanel();
   document.getElementById('play-btn').textContent = '⏸';
   function frame() {
     if (!isPlaying) return;
