@@ -189,7 +189,7 @@ header {
 .year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #FFFFFF; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
 .year-display.projected { color: #FF0000; }
 
-.timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; }
+.timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; overflow-x: clip; }
 .timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
 .timeline-historical { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(255,255,255,0.1); }
 .timeline-progress { position: absolute; left: 0; top: 0; bottom: 0; background: #FF0000; transition: width 0.05s linear; }
@@ -256,6 +256,15 @@ header {
 .toast-label { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text); }
 .toast-desc { font-size: 8.5px; color: var(--muted); letter-spacing: 0.05em; margin-top: 1px; display: block; }
 
+/* ── UPPERCASE LABELS ── */
+#tooltip .tt-name,
+.panel-territory-name,
+.search-result-item,
+.toast-label,
+.milestone-tooltip {
+  text-transform: uppercase;
+}
+
 /* ── INTRO ── */
 #intro-overlay {
   position: fixed; inset: 0; z-index: 500; background: #000000;
@@ -283,7 +292,8 @@ header {
   font-family: 'Inter', sans-serif; font-weight: 500;
   font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
   color: #FFFFFF; background: #2042E3; border: none;
-  padding: 16px 48px; cursor: pointer; transition: filter 0.2s;
+  padding: 18px 56px; cursor: pointer; transition: filter 0.2s;
+  clip-path: polygon(4% 8%, 98% 0%, 96% 92%, 2% 100%);
 }
 .intro-enter:hover { filter: brightness(1.1); }
 .intro-methodology {
@@ -320,12 +330,12 @@ header {
     <div class="wordmark">Large Labour Model</div>
     <div class="tagline">WHEN WILL AI REACH YOUR PROFESSION?</div>
   </div>
-  <div class="search-wrap">
-    <span class="search-icon">⌕</span>
-    <input type="text" id="job-search" placeholder="Search your profession..." autocomplete="off" spellcheck="false">
-    <div class="search-results" id="search-results"></div>
-  </div>
   <div class="header-right">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="job-search" placeholder="Search your profession..." autocomplete="off" spellcheck="false">
+      <div class="search-results" id="search-results"></div>
+    </div>
     <button class="methodology-btn" onclick="window.location.href='/methodology.html'">Methodology</button>
   </div>
 </header>
@@ -576,55 +586,55 @@ const START_YEAR = 1800, END_YEAR = 2040, SPLIT_YEAR = 2026;
 
 const TERRITORIES = [
   { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#004D1A',
-    baseX:0.14, baseY:0.22, rotation:-8,
+    baseX:0.12, baseY:0.14, rotation:-8,
     desc:'Agriculture, forestry, fishing. The oldest human work. Precision agriculture and autonomous machinery are transforming high-capital farming; subsistence agriculture holds by sheer scale.',
     barrier:'Capital deployment lag — frontier farms are highly automated, but 70% of global agriculture is smallholder.' },
   { id:'making_things', name:'Making Things', isic:['C'], color:'#FF6600',
-    baseX:0.33, baseY:0.16, rotation:12,
+    baseX:0.40, baseY:0.10, rotation:12,
     desc:'Manufacturing. The frontier is fully dark. The global average is decades behind it.',
     barrier:'Capital deployment lag — Xiaomi runs lights-out factories, but global average varies 10x between countries.' },
   { id:'building_things', name:'Building Things', isic:['F'], color:'#FF3D00',
-    baseX:0.14, baseY:0.48, rotation:-5,
+    baseX:0.08, baseY:0.40, rotation:-5,
     desc:'Construction. Unstructured environments remain the hardest for robotics.',
     barrier:'Unstructured environments — every site is different. Humanoid robots at $10–15k would change this.' },
   { id:'moving_things', name:'Moving Things', isic:['H'], color:'#00A36C',
-    baseX:0.32, baseY:0.42, rotation:7,
+    baseX:0.30, baseY:0.50, rotation:7,
     desc:'Transport, logistics, warehousing. Highway autonomy is operational. Last-mile is not.',
     barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.' },
   { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#FFD700',
-    baseX:0.50, baseY:0.30, rotation:-4,
+    baseX:0.55, baseY:0.35, rotation:-4,
     desc:'Retail and wholesale trade. The largest employer by headcount.',
     barrier:'Scale of existing employment — 18% of global workforce.' },
   { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#0033CC',
-    baseX:0.68, baseY:0.17, rotation:10,
+    baseX:0.75, baseY:0.08, rotation:10,
     desc:'Finance, insurance, real estate, information. LLMs accelerated decades of quiet automation.',
     barrier:'Regulatory and liability frameworks. Technically replaceable, legally complicated.' },
   { id:'thinking_leading', name:'Thinking & Leading', isic:['M','N'], color:'#7B1FA2',
-    baseX:0.84, baseY:0.30, rotation:-7,
+    baseX:0.92, baseY:0.22, rotation:-7,
     desc:'Professional, scientific, technical, management. SWE-bench: 4.4% → 71.7% in one year.',
     barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.' },
   { id:'care_health', name:'Care & Health', isic:['Q'], color:'#E60073',
-    baseX:0.82, baseY:0.56, rotation:5,
+    baseX:0.88, baseY:0.50, rotation:5,
     desc:'Human health and social work. Radiologist salaries rose 48% since 2015 despite AI matching diagnostic accuracy.',
     barrier:'Legal liability, credentialing, and deep human preference.' },
   { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#00E5FF',
-    baseX:0.68, baseY:0.68, rotation:-10,
+    baseX:0.72, baseY:0.60, rotation:-10,
     desc:'Education. AI tutors work. But lead teaching and mentorship resist automation.',
     barrier:'Human preference and trust. Parents and students want human teachers.' },
   { id:'making_meaning', name:'Making Meaning', isic:['R'], color:'#FF99CC',
-    baseX:0.50, baseY:0.64, rotation:8,
+    baseX:0.52, baseY:0.62, rotation:8,
     desc:'Arts, media, creative industries. Generative AI arrived suddenly, not gradually.',
     barrier:'Identity and authorship — the barrier is whether audiences value human-made work.' },
   { id:'governing_protecting', name:'Governing & Protecting', isic:['O'], color:'#A100FF',
-    baseX:0.50, baseY:0.84, rotation:-3,
+    baseX:0.70, baseY:0.85, rotation:-3,
     desc:'Public administration, defense. The slowest territory. Government moves at government speed.',
     barrier:'Institutional inertia and political accountability.' },
   { id:'feeding_hosting', name:'Feeding & Hosting', isic:['I'], color:'#C28A00',
-    baseX:0.32, baseY:0.72, rotation:6,
+    baseX:0.25, baseY:0.72, rotation:6,
     desc:'Accommodation, food service. Fast food is automating. Hospitality is not.',
     barrier:'Human preference. Hospitality is a performance.' },
   { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#39FF14',
-    baseX:0.16, baseY:0.76, rotation:-9,
+    baseX:0.10, baseY:0.88, rotation:-9,
     desc:'Utilities, repair, personal services. Humanoid robots at $10–15k are the unlock.',
     barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.' },
 ];
@@ -703,8 +713,8 @@ MACRO_SHAPES.forEach(m => {
 // Explicit macro positions: Industry center, Services right
 // (land_sea is already left at 0.14, 0.22)
 MACRO_SHAPES.forEach(m => {
-  if (m.id === 'macro_industry')  { m.baseX = 0.42; m.baseY = 0.35; }
-  if (m.id === 'macro_services')  { m.baseX = 0.72; m.baseY = 0.42; }
+  if (m.id === 'macro_industry')  { m.baseX = 0.24; m.baseY = 0.25; }
+  if (m.id === 'macro_services')  { m.baseX = 0.57; m.baseY = 0.53; }
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -1166,9 +1176,10 @@ function drawAllShapes() {
     if (minDim > 30 && s.alpha > 0.15) {
       ctx.save();
       ctx.globalAlpha = s.alpha * 0.85;
+      const textColor = t.id === 'maintaining_fixing' ? '#000000' : '#FFFFFF';
 
       const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
-      ctx.fillStyle = '#FFFFFF';
+      ctx.fillStyle = textColor;
       ctx.font = `400 ${nameSize}px "Inter"`;
       ctx.textAlign = 'center';
       const words = t.name.split(' ');
@@ -1181,7 +1192,7 @@ function drawAllShapes() {
       }
 
       if (!isMacro && reach >= 1 && minDim > 40) {
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = textColor;
         ctx.globalAlpha = s.alpha * 0.6;
         const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
         ctx.font = `700 ${scoreSize}px "Inter"`;
@@ -1193,7 +1204,7 @@ function drawAllShapes() {
         const workers = Math.round(share / 100 * wf);
         const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
         const wfSize = Math.max(7, Math.min(10, minDim * 0.055));
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = textColor;
         ctx.globalAlpha = s.alpha * 0.28;
         ctx.font = `400 ${wfSize}px "Inter"`;
         ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.26);
@@ -1540,7 +1551,7 @@ function buildTimeline() {
     if (zoomedTerritory) updatePanel(zoomedTerritory);
   }
 
-  track.addEventListener('click', e => { if (!dragging) setYear(e.clientX); });
+  track.addEventListener('click', e => { if (!dragging) { setYear(e.clientX); if (!isPlaying) play(); } });
   scrubber.addEventListener('mousedown', e => { dragging=true; scrubber.classList.add('dragging'); e.preventDefault(); });
   document.addEventListener('mousemove', e => { if (dragging) setYear(e.clientX); });
   document.addEventListener('mouseup', () => { if (dragging) { dragging=false; scrubber.classList.remove('dragging'); }});
