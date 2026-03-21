@@ -115,6 +115,17 @@ header {
   font-size: 8px; color: rgba(255,0,0,0.5); margin-top: 4px; letter-spacing: 0.08em;
 }
 
+/* ── REPLACEABILITY HINT ── */
+#repl-hint {
+  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.85); border: 1px solid rgba(255,0,0,0.3);
+  color: #FFFFFF; font-family: var(--font-body); font-size: 13px;
+  letter-spacing: 0.06em; padding: 12px 24px; z-index: 95;
+  opacity: 0; pointer-events: none; transition: opacity 0.6s ease;
+  backdrop-filter: blur(8px);
+}
+#repl-hint.visible { opacity: 1; }
+
 /* ── DETAIL PANEL (for zoomed view) ── */
 #detail-panel {
   position: fixed; right: 0; top: 46px; bottom: 88px; width: 340px;
@@ -293,7 +304,7 @@ header {
   font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
   color: #FFFFFF; background: #2042E3; border: none;
   padding: 18px 56px; cursor: pointer; transition: filter 0.2s;
-  clip-path: polygon(4% 8%, 98% 0%, 96% 92%, 2% 100%);
+  clip-path: polygon(6% 12%, 95% 0%, 100% 85%, 3% 96%);
 }
 .intro-enter:hover { filter: brightness(1.1); }
 .intro-methodology {
@@ -342,6 +353,8 @@ header {
 
 <canvas id="main-canvas"></canvas>
 
+<div id="repl-hint">Squares are now clickable — explore each sector</div>
+
 <div id="tooltip">
   <div class="tt-name" id="tt-name"></div>
   <div class="tt-stats" id="tt-stats"></div>
@@ -382,7 +395,6 @@ header {
     <button class="play-btn" id="play-btn">▶</button>
     <div class="year-display" id="year-display">1800</div>
     <div class="timeline-track-wrap">
-      <div class="zone-label" style="left:0">Historical</div>
       <div class="zone-label projected">Projected ›</div>
       <div class="timeline-track" id="timeline-track">
         <div class="timeline-historical" id="timeline-historical"></div>
@@ -634,7 +646,7 @@ const TERRITORIES = [
     desc:'Accommodation, food service. Fast food is automating. Hospitality is not.',
     barrier:'Human preference. Hospitality is a performance.' },
   { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#39FF14',
-    baseX:0.10, baseY:0.88, rotation:-9,
+    baseX:0.12, baseY:0.58, rotation:-9,
     desc:'Utilities, repair, personal services. Humanoid robots at $10–15k are the unlock.',
     barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.' },
 ];
@@ -738,6 +750,11 @@ let shapeStates = {};
 
 // Hover
 let hoveredTerritory = null;
+
+// Replaceability clickability indicator
+let replPulseTriggered = false;
+let replPulseFrame = 0;
+const REPL_PULSE_DURATION = 60; // frames
 
 // ═══════════════════════════════════════════════════════════════
 // INTERPOLATION
@@ -977,6 +994,25 @@ function render() {
   ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, W, H);
 
+  // Check if replaceability data just became active (trigger clickability hint)
+  if (!replPulseTriggered && isPlaying) {
+    const anyReach = TERRITORIES.some(t => getTerritoryReach(t, currentYear) > 0);
+    if (anyReach) {
+      replPulseTriggered = true;
+      replPulseFrame = 0;
+      // Show one-time hint if not shown before in this session
+      if (!sessionStorage.getItem('replHintShown')) {
+        const hint = document.getElementById('repl-hint');
+        hint.classList.add('visible');
+        sessionStorage.setItem('replHintShown', '1');
+        setTimeout(() => hint.classList.remove('visible'), 3000);
+      }
+    }
+  }
+  if (replPulseTriggered && replPulseFrame < REPL_PULSE_DURATION) {
+    replPulseFrame++;
+  }
+
   drawAllShapes();
 
   requestAnimationFrame(render);
@@ -1155,6 +1191,12 @@ function drawAllShapes() {
       drawShapeOutline(ctx, pts, '#FFFFFF', 0.25, 1.5);
     }
 
+    // Replaceability pulse glow (one-time when squares become clickable)
+    if (!isMacro && replPulseTriggered && replPulseFrame < REPL_PULSE_DURATION) {
+      const pulseAlpha = 0.5 * (1 - replPulseFrame / REPL_PULSE_DURATION);
+      drawShapeOutline(ctx, pts, '#FFFFFF', pulseAlpha, 2.5);
+    }
+
     if (!isMacro && zoomedTerritory === t.id && zoomProgress > 0.1) {
       drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
     }
@@ -1176,7 +1218,7 @@ function drawAllShapes() {
     if (minDim > 30 && s.alpha > 0.15) {
       ctx.save();
       ctx.globalAlpha = s.alpha * 0.85;
-      const textColor = t.id === 'maintaining_fixing' ? '#000000' : '#FFFFFF';
+      const textColor = '#FFFFFF';
 
       const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
       ctx.fillStyle = textColor;
@@ -1184,10 +1226,10 @@ function drawAllShapes() {
       ctx.textAlign = 'center';
       const words = t.name.split(' ');
       if (minDim > 80 && availW > 100) {
-        ctx.fillText(t.name.toUpperCase(), s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
+        ctx.fillText(t.name, s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
       } else if (minDim > 50) {
         words.forEach((w, i) => {
-          ctx.fillText(w.toUpperCase(), s.cx, s.cy - minDim * 0.12 + i * (nameSize + 3));
+          ctx.fillText(w, s.cx, s.cy - minDim * 0.12 + i * (nameSize + 3));
         });
       }
 
@@ -1237,16 +1279,25 @@ function drawJobSubShapes() {
   const n = occs.length;
   if (n === 0) return;
 
+  // Grid layout along inner edges of parent square
+  const cols = Math.ceil(Math.sqrt(n));
+  const rows = Math.ceil(n / cols);
+  const margin = Math.min(s.w, s.h) * 0.08;
+  const gridW = s.w - margin * 2;
+  const gridH = s.h - margin * 2;
+  const cellW = gridW / cols;
+  const cellH = gridH / rows;
+
   occs.forEach((occ, i) => {
     const rawScore = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
 
-    const angle = (i / n) * Math.PI * 2 - Math.PI/2;
-    const radius = Math.min(s.w, s.h) * 0.32;
-    const jcx = s.cx + Math.cos(angle) * radius;
-    const jcy = s.cy + Math.sin(angle) * radius;
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const jcx = (s.cx - s.w/2 + margin) + cellW * (col + 0.5);
+    const jcy = (s.cy - s.h/2 + margin) + cellH * (row + 0.5);
 
-    const baseJobSize = Math.min(s.w, s.h) * 0.18;
-    const jw = baseJobSize + rawScore * 0.15;
+    const baseJobSize = Math.min(cellW, cellH) * 0.65;
+    const jw = Math.min(baseJobSize + rawScore * 0.1, cellW * 0.85);
     const jh = jw * 0.82;
 
     // Draw sub-shape (always cut-out style)
@@ -1551,7 +1602,7 @@ function buildTimeline() {
     if (zoomedTerritory) updatePanel(zoomedTerritory);
   }
 
-  track.addEventListener('click', e => { if (!dragging) { setYear(e.clientX); if (!isPlaying) play(); } });
+  track.addEventListener('click', e => { if (!dragging) { setYear(e.clientX); if (isPlaying) pause(); } });
   scrubber.addEventListener('mousedown', e => { dragging=true; scrubber.classList.add('dragging'); e.preventDefault(); });
   document.addEventListener('mousemove', e => { if (dragging) setYear(e.clientX); });
   document.addEventListener('mouseup', () => { if (dragging) { dragging=false; scrubber.classList.remove('dragging'); }});
