@@ -315,6 +315,57 @@ header {
 }
 .intro-methodology:hover { opacity: 1; }
 
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 600px) {
+  header {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 6px;
+  }
+  .wordmark { font-size: 16px; }
+  .tagline { display: none; }
+  .search-wrap { flex: 1 1 100%; order: 3; }
+  .header-right { gap: 8px; }
+  .methodology-btn { font-size: 8px; padding: 4px 10px; }
+
+  header { min-height: 0; }
+  #main-canvas { top: 70px; bottom: 80px; }
+
+  #global-stats {
+    left: 12px; bottom: 90px; gap: 12px;
+  }
+  .global-stat-num { font-size: 16px; }
+  .global-stat-label { font-size: 6px; }
+
+  #era-label { right: 12px; bottom: 90px; }
+  #era-label .era-name { font-size: 11px; }
+  #era-label .era-detail { font-size: 6.5px; display: none; }
+
+  #timeline {
+    height: 80px; padding: 0 12px;
+  }
+  .timeline-scrubber { width: 16px; height: 16px; }
+  .year-display { font-size: 20px; }
+  .play-btn { width: 24px; height: 24px; font-size: 10px; }
+
+  #detail-panel {
+    width: 100%; top: 70px; bottom: 80px;
+  }
+  .panel-territory-name { font-size: 22px; }
+  .panel-stat-value { font-size: 24px; }
+  .panel-description { font-size: 13px; }
+
+  #milestone-toast { bottom: 96px; }
+
+  #repl-hint { font-size: 11px; padding: 10px 16px; }
+
+  #intro-overlay { padding: 10vh 6vw; }
+  .intro-title { font-size: clamp(36px, 10vw, 52px); }
+  .intro-subtitle { font-size: 14px; letter-spacing: 0.12em; }
+  .intro-body { font-size: 14px; margin-bottom: 36px; }
+  .intro-enter { padding: 14px 40px; font-size: 12px; }
+}
+
 /* Back button for zoom */
 #back-btn {
   position: fixed; top: 56px; left: 24px; z-index: 85;
@@ -966,10 +1017,14 @@ const canvas = document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
 let W, H;
 
+const isMobile = () => window.innerWidth <= 600;
+
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
   const cw = window.innerWidth;
-  const ch = window.innerHeight - 46 - 88;
+  const headerH = isMobile() ? 70 : 46;
+  const timelineH = isMobile() ? 80 : 88;
+  const ch = window.innerHeight - headerH - timelineH;
   canvas.width = cw * dpr;
   canvas.height = ch * dpr;
   canvas.style.width = cw + 'px';
@@ -1102,8 +1157,10 @@ function drawAllShapes() {
 
     let targetCx = t.baseX * W;
     let targetCy = t.baseY * H;
-    let targetW = Math.max(140, baseW);
-    let targetH = Math.max(115, baseH);
+    const minW = isMobile() ? 75 : 140;
+    const minH = isMobile() ? 60 : 115;
+    let targetW = Math.max(minW, baseW * (isMobile() ? 0.65 : 1));
+    let targetH = Math.max(minH, baseH * (isMobile() ? 0.65 : 1));
     const reachAlpha = 0.88;
     let targetAlpha = reachAlpha * s.morphProgress;
     if (s.isMacro) {
@@ -1412,6 +1469,29 @@ canvas.addEventListener('click', e => {
   }
 });
 
+// Touch support for canvas (mobile tap-to-select)
+canvas.addEventListener('touchend', e => {
+  e.preventDefault();
+  const touch = e.changedTouches[0];
+  const rect = canvas.getBoundingClientRect();
+  const mx = touch.clientX - rect.left;
+  const my = touch.clientY - rect.top;
+
+  if (zoomProgress > 0.3) { zoomOut(); return; }
+
+  // Find which territory was tapped
+  for (let i = TERRITORIES.length - 1; i >= 0; i--) {
+    const t = TERRITORIES[i];
+    const s = shapeStates[t.id];
+    if (!s || s.alpha < 0.15) continue;
+    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
+    if (pointInShape(mx, my, pts)) {
+      zoomIn(t.id);
+      return;
+    }
+  }
+}, {passive:false});
+
 function zoomIn(id) {
   zoomedTerritory = id;
   zoomTarget = 1;
@@ -1524,6 +1604,17 @@ function drawJobGroups(t) {
 
 document.getElementById('panel-close').addEventListener('click', zoomOut);
 
+// Swipe-right to dismiss detail panel on mobile
+(function() {
+  const panel = document.getElementById('detail-panel');
+  let touchStartX = 0;
+  panel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  panel.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx > 80) zoomOut(); // swipe right to close
+  });
+})();
+
 // ═══════════════════════════════════════════════════════════════
 // TIMELINE
 // ═══════════════════════════════════════════════════════════════
@@ -1553,7 +1644,8 @@ function hideMilestonePanel() {
 
 function buildTimeline() {
   const ye = document.getElementById('timeline-years');
-  [1800,1850,1900,1950,2000,2026,2040].forEach(y => {
+  const yearLabels = isMobile() ? [1800,1900,2000,2040] : [1800,1850,1900,1950,2000,2026,2040];
+  yearLabels.forEach(y => {
     const s = document.createElement('span');
     s.textContent = y; s.style.left = yearToPercent(y)+'%';
     if (y===2026) s.style.color = 'rgba(255,0,0,0.5)';
@@ -1606,6 +1698,12 @@ function buildTimeline() {
   scrubber.addEventListener('mousedown', e => { dragging=true; scrubber.classList.add('dragging'); e.preventDefault(); });
   document.addEventListener('mousemove', e => { if (dragging) setYear(e.clientX); });
   document.addEventListener('mouseup', () => { if (dragging) { dragging=false; scrubber.classList.remove('dragging'); }});
+
+  // Touch support for timeline scrubber
+  scrubber.addEventListener('touchstart', e => { dragging=true; scrubber.classList.add('dragging'); e.preventDefault(); }, {passive:false});
+  document.addEventListener('touchmove', e => { if (dragging) { setYear(e.touches[0].clientX); e.preventDefault(); } }, {passive:false});
+  document.addEventListener('touchend', () => { if (dragging) { dragging=false; scrubber.classList.remove('dragging'); }});
+  track.addEventListener('touchstart', e => { setYear(e.touches[0].clientX); if (isPlaying) pause(); e.preventDefault(); }, {passive:false});
 }
 
 function updateTimelineUI() {
