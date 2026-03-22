@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Methodology — Large Labour Model</title>
+<title>About — Large Labour Model</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 @font-face {
@@ -17,7 +17,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  width: 100%; height: 100%;
+  width: 100%; min-height: 100%;
   background: #000000;
   color: #FFFFFF;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -29,7 +29,7 @@ html, body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 15vh 8vw;
+  padding: 12vh 8vw 8vh;
   max-width: 720px;
 }
 
@@ -44,34 +44,126 @@ html, body {
   font-size: 9px;
   letter-spacing: 0.16em;
   color: #666666;
-  text-transform: uppercase;
   margin-bottom: 48px;
 }
+
+/* ── TOGGLE ── */
+.toggle-wrap {
+  display: flex;
+  gap: 0;
+  margin-bottom: 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.toggle-btn {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #555555;
+  background: none;
+  border: none;
+  padding: 12px 24px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.25s;
+}
+
+.toggle-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.25s;
+}
+
+.toggle-btn.active {
+  color: #FFFFFF;
+}
+
+.toggle-btn.active::after {
+  background: #2042E3;
+}
+
+.toggle-btn:hover:not(.active) {
+  color: #999999;
+}
+
+/* ── CONTENT ── */
+.section { display: none; }
+.section.active { display: block; }
 
 .body-text {
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.7;
   color: #888888;
   margin-bottom: 24px;
 }
 
+.body-text strong {
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+/* ── AUTHORS ── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 48px 0 32px;
+}
+
+.authors {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.author {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.author-name {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.author-name:hover {
+  color: #2042E3;
+}
+
+.author-role {
+  font-size: 11px;
+  color: #555555;
+  letter-spacing: 0.04em;
+}
+
+/* ── BACK BUTTON ── */
 .btn-row {
   display: flex;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 48px;
 }
 
 .cta-btn {
   font-family: 'Inter', sans-serif;
   font-weight: 500;
-  font-size: 14px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.1em;
   color: #FFFFFF;
   background: #2042E3;
   border: none;
-  padding: 16px 48px;
+  padding: 14px 40px;
   cursor: pointer;
   transition: filter 0.2s;
   text-decoration: none;
@@ -81,25 +173,71 @@ html, body {
 .cta-btn:hover {
   filter: brightness(1.1);
 }
+
+@media (max-width: 600px) {
+  .page { padding: 8vh 6vw 6vh; }
+  .toggle-btn { font-size: 11px; padding: 10px 16px; }
+  .body-text { font-size: 14px; }
+  .authors { flex-direction: column; gap: 20px; align-items: flex-start; }
+  .cta-btn { font-size: 12px; padding: 12px 32px; }
+}
 </style>
 </head>
 <body>
 
 <div class="page">
   <div class="wordmark">Large Labour Model</div>
-  <div class="tagline">WHEN WILL AI REACH YOUR PROFESSION?</div>
+  <div class="tagline">WHEN WILL AI REACH YOUR JOB?</div>
 
-  <p class="body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" data-section="methodology">Methodology</button>
+    <button class="toggle-btn" data-section="piece">The piece</button>
+  </div>
 
-  <p class="body-text">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+  <div id="methodology" class="section active">
+    <p class="body-text">The Large Labour Model draws on public data from the International Labour Organization, the World Bank, Our World in Data, and national statistical offices to reconstruct global employment shares by sector from 1800 to 2025. Pre-1950 data relies on Maddison Project estimates and historical census records; post-1950 data uses ILO-modelled estimates at the ISIC Rev. 4 section level.</p>
 
-  <p class="body-text">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+    <p class="body-text">Replaceability scores for 2015 to 2026 are derived from occupation-level task analyses cross-referenced with demonstrated AI and robotics capabilities, benchmarked against frameworks including the OECD's AI exposure index and published automation-potential studies. Each territory's score is a workforce-weighted average of its constituent occupations.</p>
+
+    <p class="body-text">Projections from 2027 to 2041 are generated under three scenarios — conservative, moderate, and accelerated — using logistic-growth curves fitted to historical adoption rates of general-purpose technologies. The moderate scenario is shown by default. All projected data is clearly marked on the timeline.</p>
+
+    <p class="body-text">The model is deliberately reductive. It compresses a vast, uneven global reality into a single numerical trend per sector. This is the point: by stripping away nuance, it asks the viewer to notice what they feel when confronted with the raw trajectory, and to hold that feeling against their own understanding of what these numbers leave out.</p>
+  </div>
+
+  <div id="piece" class="section">
+    <p class="body-text">Large Labour Model is a data visualisation that maps 240 years of human work — and projects where AI and robotics are taking it next. It is designed to be explored, not passively consumed: the viewer controls time, searches for their own profession, and watches sectors emerge, grow, and come under pressure.</p>
+
+    <p class="body-text">The visual language borrows from Matisse's cut-outs — bold, flat shapes with imperfect edges, layered without strict alignment. Each territory of work is a coloured form whose area reflects its share of the global workforce. As the timeline advances, shapes shift, new sectors emerge from larger ones, and replaceability percentages begin to appear. The aesthetic is intentional: the warmth and texture of the forms sit in tension with the coldness of what the numbers describe.</p>
+
+    <p class="body-text">The piece does not advocate for a position on whether automation is good or bad. It presents a trend line and invites an emotional response. The question it asks is not "what should we do?" but "what do you feel when you see this?"</p>
+
+    <div class="divider"></div>
+
+    <div class="authors">
+      <div class="author">
+        <a class="author-name" href="https://www.linkedin.com/in/lukas-seel/" target="_blank" rel="noopener">Lukas Seel</a>
+      </div>
+      <div class="author">
+        <a class="author-name" href="https://www.linkedin.com/in/enyaautumn/" target="_blank" rel="noopener">Enya Autumn</a>
+      </div>
+    </div>
+  </div>
 
   <div class="btn-row">
-    <a class="cta-btn" href="#" target="_blank">GitHub</a>
-    <a class="cta-btn" href="index.html">Back to Visualisation</a>
+    <a class="cta-btn" href="index.html">Back to visualisation</a>
   </div>
 </div>
+
+<script>
+document.querySelectorAll('.toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.section).classList.add('active');
+  });
+});
+</script>
 
 </body>
 </html>

@@ -98,13 +98,7 @@ header {
 }
 
 /* ── TOOLTIP ── */
-#tooltip {
-  position: fixed; pointer-events: none; z-index: 90;
-  background: rgba(0,0,0,0.94); border: 1px solid var(--border);
-  padding: 8px 12px; opacity: 0; transition: opacity 0.15s;
-  backdrop-filter: blur(12px); max-width: 220px;
-}
-#tooltip.visible { opacity: 1; }
+#tooltip { display: none; }
 #tooltip .tt-name {
   font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 2px;
 }
@@ -193,8 +187,7 @@ header {
   font-size: 11px; transition: all 0.2s; flex-shrink: 0; border-radius: 6px;
 }
 .play-btn:hover { border-color: var(--accent); color: var(--accent); }
-.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #2042E3; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
-.year-display.projected { color: #A0A0A0; }
+.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #FFFFFF; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; overflow-x: clip; }
 .timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
@@ -239,7 +232,7 @@ header {
 .timeline-years { display: flex; position: relative; height: 12px; font-size: 8px; color: #666666; letter-spacing: 0.05em; }
 .timeline-years span { position: absolute; transform: translateX(-50%); }
 .zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; color: #666666; top: -14px; }
-.zone-label.projected { right: 0; color: rgba(255,0,0,0.4); }
+.zone-label.projected { right: 0; color: #A0A0A0; }
 .timeline-projected-zone {
   position: absolute; top: -5px; bottom: -5px; right: 0;
   background: rgba(255,0,0,0.04);
@@ -272,9 +265,17 @@ header {
 /* ── INTRO ── */
 #intro-overlay {
   position: fixed; inset: 0; z-index: 500; background: #000000;
-  display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
-  padding: 15vh 8vw;
+  display: flex; flex-direction: row; justify-content: flex-start; align-items: center;
+  padding: 6vh 8vw;
+  gap: 6vw;
   transition: opacity 0.8s ease;
+  overflow-y: auto;
+}
+.intro-left {
+  flex: 1; display: flex; flex-direction: column; align-items: flex-start;
+}
+.intro-right {
+  flex-shrink: 0; display: flex; align-items: center;
 }
 #intro-overlay.fade-out { opacity: 0; pointer-events: none; }
 .intro-title {
@@ -296,10 +297,17 @@ header {
   font-family: 'Inter', sans-serif; font-weight: 500;
   font-size: 14px; letter-spacing: 0.2em;
   color: #FFFFFF; background: #2042E3; border: none;
-  padding: 18px 56px; cursor: pointer; transition: filter 0.2s;
+  padding: 22px 64px; cursor: pointer;
   clip-path: polygon(6% 12%, 95% 0%, 100% 85%, 3% 96%);
+  animation: breathe 3s ease-in-out infinite;
+  transition: transform 0.15s ease-out, filter 0.2s;
 }
-.intro-enter:hover { filter: brightness(1.1); }
+.intro-enter:hover { filter: brightness(1.15); transform: scale(1.08); animation-play-state: paused; }
+.intro-enter:active { transform: scale(0.96); }
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
 .intro-methodology {
   position: fixed; bottom: 32px; right: 32px;
   font-family: 'Inter', sans-serif; font-weight: 400; font-size: 20px;
@@ -352,10 +360,13 @@ header {
 
   #repl-hint { font-size: 11px; padding: 10px 16px; }
 
-  #intro-overlay { padding: 10vh 6vw; }
-  .intro-title { font-size: clamp(36px, 10vw, 52px); }
-  .intro-subtitle { font-size: 14px; letter-spacing: 0.12em; }
-  .intro-body { font-size: 14px; margin-bottom: 36px; }
+  #intro-overlay { padding: 5vh 6vw; flex-direction: column; align-items: flex-start; gap: 16px; overflow-y: auto; }
+  .intro-left { flex: none; }
+  .intro-left .intro-body:last-child { display: none; }
+  .intro-right { align-self: flex-start; }
+  .intro-title { font-size: clamp(32px, 9vw, 48px); margin-bottom: 16px; }
+  .intro-subtitle { font-size: 13px; letter-spacing: 0.12em; margin-bottom: 20px; }
+  .intro-body { font-size: 13px; line-height: 1.55; margin-bottom: 16px; }
   .intro-enter { padding: 14px 40px; font-size: 12px; }
 }
 
@@ -373,16 +384,20 @@ header {
 <body>
 
 <div id="intro-overlay">
-  <div class="intro-title">Large Labour Model</div>
-  <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
-  <div class="intro-body">This map traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. By 2026, that share had fallen to less than one in four, and AI had become technically capable of performing the majority of tasks in most knowledge-based professions. By 2041, the model projects a world in which very few categories of human work remain beyond the technical reach of AI and robotics; and in which the global workforce has begun to contract for the first time in modern history.</div>
-  <div class="intro-body" style="margin-top: 0; margin-bottom: 24px;">
-    <strong style="color: #FFFFFF; font-size: 14px; letter-spacing: 0.08em; display: block; margin-bottom: 12px;">How to interact:</strong>
-    <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Explore</strong> — Use the search bar to find your specific profession</span>
-    <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Control time</strong> — Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</span>
-    <span style="color: #888888; display: block;"><strong style="color: #FFFFFF;">Deep dive</strong> — Click Methodology to inspect the data sources, assumptions, and the mathematical framework powering the model</span>
+  <div class="intro-left">
+    <div class="intro-title">Large Labour Model</div>
+    <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
+    <div class="intro-body">This map traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. By 2026, that share had fallen to less than one in four, and AI had become technically capable of performing the majority of tasks in most knowledge-based professions. By 2041, the model projects a world in which very few categories of human work remain beyond the technical reach of AI and robotics; and in which the global workforce has begun to contract for the first time in modern history.</div>
+    <div class="intro-body" style="margin-top: 0; margin-bottom: 0;">
+      <strong style="color: #FFFFFF; font-size: 14px; letter-spacing: 0.08em; display: block; margin-bottom: 12px;">How to interact:</strong>
+      <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Explore</strong> — Use the search bar to find your specific profession</span>
+      <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Control time</strong> — Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</span>
+      <span style="color: #888888; display: block;"><strong style="color: #FFFFFF;">Deep dive</strong> — Click About to inspect the data sources, assumptions, and the mathematical framework powering the model</span>
+    </div>
   </div>
-  <button class="intro-enter" onclick="enterSite()">Enter</button>
+  <div class="intro-right">
+    <button class="intro-enter" onclick="enterSite()">Enter</button>
+  </div>
   <button class="intro-methodology" id="methodology-btn">+</button>
 </div>
 
@@ -397,7 +412,7 @@ header {
       <input type="text" id="job-search" placeholder="Find your job" autocomplete="off" spellcheck="false">
       <div class="search-results" id="search-results"></div>
     </div>
-    <button class="methodology-btn" onclick="window.location.href='/methodology.html'">Methodology</button>
+    <button class="methodology-btn" onclick="window.location.href='/methodology.html'">About</button>
   </div>
 </header>
 
@@ -1702,7 +1717,7 @@ function buildTimeline() {
   yearLabels.forEach(y => {
     const s = document.createElement('span');
     s.textContent = y; s.style.left = yearToPercent(y)+'%';
-    if (y===2026) s.style.color = 'rgba(32,66,227,0.7)';
+    if (y===2026) s.style.color = '#666666';
     ye.appendChild(s);
   });
 
@@ -1779,7 +1794,16 @@ function updateTimelineUI() {
   const yr = Math.round(currentYear);
   const ye = document.getElementById('year-display');
   ye.textContent = yr;
-  ye.className = currentYear >= SPLIT_YEAR ? 'year-display projected' : 'year-display';
+  // White before 2026, fade to grey between 2026-2027, fully grey after 2027
+  if (currentYear < 2026) {
+    ye.style.color = '#FFFFFF';
+  } else if (currentYear < 2027) {
+    const t = currentYear - 2026; // 0 to 1
+    const c = Math.round(255 - t * (255 - 160));
+    ye.style.color = `rgb(${c},${c},${c})`;
+  } else {
+    ye.style.color = '#A0A0A0';
+  }
 
   const wf = getWorkforce(currentYear);
   document.getElementById('global-workforce-num').textContent = wf>=1000?(wf/1000).toFixed(1)+'B':Math.round(wf)+'M';
