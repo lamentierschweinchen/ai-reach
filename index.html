@@ -78,8 +78,9 @@ header {
   border: 1px solid var(--border);
   color: var(--muted);
   font-family: var(--font-body);
-  font-size: 9px;
-  letter-spacing: 0.10em;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   padding: 5px 14px;
   cursor: pointer;
   transition: all 0.2s;
@@ -107,12 +108,8 @@ header {
 #tooltip .tt-name {
   font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 2px;
 }
-#tooltip .tt-stats {
-  font-size: 9px; letter-spacing: 0.06em; color: var(--muted); line-height: 1.5;
-}
-#tooltip .tt-hint {
-  font-size: 8px; color: rgba(255,0,0,0.5); margin-top: 4px; letter-spacing: 0.08em;
-}
+#tooltip .tt-stats { display: none; }
+#tooltip .tt-hint { display: none; }
 
 /* ── REPLACEABILITY HINT ── */
 #repl-hint {
@@ -197,7 +194,7 @@ header {
 }
 .play-btn:hover { border-color: var(--accent); color: var(--accent); }
 .year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #2042E3; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
-.year-display.projected { color: #2042E3; }
+.year-display.projected { color: #A0A0A0; }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; overflow-x: clip; }
 .timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
@@ -206,28 +203,28 @@ header {
 .timeline-split { position: absolute; top: -7px; bottom: -7px; width: 1px; background: rgba(255,0,0,0.3); }
 .timeline-scrubber {
   position: absolute; top: 50%; width: 11px; height: 11px;
-  background: #2042E3; border: 2px solid var(--bg); border-radius: 50%;
-  transform: translate(-50%, -50%); cursor: grab; transition: width 0.15s, height 0.15s; z-index: 10;
+  background: #FF0000; border: 2px solid var(--bg); border-radius: 50%;
+  transform: translate(-50%, -50%); cursor: grab; transition: width 0.15s ease-out, height 0.15s ease-out; z-index: 10;
 }
-.timeline-scrubber:hover, .timeline-scrubber.dragging { width: 18px; height: 18px; }
+.timeline-scrubber:hover, .timeline-scrubber.dragging { width: 22px; height: 22px; }
 
 .milestone-dot {
   position: absolute; top: 50%; width: 7px; height: 7px;
-  background: rgba(255,255,255,0.28); border: 1px solid rgba(255,255,255,0.12);
+  background: #FFFFFF; border: 1px solid rgba(255,255,255,0.5);
   border-radius: 50%;
   transform: translate(-50%, -50%); cursor: pointer; transition: all 0.2s; z-index: 5;
 }
 .milestone-dot::before {
   content: ''; position: absolute; bottom: 100%; left: 50%;
   transform: translateX(-50%); width: 1px; height: 7px;
-  background: rgba(255,255,255,0.12); margin-bottom: 2px;
+  background: rgba(255,255,255,0.25); margin-bottom: 2px;
 }
-.milestone-dot:hover { background: #FF0000; border-color: #FF0000; width: 11px; height: 11px; box-shadow: 0 0 10px rgba(255,0,0,0.45); }
-.milestone-dot:hover::before { background: rgba(255,0,0,0.5); }
+.milestone-dot:hover { background: #FFFFFF; border-color: #FFFFFF; width: 11px; height: 11px; box-shadow: 0 0 8px rgba(255,255,255,0.4); }
+.milestone-dot:hover::before { background: rgba(255,255,255,0.5); }
 .milestone-dot:hover .milestone-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
 .milestone-featured {
   width: 9px; height: 9px;
-  background: rgba(255,0,0,0.25); border-color: rgba(255,0,0,0.4);
+  background: #FFFFFF; border-color: rgba(255,255,255,0.6);
 }
 .milestone-featured:hover { width: 13px; height: 13px; }
 .milestone-tooltip {
@@ -377,8 +374,14 @@ header {
 
 <div id="intro-overlay">
   <div class="intro-title">Large Labour Model</div>
-  <div class="intro-subtitle">When will AI reach your profession?</div>
-  <div class="intro-body">Large Labour Model maps the development — and subsequent replaceability — of human labour from 1800 to 2040. Taking a deliberately crude approach of charting a numerical trend, the piece encourages viewers to consider their emotional reaction to a rational expression.</div>
+  <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
+  <div class="intro-body">This map traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. By 2026, that share had fallen to less than one in four, and AI had become technically capable of performing the majority of tasks in most knowledge-based professions. By 2041, the model projects a world in which very few categories of human work remain beyond the technical reach of AI and robotics; and in which the global workforce has begun to contract for the first time in modern history.</div>
+  <div class="intro-body" style="margin-top: 0; margin-bottom: 24px;">
+    <strong style="color: #FFFFFF; font-size: 14px; letter-spacing: 0.08em; display: block; margin-bottom: 12px;">How to interact:</strong>
+    <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Explore</strong> — Use the search bar to find your specific profession</span>
+    <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Control time</strong> — Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</span>
+    <span style="color: #888888; display: block;"><strong style="color: #FFFFFF;">Deep dive</strong> — Click Methodology to inspect the data sources, assumptions, and the mathematical framework powering the model</span>
+  </div>
   <button class="intro-enter" onclick="enterSite()">Enter</button>
   <button class="intro-methodology" id="methodology-btn">+</button>
 </div>
@@ -386,12 +389,12 @@ header {
 <header>
   <div>
     <div class="wordmark">Large Labour Model</div>
-    <div class="tagline">When will AI reach your profession?</div>
+    <div class="tagline">WHEN WILL AI REACH YOUR JOB?</div>
   </div>
   <div class="header-right">
     <div class="search-wrap">
       <span class="search-icon">⌕</span>
-      <input type="text" id="job-search" placeholder="Search your profession..." autocomplete="off" spellcheck="false">
+      <input type="text" id="job-search" placeholder="Find your job" autocomplete="off" spellcheck="false">
       <div class="search-results" id="search-results"></div>
     </div>
     <button class="methodology-btn" onclick="window.location.href='/methodology.html'">Methodology</button>
@@ -616,26 +619,45 @@ function buildLookupTables() {
     territory: ev.primary_territory_id
   }));
 
-  // Filter to ~20-25 for timeline display
+  // Filter to high-confidence structural events for timeline
   const highConfStructural = ALL_EVENTS.filter(ev =>
     ev.confidence === 'HIGH' &&
     (ev.type === 'INVENTION' || ev.type === 'DEPLOYMENT' || ev.type === 'BENCHMARK')
   );
-  // Deduplicate by year (keep first per year), prioritize spread
-  const byYear = {};
-  highConfStructural.forEach(ev => {
-    if (!byYear[ev.year]) byYear[ev.year] = ev;
-  });
-  MILESTONES = Object.values(byYear).sort((a,b) => a.year - b.year);
 
-  // If we have more than 25, thin out pre-1900 events
-  if (MILESTONES.length > 25) {
-    const pre1900 = MILESTONES.filter(m => m.year < 1900);
-    const post1900 = MILESTONES.filter(m => m.year >= 1900);
-    // Keep every other pre-1900 event
-    const thinned = pre1900.filter((_, i) => i % 2 === 0);
-    MILESTONES = [...thinned, ...post1900];
+  // Pre-2022: deduplicate by year, keep 1 per year
+  const pre2022 = {};
+  highConfStructural.filter(ev => ev.year < 2022).forEach(ev => {
+    if (!pre2022[ev.year]) pre2022[ev.year] = ev;
+  });
+  let pre2022List = Object.values(pre2022).sort((a,b) => a.year - b.year);
+  // Thin out pre-1900 if too many
+  if (pre2022List.filter(m => m.year < 1900).length > 12) {
+    const early = pre2022List.filter(m => m.year < 1900).filter((_, i) => i % 2 === 0);
+    const late = pre2022List.filter(m => m.year >= 1900);
+    pre2022List = [...early, ...late];
   }
+
+  // Post-2022: exactly 2 per year, spaced at ~Jan and ~Jul
+  const post2022List = [];
+  for (let yr = 2022; yr <= END_YEAR; yr++) {
+    const yearEvents = ALL_EVENTS.filter(ev => ev.year === yr)
+      .sort((a,b) => {
+        // Prioritize HIGH confidence, then INVENTION/BENCHMARK
+        const aScore = (a.confidence === 'HIGH' ? 10 : 0) + (a.type === 'INVENTION' ? 5 : a.type === 'BENCHMARK' ? 4 : 0);
+        const bScore = (b.confidence === 'HIGH' ? 10 : 0) + (b.type === 'INVENTION' ? 5 : b.type === 'BENCHMARK' ? 4 : 0);
+        return bScore - aScore;
+      });
+    const picked = yearEvents.slice(0, 2);
+    if (picked.length >= 1) {
+      post2022List.push({ ...picked[0], year: yr + 0.0 }); // ~January position
+    }
+    if (picked.length >= 2) {
+      post2022List.push({ ...picked[1], year: yr + 0.5 }); // ~July position
+    }
+  }
+
+  MILESTONES = [...pre2022List, ...post2022List].sort((a,b) => a.year - b.year);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1279,18 +1301,32 @@ function drawAllShapes() {
       ctx.textAlign = 'center';
       const displayName = t.name.toUpperCase();
       const words = displayName.split(' ');
-      if (minDim > 80 && availW > 100) {
-        ctx.fillText(displayName, s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
-      } else if (minDim > 50) {
-        words.forEach((w, i) => {
-          ctx.fillText(w, s.cx, s.cy - minDim * 0.12 + i * (nameSize + 3));
-        });
+
+      // On mobile: strict rule — show both name+% if both fit, else name-only
+      const mobile = isMobile();
+      const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
+      const nameH = words.length * (nameSize + 3);
+      const scoreH = scoreSize;
+      const bothFit = !mobile || (nameH + scoreH + 8 < availH && minDim > 55);
+      const nameVisible = minDim > 50 || (minDim > 30 && availW > 60);
+
+      if (nameVisible) {
+        if (minDim > 80 && availW > 100) {
+          ctx.fillText(displayName, s.cx, s.cy - (reach > 0 && bothFit ? minDim * 0.08 : 0));
+        } else if (minDim > 50) {
+          words.forEach((w, i) => {
+            ctx.fillText(w, s.cx, s.cy - minDim * 0.12 + i * (nameSize + 3));
+          });
+        } else {
+          // Very small tile — just show first word
+          ctx.fillText(words[0], s.cx, s.cy);
+        }
       }
 
-      if (!isMacro && reach >= 1 && minDim > 40) {
+      // Show percentage only if name is also visible and both fit
+      if (!isMacro && reach >= 1 && nameVisible && bothFit && minDim > 40) {
         ctx.fillStyle = textColor;
         ctx.globalAlpha = s.alpha * 0.6;
-        const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
         ctx.font = `700 ${scoreSize}px "Inter"`;
         ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
       }
