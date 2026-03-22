@@ -46,7 +46,7 @@ header {
   background: rgba(0,0,0,0.88);
 }
 .wordmark { font-family: var(--font-body); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; }
-.tagline { font-size: 9px; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; margin-top: 1px; }
+.tagline { font-size: 9px; letter-spacing: 0.16em; color: var(--muted); margin-top: 1px; }
 
 .search-wrap { position: relative; flex: 0 0 240px; }
 .search-wrap input {
@@ -83,7 +83,6 @@ header {
   padding: 5px 14px;
   cursor: pointer;
   transition: all 0.2s;
-  text-transform: uppercase;
   border-radius: 6px;
 }
 .methodology-btn:hover {
@@ -145,7 +144,7 @@ header {
 }
 .panel-close:hover { color: var(--text); }
 .panel-territory-name { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
-.panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+.panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
 .panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.68); margin-bottom: 18px; }
 
 .panel-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
@@ -197,8 +196,8 @@ header {
   font-size: 11px; transition: all 0.2s; flex-shrink: 0; border-radius: 6px;
 }
 .play-btn:hover { border-color: var(--accent); color: var(--accent); }
-.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #FFFFFF; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
-.year-display.projected { color: #FF0000; }
+.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #2042E3; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
+.year-display.projected { color: #2042E3; }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; overflow-x: clip; }
 .timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
@@ -207,7 +206,7 @@ header {
 .timeline-split { position: absolute; top: -7px; bottom: -7px; width: 1px; background: rgba(255,0,0,0.3); }
 .timeline-scrubber {
   position: absolute; top: 50%; width: 11px; height: 11px;
-  background: #FFFFFF; border: 2px solid var(--bg); border-radius: 50%;
+  background: #2042E3; border: 2px solid var(--bg); border-radius: 50%;
   transform: translate(-50%, -50%); cursor: grab; transition: width 0.15s, height 0.15s; z-index: 10;
 }
 .timeline-scrubber:hover, .timeline-scrubber.dragging { width: 18px; height: 18px; }
@@ -242,7 +241,7 @@ header {
 
 .timeline-years { display: flex; position: relative; height: 12px; font-size: 8px; color: #666666; letter-spacing: 0.05em; }
 .timeline-years span { position: absolute; transform: translateX(-50%); }
-.zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; text-transform: uppercase; color: #666666; top: -14px; }
+.zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; color: #666666; top: -14px; }
 .zone-label.projected { right: 0; color: rgba(255,0,0,0.4); }
 .timeline-projected-zone {
   position: absolute; top: -5px; bottom: -5px; right: 0;
@@ -267,12 +266,9 @@ header {
 .toast-label { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text); }
 .toast-desc { font-size: 8.5px; color: var(--muted); letter-spacing: 0.05em; margin-top: 1px; display: block; }
 
-/* ── UPPERCASE LABELS ── */
+/* ── UPPERCASE — territory names & stat labels only ── */
 #tooltip .tt-name,
-.panel-territory-name,
-.search-result-item,
-.toast-label,
-.milestone-tooltip {
+.panel-territory-name {
   text-transform: uppercase;
 }
 
@@ -292,7 +288,7 @@ header {
 .intro-subtitle {
   font-family: 'Inter', sans-serif; font-weight: 400;
   font-size: 18px; letter-spacing: 0.15em; color: #FFFFFF;
-  text-transform: uppercase; margin-bottom: 32px;
+  margin-bottom: 32px;
 }
 .intro-body {
   font-family: 'Inter', sans-serif; font-weight: 400;
@@ -301,7 +297,7 @@ header {
 }
 .intro-enter {
   font-family: 'Inter', sans-serif; font-weight: 500;
-  font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size: 14px; letter-spacing: 0.2em;
   color: #FFFFFF; background: #2042E3; border: none;
   padding: 18px 56px; cursor: pointer; transition: filter 0.2s;
   clip-path: polygon(6% 12%, 95% 0%, 100% 85%, 3% 96%);
@@ -369,7 +365,7 @@ header {
 /* Back button for zoom */
 #back-btn {
   position: fixed; top: 56px; left: 24px; z-index: 85;
-  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  font-size: 9px; letter-spacing: 0.1em; color: var(--muted);
   background: transparent; border: 1px solid var(--border); padding: 5px 12px;
   cursor: pointer; font-family: var(--font-body); transition: all 0.2s; display: none;
 }
@@ -381,16 +377,16 @@ header {
 
 <div id="intro-overlay">
   <div class="intro-title">Large Labour Model</div>
-  <div class="intro-subtitle">WHEN WILL AI REACH YOUR PROFESSION?</div>
+  <div class="intro-subtitle">When will AI reach your profession?</div>
   <div class="intro-body">Large Labour Model maps the development — and subsequent replaceability — of human labour from 1800 to 2040. Taking a deliberately crude approach of charting a numerical trend, the piece encourages viewers to consider their emotional reaction to a rational expression.</div>
-  <button class="intro-enter" onclick="enterSite()">ENTER</button>
+  <button class="intro-enter" onclick="enterSite()">Enter</button>
   <button class="intro-methodology" id="methodology-btn">+</button>
 </div>
 
 <header>
   <div>
     <div class="wordmark">Large Labour Model</div>
-    <div class="tagline">WHEN WILL AI REACH YOUR PROFESSION?</div>
+    <div class="tagline">When will AI reach your profession?</div>
   </div>
   <div class="header-right">
     <div class="search-wrap">
@@ -1281,9 +1277,10 @@ function drawAllShapes() {
       ctx.fillStyle = textColor;
       ctx.font = `400 ${nameSize}px "Inter"`;
       ctx.textAlign = 'center';
-      const words = t.name.split(' ');
+      const displayName = t.name.toUpperCase();
+      const words = displayName.split(' ');
       if (minDim > 80 && availW > 100) {
-        ctx.fillText(t.name, s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
+        ctx.fillText(displayName, s.cx, s.cy - (reach > 0 ? minDim * 0.08 : 0));
       } else if (minDim > 50) {
         words.forEach((w, i) => {
           ctx.fillText(w, s.cx, s.cy - minDim * 0.12 + i * (nameSize + 3));
@@ -1331,9 +1328,27 @@ function drawJobSubShapes() {
 
   const alpha = Math.min(1, (zoomProgress - 0.3) / 0.5);
 
+  // Compute territory name exclusion zone (center of shape + padding)
+  const reach = getTerritoryReach(t, currentYear);
+  const minDim = Math.min(s.w, s.h) * 0.84;
+  const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
+  const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
+  const exclPad = 24;
+  const displayName = t.name.toUpperCase();
+  // Estimate text width
+  const nameWidth = displayName.length * nameSize * 0.65;
+  const exclTop = s.cy - nameSize - scoreSize * 0.5 - exclPad;
+  const exclBottom = s.cy + minDim * 0.26 + exclPad;
+  const exclLeft = s.cx - nameWidth / 2 - exclPad;
+  const exclRight = s.cx + nameWidth / 2 + exclPad;
+
+  function overlapsExclZone(cx, cy, hw, hh) {
+    return !(cx + hw < exclLeft || cx - hw > exclRight || cy + hh < exclTop || cy - hh > exclBottom);
+  }
+
   // Get top 8 occupations for this territory
-  const occs = (occupationsByTerritory[t.id] || []).slice(0, 8);
-  const n = occs.length;
+  const allOccs = (occupationsByTerritory[t.id] || []).slice(0, 8);
+  const n = allOccs.length;
   if (n === 0) return;
 
   // Grid layout along inner edges of parent square
@@ -1345,7 +1360,7 @@ function drawJobSubShapes() {
   const cellW = gridW / cols;
   const cellH = gridH / rows;
 
-  occs.forEach((occ, i) => {
+  allOccs.forEach((occ, i) => {
     const rawScore = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
 
     const col = i % cols;
@@ -1356,6 +1371,9 @@ function drawJobSubShapes() {
     const baseJobSize = Math.min(cellW, cellH) * 0.65;
     const jw = Math.min(baseJobSize + rawScore * 0.1, cellW * 0.85);
     const jh = jw * 0.82;
+
+    // Skip if overlapping territory name exclusion zone
+    if (overlapsExclZone(jcx, jcy, jw/2, jh/2)) return;
 
     // Draw sub-shape (always cut-out style)
     const pts = generateShapePath(jcx, jcy, jw, jh,
@@ -1648,7 +1666,7 @@ function buildTimeline() {
   yearLabels.forEach(y => {
     const s = document.createElement('span');
     s.textContent = y; s.style.left = yearToPercent(y)+'%';
-    if (y===2026) s.style.color = 'rgba(255,0,0,0.5)';
+    if (y===2026) s.style.color = 'rgba(32,66,227,0.7)';
     ye.appendChild(s);
   });
 
