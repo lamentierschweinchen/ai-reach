@@ -370,6 +370,44 @@ header {
   .intro-enter { padding: 14px 40px; font-size: 12px; }
 }
 
+/* ── INTRO INTERACTION BUTTONS ── */
+.intro-actions-heading {
+  font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px;
+  letter-spacing: 0.08em; color: #FFFFFF; margin-bottom: 16px; margin-top: 8px;
+}
+.intro-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.action-btn-wrap {
+  position: relative;
+}
+.action-btn {
+  font-family: var(--font-body); font-size: 11px; font-weight: 400;
+  letter-spacing: 0.04em; color: var(--muted);
+  background: transparent; border: 1px solid var(--border);
+  padding: 5px 14px; cursor: pointer; border-radius: 6px;
+  transition: background-color 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out;
+}
+.action-btn:hover {
+  background: #FFFFFF; color: #000000; border-color: #FFFFFF;
+}
+.action-popup {
+  position: absolute; bottom: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%); min-width: 220px; max-width: 300px;
+  background: rgba(0,0,0,0.97); border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 10px; padding: 10px 14px; font-size: 12px; line-height: 1.5;
+  color: #FFFFFF; opacity: 0; pointer-events: none;
+  transition: opacity 0.2s; z-index: 600; text-align: center;
+}
+.action-btn-wrap:hover .action-popup {
+  opacity: 1; pointer-events: auto;
+}
+
+@media (max-width: 600px) {
+  .intro-actions { flex-direction: column; gap: 8px; }
+  .action-popup { left: 0; transform: none; min-width: 200px; }
+}
+
 /* Back button for zoom */
 #back-btn {
   position: fixed; top: 56px; left: 24px; z-index: 85;
@@ -388,11 +426,20 @@ header {
     <div class="intro-title">Large Labour Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
     <div class="intro-body">This map traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. By 2026, that share had fallen to less than one in four, and AI had become technically capable of performing the majority of tasks in most knowledge-based professions. By 2041, the model projects a world in which very few categories of human work remain beyond the technical reach of AI and robotics; and in which the global workforce has begun to contract for the first time in modern history.</div>
-    <div class="intro-body" style="margin-top: 0; margin-bottom: 0;">
-      <strong style="color: #FFFFFF; font-size: 14px; letter-spacing: 0.08em; display: block; margin-bottom: 12px;">How to interact:</strong>
-      <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Explore</strong> — Use the search bar to find your specific profession</span>
-      <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Control time</strong> — Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</span>
-      <span style="color: #888888; display: block;"><strong style="color: #FFFFFF;">Deep dive</strong> — Click About to inspect the data sources, assumptions, and the mathematical framework powering the model</span>
+    <div class="intro-actions-heading">How to interact:</div>
+    <div class="intro-actions">
+      <div class="action-btn-wrap">
+        <button class="action-btn">Explore</button>
+        <div class="action-popup">Use the search bar to find your specific job</div>
+      </div>
+      <div class="action-btn-wrap">
+        <button class="action-btn">Control time</button>
+        <div class="action-popup">Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</div>
+      </div>
+      <div class="action-btn-wrap">
+        <button class="action-btn">Deep dive</button>
+        <div class="action-popup">Click Methodology to inspect the data sources, assumptions, and the mathematical framework powering the model</div>
+      </div>
     </div>
   </div>
   <div class="intro-right">
@@ -1176,8 +1223,8 @@ function drawAllShapes() {
     }
   });
 
-  // 3. Compute sizes and positions
-  const canvasArea = W * H * 0.88;
+  // 3. Compute sizes and positions — 4× area scaling
+  const canvasArea = W * H * 3.5;
   const totalShare = shapesToDraw.reduce((s,x) => s + x.share, 0) || 1;
 
   const items = shapesToDraw.map(s => {
@@ -1190,10 +1237,10 @@ function drawAllShapes() {
 
     let targetCx = t.baseX * W;
     let targetCy = t.baseY * H;
-    const minW = isMobile() ? 75 : 140;
-    const minH = isMobile() ? 60 : 115;
-    let targetW = Math.max(minW, baseW * (isMobile() ? 0.65 : 1));
-    let targetH = Math.max(minH, baseH * (isMobile() ? 0.65 : 1));
+    const minW = isMobile() ? 120 : 220;
+    const minH = isMobile() ? 100 : 180;
+    let targetW = Math.max(minW, baseW * (isMobile() ? 0.7 : 1));
+    let targetH = Math.max(minH, baseH * (isMobile() ? 0.7 : 1));
     const reachAlpha = 0.88;
     let targetAlpha = reachAlpha * s.morphProgress;
     if (s.isMacro) {
@@ -1224,7 +1271,7 @@ function drawAllShapes() {
         targetCy = t.baseY * H + (zCy - t.baseY * H) * zoomProgress;
         targetW = baseW + (W * 0.42 - baseW) * zoomProgress;
         targetH = baseH + (H * 0.55 - baseH) * zoomProgress;
-        targetAlpha = 0.92;
+        targetAlpha = 0.97;
       } else {
         targetAlpha = 0.88 * s.morphProgress * (1 - zoomProgress * 0.85);
         const dx = targetCx - W*0.5;
@@ -1350,11 +1397,11 @@ function drawAllShapes() {
         const wf = getWorkforce(year);
         const workers = Math.round(share / 100 * wf);
         const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
-        const wfSize = Math.max(7, Math.min(10, minDim * 0.055));
+        const wfSize = Math.max(14, Math.min(28, minDim * 0.14));
         ctx.fillStyle = textColor;
         ctx.globalAlpha = s.alpha * 0.28;
         ctx.font = `400 ${wfSize}px "Inter"`;
-        ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.26);
+        ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.35);
       }
 
       ctx.restore();
@@ -1436,15 +1483,19 @@ function drawJobSubShapes() {
       ctx.save();
       ctx.globalAlpha = alpha * 0.8;
       ctx.fillStyle = '#FFFFFF';
-      const labelSize = Math.max(7, Math.min(10, jw * 0.15));
+      const labelSize = Math.max(14, Math.min(24, jw * 0.35));
       ctx.font = `400 ${labelSize}px "Inter"`;
       ctx.textAlign = 'center';
 
       let label = occ.occupation_name;
-      if (label.length > 18) label = label.substring(0, 16) + '…';
+      // Truncate to fit within tile with 12px padding each side
+      const maxTextW = jw - 24;
+      while (ctx.measureText(label).width > maxTextW && label.length > 3) {
+        label = label.substring(0, label.length - 2) + '…';
+      }
       ctx.fillText(label, jcx, jcy - jh * 0.08);
 
-      ctx.font = `700 ${Math.max(12, jw * 0.22)}px "Inter"`;
+      ctx.font = `700 ${Math.max(18, jw * 0.3)}px "Inter"`;
       ctx.globalAlpha = alpha * 0.6;
       ctx.fillText(rawScore + '%', jcx, jcy + jh * 0.22);
       ctx.restore();
@@ -1476,27 +1527,32 @@ canvas.addEventListener('mousemove', e => {
     return;
   }
 
-  // Check all visible shapes (territories + macros)
+  // Check all visible shapes — test in reverse draw order (topmost pixel wins)
+  // Shapes are drawn sorted by descending share (largest first, smallest on top)
   let found = null;
   let foundIsMacro = false;
 
-  // Check real territories first (higher priority)
-  for (let i = TERRITORIES.length - 1; i >= 0; i--) {
-    const t = TERRITORIES[i];
+  // Build sorted list matching draw order, then check in reverse (top-to-bottom)
+  const allShapes = [];
+  TERRITORIES.forEach(t => {
     const s = shapeStates[t.id];
-    if (!s || s.alpha < 0.15) continue;
-    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
-    if (pointInShape(mx, my, pts)) { found = t; break; }
-  }
-
-  // If not on a real territory, check macro shapes
-  if (!found) {
-    for (const m of MACRO_SHAPES) {
-      const s = shapeStates[m.id];
-      if (!s || s.alpha < 0.15) continue;
-      const pts = generateShapePath(s.cx, s.cy, s.w, s.h, m.rotation, hashStr(m.id));
-      if (pointInShape(mx, my, pts)) { found = m; foundIsMacro = true; break; }
-    }
+    if (!s || s.alpha < 0.15) return;
+    const share = getShareForId(t.id, currentYear);
+    allShapes.push({ t, s, share, isMacro: false });
+  });
+  MACRO_SHAPES.forEach(m => {
+    const s = shapeStates[m.id];
+    if (!s || s.alpha < 0.15) return;
+    const share = getShareForId(m.id, currentYear);
+    allShapes.push({ t: m, s, share, isMacro: true });
+  });
+  // Sort same as draw: largest share first (drawn first = behind)
+  allShapes.sort((a, b) => b.share - a.share);
+  // Check in reverse: last drawn = topmost visual layer
+  for (let i = allShapes.length - 1; i >= 0; i--) {
+    const { t: shape, s, isMacro: macro } = allShapes[i];
+    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, shape.rotation, hashStr(shape.id));
+    if (pointInShape(mx, my, pts)) { found = shape; foundIsMacro = macro; break; }
   }
 
   if (found) {
@@ -1548,16 +1604,18 @@ canvas.addEventListener('touchend', e => {
 
   if (zoomProgress > 0.3) { zoomOut(); return; }
 
-  // Find which territory was tapped
-  for (let i = TERRITORIES.length - 1; i >= 0; i--) {
-    const t = TERRITORIES[i];
+  // Find which territory was tapped — topmost visible pixel wins
+  const touchShapes = [];
+  TERRITORIES.forEach(t => {
     const s = shapeStates[t.id];
-    if (!s || s.alpha < 0.15) continue;
+    if (!s || s.alpha < 0.15) return;
+    touchShapes.push({ t, s, share: getShareForId(t.id, currentYear) });
+  });
+  touchShapes.sort((a, b) => b.share - a.share);
+  for (let i = touchShapes.length - 1; i >= 0; i--) {
+    const { t, s } = touchShapes[i];
     const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
-    if (pointInShape(mx, my, pts)) {
-      zoomIn(t.id);
-      return;
-    }
+    if (pointInShape(mx, my, pts)) { zoomIn(t.id); return; }
   }
 }, {passive:false});
 
