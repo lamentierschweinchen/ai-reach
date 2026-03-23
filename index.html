@@ -275,7 +275,7 @@ header {
   flex: 1 1 0; max-width: 560px; display: flex; flex-direction: column; align-items: flex-start;
 }
 .intro-right {
-  flex: 0 0 auto; display: flex; align-items: center;
+  flex: 1 1 0; display: flex; align-items: center; justify-content: center;
 }
 #intro-overlay.fade-out { opacity: 0; pointer-events: none; }
 .intro-title {
@@ -291,7 +291,7 @@ header {
 .intro-body {
   font-family: 'Inter', sans-serif; font-weight: 400;
   font-size: 16px; line-height: 1.6; color: #888888;
-  max-width: 600px; margin-bottom: 48px;
+  max-width: 480px; margin-bottom: 20px;
 }
 .intro-enter {
   font-family: 'Inter', sans-serif; font-weight: 500;
@@ -299,14 +299,16 @@ header {
   color: #FFFFFF; background: #2042E3; border: none;
   padding: 36px 80px; cursor: pointer;
   clip-path: polygon(6% 12%, 95% 0%, 100% 85%, 3% 96%);
-  animation: breathe 2.8s ease-in-out infinite;
+  transform-origin: center center;
+  animation: breathe 3.2s ease-in-out infinite;
   transition: transform 0.15s ease-out, filter 0.2s;
 }
-.intro-enter:hover { filter: brightness(1.15); transform: scale(1.12); animation-play-state: paused; }
+.intro-enter:hover { filter: brightness(1.15); transform: scale(3.1); animation-play-state: paused; }
 .intro-enter:active { transform: scale(0.92); }
 @keyframes breathe {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.12); }
+  0% { transform: scale(1); }
+  50% { transform: scale(3); }
+  100% { transform: scale(1); }
 }
 .intro-methodology {
   position: fixed; bottom: 32px; right: 32px;
@@ -363,7 +365,7 @@ header {
   #intro-overlay { padding: 5vh 6vw; flex-direction: column; align-items: flex-start; gap: 16px; overflow-y: auto; }
   .intro-left { flex: none; }
   .intro-left .intro-body:last-child { display: none; }
-  .intro-right { align-self: flex-start; }
+  .intro-right { align-self: center; }
   .intro-title { font-size: clamp(32px, 9vw, 48px); margin-bottom: 16px; }
   .intro-subtitle { font-size: 13px; letter-spacing: 0.12em; margin-bottom: 20px; }
   .intro-body { font-size: 13px; line-height: 1.55; margin-bottom: 16px; }
@@ -393,14 +395,14 @@ header {
   position: relative;
 }
 .intro-interact-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--muted);
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.85);
+  color: #FFFFFF;
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.04em;
-  padding: 5px 14px;
+  padding: 6px 16px;
   cursor: pointer;
   transition: background-color 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out;
   border-radius: 6px;
@@ -437,7 +439,7 @@ header {
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
     <div class="intro-body">This map traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. By 2026, that share had fallen to less than one in four, and AI had become technically capable of performing the majority of tasks in most knowledge-based professions. By 2041, the model projects a world in which very few categories of human work remain beyond the technical reach of AI and robotics; and in which the global workforce has begun to contract for the first time in modern history.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
-      <span class="intro-interact-heading">How to interact:</span>
+      <span class="intro-interact-heading">How it works</span>
       <div class="intro-interact-row">
         <div class="intro-interact-btn-wrap">
           <button class="intro-interact-btn" type="button">Explore</button>
@@ -457,12 +459,11 @@ header {
   <div class="intro-right">
     <button class="intro-enter" onclick="enterSite()">Enter</button>
   </div>
-  <button class="intro-methodology" id="methodology-btn">+</button>
 </div>
 
 <header>
   <div>
-    <div class="wordmark">Large Labour Model</div>
+    <div class="wordmark" style="cursor:pointer" onclick="resetTimeline()">Large Labour Model</div>
     <div class="tagline">WHEN WILL AI REACH YOUR JOB?</div>
   </div>
   <div class="header-right">
@@ -1098,6 +1099,14 @@ function getShapeColor(baseHex, reach) {
   return baseHex;
 }
 
+function lightenHex(hex, amount) {
+  const rgb = hexToRGB(hex);
+  const r = Math.min(255, Math.round(rgb.r + (255 - rgb.r) * amount));
+  const g = Math.min(255, Math.round(rgb.g + (255 - rgb.g) * amount));
+  const b = Math.min(255, Math.round(rgb.b + (255 - rgb.b) * amount));
+  return `rgb(${r},${g},${b})`;
+}
+
 function getBarColor(score) {
   if (score < 25) return '#3A6A8A';
   if (score < 50) return '#8A7A3A';
@@ -1393,13 +1402,15 @@ function drawAllShapes() {
 
     if (minDim > 30 && drawAlpha > 0.15) {
       ctx.save();
-      ctx.globalAlpha = drawAlpha * 0.85;
       const textColor = '#FFFFFF';
 
-      const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
+      // Sector title — bold, 1.15× size, letter-spacing 0.08em, 100% opacity
+      const nameSize = Math.max(9, Math.min(15, minDim * 0.08));
+      ctx.globalAlpha = drawAlpha;
       ctx.fillStyle = textColor;
-      ctx.font = `400 ${nameSize}px "Inter"`;
+      ctx.font = `700 ${nameSize}px "Inter"`;
       ctx.textAlign = 'center';
+      ctx.letterSpacing = '0.08em';
       const displayName = t.name.toUpperCase();
       const words = displayName.split(' ');
 
@@ -1432,7 +1443,7 @@ function drawAllShapes() {
         ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
       }
 
-      // Worker count label — 2× current size, lower third of tile
+      // Worker count label — 2× size, lower third of tile, secondary opacity
       if (minDim > 55) {
         const wf = getWorkforce(year);
         const workers = Math.round(share / 100 * wf);
@@ -1469,7 +1480,7 @@ function drawJobSubShapes() {
   // Compute territory name exclusion zone (center of shape + padding)
   const reach = getTerritoryReach(t, currentYear);
   const minDim = Math.min(s.w, s.h) * 0.84;
-  const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
+  const nameSize = Math.max(9, Math.min(15, minDim * 0.08));
   const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
   const exclPad = 24;
   const displayName = t.name.toUpperCase();
@@ -1522,31 +1533,37 @@ function drawJobSubShapes() {
     if (jcx - jw/2 < parentLeft || jcx + jw/2 > parentRight ||
         jcy - jh/2 < parentTop || jcy + jh/2 > parentBottom) return;
 
-    // Draw sub-shape (always cut-out style)
+    // Draw sub-shape — lighter tint of parent (15-20% brighter)
     const pts = generateShapePath(jcx, jcy, jw, jh,
       t.rotation + 15 * (i - n/2), hashStr(t.id + occ.occupation_name));
-    const jobColor = getShapeColor(t.color, rawScore);
-    drawShape(ctx, pts, jobColor, alpha * 0.85);
+    const lighterColor = lightenHex(t.color, 0.2);
+    drawShape(ctx, pts, lighterColor, alpha * 0.88);
+
+    // Subtle inner border (1px white at 18% opacity)
+    drawShapeOutline(ctx, pts, '#FFFFFF', alpha * 0.18, 1);
 
     if (alpha > 0.3 && jw > 20) {
       ctx.save();
-      ctx.globalAlpha = alpha * 0.8;
+      ctx.globalAlpha = alpha; // 100% opacity for job labels
       ctx.fillStyle = '#FFFFFF';
-      // 1.5× job label font size
-      const labelSize = Math.max(10.5, Math.min(15, jw * 0.225));
-      ctx.font = `400 ${labelSize}px "Inter"`;
-      ctx.textAlign = 'center';
 
-      let label = occ.occupation_name;
-      // Truncate with ellipsis if too long for the inner square
+      // Full job name — uppercase small caps style at 11-12px
+      // Reduce font size to fit rather than truncating
+      let label = occ.occupation_name.toUpperCase();
       const maxLabelW = jw - 24; // 12px padding each side
-      while (ctx.measureText(label).width > maxLabelW && label.length > 3) {
-        label = label.substring(0, label.length - 2) + '\u2026';
+      let labelSize = Math.min(12, Math.max(7, jw * 0.14));
+      ctx.font = `500 ${labelSize}px "Inter"`;
+      // Shrink font until it fits
+      while (ctx.measureText(label).width > maxLabelW && labelSize > 6) {
+        labelSize -= 0.5;
+        ctx.font = `500 ${labelSize}px "Inter"`;
       }
+      ctx.textAlign = 'center';
       ctx.fillText(label, jcx, jcy - jh * 0.08);
 
+      // Percentage below
       ctx.font = `700 ${Math.max(18, jw * 0.33)}px "Inter"`;
-      ctx.globalAlpha = alpha * 0.6;
+      ctx.globalAlpha = alpha * 0.7;
       ctx.fillText(rawScore + '%', jcx, jcy + jh * 0.22);
       ctx.restore();
     }
@@ -2009,6 +2026,13 @@ document.addEventListener('keydown', e => {
 // ═══════════════════════════════════════════════════════════════
 // INIT — waits for V2 data
 // ═══════════════════════════════════════════════════════════════
+function resetTimeline() {
+  if (isPlaying) pause();
+  zoomOut();
+  currentYear = START_YEAR;
+  updateTimelineUI();
+}
+
 function enterSite() {
   document.getElementById('intro-overlay').classList.add('fade-out');
   setTimeout(()=> document.getElementById('intro-overlay').style.display='none', 1000);
