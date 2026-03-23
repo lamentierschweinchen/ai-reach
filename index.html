@@ -379,6 +379,54 @@ header {
 }
 #back-btn:hover { border-color: var(--accent); color: var(--accent); }
 #back-btn.visible { display: block; }
+
+/* ── HOW-TO INTERACT BUTTONS (landing page) ── */
+.intro-interact-heading {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: 14px; letter-spacing: 0.08em; color: #FFFFFF;
+  margin-bottom: 12px; display: block;
+}
+.intro-interact-row {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.intro-interact-btn-wrap {
+  position: relative;
+}
+.intro-interact-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: background-color 150ms ease-out, color 150ms ease-out, border-color 150ms ease-out;
+  border-radius: 6px;
+}
+.intro-interact-btn:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+}
+.intro-interact-popup {
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.97); border: 1.5px solid rgba(255,255,255,0.85); border-radius: 10px;
+  padding: 10px 16px; font-size: 12px; line-height: 1.5; color: var(--text);
+  min-width: 220px; max-width: 300px; white-space: normal;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  z-index: 600;
+}
+.intro-interact-btn-wrap:hover .intro-interact-popup {
+  opacity: 1; pointer-events: auto;
+  transition-delay: 0.1s;
+}
+@media (max-width: 600px) {
+  .intro-interact-row { flex-direction: column; gap: 8px; }
+  .intro-interact-popup { left: 0; transform: none; min-width: 180px; }
+}
 </style>
 </head>
 <body>
@@ -388,11 +436,22 @@ header {
     <div class="intro-title">Large Labour Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
     <div class="intro-body">This map traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. By 2026, that share had fallen to less than one in four, and AI had become technically capable of performing the majority of tasks in most knowledge-based professions. By 2041, the model projects a world in which very few categories of human work remain beyond the technical reach of AI and robotics; and in which the global workforce has begun to contract for the first time in modern history.</div>
-    <div class="intro-body" style="margin-top: 0; margin-bottom: 0;">
-      <strong style="color: #FFFFFF; font-size: 14px; letter-spacing: 0.08em; display: block; margin-bottom: 12px;">How to interact:</strong>
-      <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Explore</strong> — Use the search bar to find your specific profession</span>
-      <span style="color: #888888; display: block; margin-bottom: 6px;"><strong style="color: #FFFFFF;">Control time</strong> — Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</span>
-      <span style="color: #888888; display: block;"><strong style="color: #FFFFFF;">Deep dive</strong> — Click About to inspect the data sources, assumptions, and the mathematical framework powering the model</span>
+    <div style="margin-top: 0; margin-bottom: 0;">
+      <span class="intro-interact-heading">How to interact:</span>
+      <div class="intro-interact-row">
+        <div class="intro-interact-btn-wrap">
+          <button class="intro-interact-btn" type="button">Explore</button>
+          <div class="intro-interact-popup">Use the search bar to find your specific job</div>
+        </div>
+        <div class="intro-interact-btn-wrap">
+          <button class="intro-interact-btn" type="button">Control time</button>
+          <div class="intro-interact-popup">Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</div>
+        </div>
+        <div class="intro-interact-btn-wrap">
+          <button class="intro-interact-btn" type="button">Deep dive</button>
+          <div class="intro-interact-popup">Click About to inspect the data sources, assumptions, and the mathematical framework powering the model</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="intro-right">
@@ -835,6 +894,9 @@ let shapeStates = {};
 // Hover
 let hoveredTerritory = null;
 
+// Rendered shapes for dynamic hit-testing (populated each frame, last = topmost)
+let renderedShapes = [];
+
 // Replaceability clickability indicator
 let replPulseTriggered = false;
 let replPulseFrame = 0;
@@ -1263,7 +1325,20 @@ function drawAllShapes() {
     }
   });
 
+  // Sort: largest (background) first, smallest (foreground) last — so smaller tiles render on top
   items.sort((a,b) => b.share - a.share);
+
+  // Move zoomed/active territory to end so it renders on top of everything
+  if (zoomedTerritory) {
+    const zi = items.findIndex(x => x.t.id === zoomedTerritory);
+    if (zi >= 0) {
+      const [active] = items.splice(zi, 1);
+      items.push(active);
+    }
+  }
+
+  // Store rendered shape data for hit-testing (front-to-back order, last = topmost)
+  renderedShapes = [];
 
   items.forEach(({t, reach, isMacro, share}) => {
     const s = shapeStates[t.id];
@@ -1271,10 +1346,21 @@ function drawAllShapes() {
 
     let drawW = s.w, drawH = s.h;
 
+    // Active/zoomed territory gets uniform 0.97 opacity
+    let drawAlpha = s.alpha;
+    if (!isMacro && zoomedTerritory === t.id && zoomProgress > 0.1) {
+      drawAlpha = 0.97;
+    }
+
     // Draw shape (always cut-out style)
     const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
     const color = isMacro ? getShapeColor(t.color, 15) : getShapeColor(t.color, reach);
-    drawShape(ctx, pts, color, s.alpha);
+    drawShape(ctx, pts, color, drawAlpha);
+
+    // Store for hit-testing (last pushed = topmost)
+    if (!isMacro) {
+      renderedShapes.push({ territory: t, points: pts, alpha: drawAlpha });
+    }
 
     // Hover outline (real territories only)
     if (!isMacro && hoveredTerritory === t.id && zoomProgress < 0.5) {
@@ -1305,9 +1391,9 @@ function drawAllShapes() {
     const availH = drawH - paddingY * 2;
     const minDim = Math.min(availW, availH);
 
-    if (minDim > 30 && s.alpha > 0.15) {
+    if (minDim > 30 && drawAlpha > 0.15) {
       ctx.save();
-      ctx.globalAlpha = s.alpha * 0.85;
+      ctx.globalAlpha = drawAlpha * 0.85;
       const textColor = '#FFFFFF';
 
       const nameSize = Math.max(8, Math.min(13, minDim * 0.07));
@@ -1341,20 +1427,21 @@ function drawAllShapes() {
       // Show percentage only if name is also visible and both fit
       if (!isMacro && reach >= 1 && nameVisible && bothFit && minDim > 40) {
         ctx.fillStyle = textColor;
-        ctx.globalAlpha = s.alpha * 0.6;
+        ctx.globalAlpha = drawAlpha * 0.6;
         ctx.font = `700 ${scoreSize}px "Inter"`;
         ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
       }
 
+      // Worker count label — 2× current size, lower third of tile
       if (minDim > 55) {
         const wf = getWorkforce(year);
         const workers = Math.round(share / 100 * wf);
         const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
-        const wfSize = Math.max(7, Math.min(10, minDim * 0.055));
+        const wfSize = Math.max(14, Math.min(20, minDim * 0.11));
         ctx.fillStyle = textColor;
-        ctx.globalAlpha = s.alpha * 0.28;
+        ctx.globalAlpha = drawAlpha * 0.28;
         ctx.font = `400 ${wfSize}px "Inter"`;
-        ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.26);
+        ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.32);
       }
 
       ctx.restore();
@@ -1419,12 +1506,21 @@ function drawJobSubShapes() {
     const jcx = (s.cx - s.w/2 + margin) + cellW * (col + 0.5);
     const jcy = (s.cy - s.h/2 + margin) + cellH * (row + 0.5);
 
-    const baseJobSize = Math.min(cellW, cellH) * 0.65;
-    const jw = Math.min(baseJobSize + rawScore * 0.1, cellW * 0.85);
+    // Inner square slightly larger to accommodate 1.5× label size
+    const baseJobSize = Math.min(cellW, cellH) * 0.75;
+    const jw = Math.min(baseJobSize + rawScore * 0.12, cellW * 0.9);
     const jh = jw * 0.82;
 
     // Skip if overlapping territory name exclusion zone
     if (overlapsExclZone(jcx, jcy, jw/2, jh/2)) return;
+
+    // Ensure inner square stays within parent territory bounds (12px min padding)
+    const parentLeft = s.cx - s.w/2 + 12;
+    const parentRight = s.cx + s.w/2 - 12;
+    const parentTop = s.cy - s.h/2 + 12;
+    const parentBottom = s.cy + s.h/2 - 12;
+    if (jcx - jw/2 < parentLeft || jcx + jw/2 > parentRight ||
+        jcy - jh/2 < parentTop || jcy + jh/2 > parentBottom) return;
 
     // Draw sub-shape (always cut-out style)
     const pts = generateShapePath(jcx, jcy, jw, jh,
@@ -1436,15 +1532,20 @@ function drawJobSubShapes() {
       ctx.save();
       ctx.globalAlpha = alpha * 0.8;
       ctx.fillStyle = '#FFFFFF';
-      const labelSize = Math.max(7, Math.min(10, jw * 0.15));
+      // 1.5× job label font size
+      const labelSize = Math.max(10.5, Math.min(15, jw * 0.225));
       ctx.font = `400 ${labelSize}px "Inter"`;
       ctx.textAlign = 'center';
 
       let label = occ.occupation_name;
-      if (label.length > 18) label = label.substring(0, 16) + '…';
+      // Truncate with ellipsis if too long for the inner square
+      const maxLabelW = jw - 24; // 12px padding each side
+      while (ctx.measureText(label).width > maxLabelW && label.length > 3) {
+        label = label.substring(0, label.length - 2) + '\u2026';
+      }
       ctx.fillText(label, jcx, jcy - jh * 0.08);
 
-      ctx.font = `700 ${Math.max(12, jw * 0.22)}px "Inter"`;
+      ctx.font = `700 ${Math.max(18, jw * 0.33)}px "Inter"`;
       ctx.globalAlpha = alpha * 0.6;
       ctx.fillText(rawScore + '%', jcx, jcy + jh * 0.22);
       ctx.restore();
@@ -1476,17 +1577,15 @@ canvas.addEventListener('mousemove', e => {
     return;
   }
 
-  // Check all visible shapes (territories + macros)
+  // Dynamic hit-testing: check rendered shapes in reverse (topmost first)
   let found = null;
   let foundIsMacro = false;
 
-  // Check real territories first (higher priority)
-  for (let i = TERRITORIES.length - 1; i >= 0; i--) {
-    const t = TERRITORIES[i];
-    const s = shapeStates[t.id];
-    if (!s || s.alpha < 0.15) continue;
-    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
-    if (pointInShape(mx, my, pts)) { found = t; break; }
+  // Check real territories using renderedShapes (last = topmost on canvas)
+  for (let i = renderedShapes.length - 1; i >= 0; i--) {
+    const rs = renderedShapes[i];
+    if (rs.alpha < 0.15) continue;
+    if (pointInShape(mx, my, rs.points)) { found = rs.territory; break; }
   }
 
   // If not on a real territory, check macro shapes
@@ -1548,14 +1647,12 @@ canvas.addEventListener('touchend', e => {
 
   if (zoomProgress > 0.3) { zoomOut(); return; }
 
-  // Find which territory was tapped
-  for (let i = TERRITORIES.length - 1; i >= 0; i--) {
-    const t = TERRITORIES[i];
-    const s = shapeStates[t.id];
-    if (!s || s.alpha < 0.15) continue;
-    const pts = generateShapePath(s.cx, s.cy, s.w, s.h, t.rotation, hashStr(t.id));
-    if (pointInShape(mx, my, pts)) {
-      zoomIn(t.id);
+  // Find which territory was tapped — use renderedShapes for dynamic hit-testing
+  for (let i = renderedShapes.length - 1; i >= 0; i--) {
+    const rs = renderedShapes[i];
+    if (rs.alpha < 0.15) continue;
+    if (pointInShape(mx, my, rs.points)) {
+      zoomIn(rs.territory.id);
       return;
     }
   }
