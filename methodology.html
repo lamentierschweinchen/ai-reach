@@ -190,21 +190,29 @@ html, body {
   <div class="tagline">WHEN WILL AI REACH YOUR JOB?</div>
 
   <div class="toggle-wrap">
-    <button class="toggle-btn active" data-section="methodology">Methodology</button>
-    <button class="toggle-btn" data-section="piece">The piece</button>
+    <button class="toggle-btn" data-section="data">About the data</button>
+    <button class="toggle-btn active" data-section="work">About the work</button>
   </div>
 
-  <div id="methodology" class="section active">
-    <p class="body-text">The Large Labour Model draws on public data from the International Labour Organization, the World Bank, Our World in Data, and national statistical offices to reconstruct global employment shares by sector from 1800 to 2025. Pre-1950 data relies on Maddison Project estimates and historical census records; post-1950 data uses ILO-modelled estimates at the ISIC Rev. 4 section level.</p>
+  <div id="data" class="section">
+    <p class="body-text">The model tracks two things: <strong>labor shares</strong> — how many people work in each territory, globally — and <strong>replaceability</strong> — when AI or robotics becomes technically capable of performing the core tasks of each territory, scored 0 to 100.</p>
 
-    <p class="body-text">Replaceability scores for 2015 to 2026 are derived from occupation-level task analyses cross-referenced with demonstrated AI and robotics capabilities, benchmarked against frameworks including the OECD's AI exposure index and published automation-potential studies. Each territory's score is a workforce-weighted average of its constituent occupations.</p>
+    <p class="body-text">These are separate measurements. Replaceability tracks the <strong>technical frontier</strong>: can the best commercially available AI or robotics do this job? A prototype in a lab does not count. A product you can buy does. Regulation, economics, and social preference do not affect the score — they are recorded separately. This means a territory can score 90 while employment has barely changed. That gap between what AI <em>can</em> do and what has actually happened to jobs is not a flaw in the model. It is one of the most important things it shows.</p>
 
-    <p class="body-text">Projections from 2027 to 2041 are generated under three scenarios — conservative, moderate, and accelerated — using logistic-growth curves fitted to historical adoption rates of general-purpose technologies. The moderate scenario is shown by default. All projected data is clearly marked on the timeline.</p>
+    <p class="body-text">Labor data from 1800 to 1870 is reconstructed from Bairoch (1988), Mitchell (2003), and Cambridge Group occupational records. From 1991 onward, data uses ILO modelled estimates at the ISIC Rev. 4 section level across 189 countries. The 13 territories are an editorial grouping over these standard classifications.</p>
 
-    <p class="body-text">The model is deliberately reductive. It compresses a vast, uneven global reality into a single numerical trend per sector. This is the point: by stripping away nuance, it asks the viewer to notice what they feel when confronted with the raw trajectory, and to hold that feeling against their own understanding of what these numbers leave out.</p>
+    <p class="body-text">Projections from 2027 to 2041 were computed under three scenarios — conservative, moderate, and accelerated. <strong>The visualisation shows the moderate scenario only.</strong> The conservative scenario serves as the baseline: where employment would go if AI displacement did not occur. The displacement model converts replaceability gains into projected job losses using a conversion rate (one-third of each new replaceability point becomes displacement) and a lag schedule (existing capability is absorbed over 15 years on a decelerating curve). These are the model's most consequential assumptions and the most appropriate targets for challenge.</p>
+
+    <p class="body-text">The dataset was produced through a multi-model adversarial pipeline — independent AI research instances producing scores without seeing each other's work, reconciled by a third instance, and validated by Claude (Opus 4.6) as final editor. Manual review by the project lead covered structural decisions and spot-checking. Every number in the dataset should be explainable; where it isn't, that is a known limitation documented in the full methodology.</p>
+
+    <p class="body-text">The model is deliberately reductive and intentionally incomplete. It does not model job creation, policy responses, or economic restructuring. It shows the displacement pressure. What happens next is a political question, not a technical one.</p>
+
+    <div class="btn-row" style="margin-top: 32px;">
+      <a class="cta-btn" href="methodology-full.html">Full methodology and dataset →</a>
+    </div>
   </div>
 
-  <div id="piece" class="section">
+  <div id="work" class="section active">
     <p class="body-text">Large Labour Model is a data visualisation that maps 240 years of human work — and projects where AI and robotics are taking it next. It is designed to be explored, not passively consumed: the viewer controls time, searches for their own profession, and watches sectors emerge, grow, and come under pressure.</p>
 
     <p class="body-text">The visual language borrows from Matisse's cut-outs — bold, flat shapes with imperfect edges, layered without strict alignment. Each territory of work is a coloured form whose area reflects its share of the global workforce. As the timeline advances, shapes shift, new sectors emerge from larger ones, and replaceability percentages begin to appear. The aesthetic is intentional: the warmth and texture of the forms sit in tension with the coldness of what the numbers describe.</p>

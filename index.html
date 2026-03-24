@@ -561,7 +561,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v2.1.json');
+  const resp = await fetch('ai_reach_v2.2.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -738,7 +738,7 @@ function buildLookupTables() {
 // ═══════════════════════════════════════════════════════════════
 // CONSTANTS & TERRITORY DEFINITIONS
 // ═══════════════════════════════════════════════════════════════
-const START_YEAR = 1800, END_YEAR = 2040, SPLIT_YEAR = 2026;
+const START_YEAR = 1800, END_YEAR = 2041, SPLIT_YEAR = 2026;
 
 const TERRITORIES = [
   { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#004D1A',
@@ -1726,7 +1726,7 @@ function updatePanel(id) {
 function drawMiniChart(t) {
   const svg = document.getElementById('mini-chart');
   svg.innerHTML = '';
-  const CW=300, CH=70, s=2000, e=2040, r=e-s;
+  const CW=300, CH=70, s=2000, e=2041, r=e-s;
 
   [25,50,75].forEach(v => {
     const y = CH-(v/100)*CH;
@@ -1810,9 +1810,7 @@ function showMilestonePanel(m) {
   const toast = document.getElementById('milestone-toast');
   document.getElementById('toast-year').textContent = m.year;
   document.getElementById('toast-label').textContent = m.label;
-  let desc = m.desc || '';
-  if (desc.length > 80) desc = desc.substring(0, 77) + '\u2026';
-  document.getElementById('toast-desc').textContent = desc;
+  document.getElementById('toast-desc').textContent = '';
   toast.classList.add('visible');
   toast.style.pointerEvents = 'auto';
   if (toastTimeout) { clearTimeout(toastTimeout); toastTimeout = null; }
@@ -1827,7 +1825,7 @@ function hideMilestonePanel() {
 
 function buildTimeline() {
   const ye = document.getElementById('timeline-years');
-  const yearLabels = isMobile() ? [1800,1900,2000,2040] : [1800,1850,1900,1950,2000,2026,2040];
+  const yearLabels = isMobile() ? [1800,1900,2000,2041] : [1800,1850,1900,1950,2000,2026,2041];
   yearLabels.forEach(y => {
     const s = document.createElement('span');
     s.textContent = y; s.style.left = yearToPercent(y)+'%';
@@ -1852,10 +1850,7 @@ function buildTimeline() {
     const d = document.createElement('div');
     d.className = 'milestone-dot' + (featuredYears.has(m.year) ? ' milestone-featured' : '');
     d.style.left = yearToPercent(m.year)+'%';
-    // Truncate desc for tooltip
-    let desc = m.desc || '';
-    if (desc.length > 80) desc = desc.substring(0, 77) + '…';
-    d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}<div style="color:#6b6a72;font-size:9px;margin-top:3px;max-width:180px;white-space:normal">${desc}</div></div>`;
+    d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}</div>`;
     d.addEventListener('click', e => {
       e.stopPropagation();
       if (activeMilestone === m) return;
@@ -1939,9 +1934,7 @@ function checkMilestoneToast(prevYear, newYear) {
   lastMilestoneYear = hit.year;
   document.getElementById('toast-year').textContent = hit.year;
   document.getElementById('toast-label').textContent = hit.label;
-  let desc = hit.desc || '';
-  if (desc.length > 80) desc = desc.substring(0, 77) + '…';
-  document.getElementById('toast-desc').textContent = desc;
+  document.getElementById('toast-desc').textContent = '';
   toast.classList.add('visible');
   if (toastTimeout) clearTimeout(toastTimeout);
   const isFeatured = hit.type === 'INVENTION' || hit.type === 'BENCHMARK';
