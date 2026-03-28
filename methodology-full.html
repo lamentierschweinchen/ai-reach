@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Full Methodology — Large Labour Model</title>
+<title>Methodology — Large Labour Model</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 @font-face {
@@ -24,12 +24,14 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+html { scroll-behavior: smooth; }
+
 .page {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 12vh 8vw 8vh;
+  padding: 6vh 8vw 8vh;
   max-width: 720px;
 }
 
@@ -42,65 +44,31 @@ html, body {
   color: #FFFFFF;
 }
 
-.wordmark:hover {
-  color: #FFFFFF;
-}
-
 .tagline {
   font-size: 9px;
   letter-spacing: 0.16em;
   color: #666666;
-  margin-bottom: 24px;
-}
-
-.version {
-  font-weight: 500;
-  font-size: 14px;
-  color: #888888;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 /* ── SECTION NAV ── */
 .section-nav {
-  display: flex;
-  gap: 0;
-  margin-bottom: 48px;
+  display: flex; gap: 0; margin-bottom: 48px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  position: sticky;
-  top: 0;
-  background: #000000;
-  z-index: 10;
-  padding-top: 12px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  position: sticky; top: 0; background: #000000; z-index: 10;
+  padding-top: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  width: 100%;
 }
-
 .nav-item {
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  color: #555555;
-  background: none;
-  border: none;
-  padding: 12px 16px;
-  text-decoration: none;
-  position: relative;
-  transition: color 0.25s;
-  flex-shrink: 0;
+  font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13px;
+  letter-spacing: 0.08em; color: #555555; background: none; border: none;
+  padding: 12px 16px; text-decoration: none; position: relative;
+  transition: color 0.25s; flex-shrink: 0;
 }
-
 .nav-item::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: transparent;
-  transition: background 0.25s;
+  content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+  height: 2px; background: transparent; transition: background 0.25s;
 }
-
 .nav-item.active { color: #FFFFFF; }
 .nav-item.active::after { background: #2042E3; }
 .nav-item:hover:not(.active) { color: #999999; }
@@ -119,101 +87,55 @@ html, body {
   font-weight: 500;
 }
 
-.body-text em {
-  font-style: italic;
+ul.body-text {
+  padding-left: 24px;
+}
+
+ul.body-text li {
+  margin-bottom: 8px;
+}
+
+ol.body-text {
+  padding-left: 24px;
+  color: #888888;
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+ol.body-text li {
+  margin-bottom: 8px;
 }
 
 .section-title {
-  font-weight: 600;
-  font-size: 20px;
-  color: #FFFFFF;
-  margin-top: 64px;
-  margin-bottom: 24px;
-  letter-spacing: 0.02em;
+  font-weight: 600; font-size: 20px; color: #FFFFFF;
+  margin-top: 64px; margin-bottom: 24px; letter-spacing: 0.02em;
 }
 
 .section-subtitle {
-  font-weight: 500;
-  font-size: 16px;
-  color: #FFFFFF;
-  margin-top: 32px;
-  margin-bottom: 16px;
+  font-weight: 500; font-size: 16px; color: #FFFFFF;
+  margin-top: 32px; margin-bottom: 16px;
 }
 
-/* ── TABLES ── */
-.method-table-wrap {
-  overflow-x: auto;
-  margin: 24px 0;
-}
-
-.method-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0;
-  font-size: 14px;
-}
-
+.method-table-wrap { overflow-x: auto; margin: 24px 0; }
+.method-table { width: 100%; border-collapse: collapse; margin: 0; font-size: 14px; }
 .method-table th {
-  text-align: left;
-  padding: 10px 12px;
+  text-align: left; padding: 10px 12px;
   border-bottom: 1px solid rgba(255,255,255,0.15);
-  color: #FFFFFF;
-  font-weight: 500;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+  color: #FFFFFF; font-weight: 500; font-size: 13px;
+  letter-spacing: 0.04em; white-space: nowrap;
 }
-
 .method-table td {
-  padding: 8px 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  color: #888888;
-  vertical-align: top;
+  padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: #888888; vertical-align: top;
 }
 
-/* ── FORMULA ── */
 .formula-block {
-  background: rgba(255,255,255,0.04);
-  border-left: 2px solid #2042E3;
-  padding: 16px 20px;
-  margin: 24px 0;
+  background: rgba(255,255,255,0.04); border-left: 2px solid #2042E3;
+  padding: 16px 20px; margin: 24px 0;
   font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
-  font-size: 13px;
-  color: #AAAAAA;
-  line-height: 1.8;
-  overflow-x: auto;
-}
-
-/* ── LISTS ── */
-ul {
-  margin-bottom: 24px;
-  padding-left: 20px;
-}
-
-ul li {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.7;
-  color: #888888;
-  margin-bottom: 8px;
-}
-
-ul li strong {
-  color: #FFFFFF;
-  font-weight: 500;
-}
-
-ol {
-  margin-bottom: 24px;
-  padding-left: 20px;
-}
-
-ol li {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.7;
-  color: #888888;
-  margin-bottom: 8px;
+  font-size: 13px; color: #AAAAAA; line-height: 1.8; overflow-x: auto;
+  white-space: pre-wrap;
 }
 
 /* ── BUTTONS ── */
@@ -243,26 +165,19 @@ ol li {
 }
 
 .cta-btn.secondary {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent; border: 1px solid rgba(255,255,255,0.2);
 }
-
-.cta-btn.secondary:hover {
-  border-color: rgba(255,255,255,0.5);
-}
+.cta-btn.secondary:hover { border-color: rgba(255,255,255,0.5); }
 
 @media (max-width: 600px) {
-  .page { padding: 8vh 6vw 6vh; }
-  .nav-item { font-size: 11px; padding: 10px 12px; }
+  .page { padding: 8vh 6vw 6vh; max-width: 100%; }
+  .section-title { font-size: 18px; }
+  .section-subtitle { font-size: 15px; }
   .body-text { font-size: 14px; }
-  ul li, ol li { font-size: 14px; }
-  .section-title { font-size: 18px; margin-top: 48px; }
-  .section-subtitle { font-size: 14px; }
+  .formula-block { font-size: 11px; padding: 12px 14px; }
   .method-table { font-size: 12px; }
-  .method-table th { font-size: 11px; }
-  .formula-block { font-size: 11px; padding: 12px 16px; }
   .cta-btn { font-size: 12px; padding: 12px 32px; }
-  .btn-row { flex-direction: column; }
+  .nav-item { padding: 10px 12px; font-size: 11px; }
 }
 </style>
 </head>
@@ -273,7 +188,7 @@ ol li {
   <div class="tagline">WHEN WILL AI REACH YOUR JOB?</div>
 
   <nav class="section-nav">
-    <a href="#what" class="nav-item active">1</a>
+    <a href="#what" class="nav-item">1</a>
     <a href="#territories" class="nav-item">2</a>
     <a href="#sources" class="nav-item">3</a>
     <a href="#scenarios" class="nav-item">4</a>
@@ -287,13 +202,15 @@ ol li {
     <a href="#citation" class="nav-item">12</a>
   </nav>
 
+  <h1 class="section-title" style="margin-top: 0;">Large Labor Model — Methodology</h1>
+
   <p class="body-text"><strong>Version 2.2 — March 2026</strong></p>
 
   <p class="body-text">This document describes how the Large Labor Model dataset was produced. It is written so that someone with no prior knowledge of the project can understand how every number in the dataset was derived, what assumptions were made, and where the model is weakest. It is the single reference for anyone who wants to challenge, extend, or build on this work.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 1. WHAT THIS PROJECT MEASURES           -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="what">1. What this project measures</h2>
 
@@ -319,42 +236,40 @@ ol li {
 
   <p class="body-text">The displacement model (Section 5) converts replaceability into projected employment change. The labor share data tracks actual historical employment. Together they show: here is what AI can technically do, and here is what has actually happened to jobs. The distance between those two lines is the project's central provocation.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 2. TERRITORY DEFINITIONS                -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="territories">2. Territory definitions</h2>
 
   <p class="body-text">Human work is organized into 13 territories. Each maps to one or more sections of the International Standard Industrial Classification (ISIC Rev. 4). The territory names are editorial — designed to be legible to a general audience rather than to an economist. The ISIC mapping ensures that every territory corresponds to a standard, internationally comparable definition of economic activity.</p>
 
-  <div class="method-table-wrap">
-    <table class="method-table">
-      <thead>
-        <tr><th>Territory</th><th>What it covers</th><th>ISIC Sections</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Land &amp; Sea</td><td>Agriculture, forestry, fishing, mining, quarrying</td><td>A, B</td></tr>
-        <tr><td>Making Things</td><td>Manufacturing</td><td>C</td></tr>
-        <tr><td>Building Things</td><td>Construction</td><td>F</td></tr>
-        <tr><td>Moving Things</td><td>Transport, logistics, warehousing</td><td>H</td></tr>
-        <tr><td>Buying &amp; Selling</td><td>Retail and wholesale trade</td><td>G</td></tr>
-        <tr><td>Money &amp; Data</td><td>Finance, insurance, real estate, information</td><td>J, K, L</td></tr>
-        <tr><td>Care &amp; Health</td><td>Human health and social work</td><td>Q</td></tr>
-        <tr><td>Learning &amp; Teaching</td><td>Education</td><td>P</td></tr>
-        <tr><td>Making Meaning</td><td>Arts, media, creative industries</td><td>R</td></tr>
-        <tr><td>Governing &amp; Protecting</td><td>Public administration, defense</td><td>O</td></tr>
-        <tr><td>Feeding &amp; Hosting</td><td>Accommodation, food service</td><td>I</td></tr>
-        <tr><td>Maintaining &amp; Fixing</td><td>Utilities, repair, personal services</td><td>D, E, S</td></tr>
-        <tr><td>Thinking &amp; Leading</td><td>Professional, scientific, technical, management</td><td>M, N</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Territory</th><th>What it covers</th><th>ISIC Sections</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Land &amp; Sea</td><td>Agriculture, forestry, fishing, mining, quarrying</td><td>A, B</td></tr>
+      <tr><td>Making Things</td><td>Manufacturing</td><td>C</td></tr>
+      <tr><td>Building Things</td><td>Construction</td><td>F</td></tr>
+      <tr><td>Moving Things</td><td>Transport, logistics, warehousing</td><td>H</td></tr>
+      <tr><td>Buying &amp; Selling</td><td>Retail and wholesale trade</td><td>G</td></tr>
+      <tr><td>Money &amp; Data</td><td>Finance, insurance, real estate, information</td><td>J, K, L</td></tr>
+      <tr><td>Care &amp; Health</td><td>Human health and social work</td><td>Q</td></tr>
+      <tr><td>Learning &amp; Teaching</td><td>Education</td><td>P</td></tr>
+      <tr><td>Making Meaning</td><td>Arts, media, creative industries</td><td>R</td></tr>
+      <tr><td>Governing &amp; Protecting</td><td>Public administration, defense</td><td>O</td></tr>
+      <tr><td>Feeding &amp; Hosting</td><td>Accommodation, food service</td><td>I</td></tr>
+      <tr><td>Maintaining &amp; Fixing</td><td>Utilities, repair, personal services</td><td>D, E, S</td></tr>
+      <tr><td>Thinking &amp; Leading</td><td>Professional, scientific, technical, management</td><td>M, N</td></tr>
+    </tbody>
+  </table></div>
 
   <p class="body-text">The territory groupings are an editorial layer over the native ISIC classification. The underlying data is keyed to ISIC sections so that regrouping territories does not require re-collecting data.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 3. DATA SOURCES AND QUALITY             -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="sources">3. Data sources and quality</h2>
 
@@ -388,24 +303,22 @@ ol li {
 
   <p class="body-text"><strong>Scoring scale:</strong></p>
 
-  <div class="method-table-wrap">
-    <table class="method-table">
-      <thead>
-        <tr><th>Score</th><th>Meaning</th><th>Example</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>~5</td><td>Narrow subtask automation; role not substitutable</td><td>Single-task construction robot (2015)</td></tr>
-        <tr><td>~25</td><td>AI handles specific bounded tasks; majority beyond frontier</td><td>Agricultural GPS auto-steer + drone spraying (2020)</td></tr>
-        <tr><td>~50</td><td>Frontier AI capable of most core functions; not all</td><td>Radiology AI matching human accuracy (2024)</td></tr>
-        <tr><td>~75</td><td>Capable of full role with minimal human involvement</td><td>SWE-bench 71.7%; AI writes 30–50% of production code (2024)</td></tr>
-        <tr><td>~90+</td><td>Complete technical substitution possible at frontier</td><td>Xiaomi zero-worker smartphone factory (2024)</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Score</th><th>Meaning</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>~5</td><td>Narrow subtask automation; role not substitutable</td><td>Single-task construction robot (2015)</td></tr>
+      <tr><td>~25</td><td>AI handles specific bounded tasks; majority beyond frontier</td><td>Agricultural GPS auto-steer + drone spraying (2020)</td></tr>
+      <tr><td>~50</td><td>Frontier AI capable of most core functions; not all</td><td>Radiology AI matching human accuracy (2024)</td></tr>
+      <tr><td>~75</td><td>Capable of full role with minimal human involvement</td><td>SWE-bench 71.7%; AI writes 30–50% of production code (2024)</td></tr>
+      <tr><td>~90+</td><td>Complete technical substitution possible at frontier</td><td>Xiaomi zero-worker smartphone factory (2024)</td></tr>
+    </tbody>
+  </table></div>
 
   <p class="body-text"><strong>Methodology constraints:</strong></p>
 
-  <ul>
+  <ul class="body-text">
     <li>Monotonicity: scores are non-decreasing within each territory-scenario. AI capability does not regress.</li>
     <li>Cross-scenario ordering: accelerated ≥ moderate ≥ conservative at every anchor year.</li>
     <li>Both constraints are validated programmatically. The current dataset has zero violations.</li>
@@ -427,7 +340,7 @@ ol li {
 
   <p class="body-text">The dataset contains 414 source records. The source hierarchy for labor data is:</p>
 
-  <ol>
+  <ol class="body-text">
     <li>ILO ILOSTAT modelled estimates (primary for 1991–2025)</li>
     <li>World Bank World Development Indicators (cross-check)</li>
     <li>GGDC 10-Sector Database (historical disaggregation)</li>
@@ -437,9 +350,9 @@ ol li {
 
   <p class="body-text">For replaceability scores, sources are primarily benchmark datasets (SWE-bench, METR, IFR robot density), commercial deployment data (company reports, earnings calls, industry databases), and academic research (Frey &amp; Osborne, Eloundou et al., Gmyrek et al., Anthropic Economic Index).</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 4. SCENARIOS                            -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="scenarios">4. Scenarios</h2>
 
@@ -455,15 +368,15 @@ ol li {
 
   <p class="body-text">The METR 4-month capability doubling rate continues through 2028, then stabilizes. Frontier AI reaches human-level performance on most cognitive tasks by 2027–2028. Commercially available robotics crosses dexterity thresholds for most structured physical environments by 2029–2030.</p>
 
-  <p class="body-text"><strong>This is the display scenario. The visualization shows the moderate projection only.</strong></p>
+  <p class="body-text">This is the display scenario. The visualization shows the moderate projection only.</p>
 
   <h3 class="section-subtitle">4.3 Accelerated</h3>
 
   <p class="body-text">Capability improvement accelerates beyond 2025 levels. Frontier AI reaches AGI-adjacent performance by 2027. Commercially available robotics crosses thresholds for unstructured physical environments by 2028. By 2030, the only remaining technical frontiers are direct physical contact with humans and genuinely novel creative output.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 5. THE DISPLACEMENT MODEL               -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="displacement">5. The displacement model</h2>
 
@@ -473,14 +386,26 @@ ol li {
 
   <p class="body-text">For each territory T, year Y, and scenario S:</p>
 
-  <div class="formula-block">total_reduction = delta_repl_term + lag_term<br><br>delta_repl_term = conv_rate(S) × max(0, repl(T, Y, S) − repl_2026(T)) / 100<br><br>lag_term = lag_release(S, Y) × pending(T) / 100<br><br>pending(T) = repl_2026(T) × 0.85<br><br>workers(T, Y, S) = consensus_workers(T, Y) × (1 − total_reduction)</div>
+  <div class="formula-block">total_reduction = delta_repl_term + lag_term
 
-  <p class="body-text"><strong>repl(T, Y, S)</strong> is the replaceability score for territory T at year Y under scenario S</p>
-  <p class="body-text"><strong>repl_2026(T)</strong> is the locked 2026 baseline score (no scenario)</p>
-  <p class="body-text"><strong>consensus_workers(T, Y)</strong> is the conservative (ILO consensus) workforce projection</p>
-  <p class="body-text"><strong>conv_rate(S)</strong> is the scenario-specific conversion rate</p>
-  <p class="body-text"><strong>lag_release(S, Y)</strong> is the scenario-specific lag absorption at year Y</p>
-  <p class="body-text"><strong>pending(T)</strong> is the backlog of existing capability not yet absorbed (85% of the 2026 score)</p>
+delta_repl_term = conv_rate(S) &times; max(0, repl(T, Y, S) &minus; repl_2026(T)) / 100
+
+lag_term = lag_release(S, Y) &times; pending(T) / 100
+
+pending(T) = repl_2026(T) &times; 0.85
+
+workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</div>
+
+  <p class="body-text">Where:</p>
+
+  <ul class="body-text">
+    <li><strong>repl(T, Y, S)</strong> is the replaceability score for territory T at year Y under scenario S</li>
+    <li><strong>repl_2026(T)</strong> is the locked 2026 baseline score (no scenario)</li>
+    <li><strong>consensus_workers(T, Y)</strong> is the conservative (ILO consensus) workforce projection</li>
+    <li><strong>conv_rate(S)</strong> is the scenario-specific conversion rate</li>
+    <li><strong>lag_release(S, Y)</strong> is the scenario-specific lag absorption at year Y</li>
+    <li><strong>pending(T)</strong> is the backlog of existing capability not yet absorbed (85% of the 2026 score)</li>
+  </ul>
 
   <h3 class="section-subtitle">5.2 What the two terms mean</h3>
 
@@ -492,54 +417,48 @@ ol li {
 
   <p class="body-text"><strong>Conversion rates</strong> (what fraction of each new replaceability point becomes an actual job loss):</p>
 
-  <div class="method-table-wrap">
-    <table class="method-table">
-      <thead>
-        <tr><th>Scenario</th><th>Rate</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Conservative</td><td>No displacement applied. The conservative scenario is the ILO consensus baseline — it represents where employment would go if AI displacement did not occur. The displacement formula is not run on this scenario.</td></tr>
-        <tr><td>Moderate</td><td>1/3 (0.333). One-third of new capability becomes displacement.</td></tr>
-        <tr><td>Accelerated</td><td>0.60. Three-fifths of new capability becomes displacement.</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Scenario</th><th>Rate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Conservative</td><td>No displacement applied. The conservative scenario is the ILO consensus baseline — it represents where employment would go if AI displacement did not occur. The displacement formula is not run on this scenario.</td></tr>
+      <tr><td>Moderate</td><td>1/3 (0.333). One-third of new capability becomes displacement.</td></tr>
+      <tr><td>Accelerated</td><td>0.60. Three-fifths of new capability becomes displacement.</td></tr>
+    </tbody>
+  </table></div>
 
   <p class="body-text"><strong>Lag release schedule</strong> (what fraction of the 2026 capability backlog has been absorbed by each year). These values apply to the moderate and accelerated scenarios only. The conservative scenario does not use the displacement formula.</p>
 
-  <div class="method-table-wrap">
-    <table class="method-table">
-      <thead>
-        <tr><th>Year</th><th>Moderate</th><th>Accelerated</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>2026</td><td>5%</td><td>12%</td></tr>
-        <tr><td>2030</td><td>28%</td><td>55%</td></tr>
-        <tr><td>2035</td><td>48%</td><td>75%</td></tr>
-        <tr><td>2040</td><td>58%</td><td>85%</td></tr>
-        <tr><td>2041</td><td>60%</td><td>87%</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Year</th><th>Moderate</th><th>Accelerated</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2026</td><td>5%</td><td>12%</td></tr>
+      <tr><td>2030</td><td>28%</td><td>55%</td></tr>
+      <tr><td>2035</td><td>48%</td><td>75%</td></tr>
+      <tr><td>2040</td><td>58%</td><td>85%</td></tr>
+      <tr><td>2041</td><td>60%</td><td>87%</td></tr>
+    </tbody>
+  </table></div>
 
   <p class="body-text">The lag schedule decelerates: the gaps between anchor points are +23pp (2026–2030), +20pp (2030–2035), +10pp (2035–2040), +2pp (2040–2041) for the moderate scenario. This reflects the assumption that the easiest-to-displace roles are absorbed first, and the remaining backlog becomes progressively harder to convert into actual displacement.</p>
 
   <h3 class="section-subtitle">5.4 Headline outputs</h3>
 
-  <div class="method-table-wrap">
-    <table class="method-table">
-      <thead>
-        <tr><th>Year</th><th>Conservative</th><th>Moderate</th><th>Accelerated</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>2026</td><td>3,551M</td><td>3,417M</td><td>3,151M</td></tr>
-        <tr><td>2030</td><td>3,606M</td><td>2,946M</td><td>2,134M</td></tr>
-        <tr><td>2035</td><td>3,700M</td><td>2,580M</td><td>1,692M</td></tr>
-        <tr><td>2040</td><td>3,800M</td><td>2,427M</td><td>1,470M</td></tr>
-        <tr><td>2041</td><td>3,820M</td><td>2,395M</td><td>1,426M</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Year</th><th>Conservative</th><th>Moderate</th><th>Accelerated</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>2026</td><td>3,551M</td><td>3,417M</td><td>3,151M</td></tr>
+      <tr><td>2030</td><td>3,606M</td><td>2,946M</td><td>2,134M</td></tr>
+      <tr><td>2035</td><td>3,700M</td><td>2,580M</td><td>1,692M</td></tr>
+      <tr><td>2040</td><td>3,800M</td><td>2,427M</td><td>1,470M</td></tr>
+      <tr><td>2041</td><td>3,820M</td><td>2,395M</td><td>1,426M</td></tr>
+    </tbody>
+  </table></div>
 
   <p class="body-text">The moderate scenario shows a 30% workforce decline from 2026 to 2041.</p>
 
@@ -555,7 +474,7 @@ ol li {
 
   <p class="body-text">The lag release schedule is the single most consequential free parameter in the model. Small changes produce large changes in output:</p>
 
-  <ul>
+  <ul class="body-text">
     <li>Moderate lag at 2040 = 58% → total workforce 2,427M (29% decline from conservative)</li>
     <li>Moderate lag at 2040 = 30% → total workforce approximately 2,760M (18% decline)</li>
     <li>Moderate lag at 2040 = 80% → total workforce approximately 2,120M (38% decline)</li>
@@ -565,9 +484,9 @@ ol li {
 
   <p class="body-text">The lag schedule is modeled, not empirically measured. It reflects the project's assessment of institutional absorption speed based on historical technology adoption patterns. It is not a prediction. Alternative schedules would produce materially different projections.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 6. THE PRODUCTION PIPELINE              -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="pipeline">6. The production pipeline</h2>
 
@@ -575,23 +494,21 @@ ol li {
 
   <h3 class="section-subtitle">6.1 Phases</h3>
 
-  <div class="method-table-wrap">
-    <table class="method-table">
-      <thead>
-        <tr><th>Phase</th><th>Content</th><th>Research models</th><th>Reconciler</th><th>Final editor</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>1</td><td>Historical labor shares 1800–2024</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
-        <tr><td>2</td><td>Labor projections 2025–2040</td><td>Gemini + GPT</td><td>Claude</td><td>Claude (Opus 4.6)</td></tr>
-        <tr><td>3</td><td>Territory replaceability 2015–2026</td><td>Claude + GPT</td><td>Gemini</td><td>Claude (Opus 4.6)</td></tr>
-        <tr><td>4A/B</td><td>Occupation replaceability (405 occupations)</td><td>Claude + GPT</td><td>Gemini</td><td>Claude (Opus 4.6)</td></tr>
-        <tr><td>5</td><td>Replaceability projections 2027–2040</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
-        <tr><td>6</td><td>Technology events timeline</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
-        <tr><td>7</td><td>Manual integration + source deduplication</td><td>—</td><td>—</td><td>Manual + Claude (Opus 4.6)</td></tr>
-        <tr><td>8</td><td>Final validation</td><td>—</td><td>—</td><td>Automated + manual</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Phase</th><th>Content</th><th>Research models</th><th>Reconciler</th><th>Final editor</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Historical labor shares 1800–2024</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
+      <tr><td>2</td><td>Labor projections 2025–2040</td><td>Gemini + GPT</td><td>Claude</td><td>Claude (Opus 4.6)</td></tr>
+      <tr><td>3</td><td>Territory replaceability 2015–2026</td><td>Claude + GPT</td><td>Gemini</td><td>Claude (Opus 4.6)</td></tr>
+      <tr><td>4A/B</td><td>Occupation replaceability (405 occupations)</td><td>Claude + GPT</td><td>Gemini</td><td>Claude (Opus 4.6)</td></tr>
+      <tr><td>5</td><td>Replaceability projections 2027–2040</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
+      <tr><td>6</td><td>Technology events timeline</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
+      <tr><td>7</td><td>Manual integration + source deduplication</td><td>—</td><td>—</td><td>Manual + Claude (Opus 4.6)</td></tr>
+      <tr><td>8</td><td>Final validation</td><td>—</td><td>—</td><td>Automated + manual</td></tr>
+    </tbody>
+  </table></div>
 
   <p class="body-text">Automated validation checks: monotonicity (all territory-scenario trajectories non-decreasing), cross-scenario ordering (accelerated ≥ moderate ≥ conservative at every anchor year), labor share summation (100% at every anchor year), and displacement formula consistency. Manual validation caught errors that automated checks cannot — most notably a phantom parameter value (conservative conversion rate listed as 0.30 but never applied) that persisted through multiple automated validation passes.</p>
 
@@ -611,40 +528,38 @@ ol li {
 
   <p class="body-text"><strong>Feeding &amp; Hosting (moderate):</strong> 2027–2032 scores lowered by 5–8 points. Basis: The leading kitchen automation robot (Flippy) has approximately 14 active commercial installations. The leading validated success (Sweetgreen Infinite Kitchen) operates at 12 locations and still requires roughly half the normal staff. No general cooking robot, hotel room-cleaning robot, or humanoid hospitality worker is commercially deployed anywhere.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 7. 2026 REPLACEABILITY BASELINES        -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="baselines">7. 2026 replaceability baselines</h2>
 
   <p class="body-text">These are the locked baseline scores from which all projections depart. Each score is briefly justified below.</p>
 
-  <div class="method-table-wrap">
-    <table class="method-table">
-      <thead>
-        <tr><th>Territory</th><th>2026 Score</th><th>Justification</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Making Things</td><td>86</td><td>Xiaomi zero-worker factory (81K sqm, 24/7); China 470 robots per 10K manufacturing workers. High-capital frontier is essentially fully automatable. Global average lower due to legacy equipment.</td></tr>
-        <tr><td>Money &amp; Data</td><td>78</td><td>Frontier AI performs most financial analysis, document processing, compliance review, and data management at professional level. Complex multi-party judgment and novel legal structures remain.</td></tr>
-        <tr><td>Thinking &amp; Leading</td><td>72</td><td>SWE-bench 71.7% (2024); AI writes 30–50% of code at frontier companies. Professional services (consulting, management, legal research) substantially automatable. Senior architecture and novel system design remain.</td></tr>
-        <tr><td>Making Meaning</td><td>72</td><td>Generative AI produces professional-quality text, image, video, and music. Commercial deployment in advertising, content production, design. Genuinely novel creative output and aesthetic judgment remain.</td></tr>
-        <tr><td>Care &amp; Health</td><td>62</td><td>873 FDA-cleared AI radiology tools. AI matches human diagnostic accuracy on many imaging tasks. Telehealth AI operational. Fine physical manipulation, novel diagnosis, and therapeutic relationship remain.</td></tr>
-        <tr><td>Buying &amp; Selling</td><td>62</td><td>E-commerce AI, automated customer service, inventory optimization, dynamic pricing all commercially deployed. Complex negotiation and relationship sales remain.</td></tr>
-        <tr><td>Moving Things</td><td>52</td><td>Waymo commercial robotaxi in multiple cities. Amazon 1M+ warehouse robots. Autonomous trucking in pilot. Last-mile in unstructured environments and adverse conditions remain.</td></tr>
-        <tr><td>Land &amp; Sea</td><td>48</td><td>GPS auto-steer, drone spraying, autonomous grain harvesting commercially deployed. Precision weeding lasers operational. Fruit harvesting in early commercial. Unstructured terrain, biological variability, and the global South's minimal mechanization anchor the score.</td></tr>
-        <tr><td>Building Things</td><td>46</td><td>Construction drones (45–67% contractor adoption), rebar robots, 3D concrete printing scaling. MEP trades (plumbing, electrical, HVAC) at zero robotic automation. Unstructured environments, multi-trade coordination unsolved.</td></tr>
-        <tr><td>Governing &amp; Protecting</td><td>41</td><td>AI surveillance, predictive policing, document automation in government. Military autonomous systems in deployment. Democratic accountability, judgment in novel situations, and physical enforcement remain deeply human.</td></tr>
-        <tr><td>Feeding &amp; Hosting</td><td>34</td><td>Digital ordering/payment mature. Restaurant delivery robots (160K+ units globally). Basic food assembly automation (Sweetgreen). No general cooking, room-cleaning, or complex hospitality service robots deployed.</td></tr>
-        <tr><td>Maintaining &amp; Fixing</td><td>32</td><td>Industrial inspection platforms (Boston Dynamics Spot, pipe crawlers, utility drones) commercially deployed. SCADA/IoT for process monitoring. Zero commercial robotic solutions for physical repair (HVAC, plumbing, electrical).</td></tr>
-        <tr><td>Learning &amp; Teaching</td><td>18</td><td>AI tutoring systems (Khan Academy + GPT-4) operational. Automated grading for structured assessments. Embodied presence, real-time social adaptation, and the developmental relationship remain far from any technical solution.</td></tr>
-      </tbody>
-    </table>
-  </div>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Territory</th><th>2026 Score</th><th>Justification</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Making Things</td><td>86</td><td>Xiaomi zero-worker factory (81K sqm, 24/7); China 470 robots per 10K manufacturing workers. High-capital frontier is essentially fully automatable. Global average lower due to legacy equipment.</td></tr>
+      <tr><td>Money &amp; Data</td><td>78</td><td>Frontier AI performs most financial analysis, document processing, compliance review, and data management at professional level. Complex multi-party judgment and novel legal structures remain.</td></tr>
+      <tr><td>Thinking &amp; Leading</td><td>72</td><td>SWE-bench 71.7% (2024); AI writes 30–50% of code at frontier companies. Professional services (consulting, management, legal research) substantially automatable. Senior architecture and novel system design remain.</td></tr>
+      <tr><td>Making Meaning</td><td>72</td><td>Generative AI produces professional-quality text, image, video, and music. Commercial deployment in advertising, content production, design. Genuinely novel creative output and aesthetic judgment remain.</td></tr>
+      <tr><td>Care &amp; Health</td><td>62</td><td>873 FDA-cleared AI radiology tools. AI matches human diagnostic accuracy on many imaging tasks. Telehealth AI operational. Fine physical manipulation, novel diagnosis, and therapeutic relationship remain.</td></tr>
+      <tr><td>Buying &amp; Selling</td><td>62</td><td>E-commerce AI, automated customer service, inventory optimization, dynamic pricing all commercially deployed. Complex negotiation and relationship sales remain.</td></tr>
+      <tr><td>Moving Things</td><td>52</td><td>Waymo commercial robotaxi in multiple cities. Amazon 1M+ warehouse robots. Autonomous trucking in pilot. Last-mile in unstructured environments and adverse conditions remain.</td></tr>
+      <tr><td>Land &amp; Sea</td><td>48</td><td>GPS auto-steer, drone spraying, autonomous grain harvesting commercially deployed. Precision weeding lasers operational. Fruit harvesting in early commercial. Unstructured terrain, biological variability, and the global South's minimal mechanization anchor the score.</td></tr>
+      <tr><td>Building Things</td><td>46</td><td>Construction drones (45–67% contractor adoption), rebar robots, 3D concrete printing scaling. MEP trades (plumbing, electrical, HVAC) at zero robotic automation. Unstructured environments, multi-trade coordination unsolved.</td></tr>
+      <tr><td>Governing &amp; Protecting</td><td>41</td><td>AI surveillance, predictive policing, document automation in government. Military autonomous systems in deployment. Democratic accountability, judgment in novel situations, and physical enforcement remain deeply human.</td></tr>
+      <tr><td>Feeding &amp; Hosting</td><td>34</td><td>Digital ordering/payment mature. Restaurant delivery robots (160K+ units globally). Basic food assembly automation (Sweetgreen). No general cooking, room-cleaning, or complex hospitality service robots deployed.</td></tr>
+      <tr><td>Maintaining &amp; Fixing</td><td>32</td><td>Industrial inspection platforms (Boston Dynamics Spot, pipe crawlers, utility drones) commercially deployed. SCADA/IoT for process monitoring. Zero commercial robotic solutions for physical repair (HVAC, plumbing, electrical).</td></tr>
+      <tr><td>Learning &amp; Teaching</td><td>18</td><td>AI tutoring systems (Khan Academy + GPT-4) operational. Automated grading for structured assessments. Embodied presence, real-time social adaptation, and the developmental relationship remain far from any technical solution.</td></tr>
+    </tbody>
+  </table></div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 8. TIMELINE AND ENDPOINT RATIONALE      -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 8 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="timeline">8. Timeline and endpoint rationale</h2>
 
@@ -666,9 +581,9 @@ ol li {
 
   <p class="body-text">The 2025–2026 boundary is a methodological seam where backward-calibrated historical data meets forward-calibrated projections. Some territories show apparent plateaus at this boundary (e.g., Land &amp; Sea holding at 48 for both 2025 and 2026). These are artifacts of the calibration methodology, not genuine capability stalls.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 9. KNOWN LIMITATIONS                    -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 9 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="limitations">9. Known limitations</h2>
 
@@ -696,9 +611,9 @@ ol li {
 
   <p class="body-text">The displacement model models job loss only, not job creation. This is its most challengeable assumption. Every economist will ask where the reinstatement effect is. The answer is: it is deliberately excluded. See Section 5.5 for the rationale. Readers should understand that actual employment outcomes depend on policy responses and economic restructuring that this model does not attempt to predict.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 10. HOW TO CONTRIBUTE                   -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 10 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="contribute">10. How to contribute</h2>
 
@@ -726,15 +641,15 @@ ol li {
 
   <p class="body-text">Corrections and extensions should reference the dataset's native structure: territory_id, year, scenario, replaceability_score, source_ids. The canonical dataset is a JSON file. Territory groupings are a separate editorial layer over native ISIC/ISCO classification keys.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 11. CHANGELOG                           -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 11 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="changelog">11. Changelog</h2>
 
   <h3 class="section-subtitle">v2.2 (March 2026)</h3>
 
-  <ul>
+  <ul class="body-text">
     <li>Timeline extended from 2040 to 2041 (78 new records: 39 replaceability + 39 labor)</li>
     <li>Feeding &amp; Hosting moderate 2027–2032: scores lowered by 5–8 points (evidence review)</li>
     <li>Feeding &amp; Hosting conservative 2027–2029: adjusted to maintain cross-scenario ordering</li>
@@ -749,61 +664,57 @@ ol li {
 
   <h3 class="section-subtitle">v2.1 (February 2026)</h3>
 
-  <ul>
+  <ul class="body-text">
     <li>Initial public dataset</li>
     <li>496 replaceability records, 387 labor records, 405 occupations, 96 technology events, 410 sources</li>
     <li>Three scenarios (conservative, moderate, accelerated)</li>
     <li>Timeline: 1800–2040</li>
   </ul>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- 12. CITATION                            -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 12 -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="citation">12. Citation</h2>
 
   <p class="body-text">If referencing this dataset or methodology:</p>
 
-  <p class="body-text"><strong>Large Labor Model, v2.2.</strong> Dataset and methodology. March 2026. largelabormodel.com.</p>
+  <p class="body-text">Large Labor Model, v2.2. Dataset and methodology. March 2026. largelabormodel.com.</p>
 
   <p class="body-text">The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.</p>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- BOTTOM BUTTONS                          -->
-  <!-- ════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- BUTTONS -->
+  <!-- ═══════════════════════════════════════════ -->
 
   <div class="btn-row">
     <a class="cta-btn" href="index.html">Back to visualisation</a>
     <a class="cta-btn secondary" href="https://github.com/lamentierschweinchen/ai-reach" target="_blank" rel="noopener">Dataset on GitHub</a>
   </div>
-
 </div>
 
 <script>
-// Scroll-spy: highlight active section in nav
+// Scroll spy — highlight active nav item based on visible section
 (function() {
   const navItems = document.querySelectorAll('.nav-item');
-  const sections = [];
-  navItems.forEach(item => {
-    const id = item.getAttribute('href').substring(1);
-    const el = document.getElementById(id);
-    if (el) sections.push({ id, el, navItem: item });
-  });
+  const sectionIds = Array.from(navItems).map(a => a.getAttribute('href').slice(1));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        navItems.forEach(n => n.classList.remove('active'));
-        const match = sections.find(s => s.el === entry.target);
-        if (match) match.navItem.classList.add('active');
+        const id = entry.target.id;
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+        });
       }
     });
   }, {
-    rootMargin: '-20% 0px -75% 0px',
+    rootMargin: '-80px 0px -60% 0px',
     threshold: 0
   });
 
-  sections.forEach(s => observer.observe(s.el));
+  sections.forEach(section => observer.observe(section));
 })();
 </script>
 
