@@ -1305,8 +1305,8 @@ function drawAllShapes() {
       }
     }
 
-    // Zoom handling (only for real territories)
-    if (!s.isMacro && zoomProgress > 0.01) {
+    // Zoom handling (territories and macros)
+    if (zoomProgress > 0.01) {
       if (t.id === zoomedTerritory) {
         const zCx = W * 0.38;
         const zCy = H * 0.5;
@@ -1376,7 +1376,7 @@ function drawAllShapes() {
 
     // Active/zoomed territory gets uniform 0.97 opacity
     let drawAlpha = s.alpha;
-    if (!isMacro && zoomedTerritory === t.id && zoomProgress > 0.1) {
+    if (zoomedTerritory === t.id && zoomProgress > 0.1) {
       drawAlpha = 0.97;
     }
 
@@ -1388,8 +1388,8 @@ function drawAllShapes() {
     // Store for hit-testing (last pushed = topmost)
     renderedShapes.push({ territory: t, points: pts, alpha: drawAlpha, isMacro: !!isMacro });
 
-    // Hover outline (real territories only)
-    if (!isMacro && hoveredTerritory === t.id && zoomProgress < 0.5) {
+    // Hover outline
+    if (hoveredTerritory === t.id && zoomProgress < 0.5) {
       drawShapeOutline(ctx, pts, '#FFFFFF', 0.25, 1.5);
     }
 
@@ -1399,7 +1399,7 @@ function drawAllShapes() {
       drawShapeOutline(ctx, pts, '#FFFFFF', pulseAlpha, 2.5);
     }
 
-    if (!isMacro && zoomedTerritory === t.id && zoomProgress > 0.1) {
+    if (zoomedTerritory === t.id && zoomProgress > 0.1) {
       drawShapeOutline(ctx, pts, t.color, 0.4 * zoomProgress, 2);
     }
 
@@ -1487,10 +1487,13 @@ function drawAllShapes() {
 }
 
 function getSubShapes(territoryId, currentYear) {
-  // Check if land_sea should use historical labels
-  if (territoryId === 'land_sea' && currentYear < 1900) {
-    const hist = historicalOccupations['land_sea'];
-    if (hist) {
+  // Historical occupations for macros and early land_sea
+  const hist = historicalOccupations[territoryId];
+  if (hist) {
+    const inRange = (territoryId === 'land_sea' && currentYear < 1900)
+      || territoryId === 'macro_industry'
+      || territoryId === 'macro_services';
+    if (inRange) {
       return hist.occupations.map(o => ({
         name: o.display_name,
         score: o.replaceability_score,
@@ -1511,7 +1514,7 @@ function getSubShapes(territoryId, currentYear) {
 }
 
 function drawJobSubShapes() {
-  const t = TERRITORIES.find(x => x.id === zoomedTerritory);
+  const t = TERRITORIES.find(x => x.id === zoomedTerritory) || MACRO_SHAPES.find(x => x.id === zoomedTerritory);
   if (!t) return;
   const s = shapeStates[t.id];
   if (!s) return;
@@ -1539,43 +1542,46 @@ function drawJobSubShapes() {
   const n = subShapes.length;
   if (n === 0) return;
 
-  // Grid layout along inner edges of parent square
-  const cols = Math.ceil(Math.sqrt(n));
+  // Grid layout: 4 columns × 2 rows, items placed to avoid center title zone
+  const margin = Math.min(s.w, s.h) * 0.06;
+  const innerL = s.cx - s.w/2 + margin;
+  const innerR = s.cx + s.w/2 - margin;
+  const innerT = s.cy - s.h/2 + margin;
+  const innerB = s.cy + s.h/2 - margin;
+  const gridW = innerR - innerL;
+  const gridH = innerB - innerT;
+
+  // For 8: two rows of 4, compact grid
+  // For other counts: standard grid
+  const cols = n <= 8 ? 4 : Math.ceil(Math.sqrt(n));
   const rows = Math.ceil(n / cols);
-  const margin = Math.min(s.w, s.h) * 0.08;
-  const gridW = s.w - margin * 2;
-  const gridH = s.h - margin * 2;
-  const cellW = gridW / cols;
-  const cellH = gridH / rows;
+  const positions = [];
+  for (let i = 0; i < n; i++) {
+    const c = i % cols, r = Math.floor(i / cols);
+    positions.push([(c + 0.5) / cols, (r + 0.5) / rows]);
+  }
+
+  const subSize = Math.min(gridW / cols, gridH / rows);
 
   subShapes.forEach((sub, i) => {
+    if (i >= positions.length) return;
+    const [xFrac, yFrac] = positions[i];
     const rawScore = Math.max(0, Math.min(99, Math.round(sub.score)));
     const displayValue = sub.isHistorical ? sub.sharePct : rawScore;
 
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    const jcx = (s.cx - s.w/2 + margin) + cellW * (col + 0.5);
-    const jcy = (s.cy - s.h/2 + margin) + cellH * (row + 0.5);
+    const jcx = innerL + gridW * xFrac;
+    const jcy = innerT + gridH * yFrac;
 
     // Size by share for historical, uniform for modern
-    const baseJobSize = Math.min(cellW, cellH) * 0.75;
+    const baseJobSize = subSize * 0.75;
     let jw, jh;
     if (sub.isHistorical && sub.sharePct != null) {
       const shareScale = 0.6 + (sub.sharePct / 50) * 0.4;
-      jw = Math.min(baseJobSize * shareScale, cellW * 0.9);
+      jw = Math.min(baseJobSize * shareScale, subSize * 0.9);
     } else {
-      jw = Math.min(baseJobSize + rawScore * 0.12, cellW * 0.9);
+      jw = Math.min(baseJobSize + rawScore * 0.12, subSize * 0.9);
     }
     jh = jw * 0.82;
-
-    if (overlapsExclZone(jcx, jcy, jw/2, jh/2)) return;
-
-    const parentLeft = s.cx - s.w/2 + 12;
-    const parentRight = s.cx + s.w/2 - 12;
-    const parentTop = s.cy - s.h/2 + 12;
-    const parentBottom = s.cy + s.h/2 - 12;
-    if (jcx - jw/2 < parentLeft || jcx + jw/2 > parentRight ||
-        jcy - jh/2 < parentTop || jcy + jh/2 > parentBottom) return;
 
     const pts = generateShapePath(jcx, jcy, jw, jh,
       t.rotation + 15 * (i - n/2), hashStr(t.id + sub.name));
@@ -1701,24 +1707,7 @@ canvas.addEventListener('mousemove', e => {
 canvas.addEventListener('click', e => {
   if (zoomProgress > 0.3) { zoomOut(); return; }
   if (!hoveredTerritory) return;
-  // Real territory — zoom in directly
-  if (TERRITORIES.find(t => t.id === hoveredTerritory)) {
-    zoomIn(hoveredTerritory);
-    return;
-  }
-  // Macro shape — zoom to first emerged child, or show hint
-  const macro = MACRO_SHAPES.find(m => m.id === hoveredTerritory);
-  if (macro) {
-    const emerged = macro.children.filter(cid => TERRITORY_EMERGENCE[cid] <= currentYear);
-    if (emerged.length > 0) {
-      zoomIn(emerged[0]);
-    } else {
-      const hint = document.getElementById('repl-hint');
-      hint.textContent = 'Advance to ' + MACRO_DISSOLVE[macro.id] + ' to explore this sector';
-      hint.classList.add('visible');
-      setTimeout(() => hint.classList.remove('visible'), 3000);
-    }
-  }
+  zoomIn(hoveredTerritory);
 });
 
 // Touch support for canvas (mobile tap-to-select)
@@ -1736,23 +1725,7 @@ canvas.addEventListener('touchend', e => {
     const rs = renderedShapes[i];
     if (rs.alpha < 0.15) continue;
     if (pointInShape(mx, my, rs.points)) {
-      if (rs.isMacro) {
-        // Macro shape — zoom to first emerged child or show hint
-        const macro = MACRO_SHAPES.find(m => m.id === rs.territory.id);
-        if (macro) {
-          const emerged = macro.children.filter(cid => TERRITORY_EMERGENCE[cid] <= currentYear);
-          if (emerged.length > 0) {
-            zoomIn(emerged[0]);
-          } else {
-            const hint = document.getElementById('repl-hint');
-            hint.textContent = 'Advance to ' + MACRO_DISSOLVE[macro.id] + ' to explore this sector';
-            hint.classList.add('visible');
-            setTimeout(() => hint.classList.remove('visible'), 3000);
-          }
-        }
-      } else {
-        zoomIn(rs.territory.id);
-      }
+      zoomIn(rs.territory.id);
       return;
     }
   }
@@ -1779,7 +1752,34 @@ function zoomOut() {
 // ═══════════════════════════════════════════════════════════════
 function updatePanel(id) {
   const t = TERRITORIES.find(x => x.id === id);
-  if (!t) return;
+  const macro = !t ? MACRO_SHAPES.find(x => x.id === id) : null;
+  const entry = t || macro;
+  if (!entry) return;
+
+  if (macro) {
+    // Macro territory panel — historical view
+    const share = getShareForId(id, currentYear);
+    const wf = getWorkforce(currentYear);
+    const workers = Math.round(share / 100 * wf);
+
+    document.getElementById('panel-name').textContent = entry.name;
+    document.getElementById('panel-name').style.color = entry.color;
+    document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
+    const hist = historicalOccupations[id];
+    document.getElementById('panel-desc').textContent = hist ? hist.description : '';
+    document.getElementById('panel-reach-num').textContent = '0%';
+    document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
+
+    const bar = document.getElementById('panel-reach-bar');
+    bar.style.width = '0%';
+    bar.style.background = getBarColor(0);
+
+    document.getElementById('panel-barrier').innerHTML = hist && hist.note ? `<strong>Note:</strong> ${hist.note}` : '';
+
+    drawMiniChart(entry);
+    drawJobGroups(entry);
+    return;
+  }
 
   const reach = Math.round(getTerritoryReach(t, currentYear));
   const share = getTerritoryShare(t, Math.max(1950, currentYear));
@@ -1850,9 +1850,13 @@ function drawJobGroups(t) {
   const jg = document.getElementById('panel-job-groups');
   jg.innerHTML = '';
 
-  // Historical land_sea pre-1900: show historical occupation list with share bars
-  if (t.id === 'land_sea' && currentYear < 1900 && historicalOccupations['land_sea']) {
-    const hist = historicalOccupations['land_sea'];
+  // Historical occupations: macros + early land_sea
+  const hist = historicalOccupations[t.id];
+  const showHistorical = hist && (
+    t.id === 'macro_industry' || t.id === 'macro_services' ||
+    (t.id === 'land_sea' && currentYear < 1900)
+  );
+  if (showHistorical) {
     hist.occupations.forEach(occ => {
       const row = document.createElement('div');
       row.className = 'job-group';
@@ -1865,8 +1869,8 @@ function drawJobGroups(t) {
     return;
   }
 
-  // Modern: show all occupations in this territory, sorted by replaceability
-  const occs = occupationsByTerritory[t.id] || [];
+  // Modern: show the 8 curated display occupations (matching canvas sub-shapes)
+  const occs = displayOccupations[t.id] || [];
 
   occs.forEach(occ => {
     const s = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
