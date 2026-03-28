@@ -3,7 +3,7 @@
     "version": "2.3",
     "date": "2026-03-28",
     "occupation_display_note": "Each territory displays 8 occupations as sub-shapes. The display_in_territory field marks which 8. All 389 occupations remain searchable and appear in the side panel.",
-    "historical_occupations_note": "Pre-disaggregation periods use authored historical occupation labels. macro_industry (1800-1899) has 10 occupations. macro_services (1800-1949) has 11 occupations. land_sea historical labels (1800-1899) has 8 occupations. These replace ISCO occupations when the timeline is before the relevant disaggregation year.",
+    "historical_occupations_note": "Pre-disaggregation periods use authored historical occupation labels. All three categories have exactly 8 occupations. approximate_share_pct is for relative diamond SIZING only \u2014 do not display as a number. replaceability_score is 0 for all historical occupations. On sub-shape diamonds: show the display_name only, no percentage. In the side panel: show share bars with labels for relative sizing context.",
     "display_name_note": "The display_name field (max 25 chars) is for canvas sub-shapes and side panel headers. The occupation_name field retains the full ISCO name.",
     "total_occupations": 389,
     "total_displayed_per_territory": 8,
@@ -40335,42 +40335,42 @@
         {
           "display_name": "Textile Workers",
           "description": "Spinners, weavers, dyers, bleachers, finishers. The dominant industrial occupation through 1870.",
-          "approximate_share_pct": 25,
+          "approximate_share_pct": 26,
           "share_trend": "Declining from ~30% in 1800 to ~20% by 1870 as industry diversifies",
           "replaceability_score": 0
         },
         {
           "display_name": "Construction Workers",
           "description": "Masons, bricklayers, plasterers, roofers, road builders. Grows with urbanization.",
-          "approximate_share_pct": 18,
+          "approximate_share_pct": 19,
           "share_trend": "Rising from ~15% in 1800 to ~20% by 1870",
           "replaceability_score": 0
         },
         {
           "display_name": "Miners",
           "description": "Coal, iron, copper, tin, quarrying. Grows sharply with steam power demand.",
-          "approximate_share_pct": 12,
+          "approximate_share_pct": 13,
           "share_trend": "Rising from ~8% in 1800 to ~15% by 1870",
           "replaceability_score": 0
         },
         {
           "display_name": "Metalworkers",
           "description": "Blacksmiths, foundry workers, toolmakers, nailmakers. The skilled core of early industry.",
-          "approximate_share_pct": 11,
+          "approximate_share_pct": 12,
           "share_trend": "Stable",
           "replaceability_score": 0
         },
         {
           "display_name": "Food Processors",
           "description": "Millers, bakers, brewers, butchers, sugar refiners.",
-          "approximate_share_pct": 9,
+          "approximate_share_pct": 10,
           "share_trend": "Stable",
           "replaceability_score": 0
         },
         {
           "display_name": "Woodworkers",
           "description": "Carpenters, coopers, wheelwrights, furniture makers, shipwrights.",
-          "approximate_share_pct": 8,
+          "approximate_share_pct": 9,
           "share_trend": "Declining as metal replaces wood in manufacturing",
           "replaceability_score": 0
         },
@@ -40387,20 +40387,6 @@
           "approximate_share_pct": 5,
           "share_trend": "Rising with trade expansion",
           "replaceability_score": 0
-        },
-        {
-          "display_name": "Potters and Glassmakers",
-          "description": "Ceramic workers, glassblowers, tile makers.",
-          "approximate_share_pct": 3,
-          "share_trend": "Stable",
-          "replaceability_score": 0
-        },
-        {
-          "display_name": "Printers",
-          "description": "Typesetters, pressmen, bookbinders, papermakers.",
-          "approximate_share_pct": 3,
-          "share_trend": "Rising with literacy and newspaper demand",
-          "replaceability_score": 0
         }
       ]
     },
@@ -40416,42 +40402,42 @@
         {
           "display_name": "Domestic Servants",
           "description": "Housemaids, cooks, valets, governesses, laundresses. The single largest service occupation until ~1920.",
-          "approximate_share_pct": 35,
+          "approximate_share_pct": 38,
           "share_trend": "Declining from ~40% in 1800 to ~25% by 1900, ~10% by 1940",
           "replaceability_score": 0
         },
         {
           "display_name": "Soldiers and Police",
           "description": "Military personnel, constables, watchmen. Fluctuates with wars.",
-          "approximate_share_pct": 15,
+          "approximate_share_pct": 16,
           "share_trend": "Volatile \u2014 spikes during wartime, otherwise gradually rising with state capacity",
           "replaceability_score": 0
         },
         {
           "display_name": "Merchants and Traders",
           "description": "Shopkeepers, market traders, hawkers, commercial agents, brokers.",
-          "approximate_share_pct": 13,
+          "approximate_share_pct": 14,
           "share_trend": "Rising steadily with urbanization and consumer economy",
           "replaceability_score": 0
         },
         {
           "display_name": "Innkeepers and Tavern Staff",
           "description": "Publicans, innkeepers, waiters, hotel staff, cooks (commercial).",
-          "approximate_share_pct": 7,
+          "approximate_share_pct": 8,
           "share_trend": "Rising with travel and urbanization",
           "replaceability_score": 0
         },
         {
           "display_name": "Government Officials",
           "description": "Tax collectors, customs officers, postal workers, clerks, magistrates.",
-          "approximate_share_pct": 7,
+          "approximate_share_pct": 8,
           "share_trend": "Rising with state bureaucracy expansion",
           "replaceability_score": 0
         },
         {
           "display_name": "Clergy",
           "description": "Priests, ministers, monks, nuns, missionaries.",
-          "approximate_share_pct": 6,
+          "approximate_share_pct": 7,
           "share_trend": "Declining from ~8% in 1800 to ~3% by 1900",
           "replaceability_score": 0
         },
@@ -40467,27 +40453,6 @@
           "description": "Physicians, surgeons, apothecaries, midwives, dentists.",
           "approximate_share_pct": 4,
           "share_trend": "Rising with public health infrastructure",
-          "replaceability_score": 0
-        },
-        {
-          "display_name": "Lawyers and Notaries",
-          "description": "Barristers, solicitors, notaries, court officers.",
-          "approximate_share_pct": 2,
-          "share_trend": "Rising with legal system complexity",
-          "replaceability_score": 0
-        },
-        {
-          "display_name": "Entertainers and Musicians",
-          "description": "Actors, musicians, circus performers, showmen.",
-          "approximate_share_pct": 2,
-          "share_trend": "Rising with urbanization and leisure economy",
-          "replaceability_score": 0
-        },
-        {
-          "display_name": "Carriers and Coachmen",
-          "description": "Carters, coachmen, bargemen, messengers. Transport as a service rather than as industry.",
-          "approximate_share_pct": 4,
-          "share_trend": "Rising to 1850, then transfers to Moving Things territory as railways expand",
           "replaceability_score": 0
         }
       ]
