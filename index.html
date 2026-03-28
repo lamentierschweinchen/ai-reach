@@ -2058,14 +2058,13 @@ function checkMilestoneToast(prevYear, newYear) {
 // ═══════════════════════════════════════════════════════════════
 function getPlaySpeed(year) {
   // Anchor-based interpolation with smoothstep blending between speed zones.
-  // 10-year blend windows ≈ 1s of perceptible transition at 60fps.
-  // Pre-1950 slowed by one-third (0.250 → 0.1667).
+  // Returns years per SECOND (frame-rate independent). Calibrated for ~75s total.
   const anchors = [
-    [1800, 0.1667], [1950, 0.1667],
-    [1960, 0.0417], [2000, 0.0417],
-    [2010, 0.0167], [2020, 0.0167],
-    [2024, 0.00667], [2026, 0.00667],
-    [2027, 0.01556], [2041, 0.01556],
+    [1800, 10.2914], [1950, 10.2914],
+    [1960, 2.5744],  [2000, 2.5744],
+    [2010, 1.0310],  [2020, 1.0310],
+    [2024, 0.4118],  [2026, 0.4118],
+    [2027, 0.9606],  [2041, 0.9606],
   ];
   for (let i = 0; i < anchors.length - 1; i++) {
     const [y0, s0] = anchors[i];
@@ -2084,10 +2083,13 @@ function play() {
   activeMilestone = null;
   hideMilestonePanel();
   document.getElementById('play-btn').textContent = '⏸';
-  function frame() {
+  let lastTime = performance.now();
+  function frame(now) {
     if (!isPlaying) return;
+    const dt = Math.min((now - lastTime) / 1000, 0.1); // seconds, capped at 100ms
+    lastTime = now;
     const prevYear = currentYear;
-    currentYear += getPlaySpeed(currentYear);
+    currentYear += getPlaySpeed(currentYear) * dt;
     checkMilestoneToast(prevYear, currentYear);
     if (currentYear >= END_YEAR) { currentYear=END_YEAR; isPlaying=false; document.getElementById('play-btn').textContent='▶'; }
     updateTimelineUI();
