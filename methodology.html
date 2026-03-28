@@ -29,8 +29,8 @@ html, body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 12vh 8vw 8vh;
-  max-width: 720px;
+  padding: 6vh 8vw 8vh;
+  max-width: min(46vw, 820px);
 }
 
 .wordmark {
@@ -38,6 +38,8 @@ html, body {
   font-size: 20px;
   letter-spacing: 0.04em;
   margin-bottom: 2px;
+  text-decoration: none;
+  color: #FFFFFF;
 }
 
 .tagline {
@@ -175,7 +177,7 @@ html, body {
 }
 
 @media (max-width: 600px) {
-  .page { padding: 8vh 6vw 6vh; }
+  .page { padding: 8vh 6vw 6vh; max-width: 100%; }
   .toggle-btn { font-size: 11px; padding: 10px 16px; }
   .body-text { font-size: 14px; }
   .authors { flex-direction: column; gap: 20px; align-items: flex-start; }
@@ -186,7 +188,7 @@ html, body {
 <body>
 
 <div class="page">
-  <div class="wordmark">Large Labour Model</div>
+  <a class="wordmark" href="index.html">Large Labour Model</a>
   <div class="tagline">WHEN WILL AI REACH YOUR JOB?</div>
 
   <div class="toggle-wrap">
@@ -226,13 +228,13 @@ html, body {
         <a class="author-name" href="https://www.linkedin.com/in/lukas-seel/" target="_blank" rel="noopener">Lukas Seel</a>
       </div>
       <div class="author">
-        <a class="author-name" href="https://www.linkedin.com/in/enyaautumn/" target="_blank" rel="noopener">Enya Autumn</a>
+        <a class="author-name" href="https://www.linkedin.com/in/enyaautumn/" target="_blank" rel="noopener">Enya Trenholm-Jensen</a>
       </div>
     </div>
   </div>
 
   <div class="btn-row">
-    <a class="cta-btn" href="index.html">Back to visualisation</a>
+    <a class="cta-btn" href="index.html">Back</a>
   </div>
 </div>
 

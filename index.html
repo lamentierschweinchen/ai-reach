@@ -187,13 +187,14 @@ header {
   font-size: 11px; transition: all 0.2s; flex-shrink: 0; border-radius: 6px;
 }
 .play-btn:hover { border-color: var(--accent); color: var(--accent); }
-.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 56px; flex-shrink: 0; color: #FFFFFF; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
+.year-display { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: 0.04em; min-width: 64px; flex-shrink: 0; color: #FFFFFF; text-align: right; background: #000000; position: relative; z-index: 10; padding-right: 6px; }
 
 .timeline-track-wrap { flex: 1; position: relative; height: 28px; display: flex; align-items: center; overflow-x: clip; }
+.timeline-track::before { content: ''; position: absolute; top: -16px; bottom: -16px; left: 0; right: 0; cursor: pointer; }
 .timeline-track { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: relative; cursor: pointer; }
 .timeline-historical { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(255,255,255,0.1); }
 .timeline-progress { position: absolute; left: 0; top: 0; bottom: 0; background: #FF0000; transition: width 0.05s linear; }
-.timeline-split { position: absolute; top: -7px; bottom: -7px; width: 1px; background: rgba(255,0,0,0.3); }
+.timeline-split { position: absolute; top: -7px; bottom: -7px; width: 2px; background: rgba(255,0,0,0.5); }
 .timeline-scrubber {
   position: absolute; top: 50%; width: 11px; height: 11px;
   background: #FF0000; border: 2px solid var(--bg); border-radius: 50%;
@@ -232,7 +233,7 @@ header {
 .timeline-years { display: flex; position: relative; height: 12px; font-size: 8px; color: #666666; letter-spacing: 0.05em; }
 .timeline-years span { position: absolute; transform: translateX(-50%); }
 .zone-label { position: absolute; font-size: 7px; letter-spacing: 0.08em; color: #666666; top: -14px; }
-.zone-label.projected { right: 0; color: #A0A0A0; }
+.zone-label.projected { color: #A0A0A0; visibility: hidden; }
 .timeline-projected-zone {
   position: absolute; top: -5px; bottom: -5px; right: 0;
   background: rgba(255,0,0,0.04);
@@ -300,16 +301,9 @@ header {
   padding: 36px 80px; cursor: pointer;
   clip-path: polygon(6% 12%, 95% 0%, 100% 85%, 3% 96%);
   transform-origin: center center;
-  animation: breathe 3.2s ease-in-out infinite;
-  transition: transform 0.15s ease-out, filter 0.2s;
+  transition: filter 0.2s;
 }
-.intro-enter:hover { filter: brightness(1.15); transform: scale(3.1); animation-play-state: paused; }
-.intro-enter:active { transform: scale(0.92); }
-@keyframes breathe {
-  0% { transform: scale(1); }
-  50% { transform: scale(3); }
-  100% { transform: scale(1); }
-}
+.intro-enter:hover { filter: brightness(1.15); }
 .intro-methodology {
   position: fixed; bottom: 32px; right: 32px;
   font-family: 'Inter', sans-serif; font-weight: 400; font-size: 20px;
@@ -348,6 +342,8 @@ header {
     height: 80px; padding: 0 12px;
   }
   .timeline-scrubber { width: 16px; height: 16px; }
+  .zone-label.projected { font-size: 6px; }
+  .timeline-track::before { top: -12px; bottom: -12px; }
   .year-display { font-size: 20px; }
   .play-btn { width: 24px; height: 24px; font-size: 10px; }
 
@@ -449,10 +445,6 @@ header {
           <button class="intro-interact-btn" type="button">Control time</button>
           <div class="intro-interact-popup">Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</div>
         </div>
-        <div class="intro-interact-btn-wrap">
-          <button class="intro-interact-btn" type="button">Deep dive</button>
-          <div class="intro-interact-popup">Click About to inspect the data sources, assumptions, and the mathematical framework powering the model</div>
-        </div>
       </div>
     </div>
   </div>
@@ -553,6 +545,8 @@ let replLookup = {};        // replLookup[territory_id][year] = score (2015-2026
 let replProjected = {};     // replProjected[scenario][territory_id][year] = score (2027-2040)
 let workforceLookup = {};   // workforceLookup[year] = total_millions
 let occupationsByTerritory = {}; // occupationsByTerritory[territory_id] = [occ, ...]
+let displayOccupations = {};    // displayOccupations[territory_id] = [occ, ...] (8 per territory, display_in_territory=true)
+let historicalOccupations = {}; // historicalOccupations[macro_id] = { applicable_years, occupations }
 let JOB_SEARCH_DATA = [];
 let MILESTONES = [];        // filtered ~20-25 events for timeline
 let ALL_EVENTS = [];        // all events for toast during playback
@@ -561,7 +555,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v2.2.json');
+  const resp = await fetch('ai_reach_v2.3.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -663,10 +657,26 @@ function buildLookupTables() {
     occupationsByTerritory[tid].sort((a,b) => b.replaceability_2026 - a.replaceability_2026);
   });
 
+  // ── Display occupations (8 per territory, for canvas sub-shapes) ──
+  displayOccupations = {};
+  V2.occupations.forEach(occ => {
+    if (occ.display_in_territory) {
+      const tid = occ.territory_id;
+      if (!displayOccupations[tid]) displayOccupations[tid] = [];
+      displayOccupations[tid].push(occ);
+    }
+  });
+  Object.keys(displayOccupations).forEach(tid => {
+    displayOccupations[tid].sort((a,b) => b.replaceability_2026 - a.replaceability_2026);
+  });
+
+  // ── Historical occupations (for macro categories and pre-1900 land_sea) ──
+  historicalOccupations = V2.historical_occupations || {};
+
   // ── Job search data (deduplicated) ──
   const titleMap = new Map();
   V2.occupations.forEach(occ => {
-    const entries = [occ.occupation_name, ...(occ.common_titles || [])];
+    const entries = [occ.display_name, occ.occupation_name, ...(occ.common_titles || [])].filter(Boolean);
     entries.forEach(title => {
       const key = title.toLowerCase().trim();
       const existing = titleMap.get(key);
@@ -771,7 +781,7 @@ const TERRITORIES = [
     barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.' },
   { id:'care_health', name:'Care & Health', isic:['Q'], color:'#E60073',
     baseX:0.88, baseY:0.50, rotation:5,
-    desc:'Human health and social work. Radiologist salaries rose 48% since 2015 despite AI matching diagnostic accuracy.',
+    desc:'Human health and social work. AI matches expert accuracy on imaging and diagnostics. The legal, credentialing, and human-contact dimensions of care remain technically out of reach.',
     barrier:'Legal liability, credentialing, and deep human preference.' },
   { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#00E5FF',
     baseX:0.72, baseY:0.60, rotation:-10,
@@ -869,8 +879,8 @@ MACRO_SHAPES.forEach(m => {
 // Explicit macro positions: Industry center, Services right
 // (land_sea is already left at 0.14, 0.22)
 MACRO_SHAPES.forEach(m => {
-  if (m.id === 'macro_industry')  { m.baseX = 0.24; m.baseY = 0.25; }
-  if (m.id === 'macro_services')  { m.baseX = 0.57; m.baseY = 0.53; }
+  if (m.id === 'macro_industry')  { m.baseX = 0.38; m.baseY = 0.42; }
+  if (m.id === 'macro_services')  { m.baseX = 0.72; m.baseY = 0.38; }
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -1105,6 +1115,15 @@ function lightenHex(hex, amount) {
   const g = Math.min(255, Math.round(rgb.g + (255 - rgb.g) * amount));
   const b = Math.min(255, Math.round(rgb.b + (255 - rgb.b) * amount));
   return `rgb(${r},${g},${b})`;
+}
+
+function isColorBright(hex) {
+  const { r, g, b } = hexToRGB(hex);
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.65;
+}
+function darkenHex(hex, amount) {
+  const rgb = hexToRGB(hex);
+  return `rgb(${Math.round(rgb.r*(1-amount))},${Math.round(rgb.g*(1-amount))},${Math.round(rgb.b*(1-amount))})`;
 }
 
 function getBarColor(score) {
@@ -1367,9 +1386,7 @@ function drawAllShapes() {
     drawShape(ctx, pts, color, drawAlpha);
 
     // Store for hit-testing (last pushed = topmost)
-    if (!isMacro) {
-      renderedShapes.push({ territory: t, points: pts, alpha: drawAlpha });
-    }
+    renderedShapes.push({ territory: t, points: pts, alpha: drawAlpha, isMacro: !!isMacro });
 
     // Hover outline (real territories only)
     if (!isMacro && hoveredTerritory === t.id && zoomProgress < 0.5) {
@@ -1469,6 +1486,30 @@ function drawAllShapes() {
     currentYear < 1960 ? '—' : avgReach + '%';
 }
 
+function getSubShapes(territoryId, currentYear) {
+  // Check if land_sea should use historical labels
+  if (territoryId === 'land_sea' && currentYear < 1900) {
+    const hist = historicalOccupations['land_sea'];
+    if (hist) {
+      return hist.occupations.map(o => ({
+        name: o.display_name,
+        score: o.replaceability_score,
+        sharePct: o.approximate_share_pct,
+        isHistorical: true
+      }));
+    }
+  }
+
+  // Modern territory — use curated display occupations
+  const occs = displayOccupations[territoryId] || [];
+  return occs.map(o => ({
+    name: o.display_name || o.occupation_name,
+    score: getOccupationScore(o, currentYear),
+    sharePct: null,
+    isHistorical: false
+  }));
+}
+
 function drawJobSubShapes() {
   const t = TERRITORIES.find(x => x.id === zoomedTerritory);
   if (!t) return;
@@ -1483,9 +1524,8 @@ function drawJobSubShapes() {
   const nameSize = Math.max(9, Math.min(15, minDim * 0.08));
   const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
   const exclPad = 24;
-  const displayName = t.name.toUpperCase();
-  // Estimate text width
-  const nameWidth = displayName.length * nameSize * 0.65;
+  const territoryDisplayName = t.name.toUpperCase();
+  const nameWidth = territoryDisplayName.length * nameSize * 0.65;
   const exclTop = s.cy - nameSize - scoreSize * 0.5 - exclPad;
   const exclBottom = s.cy + minDim * 0.26 + exclPad;
   const exclLeft = s.cx - nameWidth / 2 - exclPad;
@@ -1495,9 +1535,8 @@ function drawJobSubShapes() {
     return !(cx + hw < exclLeft || cx - hw > exclRight || cy + hh < exclTop || cy - hh > exclBottom);
   }
 
-  // Get top 8 occupations for this territory
-  const allOccs = (occupationsByTerritory[t.id] || []).slice(0, 8);
-  const n = allOccs.length;
+  const subShapes = getSubShapes(t.id, currentYear);
+  const n = subShapes.length;
   if (n === 0) return;
 
   // Grid layout along inner edges of parent square
@@ -1509,23 +1548,28 @@ function drawJobSubShapes() {
   const cellW = gridW / cols;
   const cellH = gridH / rows;
 
-  allOccs.forEach((occ, i) => {
-    const rawScore = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
+  subShapes.forEach((sub, i) => {
+    const rawScore = Math.max(0, Math.min(99, Math.round(sub.score)));
+    const displayValue = sub.isHistorical ? sub.sharePct : rawScore;
 
     const col = i % cols;
     const row = Math.floor(i / cols);
     const jcx = (s.cx - s.w/2 + margin) + cellW * (col + 0.5);
     const jcy = (s.cy - s.h/2 + margin) + cellH * (row + 0.5);
 
-    // Inner square slightly larger to accommodate 1.5× label size
+    // Size by share for historical, uniform for modern
     const baseJobSize = Math.min(cellW, cellH) * 0.75;
-    const jw = Math.min(baseJobSize + rawScore * 0.12, cellW * 0.9);
-    const jh = jw * 0.82;
+    let jw, jh;
+    if (sub.isHistorical && sub.sharePct != null) {
+      const shareScale = 0.6 + (sub.sharePct / 50) * 0.4;
+      jw = Math.min(baseJobSize * shareScale, cellW * 0.9);
+    } else {
+      jw = Math.min(baseJobSize + rawScore * 0.12, cellW * 0.9);
+    }
+    jh = jw * 0.82;
 
-    // Skip if overlapping territory name exclusion zone
     if (overlapsExclZone(jcx, jcy, jw/2, jh/2)) return;
 
-    // Ensure inner square stays within parent territory bounds (12px min padding)
     const parentLeft = s.cx - s.w/2 + 12;
     const parentRight = s.cx + s.w/2 - 12;
     const parentTop = s.cy - s.h/2 + 12;
@@ -1533,42 +1577,50 @@ function drawJobSubShapes() {
     if (jcx - jw/2 < parentLeft || jcx + jw/2 > parentRight ||
         jcy - jh/2 < parentTop || jcy + jh/2 > parentBottom) return;
 
-    // Draw sub-shape — lighter tint of parent (15-20% brighter)
     const pts = generateShapePath(jcx, jcy, jw, jh,
-      t.rotation + 15 * (i - n/2), hashStr(t.id + occ.occupation_name));
-    const lighterColor = lightenHex(t.color, 0.2);
-    drawShape(ctx, pts, lighterColor, alpha * 0.88);
-
-    // Subtle inner border (1px white at 18% opacity)
+      t.rotation + 15 * (i - n/2), hashStr(t.id + sub.name));
+    const subShapeColor = isColorBright(t.color) ? darkenHex(t.color, 0.35) : lightenHex(t.color, 0.2);
+    drawShape(ctx, pts, subShapeColor, alpha * 0.88);
     drawShapeOutline(ctx, pts, '#FFFFFF', alpha * 0.18, 1);
 
     if (alpha > 0.3 && jw > 20) {
       ctx.save();
-      ctx.globalAlpha = alpha; // 100% opacity for job labels
+      ctx.globalAlpha = alpha;
       ctx.fillStyle = '#FFFFFF';
 
-      // Full job name — uppercase small caps style at 11-12px
-      // Reduce font size to fit rather than truncating
-      let label = occ.occupation_name.toUpperCase();
-      const maxLabelW = jw - 24; // 12px padding each side
-      let labelSize = Math.min(12, Math.max(7, jw * 0.14));
+      let label = sub.name.toUpperCase();
+      const maxLabelW = jw - 16;
+      let labelSize = Math.min(11, Math.max(8, jw * 0.12));
       ctx.font = `500 ${labelSize}px "Inter"`;
-      // Shrink font until it fits
       while (ctx.measureText(label).width > maxLabelW && labelSize > 6) {
         labelSize -= 0.5;
         ctx.font = `500 ${labelSize}px "Inter"`;
       }
       ctx.textAlign = 'center';
-      ctx.fillText(label, jcx, jcy - jh * 0.08);
+      if (ctx.measureText(label).width > maxLabelW && label.includes(' ')) {
+        const mid = Math.floor(label.length / 2);
+        let splitIdx = label.lastIndexOf(' ', mid);
+        if (splitIdx < 4) splitIdx = label.indexOf(' ', mid);
+        if (splitIdx > 0) {
+          const line1 = label.substring(0, splitIdx);
+          const line2 = label.substring(splitIdx + 1);
+          ctx.fillText(line1, jcx, jcy - jh * 0.18);
+          ctx.fillText(line2, jcx, jcy - jh * 0.05);
+        } else {
+          ctx.fillText(label, jcx, jcy - jh * 0.08);
+        }
+      } else {
+        ctx.fillText(label, jcx, jcy - jh * 0.08);
+      }
 
-      // Percentage below
-      ctx.font = `700 ${Math.max(18, jw * 0.33)}px "Inter"`;
-      ctx.globalAlpha = alpha * 0.7;
-      ctx.fillText(rawScore + '%', jcx, jcy + jh * 0.22);
+      ctx.font = `700 ${Math.max(14, jw * 0.20)}px "Inter"`;
+      ctx.globalAlpha = alpha * 0.55;
+      ctx.fillText(displayValue + '%', jcx, jcy + jh * 0.22);
       ctx.restore();
     }
   });
 }
+
 
 
 function hashStr(str) {
@@ -1617,7 +1669,7 @@ canvas.addEventListener('mousemove', e => {
 
   if (found) {
     hoveredTerritory = found.id;
-    canvas.style.cursor = foundIsMacro ? 'default' : 'pointer';
+    canvas.style.cursor = 'pointer';
 
     const share = getShareForId(found.id, currentYear);
     const wf = getWorkforce(currentYear);
@@ -1648,9 +1700,24 @@ canvas.addEventListener('mousemove', e => {
 
 canvas.addEventListener('click', e => {
   if (zoomProgress > 0.3) { zoomOut(); return; }
-  // Only zoom into real territories, not macros
-  if (hoveredTerritory && TERRITORIES.find(t => t.id === hoveredTerritory)) {
+  if (!hoveredTerritory) return;
+  // Real territory — zoom in directly
+  if (TERRITORIES.find(t => t.id === hoveredTerritory)) {
     zoomIn(hoveredTerritory);
+    return;
+  }
+  // Macro shape — zoom to first emerged child, or show hint
+  const macro = MACRO_SHAPES.find(m => m.id === hoveredTerritory);
+  if (macro) {
+    const emerged = macro.children.filter(cid => TERRITORY_EMERGENCE[cid] <= currentYear);
+    if (emerged.length > 0) {
+      zoomIn(emerged[0]);
+    } else {
+      const hint = document.getElementById('repl-hint');
+      hint.textContent = 'Advance to ' + MACRO_DISSOLVE[macro.id] + ' to explore this sector';
+      hint.classList.add('visible');
+      setTimeout(() => hint.classList.remove('visible'), 3000);
+    }
   }
 });
 
@@ -1669,7 +1736,23 @@ canvas.addEventListener('touchend', e => {
     const rs = renderedShapes[i];
     if (rs.alpha < 0.15) continue;
     if (pointInShape(mx, my, rs.points)) {
-      zoomIn(rs.territory.id);
+      if (rs.isMacro) {
+        // Macro shape — zoom to first emerged child or show hint
+        const macro = MACRO_SHAPES.find(m => m.id === rs.territory.id);
+        if (macro) {
+          const emerged = macro.children.filter(cid => TERRITORY_EMERGENCE[cid] <= currentYear);
+          if (emerged.length > 0) {
+            zoomIn(emerged[0]);
+          } else {
+            const hint = document.getElementById('repl-hint');
+            hint.textContent = 'Advance to ' + MACRO_DISSOLVE[macro.id] + ' to explore this sector';
+            hint.classList.add('visible');
+            setTimeout(() => hint.classList.remove('visible'), 3000);
+          }
+        }
+      } else {
+        zoomIn(rs.territory.id);
+      }
       return;
     }
   }
@@ -1767,16 +1850,30 @@ function drawJobGroups(t) {
   const jg = document.getElementById('panel-job-groups');
   jg.innerHTML = '';
 
-  // Show top 8 occupations
-  const occs = (occupationsByTerritory[t.id] || []).slice(0, 8);
+  // Historical land_sea pre-1900: show historical occupation list with share bars
+  if (t.id === 'land_sea' && currentYear < 1900 && historicalOccupations['land_sea']) {
+    const hist = historicalOccupations['land_sea'];
+    hist.occupations.forEach(occ => {
+      const row = document.createElement('div');
+      row.className = 'job-group';
+      row.innerHTML = `
+        <div class="job-group-name">${occ.display_name}</div>
+        <div class="job-group-bar-wrap"><div class="job-group-bar" style="width:${occ.approximate_share_pct}%;background:${t.color}"></div></div>
+        <div class="job-group-score">${occ.approximate_share_pct}%</div>`;
+      jg.appendChild(row);
+    });
+    return;
+  }
+
+  // Modern: show all occupations in this territory, sorted by replaceability
+  const occs = occupationsByTerritory[t.id] || [];
 
   occs.forEach(occ => {
     const s = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
+    const name = occ.display_name || occ.occupation_name;
 
     const row = document.createElement('div');
     row.className = 'job-group';
-    let name = occ.occupation_name;
-    if (name.length > 28) name = name.substring(0, 26) + '…';
     row.innerHTML = `
       <div class="job-group-name">${name}</div>
       <div class="job-group-bar-wrap"><div class="job-group-bar" style="width:${s}%;background:${getBarColor(s)}"></div></div>
@@ -1838,6 +1935,13 @@ function buildTimeline() {
   const projZone = document.getElementById('timeline-projected-zone');
   projZone.style.left = yearToPercent(SPLIT_YEAR)+'%';
   projZone.style.width = (100 - yearToPercent(SPLIT_YEAR))+'%';
+
+  // Position "Projected" label near the divider line
+  const projLabel = document.querySelector('.zone-label.projected');
+  if (projLabel) {
+    projLabel.style.left = (yearToPercent(SPLIT_YEAR) + 0.5) + '%';
+    projLabel.style.right = 'auto';
+  }
 
   // Featured milestones: INVENTION or BENCHMARK from 2012+
   const featuredYears = new Set(
@@ -1914,6 +2018,10 @@ function updateTimelineUI() {
     ye.style.color = '#A0A0A0';
   }
 
+  // Show "Projected" label only when timeline reaches the split year
+  const projLabel = document.querySelector('.zone-label.projected');
+  if (projLabel) projLabel.style.visibility = currentYear >= SPLIT_YEAR ? 'visible' : 'hidden';
+
   const wf = getWorkforce(currentYear);
   document.getElementById('global-workforce-num').textContent = wf>=1000?(wf/1000).toFixed(1)+'B':Math.round(wf)+'M';
 
@@ -1945,11 +2053,25 @@ function checkMilestoneToast(prevYear, newYear) {
 // PLAYBACK
 // ═══════════════════════════════════════════════════════════════
 function getPlaySpeed(year) {
-  if (year < 1950) return 0.250;
-  if (year < 2000) return 0.0417;
-  if (year < 2020) return 0.0167;
-  if (year < 2026) return 0.00667;
-  return 0.01556;
+  // Anchor-based interpolation with smoothstep blending between speed zones.
+  // 10-year blend windows ≈ 1s of perceptible transition at 60fps.
+  // Pre-1950 slowed by one-third (0.250 → 0.1667).
+  const anchors = [
+    [1800, 0.1667], [1950, 0.1667],
+    [1960, 0.0417], [2000, 0.0417],
+    [2010, 0.0167], [2020, 0.0167],
+    [2024, 0.00667], [2026, 0.00667],
+    [2027, 0.01556], [2041, 0.01556],
+  ];
+  for (let i = 0; i < anchors.length - 1; i++) {
+    const [y0, s0] = anchors[i];
+    const [y1, s1] = anchors[i + 1];
+    if (year >= y0 && year < y1) {
+      const t = (year - y0) / (y1 - y0);
+      return s0 + (s1 - s0) * smoothstep(t);
+    }
+  }
+  return anchors[anchors.length - 1][1];
 }
 
 function play() {
@@ -2011,8 +2133,9 @@ document.addEventListener('click', e => { if (!e.target.closest('.search-wrap'))
 document.addEventListener('keydown', e => {
   if (e.target.tagName==='INPUT') return;
   if (e.key===' '||e.key==='k') { e.preventDefault(); isPlaying?pause():play(); }
-  if (e.key==='ArrowLeft') { currentYear=Math.max(START_YEAR,currentYear-5); updateTimelineUI(); }
-  if (e.key==='ArrowRight') { currentYear=Math.min(END_YEAR,currentYear+5); updateTimelineUI(); }
+  // Arrow keys: 10-year steps, pause playback, update panel if zoomed (not available on mobile)
+  if (e.key==='ArrowLeft') { if (isPlaying) pause(); currentYear=Math.max(START_YEAR,currentYear-10); updateTimelineUI(); if (zoomedTerritory) updatePanel(zoomedTerritory); }
+  if (e.key==='ArrowRight') { if (isPlaying) pause(); currentYear=Math.min(END_YEAR,currentYear+10); updateTimelineUI(); if (zoomedTerritory) updatePanel(zoomedTerritory); }
   if (e.key==='Escape') zoomOut();
 });
 
@@ -2024,6 +2147,7 @@ function resetTimeline() {
   zoomOut();
   currentYear = START_YEAR;
   updateTimelineUI();
+  setTimeout(play, 500);
 }
 
 function enterSite() {
