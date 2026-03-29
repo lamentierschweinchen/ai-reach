@@ -584,7 +584,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v2.3.json');
+  const resp = await fetch('ai_reach_v2.4.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -1605,7 +1605,7 @@ function drawJobSubShapes() {
     if (i >= positions.length) return null;
     const [xFrac, yFrac] = positions[i];
     const rawScore = Math.max(0, Math.min(99, Math.round(sub.score)));
-    const displayValue = sub.isHistorical ? sub.sharePct : rawScore;
+    const displayValue = sub.isHistorical ? null : rawScore;
 
     const jcx = innerL + gridW * xFrac;
     const jcy = innerT + gridH * yFrac;
@@ -1680,10 +1680,12 @@ function drawJobSubShapes() {
         ctx.fillText(lines[li].text, jcx, labelTopY + li * (labelSize + 2) + (labelSize + 2) / 2);
       }
 
-      const valueSize = Math.max(14, jw * 0.20);
-      ctx.font = `700 ${valueSize}px "Inter"`;
-      ctx.globalAlpha = alpha * 0.55;
-      ctx.fillText(displayValue + '%', jcx, jcy + jh * 0.22);
+      if (displayValue != null) {
+        const valueSize = Math.max(14, jw * 0.20);
+        ctx.font = `700 ${valueSize}px "Inter"`;
+        ctx.globalAlpha = alpha * 0.55;
+        ctx.fillText(displayValue + '%', jcx, jcy + jh * 0.22);
+      }
       ctx.restore();
     }
   }
