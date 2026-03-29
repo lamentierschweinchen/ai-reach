@@ -533,13 +533,13 @@ header {
 </div>
 
 <script type="importmap">
-{ "imports": { "@chenglou/pretext": "https://esm.sh/@chenglou/pretext" } }
+{ "imports": { "@chenglou/pretext": "https://esm.sh/@chenglou/pretext@0.0.3" } }
 </script>
 <script type="module">
 // ═══════════════════════════════════════════════════════════════
 // PRETEXT — Canvas-based text measurement (no DOM reflow)
 // ═══════════════════════════════════════════════════════════════
-import { prepareWithSegments, layout, layoutWithLines, clearCache } from '@chenglou/pretext'
+import { prepareWithSegments, layoutWithLines, clearCache } from '@chenglou/pretext'
 
 const _textCache = new Map()
 function getPrepared(text, font) {
@@ -559,10 +559,6 @@ function measureTextLayout(text, font, maxWidth, lineHeight) {
   return layoutWithLines(prepared, maxWidth, lineHeight)
 }
 
-function measureTextHeight(text, font, maxWidth, lineHeight) {
-  const prepared = getPrepared(text, font)
-  return layout(prepared, maxWidth, lineHeight)
-}
 
 document.fonts.ready.then(() => { clearCache(); _textCache.clear() })
 
