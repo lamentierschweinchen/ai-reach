@@ -584,7 +584,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v2.4.json');
+  const resp = await fetch('ai_reach_v2.5.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -1826,11 +1826,12 @@ function updatePanel(id) {
     const wf = getWorkforce(currentYear);
     const workers = Math.round(share / 100 * wf);
 
-    document.getElementById('panel-name').textContent = entry.name;
+    const macroMeta = V2.territory_metadata && V2.territory_metadata[id];
+    document.getElementById('panel-name').textContent = macroMeta ? macroMeta.display_name : entry.name;
     document.getElementById('panel-name').style.color = entry.color;
-    document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
+    document.getElementById('panel-isic').textContent = (macroMeta ? macroMeta.isic + ' · ' : '') + share.toFixed(1) + '% of workforce';
     const hist = historicalOccupations[id];
-    document.getElementById('panel-desc').textContent = hist ? hist.description : '';
+    document.getElementById('panel-desc').textContent = macroMeta ? macroMeta.description : (hist ? hist.description : '');
     document.getElementById('panel-reach-num').textContent = '0%';
     document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
 
@@ -1838,7 +1839,8 @@ function updatePanel(id) {
     bar.style.width = '0%';
     bar.style.background = getBarColor(0);
 
-    document.getElementById('panel-barrier').innerHTML = hist && hist.note ? `<strong>Note:</strong> ${hist.note}` : '';
+    const macroNote = macroMeta && macroMeta.panel_note ? macroMeta.panel_note : (hist && hist.note ? hist.note : '');
+    document.getElementById('panel-barrier').innerHTML = macroNote ? `<strong>Note:</strong> ${macroNote}` : '';
 
     drawMiniChart(entry);
     drawJobGroups(entry);
@@ -1850,10 +1852,11 @@ function updatePanel(id) {
   const wf = getWorkforce(currentYear);
   const workers = Math.round(share / 100 * wf);
 
-  document.getElementById('panel-name').textContent = t.name;
+  const meta = V2.territory_metadata && V2.territory_metadata[t.id];
+  document.getElementById('panel-name').textContent = meta ? meta.display_name : t.name;
   document.getElementById('panel-name').style.color = t.color;
-  document.getElementById('panel-isic').textContent = 'ISIC ' + t.isic.join(', ') + ' · ' + share.toFixed(1) + '% of workforce';
-  document.getElementById('panel-desc').textContent = t.desc;
+  document.getElementById('panel-isic').textContent = (meta ? 'ISIC ' + meta.isic : 'ISIC ' + t.isic.join(', ')) + ' · ' + share.toFixed(1) + '% of workforce';
+  document.getElementById('panel-desc').textContent = meta ? meta.description : t.desc;
   document.getElementById('panel-reach-num').textContent = reach + '%';
   document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
 
