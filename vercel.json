@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/about", "destination": "/methodology.html" }
+    { "source": "/about", "destination": "/methodology" }
   ],
   "redirects": [
     { "source": "/methodology", "destination": "/about", "statusCode": 301 }
