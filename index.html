@@ -532,7 +532,36 @@ header {
   <span class="toast-desc" id="toast-desc"></span>
 </div>
 
-<script>
+<script type="importmap">
+{ "imports": { "@chenglou/pretext": "https://esm.sh/@chenglou/pretext@0.0.3" } }
+</script>
+<script type="module">
+// ═══════════════════════════════════════════════════════════════
+// PRETEXT — Canvas-based text measurement (no DOM reflow)
+// ═══════════════════════════════════════════════════════════════
+import { prepareWithSegments, layoutWithLines, clearCache } from '@chenglou/pretext'
+
+const _textCache = new Map()
+function getPrepared(text, font) {
+  const key = text + '|' + font
+  if (!_textCache.has(key)) _textCache.set(key, prepareWithSegments(text, font))
+  return _textCache.get(key)
+}
+
+function measureTextWidth(text, font) {
+  const prepared = getPrepared(text, font)
+  const result = layoutWithLines(prepared, Infinity, 100)
+  return result.lines[0]?.width || 0
+}
+
+function measureTextLayout(text, font, maxWidth, lineHeight) {
+  const prepared = getPrepared(text, font)
+  return layoutWithLines(prepared, maxWidth, lineHeight)
+}
+
+
+document.fonts.ready.then(() => { clearCache(); _textCache.clear() })
+
 // ═══════════════════════════════════════════════════════════════
 // V2 DATA — loaded from JSON at startup
 // ═══════════════════════════════════════════════════════════════
@@ -1166,7 +1195,6 @@ function render() {
 
   zoomProgress += (zoomTarget - zoomProgress) * 0.08;
   if (Math.abs(zoomProgress - zoomTarget) < 0.001) zoomProgress = zoomTarget;
-
   ctx.clearRect(0, 0, W, H);
 
   ctx.fillStyle = '#000000';
@@ -1421,34 +1449,40 @@ function drawAllShapes() {
       ctx.save();
       const textColor = '#FFFFFF';
 
-      // Sector title — bold, 1.15× size, letter-spacing 0.08em, 100% opacity
+      // Sector title — use pretext for accurate measurement and intelligent wrapping
       const nameSize = Math.max(9, Math.min(15, minDim * 0.08));
+      const nameFont = `700 ${nameSize}px "Inter"`;
+      const nameLH = nameSize + 3;
       ctx.globalAlpha = drawAlpha;
       ctx.fillStyle = textColor;
-      ctx.font = `700 ${nameSize}px "Inter"`;
+      ctx.font = nameFont;
       ctx.textAlign = 'center';
       ctx.letterSpacing = '0.08em';
       const displayName = t.name.toUpperCase();
-      const words = displayName.split(' ');
 
-      // On mobile: strict rule — show both name+% if both fit, else name-only
-      const mobile = isMobile();
-      const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
-      const nameH = words.length * (nameSize + 3);
-      const scoreH = scoreSize;
-      const bothFit = !mobile || (nameH + scoreH + 8 < availH && minDim > 55);
+      // Use pretext for accurate height/width measurement
+      const nameLayout = measureTextLayout(displayName, nameFont, availW, nameLH);
+      const nameH = nameLayout.height;
       const nameVisible = minDim > 50 || (minDim > 30 && availW > 60);
 
+      const mobile = isMobile();
+      const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
+      const scoreH = scoreSize;
+      const bothFit = !mobile || (nameH + scoreH + 8 < availH && minDim > 55);
+
       if (nameVisible) {
-        if (minDim > 80 && availW > 100) {
-          ctx.fillText(displayName, s.cx, s.cy - (reach > 0 && bothFit ? minDim * 0.08 : 0));
-        } else if (minDim > 50) {
-          words.forEach((w, i) => {
-            ctx.fillText(w, s.cx, s.cy - minDim * 0.12 + i * (nameSize + 3));
-          });
+        const nameLines = nameLayout.lines;
+        const hasScore = reach > 0 && bothFit;
+        // Center the name block vertically, shifted up if score will appear below
+        const nameBlockTop = s.cy - nameH / 2 - (hasScore ? minDim * 0.06 : 0);
+
+        if (nameLines.length === 1) {
+          ctx.fillText(nameLines[0].text, s.cx, nameBlockTop + nameLH / 2);
         } else {
-          // Very small tile — just show first word
-          ctx.fillText(words[0], s.cx, s.cy);
+          // Pretext handles intelligent line breaking — render each line
+          nameLines.forEach((line, i) => {
+            ctx.fillText(line.text, s.cx, nameBlockTop + i * nameLH + nameLH / 2);
+          });
         }
       }
 
@@ -1460,14 +1494,17 @@ function drawAllShapes() {
         ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
       }
 
-      // Worker count label — 2× size, lower third of tile, secondary opacity
-      if (minDim > 55) {
+      // Worker count label — lower third of tile, secondary opacity
+      // Fade out when zoomed into this territory (info is in the detail panel)
+      const isZoomed = zoomedTerritory === t.id && zoomProgress > 0.1;
+      const workerAlpha = isZoomed ? Math.max(0, 1 - (zoomProgress - 0.1) / 0.4) : 1;
+      if (minDim > 55 && workerAlpha > 0.01) {
         const wf = getWorkforce(year);
         const workers = Math.round(share / 100 * wf);
         const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
         const wfSize = Math.max(14, Math.min(20, minDim * 0.11));
         ctx.fillStyle = textColor;
-        ctx.globalAlpha = drawAlpha * 0.28;
+        ctx.globalAlpha = drawAlpha * 0.28 * workerAlpha;
         ctx.font = `400 ${wfSize}px "Inter"`;
         ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.32);
       }
@@ -1528,7 +1565,7 @@ function drawJobSubShapes() {
   const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
   const exclPad = 24;
   const territoryDisplayName = t.name.toUpperCase();
-  const nameWidth = territoryDisplayName.length * nameSize * 0.65;
+  const nameWidth = measureTextWidth(territoryDisplayName, `700 ${nameSize}px "Inter"`);
   const exclTop = s.cy - nameSize - scoreSize * 0.5 - exclPad;
   const exclBottom = s.cy + minDim * 0.26 + exclPad;
   const exclLeft = s.cx - nameWidth / 2 - exclPad;
@@ -1563,8 +1600,9 @@ function drawJobSubShapes() {
 
   const subSize = Math.min(gridW / cols, gridH / rows);
 
-  subShapes.forEach((sub, i) => {
-    if (i >= positions.length) return;
+  // Pre-compute layout data for all sub-shapes
+  const subLayouts = subShapes.map((sub, i) => {
+    if (i >= positions.length) return null;
     const [xFrac, yFrac] = positions[i];
     const rawScore = Math.max(0, Math.min(99, Math.round(sub.score)));
     const displayValue = sub.isHistorical ? sub.sharePct : rawScore;
@@ -1572,59 +1610,83 @@ function drawJobSubShapes() {
     const jcx = innerL + gridW * xFrac;
     const jcy = innerT + gridH * yFrac;
 
-    // Size by share for historical, uniform for modern
     const baseJobSize = subSize * 0.75;
-    let jw, jh;
+    let jw;
     if (sub.isHistorical && sub.sharePct != null) {
       const shareScale = 0.6 + (sub.sharePct / 50) * 0.4;
       jw = Math.min(baseJobSize * shareScale, subSize * 0.9);
     } else {
       jw = Math.min(baseJobSize + rawScore * 0.12, subSize * 0.9);
     }
-    jh = jw * 0.82;
+    const jh = jw * 0.82;
 
     const pts = generateShapePath(jcx, jcy, jw, jh,
       t.rotation + 15 * (i - n/2), hashStr(t.id + sub.name));
-    const subShapeColor = isColorBright(t.color) ? darkenHex(t.color, 0.35) : lightenHex(t.color, 0.2);
-    drawShape(ctx, pts, subShapeColor, alpha * 0.88);
-    drawShapeOutline(ctx, pts, '#FFFFFF', alpha * 0.18, 1);
 
-    if (alpha > 0.3 && jw > 20) {
+    return { sub, jcx, jcy, jw, jh, pts, displayValue };
+  });
+
+  // Pass 1: Draw all boxes first
+  const subShapeColor = isColorBright(t.color) ? darkenHex(t.color, 0.35) : lightenHex(t.color, 0.2);
+  for (const d of subLayouts) {
+    if (!d) continue;
+    drawShape(ctx, d.pts, subShapeColor, alpha * 0.88);
+    drawShapeOutline(ctx, d.pts, '#FFFFFF', alpha * 0.18, 1);
+  }
+
+  // Pass 2: Draw all text on top so no box can cover another label
+  if (alpha > 0.3) {
+    for (const d of subLayouts) {
+      if (!d || d.jw <= 20) continue;
+      const { jcx, jcy, jw, jh, displayValue } = d;
+
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.fillStyle = '#FFFFFF';
 
-      let label = sub.name.toUpperCase();
-      const maxLabelW = jw - 16;
-      let labelSize = Math.min(11, Math.max(8, jw * 0.12));
-      ctx.font = `500 ${labelSize}px "Inter"`;
-      while (ctx.measureText(label).width > maxLabelW && labelSize > 6) {
-        labelSize -= 0.5;
-        ctx.font = `500 ${labelSize}px "Inter"`;
-      }
-      ctx.textAlign = 'center';
-      if (ctx.measureText(label).width > maxLabelW && label.includes(' ')) {
-        const mid = Math.floor(label.length / 2);
-        let splitIdx = label.lastIndexOf(' ', mid);
-        if (splitIdx < 4) splitIdx = label.indexOf(' ', mid);
-        if (splitIdx > 0) {
-          const line1 = label.substring(0, splitIdx);
-          const line2 = label.substring(splitIdx + 1);
-          ctx.fillText(line1, jcx, jcy - jh * 0.18);
-          ctx.fillText(line2, jcx, jcy - jh * 0.05);
-        } else {
-          ctx.fillText(label, jcx, jcy - jh * 0.08);
+      const label = d.sub.name.toUpperCase();
+      const maxLabelW = jw - 8;
+      let labelSize = Math.min(11, Math.max(7, jw * 0.11));
+      let labelFont = `500 ${labelSize}px "Inter"`;
+      const maxLines = 3;
+
+      let labelResult = measureTextLayout(label, labelFont, maxLabelW, labelSize + 2);
+
+      // Check if any word is wider than maxLabelW (would cause mid-word break)
+      // Also shrink if text needs more than maxLines
+      const hasOverflow = labelResult.lines.some(l => l.width > maxLabelW + 1);
+      if ((labelResult.lineCount > maxLines || hasOverflow) && labelSize > 5) {
+        let lo = 5, hi = labelSize;
+        while (hi - lo > 0.5) {
+          const mid = (lo + hi) / 2;
+          const testFont = `500 ${mid}px "Inter"`;
+          const testResult = measureTextLayout(label, testFont, maxLabelW, mid + 2);
+          const testOverflow = testResult.lines.some(l => l.width > maxLabelW + 1);
+          if (testResult.lineCount <= maxLines && !testOverflow) { lo = mid; } else { hi = mid; }
         }
-      } else {
-        ctx.fillText(label, jcx, jcy - jh * 0.08);
+        labelSize = lo;
+        labelFont = `500 ${labelSize}px "Inter"`;
+        labelResult = measureTextLayout(label, labelFont, maxLabelW, labelSize + 2);
       }
 
-      ctx.font = `700 ${Math.max(14, jw * 0.20)}px "Inter"`;
+      ctx.font = labelFont;
+      ctx.textAlign = 'center';
+
+      const lines = labelResult.lines;
+      const linesToDraw = Math.min(lines.length, maxLines);
+      const totalLabelH = linesToDraw * (labelSize + 2);
+      const labelTopY = jcy - jh * 0.15 - totalLabelH / 2;
+      for (let li = 0; li < linesToDraw; li++) {
+        ctx.fillText(lines[li].text, jcx, labelTopY + li * (labelSize + 2) + (labelSize + 2) / 2);
+      }
+
+      const valueSize = Math.max(14, jw * 0.20);
+      ctx.font = `700 ${valueSize}px "Inter"`;
       ctx.globalAlpha = alpha * 0.55;
       ctx.fillText(displayValue + '%', jcx, jcy + jh * 0.22);
       ctx.restore();
     }
-  });
+  }
 }
 
 
@@ -2170,6 +2232,12 @@ function initApp() {
 }
 
 window.addEventListener('resize', resizeCanvas);
+
+// Expose functions needed by inline onclick handlers (module scope is not global)
+window.enterSite = enterSite;
+window.resetTimeline = resetTimeline;
+window.zoomOut = zoomOut;
+window.zoomIn = zoomIn;
 
 // Start loading data
 loadData();
