@@ -1,6 +1,6 @@
 # Large Labor Model — Methodology
 
-**Version 2.7 — March 2026**
+**Version 2.8 — March 2026**
 
 This document describes how the Large Labor Model dataset was produced. It is written so that someone with no prior knowledge of the project can understand how every number in the dataset was derived, what assumptions were made, and where the model is weakest. It is the single reference for anyone who wants to challenge, extend, or build on this work.
 
@@ -355,6 +355,14 @@ The displacement model models job loss only, not job creation. This is its most 
 
 Pre-1991 labor shares are derived from the GGDC 10-Sector Database, which uses a different sector classification than ILOSTAT. A multiplicative splice correction was applied at the 1991 junction to align classification systems. This preserves GGDC-era trend shapes but anchors levels to ILOSTAT. The correction is largest for Money & Data (factor 0.43 — GGDC overstates financial services by bundling K+L+M+N) and Land & Sea (factor 1.27 — GGDC understates agriculture relative to ILOSTAT's ISIC A+B). Five territories have estimated subsection splits (moving_things, money_data, maintaining_fixing, making_meaning, thinking_leading) where ILOSTAT reports combined groups rather than individual ISIC sections.
 
+### 9.8 ILOSTAT subsection splits
+
+Five territories (Money & Data, Moving Things, Maintaining & Fixing, Making Meaning, Thinking & Leading) require splitting ILOSTAT's combined reporting groups (H+J, L+M+N, R+S+T+U) at the World aggregate level. Split ratios were derived from a 17-country employment panel (USA, DEU, GBR, FRA, JPN, KOR, AUS, BRA, MEX, IND, IDN, TUR, RUS, ITA, ESP, POL, NLD) using national source data (indicator EMP_TEMP_SEX_ECO_NB) where individual ISIC sections are reported. Ratios are directly sourced for 2008–2023 (80 records); pre-2008 and 2024–2025 values use ratios extrapolated from the observed panel trend (95 records). Maximum deviation from previous estimates was 0.8 percentage points (Making Meaning).
+
+### 9.9 Learning & Teaching below-baseline occupations
+
+The L&T territory baseline of 28 reflects the aggregate task mix including administrative, assessment, and content delivery functions (which AI handles well). 17 of 23 individual L&T occupations score below 28 because they emphasize embodied relational tasks — physical demonstration, emotional mentoring, group facilitation — that are harder to automate. The territory score and occupation scores measure different things: the territory is an aggregate, occupations are specific roles. Both are defensible.
+
 ---
 
 ## 10. How to contribute
@@ -386,6 +394,16 @@ Corrections and extensions should reference the dataset's native structure: terr
 ---
 
 ## 11. Changelog
+
+### v2.8 (March 2026)
+
+- ILOSTAT subsection splits resolved for 5 territories using 17-country employment panel; 80 records promoted to HIGH quality
+- 29 occupation benchmark anchors completed (all 389 now substantive)
+- 13 missing occupation 2030 projections added
+- 104 conservative + accelerated territory-specific narratives added (zero generic text remaining across all scenarios)
+- ISCO corrections: 7142 Architects→Glaziers, 6224 Soil Scientists→Forestry Workers, 3131 Media Tech Educators→Photographers
+- Territory reassignments: 5164 Animal Care Workers→maintaining_fixing, 7133 Building Cleaners→maintaining_fixing
+- L&T below-baseline rationale documented for 9 occupations
 
 ### v2.7 (March 2026)
 
@@ -457,6 +475,6 @@ Corrections and extensions should reference the dataset's native structure: terr
 
 If referencing this dataset or methodology:
 
-Large Labor Model, v2.7. Dataset and methodology. March 2026. largelabormodel.com.
+Large Labor Model, v2.8. Dataset and methodology. March 2026. largelabormodel.com.
 
 The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.

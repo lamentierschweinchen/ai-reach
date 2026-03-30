@@ -52,7 +52,7 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 
 ## Dataset
 
-**Current version:** 2.7 (March 2026)
+**Current version:** 2.8 (March 2026)
 
 | Layer | Records | Coverage |
 |---|---|---|
@@ -69,7 +69,7 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 
 **Three scenarios** are computed. Only **moderate** is currently displayed. Conservative represents the ILO consensus baseline with no AI displacement applied.
 
-The full methodology is available at largelabormodel.com and in `Large_Labor_Model_Methodology_v2.7.md`.
+The full methodology is available at largelabormodel.com and in `Large_Labor_Model_Methodology_v2.8.md`.
 
 ---
 
