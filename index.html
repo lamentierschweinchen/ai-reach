@@ -584,7 +584,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v2.5.json');
+  const resp = await fetch('ai_reach_v2.7.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();

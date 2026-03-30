@@ -1,6 +1,6 @@
 # Large Labor Model — Methodology
 
-**Version 2.2 — March 2026**
+**Version 2.7 — March 2026**
 
 This document describes how the Large Labor Model dataset was produced. It is written so that someone with no prior knowledge of the project can understand how every number in the dataset was derived, what assumptions were made, and where the model is weakest. It is the single reference for anyone who wants to challenge, extend, or build on this work.
 
@@ -74,6 +74,8 @@ The labor share layer covers 1800–2025 (historical) and 2026–2041 (projected
 
 **Sum constraint:** Labor shares sum to 100% at every historical year. This is enforced by proportional normalization where raw sources produce sums that deviate from 100%.
 
+**v2.7 source architecture:** ILOSTAT modeled estimates (EMP_2EMP_SEX_ECO_NB, November 2025 vintage, World aggregate) are the single primary source for 1991–2025, providing 33 annual data points per territory (429 records). Pre-1991 records use the GGDC 10-Sector Database, splice-adjusted to ILOSTAT classification at the 1991 junction using multiplicative correction factors. This corrects classification differences between GGDC's 10-sector system (ISIC Rev.3.1) and ILOSTAT's 21-section system (ISIC Rev.4) — notably, GGDC bundles O+P+Q as "Government services" and K+L+M+N as "Business services," which the territory mapping separates. Correction factors range from 0.43 (Money & Data) to 1.44 (Maintaining & Fixing). All pre-1991 records are flagged as splice-adjusted. World Bank WDI serves as secondary validation throughout.
+
 **Known issue — ILO vintage drift:** The dataset uses the November 2024 vintage of ILO modelled estimates for most 2024–2025 figures. The ILO's November 2025 vintage (published in the Employment and Social Trends 2026 report, January 2026) places 2025 global employment at approximately 3,599 million — 49 million (1.4%) above this dataset's 3,550 million. The gap is partly driven by the ILO's revised treatment of India's Periodic Labour Force Survey data. This drift does not affect the model's internal consistency but means the conservative baseline sits slightly below current ILO consensus.
 
 ### 3.2 Replaceability data
@@ -93,7 +95,7 @@ The replaceability layer covers 1970–2026 (historical, no scenario) and 2027�
 | ~5 | Narrow subtask automation; role not substitutable | Single-task construction robot (2015) |
 | ~25 | AI handles specific bounded tasks; majority beyond frontier | Agricultural GPS auto-steer + drone spraying (2020) |
 | ~50 | Frontier AI capable of most core functions; not all | Radiology AI matching human accuracy (2024) |
-| ~75 | Capable of full role with minimal human involvement | SWE-bench 71.7%; AI writes 30–50% of production code (2024) |
+| ~75 | Capable of full role with minimal human involvement | SWE-bench 80.9%; AI writes 30–50% of production code (2024) |
 | ~90+ | Complete technical substitution possible at frontier | Xiaomi zero-worker smartphone factory (2024) |
 
 **Methodology constraints:**
@@ -104,7 +106,7 @@ The replaceability layer covers 1970–2026 (historical, no scenario) and 2027�
 
 ### 3.3 Occupation data
 
-405 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score and 2030 projections under all three scenarios.
+389 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score and 2030 projections under all three scenarios.
 
 Occupation scores were derived from a combination of benchmark research and model training knowledge. The scoring basis for individual occupations is not independently verifiable to the same standard as territory-level scores. This is a known limitation. The occupation layer exists primarily for the public-facing "find your job" feature and should be understood as indicative rather than definitive.
 
@@ -210,7 +212,7 @@ The lag schedule decelerates: the gaps between anchor points are +23pp (2026–2
 
 | Year | Conservative | Moderate | Accelerated |
 |---|---|---|---|
-| 2026 | 3,551M | 3,417M | 3,151M |
+| 2026 | 3,551M | 3,466M | 3,151M |
 | 2030 | 3,606M | 2,946M | 2,134M |
 | 2035 | 3,700M | 2,580M | 1,692M |
 | 2040 | 3,800M | 2,427M | 1,470M |
@@ -251,7 +253,7 @@ The dataset was produced through an 8-phase pipeline using multiple AI model ins
 | 1 | Historical labor shares 1800–2024 | Claude + Gemini | GPT | Claude (Opus 4.6) |
 | 2 | Labor projections 2025–2040 | Gemini + GPT | Claude | Claude (Opus 4.6) |
 | 3 | Territory replaceability 2015–2026 | Claude + GPT | Gemini | Claude (Opus 4.6) |
-| 4A/B | Occupation replaceability (405 occupations) | Claude + GPT | Gemini | Claude (Opus 4.6) |
+| 4A/B | Occupation replaceability (389 occupations) | Claude + GPT | Gemini | Claude (Opus 4.6) |
 | 5 | Replaceability projections 2027–2040 | Claude + Gemini | GPT | Claude (Opus 4.6) |
 | 6 | Technology events timeline | Claude + Gemini | GPT | Claude (Opus 4.6) |
 | 7 | Manual integration + source deduplication | — | — | Manual + Claude (Opus 4.6) |
@@ -285,17 +287,19 @@ These are the locked baseline scores from which all projections depart. Each sco
 |---|---|---|
 | Making Things | 86 | Xiaomi zero-worker factory (81K sqm, 24/7); China 470 robots per 10K manufacturing workers. High-capital frontier is essentially fully automatable. Global average lower due to legacy equipment. |
 | Money & Data | 78 | Frontier AI performs most financial analysis, document processing, compliance review, and data management at professional level. Complex multi-party judgment and novel legal structures remain. |
-| Thinking & Leading | 72 | SWE-bench 71.7% (2024); AI writes 30–50% of code at frontier companies. Professional services (consulting, management, legal research) substantially automatable. Senior architecture and novel system design remain. |
+| Thinking & Leading | 72 | SWE-bench 80.9% (2024); AI writes 30–50% of code at frontier companies. Professional services (consulting, management, legal research) substantially automatable. Senior architecture and novel system design remain. |
 | Making Meaning | 72 | Generative AI produces professional-quality text, image, video, and music. Commercial deployment in advertising, content production, design. Genuinely novel creative output and aesthetic judgment remain. |
-| Care & Health | 62 | 873 FDA-cleared AI radiology tools. AI matches human diagnostic accuracy on many imaging tasks. Telehealth AI operational. Fine physical manipulation, novel diagnosis, and therapeutic relationship remain. |
+| Care & Health | 62 | 1,104 FDA-cleared AI radiology tools. AI matches human diagnostic accuracy on many imaging tasks. Telehealth AI operational. Fine physical manipulation, novel diagnosis, and therapeutic relationship remain. |
 | Buying & Selling | 62 | E-commerce AI, automated customer service, inventory optimization, dynamic pricing all commercially deployed. Complex negotiation and relationship sales remain. |
 | Moving Things | 52 | Waymo commercial robotaxi in multiple cities. Amazon 1M+ warehouse robots. Autonomous trucking in pilot. Last-mile in unstructured environments and adverse conditions remain. |
 | Land & Sea | 48 | GPS auto-steer, drone spraying, autonomous grain harvesting commercially deployed. Precision weeding lasers operational. Fruit harvesting in early commercial. Unstructured terrain, biological variability, and the global South's minimal mechanization anchor the score. |
 | Building Things | 46 | Construction drones (45–67% contractor adoption), rebar robots, 3D concrete printing scaling. MEP trades (plumbing, electrical, HVAC) at zero robotic automation. Unstructured environments, multi-trade coordination unsolved. |
 | Governing & Protecting | 41 | AI surveillance, predictive policing, document automation in government. Military autonomous systems in deployment. Democratic accountability, judgment in novel situations, and physical enforcement remain deeply human. |
-| Feeding & Hosting | 34 | Digital ordering/payment mature. Restaurant delivery robots (160K+ units globally). Basic food assembly automation (Sweetgreen). No general cooking, room-cleaning, or complex hospitality service robots deployed. |
+| Feeding & Hosting | 34 | Digital ordering/payment mature. Restaurant delivery robots (approximately 3,000–5,000 sidewalk delivery robots globally; the widely cited 160,000 figure conflated indoor restaurant service robots from Pudu/Keenon). Basic food assembly automation (Sweetgreen). No general cooking, room-cleaning, or complex hospitality service robots deployed. |
 | Maintaining & Fixing | 32 | Industrial inspection platforms (Boston Dynamics Spot, pipe crawlers, utility drones) commercially deployed. SCADA/IoT for process monitoring. Zero commercial robotic solutions for physical repair (HVAC, plumbing, electrical). |
-| Learning & Teaching | 18 | AI tutoring systems (Khan Academy + GPT-4) operational. Automated grading for structured assessments. Embodied presence, real-time social adaptation, and the developmental relationship remain far from any technical solution. |
+| Learning & Teaching | 28 | AI tutoring platforms (Khanmigo at 1.4M users, Duolingo Max) delivering measurable learning gains (Harvard 2025 RCT: 2x gains vs classroom instruction). AI grading tools automating 60–80% of routine assessment. Administrative AI drafting special education documentation. Embodied presence, real-time social adaptation, and the developmental relationship remain far from any technical solution. Confidence: MEDIUM. |
+
+The Learning & Teaching 2026 baseline was revised from 18 to 28 in v2.7 based on Q1 2026 evidence: commercial AI tutoring platforms (Khanmigo at 1.4M users, Duolingo Max) delivering measurable learning gains (Harvard 2025 RCT: 2x gains vs classroom instruction); AI grading tools automating 60–80% of routine assessment; administrative AI drafting special education documentation. Confidence: MEDIUM.
 
 ---
 
@@ -347,6 +351,10 @@ The 405 occupation-level scores are derived from a combination of benchmark rese
 
 The displacement model models job loss only, not job creation. This is its most challengeable assumption. Every economist will ask where the reinstatement effect is. The answer is: it is deliberately excluded. See Section 5.5 for the rationale. Readers should understand that actual employment outcomes depend on policy responses and economic restructuring that this model does not attempt to predict.
 
+### 9.7 Pre-1991 splice adjustment
+
+Pre-1991 labor shares are derived from the GGDC 10-Sector Database, which uses a different sector classification than ILOSTAT. A multiplicative splice correction was applied at the 1991 junction to align classification systems. This preserves GGDC-era trend shapes but anchors levels to ILOSTAT. The correction is largest for Money & Data (factor 0.43 — GGDC overstates financial services by bundling K+L+M+N) and Land & Sea (factor 1.27 — GGDC understates agriculture relative to ILOSTAT's ISIC A+B). Five territories have estimated subsection splits (moving_things, money_data, maintaining_fixing, making_meaning, thinking_leading) where ILOSTAT reports combined groups rather than individual ISIC sections.
+
 ---
 
 ## 10. How to contribute
@@ -379,6 +387,50 @@ Corrections and extensions should reference the dataset's native structure: terr
 
 ## 11. Changelog
 
+### v2.7 (March 2026)
+
+- Historical labor shares 1991–2023 replaced with ILOSTAT modeled estimates (EMP_2EMP_SEX_ECO_NB, Nov 2025 vintage). 429 new records at annual resolution, correcting static/flat shares from original pipeline
+- 2024–2025 shares sourced from same ILOSTAT vintage
+- Pre-1991 records splice-adjusted to ILOSTAT classification at 1991 junction (13 correction factors applied)
+- Source architecture standardized: ILOSTAT single primary source 1991–2025, GGDC splice-adjusted pre-1991
+- Learning & Teaching 2026 baseline raised from 18 to 28 (Q1 2026 evidence review)
+- L&T projected replaceability trajectory revised across all 3 scenarios
+- 52 territory-specific capability narratives added to projected moderate replaceability records
+- Moderate 2026 headline: 3,466M (formula-aligned from 3,417M in v2.5)
+- Projected shares normalized to 100% within each scenario-year group
+- FDA AI tools updated: 873 → 1,104
+- SWE-bench updated: 71.7% → 80.9%
+- 160K delivery robots claim corrected: ~3,000–5,000 sidewalk robots (160K was restaurant service robots)
+- Occupation count corrected: 405 → 389
+
+### v2.6 (March 2026)
+
+- Moderate 2026 labor values recomputed to match documented displacement formula (5% lag × 0.85 pre-absorption)
+- 10 of 13 territories corrected; care_health, land_sea, maintaining_fixing were already formula-consistent
+- Projected share normalization: 6 scenario-year groups corrected to sum to 100%
+
+### v2.5 (March 2026)
+
+- 47 occupation territory reassignments (IT→money_data, engineers→physical territories, legal→governing_protecting)
+- Buying & Selling 2027 moderate flattened (72→68)
+- Learning & Teaching 2027–2029 smoothed
+- Truck Drivers recalibrated (58→52)
+- Technology events revised (Xiaomi, Unitree, Tesla, Blackboard)
+- territory_metadata added with panel copy
+- All display-8 sets reselected
+
+### v2.4 (March 2026)
+
+- ISCO corrections: 5131 Housekeeping Managers→Waiters, 5132 Lodging Managers→Bartenders
+- 5 territory moves (Cooks, Kitchen Helpers→feeding_hosting; Crop Farm Workers→land_sea; Freight Handlers→moving_things)
+- Care & Health and Feeding & Hosting display sets revised
+
+### v2.3 (March 2026)
+
+- Occupation cleanup: 405→389 (16 duplicates merged), 12 territory reassignments
+- display_name field added (max 25 chars), display_in_territory field added (8 per territory)
+- historical_occupations added for pre-disaggregation periods
+
 ### v2.2 (March 2026)
 
 - Timeline extended from 2040 to 2041 (78 new records: 39 replaceability + 39 labor)
@@ -395,7 +447,7 @@ Corrections and extensions should reference the dataset's native structure: terr
 ### v2.1 (February 2026)
 
 - Initial public dataset
-- 496 replaceability records, 387 labor records, 405 occupations, 96 technology events, 410 sources
+- 496 replaceability records, 387 labor records, 389 occupations, 96 technology events, 410 sources
 - Three scenarios (conservative, moderate, accelerated)
 - Timeline: 1800–2040
 
@@ -405,6 +457,6 @@ Corrections and extensions should reference the dataset's native structure: terr
 
 If referencing this dataset or methodology:
 
-Large Labor Model, v2.2. Dataset and methodology. March 2026. largelabormodel.com.
+Large Labor Model, v2.7. Dataset and methodology. March 2026. largelabormodel.com.
 
 The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.
