@@ -1,6 +1,6 @@
 # Large Labor Model — Methodology
 
-**Version 2.8 — March 2026**
+**Version 2.9 — March 2026**
 
 This document describes how the Large Labor Model dataset was produced. It is written so that someone with no prior knowledge of the project can understand how every number in the dataset was derived, what assumptions were made, and where the model is weakest. It is the single reference for anyone who wants to challenge, extend, or build on this work.
 
@@ -106,7 +106,7 @@ The replaceability layer covers 1970–2026 (historical, no scenario) and 2027�
 
 ### 3.3 Occupation data
 
-389 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score and 2030 projections under all three scenarios.
+388 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score and 2030 projections under all three scenarios.
 
 Occupation scores were derived from a combination of benchmark research and model training knowledge. The scoring basis for individual occupations is not independently verifiable to the same standard as territory-level scores. This is a known limitation. The occupation layer exists primarily for the public-facing "find your job" feature and should be understood as indicative rather than definitive.
 
@@ -149,6 +149,8 @@ This is the display scenario. The visualization shows the moderate projection on
 ### 4.3 Accelerated
 
 Capability improvement accelerates beyond 2025 levels. Frontier AI reaches AGI-adjacent performance by 2027. Commercially available robotics crosses thresholds for unstructured physical environments by 2028. By 2030, the only remaining technical frontiers are direct physical contact with humans and genuinely novel creative output.
+
+**v2.9 note:** The production dataset ships the moderate scenario only. Conservative and accelerated scenarios were computed during development but removed from the production file. Conservative served as the ILO baseline input to the displacement formula. Accelerated had structural issues (undocumented lag schedule, 2041 anomaly) that were not resolved. Both are archived in `scenarios_archive_v2.9.json`. The scenario definitions above are retained as documentation of the modeling framework.
 
 ---
 
@@ -253,7 +255,7 @@ The dataset was produced through an 8-phase pipeline using multiple AI model ins
 | 1 | Historical labor shares 1800–2024 | Claude + Gemini | GPT | Claude (Opus 4.6) |
 | 2 | Labor projections 2025–2040 | Gemini + GPT | Claude | Claude (Opus 4.6) |
 | 3 | Territory replaceability 2015–2026 | Claude + GPT | Gemini | Claude (Opus 4.6) |
-| 4A/B | Occupation replaceability (389 occupations) | Claude + GPT | Gemini | Claude (Opus 4.6) |
+| 4A/B | Occupation replaceability (388 occupations) | Claude + GPT | Gemini | Claude (Opus 4.6) |
 | 5 | Replaceability projections 2027–2040 | Claude + Gemini | GPT | Claude (Opus 4.6) |
 | 6 | Technology events timeline | Claude + Gemini | GPT | Claude (Opus 4.6) |
 | 7 | Manual integration + source deduplication | — | — | Manual + Claude (Opus 4.6) |
@@ -395,6 +397,14 @@ Corrections and extensions should reference the dataset's native structure: terr
 
 ## 11. Changelog
 
+### v2.9 (March 2026)
+
+- Conservative and accelerated scenarios removed from production dataset (archived in scenarios_archive_v2.9.json)
+- ISCO corrections: 2611 Paralegals→Lawyers, 2621 deleted (wrong code, redundant with 2612 Judges), 2612 promoted to display, 2624→2621 Archivists moved to making_meaning
+- Territory reassignments: 5164 Animal Care Workers→maintaining_fixing, 7133 Building Cleaners→maintaining_fixing, 2621 Archivists→making_meaning
+- Occupation count: 389→388
+- Record counts: labor 738→608, replaceability 535→327 (scenario records removed)
+
 ### v2.8 (March 2026)
 
 - ILOSTAT subsection splits resolved for 5 territories using 17-country employment panel; 80 records promoted to HIGH quality
@@ -465,7 +475,7 @@ Corrections and extensions should reference the dataset's native structure: terr
 ### v2.1 (February 2026)
 
 - Initial public dataset
-- 496 replaceability records, 387 labor records, 389 occupations, 96 technology events, 410 sources
+- 496 replaceability records, 387 labor records, 388 occupations, 96 technology events, 410 sources
 - Three scenarios (conservative, moderate, accelerated)
 - Timeline: 1800–2040
 
@@ -475,6 +485,6 @@ Corrections and extensions should reference the dataset's native structure: terr
 
 If referencing this dataset or methodology:
 
-Large Labor Model, v2.8. Dataset and methodology. March 2026. largelabormodel.com.
+Large Labor Model, v2.9. Dataset and methodology. March 2026. largelabormodel.com.
 
 The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.

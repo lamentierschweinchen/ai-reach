@@ -52,13 +52,13 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 
 ## Dataset
 
-**Current version:** 2.8 (March 2026)
+**Current version:** 2.9 (March 2026)
 
 | Layer | Records | Coverage |
 |---|---|---|
-| Labor shares | 738 | 1800–2041, 3 scenarios (projected) |
-| Replaceability scores | 535 | 1970–2041, 3 scenarios (projected) |
-| Occupations | 389 | ISCO-08 4-digit, searchable |
+| Labor shares | 608 | 1800–2041, moderate scenario |
+| Replaceability scores | 327 | 1970–2041, moderate scenario |
+| Occupations | 388 | ISCO-08 4-digit, searchable |
 | Technology events | 57 | 1764–2041 |
 
 **Source architecture:**
@@ -67,9 +67,9 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 - World Bank WDI (secondary validation)
 - Displacement formula with documented parameters (2026–2041 projections)
 
-**Three scenarios** are computed. Only **moderate** is currently displayed. Conservative represents the ILO consensus baseline with no AI displacement applied.
+The **moderate scenario** is displayed. Conservative and accelerated scenarios were computed during development and are archived separately for potential future use.
 
-The full methodology is available at largelabormodel.com and in `Large_Labor_Model_Methodology_v2.8.md`.
+The full methodology is available at largelabormodel.com and in `Large_Labor_Model_Methodology_v2.9.md`.
 
 ---
 
