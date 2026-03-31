@@ -52,7 +52,7 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 
 ## Dataset
 
-**Current version:** 2.9 (March 2026)
+**Current version:** 2.10 (March 2026)
 
 | Layer | Records | Coverage |
 |---|---|---|
@@ -69,7 +69,7 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 
 The **moderate scenario** is displayed. Conservative and accelerated scenarios were computed during development and are archived separately for potential future use.
 
-The full methodology is available at largelabormodel.com and in `Large_Labor_Model_Methodology_v2.9.md`.
+The full methodology is available at largelabormodel.com and in `Large_Labor_Model_Methodology_v2.10.md`.
 
 ---
 

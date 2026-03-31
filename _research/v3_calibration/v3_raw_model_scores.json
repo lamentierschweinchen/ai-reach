@@ -1,0 +1,7363 @@
+{
+  "description": "v3 task decomposition model raw scores. NOT integrated into production dataset. These are the pre-calibration occupation scores computed from 27,460 tasks \u00d7 6 capability curves. Use as diagnostic for v3.0 score derivation work.",
+  "date": "2026-03-31",
+  "scores": [
+    {
+      "isco_code": "1111",
+      "occupation_name": "Chief Executives and General Managers",
+      "territory_id": "thinking_leading",
+      "current_score": 38,
+      "model_score": 61,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 30,
+      "dominant_vectors": {
+        "C_R": 0.94,
+        "P_A": 0.06,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 53
+    },
+    {
+      "isco_code": "1112",
+      "occupation_name": "Senior Government Officials",
+      "territory_id": "thinking_leading",
+      "current_score": 45,
+      "model_score": 78,
+      "delta": 33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 89,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "C_G": 0.4,
+        "P_A": 0.11,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "1120",
+      "occupation_name": "Production and Operations Managers",
+      "territory_id": "making_things",
+      "current_score": 61,
+      "model_score": 89,
+      "delta": 28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 66,
+      "dominant_vectors": {
+        "C_R": 0.63,
+        "C_G": 0.25,
+        "P_A": 0.11,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "1211",
+      "occupation_name": "Finance Managers",
+      "territory_id": "thinking_leading",
+      "current_score": 70,
+      "model_score": 84,
+      "delta": 14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_R": 0.81,
+        "C_G": 0.15,
+        "P_A": 0.03,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "1212",
+      "occupation_name": "Human Resource Managers",
+      "territory_id": "thinking_leading",
+      "current_score": 65,
+      "model_score": 68,
+      "delta": 3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 55,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.3,
+        "P_A": 0.11,
+        "S_E": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "1213",
+      "occupation_name": "Information Technology Managers",
+      "territory_id": "thinking_leading",
+      "current_score": 63,
+      "model_score": 79,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 217,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "C_G": 0.26,
+        "P_A": 0.18,
+        "Phi_S": 0.01,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "1221",
+      "occupation_name": "Marketing Managers",
+      "territory_id": "thinking_leading",
+      "current_score": 65,
+      "model_score": 71,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_R": 0.59,
+        "C_G": 0.27,
+        "P_A": 0.08,
+        "S_E": 0.06
+      },
+      "raw_model_score": 64
+    },
+    {
+      "isco_code": "1223",
+      "occupation_name": "Sales and Marketing Directors",
+      "territory_id": "thinking_leading",
+      "current_score": 59,
+      "model_score": 82,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 110,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "C_G": 0.34,
+        "P_A": 0.09,
+        "Phi_S": 0.01,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "1310",
+      "occupation_name": "Finance Managers",
+      "territory_id": "money_data",
+      "current_score": 68,
+      "model_score": 71,
+      "delta": 3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 66,
+      "dominant_vectors": {
+        "C_R": 0.46,
+        "P_A": 0.25,
+        "C_G": 0.25,
+        "Phi_S": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 66
+    },
+    {
+      "isco_code": "1320",
+      "occupation_name": "Operations Managers",
+      "territory_id": "thinking_leading",
+      "current_score": 58,
+      "model_score": 81,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 460,
+      "dominant_vectors": {
+        "C_R": 0.55,
+        "C_G": 0.25,
+        "P_A": 0.18,
+        "Phi_S": 0.01,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "1321",
+      "occupation_name": "Manufacturing Managers",
+      "territory_id": "making_things",
+      "current_score": 55,
+      "model_score": 93,
+      "delta": 38,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 130,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "P_A": 0.25,
+        "C_G": 0.24,
+        "Phi_S": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 81
+    },
+    {
+      "isco_code": "1323",
+      "occupation_name": "Construction and Mining Managers",
+      "territory_id": "building_things",
+      "current_score": 60,
+      "model_score": 53,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 25,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "C_G": 0.24,
+        "P_A": 0.23,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "1324",
+      "occupation_name": "Supply Chain Managers",
+      "territory_id": "thinking_leading",
+      "current_score": 72,
+      "model_score": 84,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 88,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.22,
+        "P_A": 0.06,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 78
+    },
+    {
+      "isco_code": "1411",
+      "occupation_name": "Hotel Managers",
+      "territory_id": "feeding_hosting",
+      "current_score": 58,
+      "model_score": 64,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 24,
+      "dominant_vectors": {
+        "C_R": 0.72,
+        "P_A": 0.23,
+        "Phi_S": 0.05,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "1412",
+      "occupation_name": "Restaurant Managers",
+      "territory_id": "feeding_hosting",
+      "current_score": 55,
+      "model_score": 62,
+      "delta": 7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 28,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "P_A": 0.26,
+        "C_G": 0.2,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "1431",
+      "occupation_name": "Sports, Recreation, and Cultural Centre Managers",
+      "territory_id": "making_meaning",
+      "current_score": 58,
+      "model_score": 76,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 236,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "C_G": 0.25,
+        "P_A": 0.17,
+        "Phi_S": 0.01,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "2112",
+      "occupation_name": "Physicists and Astronomers",
+      "territory_id": "making_things",
+      "current_score": 65,
+      "model_score": 93,
+      "delta": 28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 24,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "C_G": 0.2,
+        "P_A": 0.09,
+        "S_E": 0.0
+      },
+      "raw_model_score": 83
+    },
+    {
+      "isco_code": "2120",
+      "occupation_name": "Data Analysts and Data Scientists",
+      "territory_id": "money_data",
+      "current_score": 81,
+      "model_score": 74,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 118,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.33,
+        "P_A": 0.08,
+        "Phi_S": 0.01,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "2131",
+      "occupation_name": "Computer Network Specialists",
+      "territory_id": "money_data",
+      "current_score": 72,
+      "model_score": 86,
+      "delta": 14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 191,
+      "dominant_vectors": {
+        "C_R": 0.55,
+        "C_G": 0.31,
+        "P_A": 0.1,
+        "S_E": 0.02,
+        "Phi_S": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "2133",
+      "occupation_name": "Web and Mobile Application Developers",
+      "territory_id": "thinking_leading",
+      "current_score": 77,
+      "model_score": 84,
+      "delta": 7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 161,
+      "dominant_vectors": {
+        "C_R": 0.47,
+        "C_G": 0.37,
+        "P_A": 0.15,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "2141",
+      "occupation_name": "Database Administrators and Specialists",
+      "territory_id": "money_data",
+      "current_score": 69,
+      "model_score": 85,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 46,
+      "dominant_vectors": {
+        "C_R": 0.36,
+        "C_G": 0.34,
+        "P_A": 0.19,
+        "Phi_S": 0.11,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "2142",
+      "occupation_name": "Computer Systems Administrators",
+      "territory_id": "money_data",
+      "current_score": 71,
+      "model_score": 83,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_R": 0.41,
+        "C_G": 0.35,
+        "P_A": 0.24,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 79
+    },
+    {
+      "isco_code": "2144",
+      "occupation_name": "Electronics Engineers",
+      "territory_id": "thinking_leading",
+      "current_score": 68,
+      "model_score": 91,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 141,
+      "dominant_vectors": {
+        "C_G": 0.44,
+        "C_R": 0.33,
+        "P_A": 0.17,
+        "Phi_S": 0.05,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 85
+    },
+    {
+      "isco_code": "2145",
+      "occupation_name": "Environmental Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 66,
+      "model_score": 90,
+      "delta": 24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 12,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "C_G": 0.28,
+        "P_A": 0.19,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 84
+    },
+    {
+      "isco_code": "2149",
+      "occupation_name": "Engineering Professionals NEC",
+      "territory_id": "thinking_leading",
+      "current_score": 68,
+      "model_score": 92,
+      "delta": 24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 359,
+      "dominant_vectors": {
+        "C_R": 0.49,
+        "C_G": 0.35,
+        "P_A": 0.13,
+        "Phi_S": 0.03,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 86
+    },
+    {
+      "isco_code": "2151",
+      "occupation_name": "ICT System and Network Architects",
+      "territory_id": "thinking_leading",
+      "current_score": 66,
+      "model_score": 79,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 22,
+      "dominant_vectors": {
+        "C_R": 0.51,
+        "C_G": 0.37,
+        "P_A": 0.12,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "2152",
+      "occupation_name": "Software QA Engineers and Testers",
+      "territory_id": "money_data",
+      "current_score": 74,
+      "model_score": 79,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 61,
+      "dominant_vectors": {
+        "C_R": 0.67,
+        "C_G": 0.22,
+        "P_A": 0.09,
+        "Phi_S": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "2153",
+      "occupation_name": "Telecommunications Engineers",
+      "territory_id": "money_data",
+      "current_score": 70,
+      "model_score": 80,
+      "delta": 10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "C_G": 0.24,
+        "P_A": 0.1,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "2161",
+      "occupation_name": "Electrical Engineers",
+      "territory_id": "making_things",
+      "current_score": 64,
+      "model_score": 90,
+      "delta": 26,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 24,
+      "dominant_vectors": {
+        "C_G": 0.79,
+        "C_R": 0.21,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "2162",
+      "occupation_name": "Landscape Architects",
+      "territory_id": "building_things",
+      "current_score": 60,
+      "model_score": 72,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_G": 0.76,
+        "P_A": 0.15,
+        "C_R": 0.08,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "2163",
+      "occupation_name": "Mechanical Engineers",
+      "territory_id": "making_things",
+      "current_score": 65,
+      "model_score": 90,
+      "delta": 25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_G": 0.57,
+        "C_R": 0.32,
+        "Phi_S": 0.07,
+        "P_A": 0.04,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "2164",
+      "occupation_name": "Architects",
+      "territory_id": "building_things",
+      "current_score": 64,
+      "model_score": 93,
+      "delta": 29,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_G": 0.53,
+        "C_R": 0.41,
+        "P_A": 0.06,
+        "S_E": 0.0
+      },
+      "raw_model_score": 88
+    },
+    {
+      "isco_code": "2165",
+      "occupation_name": "Civil Engineers",
+      "territory_id": "building_things",
+      "current_score": 63,
+      "model_score": 86,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 53,
+      "dominant_vectors": {
+        "C_R": 0.79,
+        "C_G": 0.13,
+        "P_A": 0.07,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "2166",
+      "occupation_name": "Illustrators and Cartoonists",
+      "territory_id": "making_meaning",
+      "current_score": 70,
+      "model_score": 78,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 31,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "C_G": 0.26,
+        "Phi_S": 0.14,
+        "P_A": 0.04,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "2171",
+      "occupation_name": "Urban and Traffic Planners",
+      "territory_id": "building_things",
+      "current_score": 65,
+      "model_score": 93,
+      "delta": 28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_G": 0.53,
+        "C_R": 0.41,
+        "P_A": 0.06,
+        "S_E": 0.0
+      },
+      "raw_model_score": 88
+    },
+    {
+      "isco_code": "2211",
+      "occupation_name": "Physicians and General Practitioners",
+      "territory_id": "care_health",
+      "current_score": 64,
+      "model_score": 62,
+      "delta": -2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 15,
+      "dominant_vectors": {
+        "C_R": 0.63,
+        "C_G": 0.23,
+        "P_A": 0.14,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 53
+    },
+    {
+      "isco_code": "2212",
+      "occupation_name": "Dentists",
+      "territory_id": "care_health",
+      "current_score": 60,
+      "model_score": 60,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 11,
+      "dominant_vectors": {
+        "C_R": 1.0,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 52
+    },
+    {
+      "isco_code": "2213",
+      "occupation_name": "Surgeons",
+      "territory_id": "care_health",
+      "current_score": 52,
+      "model_score": 47,
+      "delta": -5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "C_R": 0.6,
+        "P_A": 0.4,
+        "C_G": 0.01,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 39
+    },
+    {
+      "isco_code": "2221",
+      "occupation_name": "Nurses and Registered Nurses",
+      "territory_id": "care_health",
+      "current_score": 48,
+      "model_score": 69,
+      "delta": 21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 187,
+      "dominant_vectors": {
+        "P_A": 0.42,
+        "C_R": 0.4,
+        "C_G": 0.16,
+        "Phi_U": 0.01,
+        "S_E": 0.01,
+        "Phi_S": 0.01
+      },
+      "raw_model_score": 60
+    },
+    {
+      "isco_code": "2222",
+      "occupation_name": "Midwifery Professionals",
+      "territory_id": "care_health",
+      "current_score": 42,
+      "model_score": 89,
+      "delta": 47,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.68,
+        "C_G": 0.16,
+        "P_A": 0.14,
+        "S_E": 0.02
+      },
+      "raw_model_score": 79
+    },
+    {
+      "isco_code": "2226",
+      "occupation_name": "Physiotherapists and Occupational Therapists",
+      "territory_id": "care_health",
+      "current_score": 52,
+      "model_score": 72,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 206,
+      "dominant_vectors": {
+        "C_R": 0.44,
+        "P_A": 0.38,
+        "C_G": 0.16,
+        "S_E": 0.01,
+        "Phi_U": 0.01,
+        "Phi_S": 0.01
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "2231",
+      "occupation_name": "Pharmacists",
+      "territory_id": "care_health",
+      "current_score": 66,
+      "model_score": 65,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.47,
+        "P_A": 0.18,
+        "C_G": 0.18,
+        "Phi_S": 0.08,
+        "S_E": 0.08,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "2240",
+      "occupation_name": "Paramedical Practitioners",
+      "territory_id": "care_health",
+      "current_score": 52,
+      "model_score": 65,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 28,
+      "dominant_vectors": {
+        "P_A": 0.51,
+        "C_R": 0.38,
+        "Phi_U": 0.1,
+        "S_E": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "2251",
+      "occupation_name": "Veterinarians",
+      "territory_id": "land_sea",
+      "current_score": 66,
+      "model_score": 46,
+      "delta": -20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "C_R": 0.49,
+        "P_A": 0.34,
+        "C_G": 0.12,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "2263",
+      "occupation_name": "Environmental and Occupational Health and Hygiene Professionals",
+      "territory_id": "care_health",
+      "current_score": 62,
+      "model_score": 73,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 16,
+      "dominant_vectors": {
+        "C_G": 0.65,
+        "C_R": 0.2,
+        "P_A": 0.1,
+        "S_E": 0.05
+      },
+      "raw_model_score": 64
+    },
+    {
+      "isco_code": "2265",
+      "occupation_name": "Midwives",
+      "territory_id": "care_health",
+      "current_score": 50,
+      "model_score": 86,
+      "delta": 36,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "C_G": 0.52,
+        "C_R": 0.28,
+        "P_A": 0.16,
+        "S_E": 0.04,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "2269",
+      "occupation_name": "Health Professionals NEC",
+      "territory_id": "care_health",
+      "current_score": 58,
+      "model_score": 55,
+      "delta": -3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 141,
+      "dominant_vectors": {
+        "C_R": 0.5,
+        "C_G": 0.22,
+        "P_A": 0.19,
+        "S_E": 0.09,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 46
+    },
+    {
+      "isco_code": "2311",
+      "occupation_name": "Life Science Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 67,
+      "model_score": 59,
+      "delta": -8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 148,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.2,
+        "C_G": 0.18,
+        "S_E": 0.17,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2312",
+      "occupation_name": "Mathematicians and Statisticians",
+      "territory_id": "thinking_leading",
+      "current_score": 72,
+      "model_score": 59,
+      "delta": -13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 148,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.2,
+        "C_G": 0.18,
+        "S_E": 0.17,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2313",
+      "occupation_name": "Physical and Earth Science Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 66,
+      "model_score": 59,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 148,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.2,
+        "C_G": 0.18,
+        "S_E": 0.17,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2314",
+      "occupation_name": "Computing Professionals",
+      "territory_id": "money_data",
+      "current_score": 70,
+      "model_score": 58,
+      "delta": -12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 148,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.2,
+        "C_G": 0.18,
+        "S_E": 0.17,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2315",
+      "occupation_name": "Database Designers and Administrators",
+      "territory_id": "money_data",
+      "current_score": 73,
+      "model_score": 58,
+      "delta": -15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 148,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.2,
+        "C_G": 0.18,
+        "S_E": 0.17,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2317",
+      "occupation_name": "Environmental Scientists",
+      "territory_id": "thinking_leading",
+      "current_score": 67,
+      "model_score": 59,
+      "delta": -8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 148,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.2,
+        "C_G": 0.18,
+        "S_E": 0.17,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2331",
+      "occupation_name": "Biologists and Zoologists",
+      "territory_id": "thinking_leading",
+      "current_score": 68,
+      "model_score": 57,
+      "delta": -11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 32,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.24,
+        "C_G": 0.06,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "2332",
+      "occupation_name": "Chemistry and Physical Science Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 66,
+      "model_score": 57,
+      "delta": -9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 32,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.24,
+        "C_G": 0.06,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "2339",
+      "occupation_name": "Computing Associate Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 75,
+      "model_score": 57,
+      "delta": -18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 32,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.24,
+        "C_G": 0.06,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "2340",
+      "occupation_name": "Physical and Life Science Associate Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 72,
+      "model_score": 59,
+      "delta": -13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 85,
+      "dominant_vectors": {
+        "C_R": 0.68,
+        "P_A": 0.22,
+        "C_G": 0.08,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 52
+    },
+    {
+      "isco_code": "2341",
+      "occupation_name": "Engineering and Related Associate Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 68,
+      "model_score": 58,
+      "delta": -10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 53,
+      "dominant_vectors": {
+        "C_R": 0.73,
+        "P_A": 0.18,
+        "C_G": 0.07,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 50
+    },
+    {
+      "isco_code": "2411",
+      "occupation_name": "Accountants and Auditors",
+      "territory_id": "money_data",
+      "current_score": 79,
+      "model_score": 87,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 60,
+      "dominant_vectors": {
+        "C_R": 0.87,
+        "C_G": 0.1,
+        "P_A": 0.02,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 83
+    },
+    {
+      "isco_code": "2412",
+      "occupation_name": "Financial and Investment Advisers",
+      "territory_id": "money_data",
+      "current_score": 65,
+      "model_score": 63,
+      "delta": -2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 39,
+      "dominant_vectors": {
+        "C_R": 0.67,
+        "C_G": 0.28,
+        "P_A": 0.05,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 57
+    },
+    {
+      "isco_code": "2413",
+      "occupation_name": "Financial Analysts, Insurance Underwriters, Credit Analysts",
+      "territory_id": "money_data",
+      "current_score": 74,
+      "model_score": 79,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 45,
+      "dominant_vectors": {
+        "C_R": 0.88,
+        "C_G": 0.09,
+        "P_A": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "2414",
+      "occupation_name": "Personnel and Human Resource Specialists",
+      "territory_id": "money_data",
+      "current_score": 66,
+      "model_score": 79,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 126,
+      "dominant_vectors": {
+        "C_R": 0.83,
+        "C_G": 0.14,
+        "P_A": 0.02,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "2415",
+      "occupation_name": "Training and Curriculum Specialists",
+      "territory_id": "learning_teaching",
+      "current_score": 64,
+      "model_score": 52,
+      "delta": -12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 126,
+      "dominant_vectors": {
+        "C_R": 0.83,
+        "C_G": 0.14,
+        "P_A": 0.02,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "2421",
+      "occupation_name": "Management Consultants",
+      "territory_id": "thinking_leading",
+      "current_score": 62,
+      "model_score": 94,
+      "delta": 32,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "C_G": 0.25,
+        "P_A": 0.04,
+        "S_E": 0.03,
+        "Phi_S": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 88
+    },
+    {
+      "isco_code": "2422",
+      "occupation_name": "Policy Administration Professionals",
+      "territory_id": "governing_protecting",
+      "current_score": 68,
+      "model_score": 50,
+      "delta": -18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 137,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "C_G": 0.28,
+        "P_A": 0.16,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 79
+    },
+    {
+      "isco_code": "2423",
+      "occupation_name": "HR Specialists and Recruiters",
+      "territory_id": "thinking_leading",
+      "current_score": 66,
+      "model_score": 66,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 111,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "C_G": 0.27,
+        "P_A": 0.13,
+        "S_E": 0.03,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "2424",
+      "occupation_name": "Training and Development Specialists",
+      "territory_id": "thinking_leading",
+      "current_score": 61,
+      "model_score": 44,
+      "delta": -17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.6,
+        "C_G": 0.39,
+        "S_E": 0.01
+      },
+      "raw_model_score": 36
+    },
+    {
+      "isco_code": "2431",
+      "occupation_name": "Advertisers and Marketing Professionals",
+      "territory_id": "making_meaning",
+      "current_score": 69,
+      "model_score": 74,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 41,
+      "dominant_vectors": {
+        "C_G": 0.45,
+        "C_R": 0.35,
+        "P_A": 0.13,
+        "Phi_S": 0.04,
+        "S_E": 0.03
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "2432",
+      "occupation_name": "Public Relations and Communications Managers",
+      "territory_id": "making_meaning",
+      "current_score": 65,
+      "model_score": 65,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 18,
+      "dominant_vectors": {
+        "C_G": 0.48,
+        "C_R": 0.35,
+        "P_A": 0.1,
+        "S_E": 0.07
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "2433",
+      "occupation_name": "Event Managers",
+      "territory_id": "making_meaning",
+      "current_score": 62,
+      "model_score": 55,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 67,
+      "dominant_vectors": {
+        "C_R": 0.55,
+        "C_G": 0.26,
+        "P_A": 0.15,
+        "Phi_S": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2434",
+      "occupation_name": "Social Media Managers and Digital Content Creators",
+      "territory_id": "making_meaning",
+      "current_score": 71,
+      "model_score": 59,
+      "delta": -12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 92,
+      "dominant_vectors": {
+        "C_R": 0.55,
+        "C_G": 0.28,
+        "P_A": 0.1,
+        "Phi_S": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "2441",
+      "occupation_name": "Editors and Proofreaders",
+      "territory_id": "making_meaning",
+      "current_score": 68,
+      "model_score": 79,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.51,
+        "C_G": 0.27,
+        "P_A": 0.21,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "2451",
+      "occupation_name": "Film and Theater Producers",
+      "territory_id": "making_meaning",
+      "current_score": 59,
+      "model_score": 78,
+      "delta": 19,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 100,
+      "dominant_vectors": {
+        "C_R": 0.68,
+        "C_G": 0.26,
+        "P_A": 0.06,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "2452",
+      "occupation_name": "Audio-Visual and Multimedia Specialists",
+      "territory_id": "making_meaning",
+      "current_score": 71,
+      "model_score": 88,
+      "delta": 17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 29,
+      "dominant_vectors": {
+        "C_R": 0.81,
+        "P_A": 0.09,
+        "C_G": 0.07,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 85
+    },
+    {
+      "isco_code": "2511",
+      "occupation_name": "IT Business Analysts",
+      "territory_id": "money_data",
+      "current_score": 68,
+      "model_score": 89,
+      "delta": 21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 10,
+      "dominant_vectors": {
+        "C_R": 0.99,
+        "S_E": 0.01
+      },
+      "raw_model_score": 85
+    },
+    {
+      "isco_code": "2512",
+      "occupation_name": "Software Developers",
+      "territory_id": "money_data",
+      "current_score": 77,
+      "model_score": 88,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.26,
+        "P_A": 0.06,
+        "Phi_S": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 85
+    },
+    {
+      "isco_code": "2513",
+      "occupation_name": "Web and Multimedia Developers",
+      "territory_id": "money_data",
+      "current_score": 80,
+      "model_score": 88,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.26,
+        "P_A": 0.06,
+        "Phi_S": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 85
+    },
+    {
+      "isco_code": "2514",
+      "occupation_name": "Applications Programmers",
+      "territory_id": "thinking_leading",
+      "current_score": 80,
+      "model_score": 91,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.26,
+        "P_A": 0.06,
+        "Phi_S": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 85
+    },
+    {
+      "isco_code": "2519",
+      "occupation_name": "Software and Applications Developers NEC",
+      "territory_id": "thinking_leading",
+      "current_score": 76,
+      "model_score": 91,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.26,
+        "P_A": 0.06,
+        "Phi_S": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 85
+    },
+    {
+      "isco_code": "2521",
+      "occupation_name": "Database Designers and Administrators",
+      "territory_id": "thinking_leading",
+      "current_score": 72,
+      "model_score": 85,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 18,
+      "dominant_vectors": {
+        "C_R": 0.72,
+        "C_G": 0.28,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 78
+    },
+    {
+      "isco_code": "2522",
+      "occupation_name": "Systems Administrators",
+      "territory_id": "money_data",
+      "current_score": 74,
+      "model_score": 82,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 18,
+      "dominant_vectors": {
+        "C_R": 0.72,
+        "C_G": 0.28,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 78
+    },
+    {
+      "isco_code": "2523",
+      "occupation_name": "Computer Network and Systems Technicians",
+      "territory_id": "thinking_leading",
+      "current_score": 72,
+      "model_score": 79,
+      "delta": 7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 12,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "C_G": 0.33,
+        "P_A": 0.12,
+        "S_E": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "2529",
+      "occupation_name": "Database and Network Professionals NEC",
+      "territory_id": "thinking_leading",
+      "current_score": 70,
+      "model_score": 72,
+      "delta": 2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 10,
+      "dominant_vectors": {
+        "P_A": 0.49,
+        "C_R": 0.29,
+        "Phi_S": 0.15,
+        "Phi_U": 0.08,
+        "S_E": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "2532",
+      "occupation_name": "Designers (Graphic, Product, Web)",
+      "territory_id": "making_meaning",
+      "current_score": 72,
+      "model_score": 85,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 11,
+      "dominant_vectors": {
+        "C_G": 0.87,
+        "C_R": 0.13,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "2611",
+      "occupation_name": "Lawyers",
+      "territory_id": "governing_protecting",
+      "current_score": 73,
+      "model_score": 18,
+      "delta": -55,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 22,
+      "dominant_vectors": {
+        "C_R": 0.69,
+        "C_G": 0.19,
+        "P_A": 0.1,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 46
+    },
+    {
+      "isco_code": "2619",
+      "occupation_name": "Legal and Related Associate Professionals",
+      "territory_id": "governing_protecting",
+      "current_score": 75,
+      "model_score": 33,
+      "delta": -42,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "C_G": 0.22,
+        "P_A": 0.09,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "2622",
+      "occupation_name": "Police Officers and Detectives",
+      "territory_id": "governing_protecting",
+      "current_score": 56,
+      "model_score": 32,
+      "delta": -24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 35,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "P_A": 0.19,
+        "C_G": 0.05,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 60
+    },
+    {
+      "isco_code": "2631",
+      "occupation_name": "Statisticians",
+      "territory_id": "money_data",
+      "current_score": 74,
+      "model_score": 91,
+      "delta": 17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 31,
+      "dominant_vectors": {
+        "C_G": 0.49,
+        "C_R": 0.43,
+        "P_A": 0.07,
+        "S_E": 0.01
+      },
+      "raw_model_score": 88
+    },
+    {
+      "isco_code": "2632",
+      "occupation_name": "Sociologists and Anthropologists",
+      "territory_id": "thinking_leading",
+      "current_score": 59,
+      "model_score": 77,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 68,
+      "dominant_vectors": {
+        "C_R": 0.6,
+        "C_G": 0.21,
+        "P_A": 0.14,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "2634",
+      "occupation_name": "Psychologists and Counselors",
+      "territory_id": "care_health",
+      "current_score": 45,
+      "model_score": 72,
+      "delta": 27,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "P_A": 0.38,
+        "C_R": 0.27,
+        "C_G": 0.25,
+        "Phi_U": 0.06,
+        "S_E": 0.04
+      },
+      "raw_model_score": 62
+    },
+    {
+      "isco_code": "2635",
+      "occupation_name": "Philosophers, History and Political Science Professionals",
+      "territory_id": "thinking_leading",
+      "current_score": 58,
+      "model_score": 51,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 153,
+      "dominant_vectors": {
+        "C_G": 0.47,
+        "C_R": 0.39,
+        "P_A": 0.11,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "2641",
+      "occupation_name": "Authors, Screenwriters, and Playwrights",
+      "territory_id": "making_meaning",
+      "current_score": 59,
+      "model_score": 80,
+      "delta": 21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 63,
+      "dominant_vectors": {
+        "C_R": 0.53,
+        "C_G": 0.33,
+        "P_A": 0.09,
+        "Phi_S": 0.02,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "2642",
+      "occupation_name": "Journalists and Reporters",
+      "territory_id": "making_meaning",
+      "current_score": 62,
+      "model_score": 79,
+      "delta": 17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.51,
+        "C_G": 0.27,
+        "P_A": 0.21,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "2643",
+      "occupation_name": "Photographers",
+      "territory_id": "making_meaning",
+      "current_score": 88,
+      "model_score": 84,
+      "delta": -4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 39,
+      "dominant_vectors": {
+        "C_R": 0.75,
+        "C_G": 0.25,
+        "S_E": 0.0
+      },
+      "raw_model_score": 80
+    },
+    {
+      "isco_code": "2651",
+      "occupation_name": "Performers and Artists",
+      "territory_id": "making_meaning",
+      "current_score": 48,
+      "model_score": 80,
+      "delta": 32,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 41,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "C_G": 0.41,
+        "Phi_S": 0.07,
+        "P_A": 0.03,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "2652",
+      "occupation_name": "Musicians, Singers and Related Professionals",
+      "territory_id": "making_meaning",
+      "current_score": 54,
+      "model_score": 87,
+      "delta": 33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 68,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.27,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 84
+    },
+    {
+      "isco_code": "2653",
+      "occupation_name": "Dance and Choreography Professionals",
+      "territory_id": "making_meaning",
+      "current_score": 52,
+      "model_score": 72,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 30,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.23,
+        "P_A": 0.14,
+        "Phi_S": 0.05,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "2654",
+      "occupation_name": "Visual Artists and Sculptors",
+      "territory_id": "making_meaning",
+      "current_score": 65,
+      "model_score": 78,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 139,
+      "dominant_vectors": {
+        "C_R": 0.68,
+        "C_G": 0.24,
+        "P_A": 0.05,
+        "S_E": 0.02,
+        "Phi_S": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "2655",
+      "occupation_name": "Art Directors and Curators",
+      "territory_id": "making_meaning",
+      "current_score": 62,
+      "model_score": 80,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.73,
+        "C_G": 0.14,
+        "Phi_S": 0.13,
+        "S_E": 0.0
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "2656",
+      "occupation_name": "Dancers and Choreographers",
+      "territory_id": "making_meaning",
+      "current_score": 22,
+      "model_score": 48,
+      "delta": 26,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "C_R": 0.77,
+        "P_A": 0.22,
+        "S_E": 0.01
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "2659",
+      "occupation_name": "Creative and Performing Artists NEC",
+      "territory_id": "making_meaning",
+      "current_score": 52,
+      "model_score": 88,
+      "delta": 36,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 15,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "C_G": 0.39,
+        "Phi_S": 0.09,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 84
+    },
+    {
+      "isco_code": "3114",
+      "occupation_name": "Engineering Technicians",
+      "territory_id": "thinking_leading",
+      "current_score": 70,
+      "model_score": 76,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_G": 0.43,
+        "C_R": 0.4,
+        "P_A": 0.1,
+        "Phi_S": 0.07,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "3115",
+      "occupation_name": "Legal and Insurance Technicians",
+      "territory_id": "money_data",
+      "current_score": 77,
+      "model_score": 85,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 340,
+      "dominant_vectors": {
+        "C_R": 0.44,
+        "P_A": 0.28,
+        "C_G": 0.18,
+        "Phi_S": 0.08,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "3119",
+      "occupation_name": "Physical and Engineering Science Technicians NEC",
+      "territory_id": "making_things",
+      "current_score": 68,
+      "model_score": 92,
+      "delta": 24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 557,
+      "dominant_vectors": {
+        "C_R": 0.53,
+        "P_A": 0.27,
+        "C_G": 0.14,
+        "Phi_S": 0.04,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 79
+    },
+    {
+      "isco_code": "3122",
+      "occupation_name": "Nursing Associate Professionals",
+      "territory_id": "care_health",
+      "current_score": 45,
+      "model_score": 78,
+      "delta": 33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.63,
+        "P_A": 0.16,
+        "C_G": 0.14,
+        "Phi_S": 0.07,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "3151",
+      "occupation_name": "Ships Engineers",
+      "territory_id": "moving_things",
+      "current_score": 55,
+      "model_score": 71,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 17,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "P_A": 0.32,
+        "C_G": 0.07,
+        "Phi_S": 0.07,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "3152",
+      "occupation_name": "Ships Captains and Officers",
+      "territory_id": "moving_things",
+      "current_score": 50,
+      "model_score": 49,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 53,
+      "dominant_vectors": {
+        "C_R": 0.83,
+        "P_A": 0.14,
+        "C_G": 0.03,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "3153",
+      "occupation_name": "Aircraft Pilots and Related Professionals",
+      "territory_id": "moving_things",
+      "current_score": 55,
+      "model_score": 69,
+      "delta": 14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 46,
+      "dominant_vectors": {
+        "C_R": 0.67,
+        "P_A": 0.2,
+        "C_G": 0.12,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "3154",
+      "occupation_name": "Air Traffic Controllers",
+      "territory_id": "moving_things",
+      "current_score": 70,
+      "model_score": 80,
+      "delta": 10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "C_R": 0.82,
+        "P_A": 0.1,
+        "C_G": 0.08,
+        "S_E": 0.0
+      },
+      "raw_model_score": 84
+    },
+    {
+      "isco_code": "3155",
+      "occupation_name": "Air Traffic Safety Officers",
+      "territory_id": "moving_things",
+      "current_score": 65,
+      "model_score": 64,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_G": 0.43,
+        "C_R": 0.4,
+        "P_A": 0.1,
+        "Phi_S": 0.07,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "3211",
+      "occupation_name": "Medical Assistants",
+      "territory_id": "care_health",
+      "current_score": 64,
+      "model_score": 74,
+      "delta": 10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 105,
+      "dominant_vectors": {
+        "C_R": 0.64,
+        "P_A": 0.24,
+        "C_G": 0.08,
+        "S_E": 0.03,
+        "Phi_U": 0.02
+      },
+      "raw_model_score": 64
+    },
+    {
+      "isco_code": "3212",
+      "occupation_name": "Medical Laboratory Technicians",
+      "territory_id": "care_health",
+      "current_score": 82,
+      "model_score": 87,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 89,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "P_A": 0.32,
+        "C_G": 0.08,
+        "Phi_U": 0.01,
+        "S_E": 0.01
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "3213",
+      "occupation_name": "Dietitians and Nutritionists",
+      "territory_id": "care_health",
+      "current_score": 66,
+      "model_score": 81,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.77,
+        "C_G": 0.14,
+        "Phi_S": 0.07,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "3214",
+      "occupation_name": "Medical and Dental Prosthetics Technicians",
+      "territory_id": "care_health",
+      "current_score": 60,
+      "model_score": 60,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 57,
+      "dominant_vectors": {
+        "C_R": 0.3,
+        "C_G": 0.24,
+        "P_A": 0.22,
+        "Phi_S": 0.22,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 52
+    },
+    {
+      "isco_code": "3222",
+      "occupation_name": "Mental Health and Substance Abuse Social Workers",
+      "territory_id": "care_health",
+      "current_score": 48,
+      "model_score": 78,
+      "delta": 30,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 35,
+      "dominant_vectors": {
+        "C_R": 0.42,
+        "P_A": 0.39,
+        "C_G": 0.19,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "3223",
+      "occupation_name": "Child Care Workers",
+      "territory_id": "care_health",
+      "current_score": 50,
+      "model_score": 77,
+      "delta": 27,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 58,
+      "dominant_vectors": {
+        "C_R": 0.41,
+        "P_A": 0.34,
+        "C_G": 0.16,
+        "Phi_S": 0.05,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "3241",
+      "occupation_name": "Health and Safety Specialists",
+      "territory_id": "care_health",
+      "current_score": 65,
+      "model_score": 47,
+      "delta": -18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 58,
+      "dominant_vectors": {
+        "C_R": 0.39,
+        "P_A": 0.34,
+        "C_G": 0.22,
+        "Phi_S": 0.04,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 39
+    },
+    {
+      "isco_code": "3251",
+      "occupation_name": "Physiotherapists",
+      "territory_id": "care_health",
+      "current_score": 54,
+      "model_score": 51,
+      "delta": -3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 16,
+      "dominant_vectors": {
+        "C_R": 0.3,
+        "Phi_S": 0.27,
+        "P_A": 0.15,
+        "C_G": 0.15,
+        "S_E": 0.12,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "3252",
+      "occupation_name": "Occupational Therapists",
+      "territory_id": "care_health",
+      "current_score": 55,
+      "model_score": 56,
+      "delta": 1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 15,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "S_E": 0.18,
+        "C_G": 0.15,
+        "P_A": 0.11,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 48
+    },
+    {
+      "isco_code": "3254",
+      "occupation_name": "Dental Technicians",
+      "territory_id": "care_health",
+      "current_score": 77,
+      "model_score": 61,
+      "delta": -16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "C_R": 0.72,
+        "P_A": 0.1,
+        "C_G": 0.09,
+        "Phi_S": 0.09,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 52
+    },
+    {
+      "isco_code": "3255",
+      "occupation_name": "Health Information and Records Officers",
+      "territory_id": "care_health",
+      "current_score": 80,
+      "model_score": 52,
+      "delta": -28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 31,
+      "dominant_vectors": {
+        "C_R": 0.51,
+        "C_G": 0.19,
+        "P_A": 0.15,
+        "Phi_S": 0.13,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 44
+    },
+    {
+      "isco_code": "3256",
+      "occupation_name": "Anatomists and Pathologists",
+      "territory_id": "care_health",
+      "current_score": 74,
+      "model_score": 75,
+      "delta": 1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 40,
+      "dominant_vectors": {
+        "C_R": 0.46,
+        "P_A": 0.46,
+        "C_G": 0.07,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 66
+    },
+    {
+      "isco_code": "3257",
+      "occupation_name": "Environmental and Occupational Health Inspectors",
+      "territory_id": "care_health",
+      "current_score": 65,
+      "model_score": 98,
+      "delta": 33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 78,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "P_A": 0.41,
+        "C_G": 0.09,
+        "Phi_S": 0.02,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 87
+    },
+    {
+      "isco_code": "3259",
+      "occupation_name": "Health Associate Professionals NEC",
+      "territory_id": "care_health",
+      "current_score": 78,
+      "model_score": 68,
+      "delta": -10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 266,
+      "dominant_vectors": {
+        "C_R": 0.47,
+        "P_A": 0.38,
+        "C_G": 0.08,
+        "Phi_S": 0.03,
+        "S_E": 0.03,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "3311",
+      "occupation_name": "Securities Traders and Financial Analysts",
+      "territory_id": "money_data",
+      "current_score": 77,
+      "model_score": 72,
+      "delta": -5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 67,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "P_A": 0.2,
+        "C_G": 0.13,
+        "Phi_S": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "3312",
+      "occupation_name": "Credit and Loans Officers",
+      "territory_id": "money_data",
+      "current_score": 82,
+      "model_score": 58,
+      "delta": -24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 70,
+      "dominant_vectors": {
+        "C_R": 0.79,
+        "C_G": 0.16,
+        "S_E": 0.03,
+        "P_A": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "3313",
+      "occupation_name": "Accounting Associate Professionals",
+      "territory_id": "money_data",
+      "current_score": 82,
+      "model_score": 99,
+      "delta": 17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 30,
+      "dominant_vectors": {
+        "C_R": 0.94,
+        "C_G": 0.06,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 97
+    },
+    {
+      "isco_code": "3314",
+      "occupation_name": "Wholesale and Retail Buyers and Purchasing Officers",
+      "territory_id": "buying_selling",
+      "current_score": 70,
+      "model_score": 85,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 68,
+      "dominant_vectors": {
+        "C_R": 0.67,
+        "C_G": 0.21,
+        "P_A": 0.08,
+        "Phi_S": 0.03,
+        "S_E": 0.01
+      },
+      "raw_model_score": 87
+    },
+    {
+      "isco_code": "3321",
+      "occupation_name": "Automotive Mechanics and Technicians",
+      "territory_id": "making_things",
+      "current_score": 62,
+      "model_score": 88,
+      "delta": 26,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 44,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "C_G": 0.3,
+        "P_A": 0.17,
+        "Phi_S": 0.03,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "3322",
+      "occupation_name": "Insurance Sales Agents",
+      "territory_id": "money_data",
+      "current_score": 62,
+      "model_score": 54,
+      "delta": -8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 87,
+      "dominant_vectors": {
+        "C_R": 0.61,
+        "C_G": 0.22,
+        "P_A": 0.15,
+        "Phi_S": 0.02,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 47
+    },
+    {
+      "isco_code": "3323",
+      "occupation_name": "Buyers",
+      "territory_id": "buying_selling",
+      "current_score": 65,
+      "model_score": 74,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 51,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "C_G": 0.26,
+        "P_A": 0.22,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "3324",
+      "occupation_name": "Trade Brokers",
+      "territory_id": "money_data",
+      "current_score": 75,
+      "model_score": 74,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 122,
+      "dominant_vectors": {
+        "C_R": 0.78,
+        "P_A": 0.11,
+        "C_G": 0.08,
+        "Phi_S": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "3325",
+      "occupation_name": "Aircraft Mechanics and Technicians",
+      "territory_id": "making_things",
+      "current_score": 70,
+      "model_score": 87,
+      "delta": 17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 268,
+      "dominant_vectors": {
+        "C_R": 0.69,
+        "C_G": 0.16,
+        "P_A": 0.13,
+        "Phi_S": 0.01,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "3331",
+      "occupation_name": "Receptionists",
+      "territory_id": "buying_selling",
+      "current_score": 72,
+      "model_score": 71,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 66,
+      "dominant_vectors": {
+        "C_R": 0.91,
+        "Phi_S": 0.05,
+        "C_G": 0.04,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "3333",
+      "occupation_name": "Debt and Loan Officers",
+      "territory_id": "money_data",
+      "current_score": 72,
+      "model_score": 71,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 33,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "C_G": 0.08,
+        "Phi_S": 0.04,
+        "P_A": 0.04,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 66
+    },
+    {
+      "isco_code": "3334",
+      "occupation_name": "Real Estate Agents and Brokers",
+      "territory_id": "buying_selling",
+      "current_score": 56,
+      "model_score": 61,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 95,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.19,
+        "C_G": 0.12,
+        "Phi_S": 0.03,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "3339",
+      "occupation_name": "Customer Service and Related Workers",
+      "territory_id": "buying_selling",
+      "current_score": 72,
+      "model_score": 72,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 295,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.25,
+        "P_A": 0.15,
+        "Phi_S": 0.01,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "3341",
+      "occupation_name": "Electrical Technicians",
+      "territory_id": "making_things",
+      "current_score": 65,
+      "model_score": 87,
+      "delta": 22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 29,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.24,
+        "P_A": 0.06,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "3342",
+      "occupation_name": "Publishing and Print Secretaries",
+      "territory_id": "making_meaning",
+      "current_score": 78,
+      "model_score": 62,
+      "delta": -16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "C_R": 0.81,
+        "C_G": 0.11,
+        "S_E": 0.07
+      },
+      "raw_model_score": 58
+    },
+    {
+      "isco_code": "3344",
+      "occupation_name": "Library and Archive Technicians",
+      "territory_id": "money_data",
+      "current_score": 73,
+      "model_score": 84,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 31,
+      "dominant_vectors": {
+        "C_R": 0.78,
+        "P_A": 0.12,
+        "Phi_S": 0.04,
+        "S_E": 0.04,
+        "C_G": 0.03
+      },
+      "raw_model_score": 81
+    },
+    {
+      "isco_code": "3351",
+      "occupation_name": "Insurance Agents and Brokers",
+      "territory_id": "money_data",
+      "current_score": 63,
+      "model_score": 76,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 176,
+      "dominant_vectors": {
+        "C_R": 0.75,
+        "P_A": 0.17,
+        "C_G": 0.07,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "3353",
+      "occupation_name": "Museum and Gallery Managers",
+      "territory_id": "making_meaning",
+      "current_score": 64,
+      "model_score": 76,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 138,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "P_A": 0.18,
+        "C_G": 0.06,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "3354",
+      "occupation_name": "Library, Museum and Archive Curators",
+      "territory_id": "making_meaning",
+      "current_score": 61,
+      "model_score": 77,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 188,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "P_A": 0.13,
+        "C_G": 0.06,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "3414",
+      "occupation_name": "Social and Religious Professionals",
+      "territory_id": "care_health",
+      "current_score": 44,
+      "model_score": 77,
+      "delta": 33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 101,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "P_A": 0.11,
+        "C_G": 0.08,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "3422",
+      "occupation_name": "Sports Coaches and Instructors",
+      "territory_id": "making_meaning",
+      "current_score": 38,
+      "model_score": 62,
+      "delta": 24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 73,
+      "dominant_vectors": {
+        "C_R": 0.53,
+        "P_A": 0.24,
+        "C_G": 0.21,
+        "Phi_U": 0.01,
+        "S_E": 0.01
+      },
+      "raw_model_score": 58
+    },
+    {
+      "isco_code": "3431",
+      "occupation_name": "Stockbrokers and Investment Advisors",
+      "territory_id": "money_data",
+      "current_score": 67,
+      "model_score": 71,
+      "delta": 4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 29,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "C_G": 0.13,
+        "P_A": 0.12,
+        "Phi_S": 0.08,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "3432",
+      "occupation_name": "Production and Specialized Managers (Media and Arts)",
+      "territory_id": "making_meaning",
+      "current_score": 66,
+      "model_score": 69,
+      "delta": 3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 63,
+      "dominant_vectors": {
+        "C_G": 0.6,
+        "C_R": 0.35,
+        "P_A": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "3433",
+      "occupation_name": "Management and Organization Analysts",
+      "territory_id": "money_data",
+      "current_score": 65,
+      "model_score": 77,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 74,
+      "dominant_vectors": {
+        "C_R": 0.64,
+        "C_G": 0.26,
+        "P_A": 0.06,
+        "S_E": 0.02,
+        "Phi_S": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "3434",
+      "occupation_name": "Human Resources Officers",
+      "territory_id": "thinking_leading",
+      "current_score": 64,
+      "model_score": 73,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 47,
+      "dominant_vectors": {
+        "C_R": 0.68,
+        "C_G": 0.18,
+        "P_A": 0.13,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 66
+    },
+    {
+      "isco_code": "3435",
+      "occupation_name": "Other Artistic and Cultural Associate Professionals",
+      "territory_id": "making_meaning",
+      "current_score": 58,
+      "model_score": 66,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "C_G": 0.23,
+        "P_A": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 62
+    },
+    {
+      "isco_code": "3456",
+      "occupation_name": "Cultural and Creative Specialists",
+      "territory_id": "making_meaning",
+      "current_score": 64,
+      "model_score": 89,
+      "delta": 25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 22,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "P_A": 0.26,
+        "C_G": 0.2,
+        "Phi_S": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 86
+    },
+    {
+      "isco_code": "3514",
+      "occupation_name": "Web Technicians",
+      "territory_id": "thinking_leading",
+      "current_score": 78,
+      "model_score": 82,
+      "delta": 4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 34,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "C_G": 0.14,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "3521",
+      "occupation_name": "Broadcasting and Audiovisual Technicians",
+      "territory_id": "making_meaning",
+      "current_score": 70,
+      "model_score": 80,
+      "delta": 10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 98,
+      "dominant_vectors": {
+        "C_R": 0.74,
+        "C_G": 0.15,
+        "P_A": 0.07,
+        "Phi_S": 0.03,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "3522",
+      "occupation_name": "Cooks and Kitchen Workers",
+      "territory_id": "feeding_hosting",
+      "current_score": 32,
+      "model_score": 60,
+      "delta": 28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_G": 0.43,
+        "C_R": 0.4,
+        "P_A": 0.1,
+        "Phi_S": 0.07,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "3527",
+      "occupation_name": "Hotel and Accommodation Managers",
+      "territory_id": "feeding_hosting",
+      "current_score": 58,
+      "model_score": 65,
+      "delta": 7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 141,
+      "dominant_vectors": {
+        "C_R": 0.64,
+        "C_G": 0.24,
+        "P_A": 0.08,
+        "Phi_S": 0.04,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "3544",
+      "occupation_name": "Fine Arts and Design Technicians",
+      "territory_id": "making_meaning",
+      "current_score": 74,
+      "model_score": 79,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 34,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "C_G": 0.14,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "4121",
+      "occupation_name": "Office Managers and Administrative Supervisors",
+      "territory_id": "buying_selling",
+      "current_score": 73,
+      "model_score": 58,
+      "delta": -15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 32,
+      "dominant_vectors": {
+        "C_R": 0.91,
+        "Phi_S": 0.06,
+        "S_E": 0.03
+      },
+      "raw_model_score": 58
+    },
+    {
+      "isco_code": "4130",
+      "occupation_name": "Library and Archives Assistants",
+      "territory_id": "money_data",
+      "current_score": 76,
+      "model_score": 94,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 28,
+      "dominant_vectors": {
+        "C_R": 0.91,
+        "C_G": 0.04,
+        "Phi_S": 0.03,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 91
+    },
+    {
+      "isco_code": "4131",
+      "occupation_name": "Supervisors and Team Leaders (Logistics)",
+      "territory_id": "moving_things",
+      "current_score": 67,
+      "model_score": 82,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.91,
+        "C_G": 0.06,
+        "Phi_U": 0.03,
+        "S_E": 0.0
+      },
+      "raw_model_score": 87
+    },
+    {
+      "isco_code": "4211",
+      "occupation_name": "Bank Tellers",
+      "territory_id": "money_data",
+      "current_score": 86,
+      "model_score": 83,
+      "delta": -3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 48,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "P_A": 0.08,
+        "Phi_S": 0.05,
+        "C_G": 0.05,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 79
+    },
+    {
+      "isco_code": "4213",
+      "occupation_name": "Bookkeepers",
+      "territory_id": "money_data",
+      "current_score": 88,
+      "model_score": 64,
+      "delta": -24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 15,
+      "dominant_vectors": {
+        "C_R": 1.0,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 58
+    },
+    {
+      "isco_code": "4214",
+      "occupation_name": "Mail Carriers and Postal Workers",
+      "territory_id": "moving_things",
+      "current_score": 65,
+      "model_score": 61,
+      "delta": -4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.29,
+        "P_A": 0.03,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "4215",
+      "occupation_name": "Debt, Tax, and Related Collectors",
+      "territory_id": "buying_selling",
+      "current_score": 82,
+      "model_score": 75,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 147,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "C_G": 0.1,
+        "P_A": 0.06,
+        "Phi_S": 0.02,
+        "Phi_U": 0.01,
+        "S_E": 0.01
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "4222",
+      "occupation_name": "Call Centre Operators",
+      "territory_id": "buying_selling",
+      "current_score": 71,
+      "model_score": 57,
+      "delta": -14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 47,
+      "dominant_vectors": {
+        "C_R": 0.89,
+        "P_A": 0.07,
+        "C_G": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 57
+    },
+    {
+      "isco_code": "4223",
+      "occupation_name": "Telephone and Order-Processing Clerks",
+      "territory_id": "moving_things",
+      "current_score": 84,
+      "model_score": 67,
+      "delta": -17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 35,
+      "dominant_vectors": {
+        "C_R": 0.82,
+        "P_A": 0.12,
+        "C_G": 0.03,
+        "S_E": 0.02
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "4224",
+      "occupation_name": "Other Clerical Support Workers",
+      "territory_id": "moving_things",
+      "current_score": 82,
+      "model_score": 65,
+      "delta": -17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 35,
+      "dominant_vectors": {
+        "C_R": 0.91,
+        "Phi_S": 0.04,
+        "C_G": 0.04,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "4225",
+      "occupation_name": "Dispatch and Control Centre Operators",
+      "territory_id": "moving_things",
+      "current_score": 69,
+      "model_score": 77,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 40,
+      "dominant_vectors": {
+        "C_R": 0.78,
+        "C_G": 0.2,
+        "S_E": 0.01
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "4226",
+      "occupation_name": "Bank and Postal Clerks",
+      "territory_id": "money_data",
+      "current_score": 86,
+      "model_score": 72,
+      "delta": -14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 1.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "4311",
+      "occupation_name": "Accounting and Bookkeeping Clerks",
+      "territory_id": "money_data",
+      "current_score": 93,
+      "model_score": 91,
+      "delta": -2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 60,
+      "dominant_vectors": {
+        "C_R": 0.88,
+        "Phi_S": 0.05,
+        "C_G": 0.04,
+        "P_A": 0.02,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 88
+    },
+    {
+      "isco_code": "4312",
+      "occupation_name": "Finance and Insurance Clerks",
+      "territory_id": "money_data",
+      "current_score": 85,
+      "model_score": 76,
+      "delta": -9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 83,
+      "dominant_vectors": {
+        "C_R": 0.98,
+        "C_G": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "4313",
+      "occupation_name": "Payroll Clerks",
+      "territory_id": "money_data",
+      "current_score": 90,
+      "model_score": 94,
+      "delta": 4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.94,
+        "C_G": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 91
+    },
+    {
+      "isco_code": "4321",
+      "occupation_name": "Customs and Border Control Officers",
+      "territory_id": "buying_selling",
+      "current_score": 80,
+      "model_score": 78,
+      "delta": -2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 33,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "P_A": 0.27,
+        "C_G": 0.04,
+        "Phi_S": 0.04,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 80
+    },
+    {
+      "isco_code": "4323",
+      "occupation_name": "Transport and Storage Clerks",
+      "territory_id": "moving_things",
+      "current_score": 78,
+      "model_score": 73,
+      "delta": -5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "P_A": 0.1,
+        "C_G": 0.1,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 78
+    },
+    {
+      "isco_code": "5111",
+      "occupation_name": "Retail and Wholesale Managers",
+      "territory_id": "buying_selling",
+      "current_score": 65,
+      "model_score": 57,
+      "delta": -8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 38,
+      "dominant_vectors": {
+        "C_R": 0.87,
+        "C_G": 0.12,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 57
+    },
+    {
+      "isco_code": "5113",
+      "occupation_name": "Tour Guides",
+      "territory_id": "feeding_hosting",
+      "current_score": 55,
+      "model_score": 44,
+      "delta": -11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 36,
+      "dominant_vectors": {
+        "C_R": 0.79,
+        "C_G": 0.1,
+        "P_A": 0.06,
+        "Phi_S": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "5120",
+      "occupation_name": "Cooks",
+      "territory_id": "feeding_hosting",
+      "current_score": 35,
+      "model_score": 46,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 83,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "C_G": 0.26,
+        "P_A": 0.18,
+        "Phi_S": 0.02,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "5131",
+      "occupation_name": "Waiters",
+      "territory_id": "feeding_hosting",
+      "current_score": 28,
+      "model_score": 36,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 39,
+      "dominant_vectors": {
+        "C_R": 0.82,
+        "P_A": 0.17,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 47
+    },
+    {
+      "isco_code": "5132",
+      "occupation_name": "Bartenders",
+      "territory_id": "feeding_hosting",
+      "current_score": 24,
+      "model_score": 42,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "C_G": 0.24,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 52
+    },
+    {
+      "isco_code": "5140",
+      "occupation_name": "Managers of Small Enterprises and Self-Employed Workers",
+      "territory_id": "buying_selling",
+      "current_score": 59,
+      "model_score": 47,
+      "delta": -12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 103,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.14,
+        "P_A": 0.13,
+        "Phi_S": 0.09,
+        "S_E": 0.04,
+        "Phi_U": 0.03
+      },
+      "raw_model_score": 47
+    },
+    {
+      "isco_code": "5151",
+      "occupation_name": "Cleaning and Housekeeping Workers",
+      "territory_id": "maintaining_fixing",
+      "current_score": 52,
+      "model_score": 27,
+      "delta": -25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "C_R": 0.78,
+        "P_A": 0.22,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 53
+    },
+    {
+      "isco_code": "5210",
+      "occupation_name": "Supervisors and Related Workers (Sales)",
+      "territory_id": "buying_selling",
+      "current_score": 66,
+      "model_score": 60,
+      "delta": -6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "C_R": 0.79,
+        "P_A": 0.2,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "5211",
+      "occupation_name": "Supervisors (Sales, Retail and Administrative)",
+      "territory_id": "buying_selling",
+      "current_score": 67,
+      "model_score": 73,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 12,
+      "dominant_vectors": {
+        "C_R": 1.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "5213",
+      "occupation_name": "Shelf Fillers and Stock Keepers",
+      "territory_id": "buying_selling",
+      "current_score": 83,
+      "model_score": 60,
+      "delta": -23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "C_R": 0.79,
+        "P_A": 0.2,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "5220",
+      "occupation_name": "Retail Salespersons",
+      "territory_id": "buying_selling",
+      "current_score": 64,
+      "model_score": 68,
+      "delta": 4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 80,
+      "dominant_vectors": {
+        "C_R": 0.6,
+        "C_G": 0.21,
+        "P_A": 0.13,
+        "Phi_S": 0.04,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "5221",
+      "occupation_name": "Stall and Market Salespersons",
+      "territory_id": "buying_selling",
+      "current_score": 42,
+      "model_score": 80,
+      "delta": 38,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 17,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "C_G": 0.2,
+        "P_A": 0.08,
+        "S_E": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "5222",
+      "occupation_name": "Shop Salespersons",
+      "territory_id": "buying_selling",
+      "current_score": 64,
+      "model_score": 66,
+      "delta": 2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "C_R": 0.42,
+        "C_G": 0.33,
+        "P_A": 0.22,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "5223",
+      "occupation_name": "Cashiers and Checkout Operators",
+      "territory_id": "buying_selling",
+      "current_score": 87,
+      "model_score": 64,
+      "delta": -23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 42,
+      "dominant_vectors": {
+        "C_R": 0.64,
+        "C_G": 0.15,
+        "P_A": 0.11,
+        "Phi_S": 0.07,
+        "Phi_U": 0.02,
+        "S_E": 0.01
+      },
+      "raw_model_score": 64
+    },
+    {
+      "isco_code": "5231",
+      "occupation_name": "Service Station Attendants",
+      "territory_id": "buying_selling",
+      "current_score": 75,
+      "model_score": 67,
+      "delta": -8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 40,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "Phi_S": 0.15,
+        "C_G": 0.08,
+        "P_A": 0.07,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "5241",
+      "occupation_name": "Shopkeepers and Stall Keepers",
+      "territory_id": "buying_selling",
+      "current_score": 55,
+      "model_score": 80,
+      "delta": 25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 17,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.15,
+        "Phi_S": 0.07,
+        "P_A": 0.07,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "5242",
+      "occupation_name": "Market and Street Vendors",
+      "territory_id": "buying_selling",
+      "current_score": 42,
+      "model_score": 51,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 24,
+      "dominant_vectors": {
+        "C_R": 0.72,
+        "C_G": 0.17,
+        "Phi_S": 0.08,
+        "S_E": 0.04
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "5243",
+      "occupation_name": "Booth Attendants and Promoters",
+      "territory_id": "buying_selling",
+      "current_score": 60,
+      "model_score": 73,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 12,
+      "dominant_vectors": {
+        "C_R": 1.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "5250",
+      "occupation_name": "Sales and Related Associate Professionals",
+      "territory_id": "buying_selling",
+      "current_score": 62,
+      "model_score": 36,
+      "delta": -26,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 18,
+      "dominant_vectors": {
+        "C_R": 0.43,
+        "S_E": 0.2,
+        "P_A": 0.18,
+        "C_G": 0.17,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 35
+    },
+    {
+      "isco_code": "5261",
+      "occupation_name": "Pet Care and Veterinary Assistants",
+      "territory_id": "care_health",
+      "current_score": 58,
+      "model_score": 59,
+      "delta": 1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 44,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.14,
+        "P_A": 0.13,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "5262",
+      "occupation_name": "Hairdressers, Barbers and Related Technicians",
+      "territory_id": "buying_selling",
+      "current_score": 48,
+      "model_score": 56,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "P_A": 0.2,
+        "Phi_S": 0.1,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "5312",
+      "occupation_name": "Care Workers and Caregivers",
+      "territory_id": "care_health",
+      "current_score": 46,
+      "model_score": 59,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 44,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.14,
+        "P_A": 0.13,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "5321",
+      "occupation_name": "Models and Demonstrators",
+      "territory_id": "buying_selling",
+      "current_score": 73,
+      "model_score": 42,
+      "delta": -31,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.72,
+        "P_A": 0.14,
+        "C_G": 0.13,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 41
+    },
+    {
+      "isco_code": "5322",
+      "occupation_name": "Home-Based Personal Care Workers",
+      "territory_id": "care_health",
+      "current_score": 32,
+      "model_score": 48,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 15,
+      "dominant_vectors": {
+        "C_R": 1.0,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 40
+    },
+    {
+      "isco_code": "6111",
+      "occupation_name": "Vegetable Growers",
+      "territory_id": "land_sea",
+      "current_score": 63,
+      "model_score": 49,
+      "delta": -14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 89,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "Phi_S": 0.18,
+        "P_A": 0.15,
+        "C_G": 0.1,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "6210",
+      "occupation_name": "Market Gardeners and Crop Producers",
+      "territory_id": "land_sea",
+      "current_score": 66,
+      "model_score": 42,
+      "delta": -24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 133,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.14,
+        "Phi_S": 0.11,
+        "C_G": 0.05,
+        "Phi_U": 0.03,
+        "S_E": 0.01
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "7119",
+      "occupation_name": "Skilled Trades Workers (Various)",
+      "territory_id": "making_things",
+      "current_score": 62,
+      "model_score": 82,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 120,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.3,
+        "Phi_S": 0.18,
+        "C_G": 0.07,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 47
+    },
+    {
+      "isco_code": "7121",
+      "occupation_name": "Blacksmiths and Tool Makers",
+      "territory_id": "making_things",
+      "current_score": 55,
+      "model_score": 70,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 28,
+      "dominant_vectors": {
+        "Phi_S": 0.52,
+        "C_G": 0.48,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 6
+    },
+    {
+      "isco_code": "7131",
+      "occupation_name": "Carpenters and Joiners",
+      "territory_id": "building_things",
+      "current_score": 59,
+      "model_score": 37,
+      "delta": -22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 39,
+      "dominant_vectors": {
+        "C_R": 0.63,
+        "Phi_S": 0.29,
+        "P_A": 0.08,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 36
+    },
+    {
+      "isco_code": "7136",
+      "occupation_name": "Bricklayers and Stone Masons",
+      "territory_id": "making_things",
+      "current_score": 61,
+      "model_score": 79,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 39,
+      "dominant_vectors": {
+        "C_R": 0.63,
+        "Phi_S": 0.29,
+        "P_A": 0.08,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 36
+    },
+    {
+      "isco_code": "7141",
+      "occupation_name": "Painters and Related Trades",
+      "territory_id": "making_things",
+      "current_score": 68,
+      "model_score": 93,
+      "delta": 25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 46,
+      "dominant_vectors": {
+        "C_R": 0.36,
+        "C_G": 0.34,
+        "P_A": 0.19,
+        "Phi_S": 0.11,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "7211",
+      "occupation_name": "Precision Metal Trades Workers",
+      "territory_id": "making_things",
+      "current_score": 70,
+      "model_score": 93,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 46,
+      "dominant_vectors": {
+        "Phi_S": 0.76,
+        "C_R": 0.1,
+        "C_G": 0.07,
+        "P_A": 0.06,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 83
+    },
+    {
+      "isco_code": "7212",
+      "occupation_name": "Welders and Flamecutters",
+      "territory_id": "making_things",
+      "current_score": 82,
+      "model_score": 82,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "Phi_S": 0.42,
+        "C_R": 0.4,
+        "P_A": 0.12,
+        "Phi_U": 0.04,
+        "C_G": 0.02
+      },
+      "raw_model_score": 46
+    },
+    {
+      "isco_code": "7214",
+      "occupation_name": "Structural Metal Preparers and Erectors",
+      "territory_id": "making_things",
+      "current_score": 55,
+      "model_score": 84,
+      "delta": 29,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 50,
+      "dominant_vectors": {
+        "C_R": 0.49,
+        "Phi_S": 0.27,
+        "C_G": 0.2,
+        "P_A": 0.03,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "7215",
+      "occupation_name": "Plumbers and Pipe Fitters",
+      "territory_id": "building_things",
+      "current_score": 58,
+      "model_score": 73,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "C_R": 0.57,
+        "Phi_S": 0.31,
+        "P_A": 0.12,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "7221",
+      "occupation_name": "Metal Moulders and Core Makers",
+      "territory_id": "making_things",
+      "current_score": 72,
+      "model_score": 92,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "Phi_S": 0.69,
+        "P_A": 0.21,
+        "C_G": 0.1,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "7222",
+      "occupation_name": "Machinery and Related Equipment Operators",
+      "territory_id": "making_things",
+      "current_score": 81,
+      "model_score": 88,
+      "delta": 7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 73,
+      "dominant_vectors": {
+        "C_R": 0.38,
+        "Phi_S": 0.33,
+        "C_G": 0.17,
+        "P_A": 0.07,
+        "Phi_U": 0.05,
+        "S_E": 0.0
+      },
+      "raw_model_score": 64
+    },
+    {
+      "isco_code": "7223",
+      "occupation_name": "CNC Machine Operators and Programmers",
+      "territory_id": "making_things",
+      "current_score": 79,
+      "model_score": 90,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 194,
+      "dominant_vectors": {
+        "Phi_S": 0.49,
+        "C_R": 0.25,
+        "P_A": 0.16,
+        "C_G": 0.09,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "7231",
+      "occupation_name": "Motor Vehicle Mechanics and Repairers",
+      "territory_id": "making_things",
+      "current_score": 60,
+      "model_score": 82,
+      "delta": 22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 221,
+      "dominant_vectors": {
+        "P_A": 0.34,
+        "C_R": 0.33,
+        "Phi_S": 0.25,
+        "C_G": 0.07,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 44
+    },
+    {
+      "isco_code": "7312",
+      "occupation_name": "Miners and Quarriers",
+      "territory_id": "making_things",
+      "current_score": 68,
+      "model_score": 85,
+      "delta": 17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 61,
+      "dominant_vectors": {
+        "C_R": 0.39,
+        "Phi_S": 0.31,
+        "P_A": 0.16,
+        "C_G": 0.14,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "7313",
+      "occupation_name": "Wood Treaters and Related Workers",
+      "territory_id": "making_things",
+      "current_score": 69,
+      "model_score": 84,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 94,
+      "dominant_vectors": {
+        "C_R": 0.37,
+        "Phi_S": 0.35,
+        "C_G": 0.2,
+        "P_A": 0.09,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 53
+    },
+    {
+      "isco_code": "7318",
+      "occupation_name": "Precision Instrument Makers",
+      "territory_id": "making_things",
+      "current_score": 55,
+      "model_score": 77,
+      "delta": 22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 27,
+      "dominant_vectors": {
+        "C_R": 0.38,
+        "Phi_S": 0.36,
+        "C_G": 0.13,
+        "P_A": 0.12,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 28
+    },
+    {
+      "isco_code": "7341",
+      "occupation_name": "Printing and Related Trades Workers",
+      "territory_id": "making_things",
+      "current_score": 74,
+      "model_score": 86,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "P_A": 0.63,
+        "C_R": 0.27,
+        "C_G": 0.1,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "7412",
+      "occupation_name": "Electrical Mechanics and Fitters",
+      "territory_id": "making_things",
+      "current_score": 62,
+      "model_score": 83,
+      "delta": 21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 281,
+      "dominant_vectors": {
+        "P_A": 0.39,
+        "C_R": 0.36,
+        "Phi_S": 0.17,
+        "C_G": 0.07,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 48
+    },
+    {
+      "isco_code": "7414",
+      "occupation_name": "Sheet Metal Fabricators and Finishers",
+      "territory_id": "making_things",
+      "current_score": 71,
+      "model_score": 83,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 351,
+      "dominant_vectors": {
+        "P_A": 0.4,
+        "C_R": 0.36,
+        "Phi_S": 0.15,
+        "C_G": 0.08,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 48
+    },
+    {
+      "isco_code": "7533",
+      "occupation_name": "Textile, Apparel, and Footwear Production Workers",
+      "territory_id": "making_things",
+      "current_score": 76,
+      "model_score": 82,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 64,
+      "dominant_vectors": {
+        "C_R": 0.61,
+        "C_G": 0.17,
+        "P_A": 0.12,
+        "Phi_S": 0.1,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 46
+    },
+    {
+      "isco_code": "7543",
+      "occupation_name": "Quality Control Inspectors",
+      "territory_id": "making_things",
+      "current_score": 85,
+      "model_score": 92,
+      "delta": 7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 32,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "P_A": 0.44,
+        "C_G": 0.08,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 79
+    },
+    {
+      "isco_code": "7549",
+      "occupation_name": "Quality and Safety Inspectors NEC",
+      "territory_id": "making_things",
+      "current_score": 85,
+      "model_score": 83,
+      "delta": -2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 34,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.18,
+        "Phi_S": 0.18,
+        "P_A": 0.06,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "8111",
+      "occupation_name": "Mining Machine Operators",
+      "territory_id": "making_things",
+      "current_score": 75,
+      "model_score": 83,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "Phi_S": 0.72,
+        "C_R": 0.18,
+        "P_A": 0.1,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "8112",
+      "occupation_name": "Mineral and Stone Processing Operators",
+      "territory_id": "making_things",
+      "current_score": 70,
+      "model_score": 88,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 33,
+      "dominant_vectors": {
+        "P_A": 0.46,
+        "Phi_S": 0.31,
+        "C_R": 0.18,
+        "C_G": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "8121",
+      "occupation_name": "Mining and Quarrying Labourers",
+      "territory_id": "making_things",
+      "current_score": 70,
+      "model_score": 90,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 96,
+      "dominant_vectors": {
+        "Phi_S": 0.43,
+        "C_R": 0.3,
+        "P_A": 0.23,
+        "C_G": 0.04,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "8122",
+      "occupation_name": "Metal Drawers and Extruders",
+      "territory_id": "making_things",
+      "current_score": 87,
+      "model_score": 90,
+      "delta": 3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 50,
+      "dominant_vectors": {
+        "P_A": 0.34,
+        "Phi_S": 0.33,
+        "C_R": 0.3,
+        "C_G": 0.03,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "8131",
+      "occupation_name": "Locomotive Engine Drivers",
+      "territory_id": "moving_things",
+      "current_score": 68,
+      "model_score": 72,
+      "delta": 4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 127,
+      "dominant_vectors": {
+        "Phi_S": 0.33,
+        "C_R": 0.31,
+        "P_A": 0.22,
+        "C_G": 0.13,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "8141",
+      "occupation_name": "Ship and Boat Crews",
+      "territory_id": "moving_things",
+      "current_score": 61,
+      "model_score": 67,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 173,
+      "dominant_vectors": {
+        "Phi_S": 0.41,
+        "C_R": 0.32,
+        "P_A": 0.18,
+        "C_G": 0.09,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "8150",
+      "occupation_name": "Textile, Leather, and Fur Machine Operators",
+      "territory_id": "making_things",
+      "current_score": 78,
+      "model_score": 89,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 141,
+      "dominant_vectors": {
+        "Phi_S": 0.41,
+        "C_R": 0.36,
+        "P_A": 0.21,
+        "C_G": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "8160",
+      "occupation_name": "Food and Beverage Processing Plant Operators",
+      "territory_id": "making_things",
+      "current_score": 82,
+      "model_score": 91,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 109,
+      "dominant_vectors": {
+        "Phi_S": 0.38,
+        "C_R": 0.32,
+        "P_A": 0.28,
+        "Phi_U": 0.01,
+        "C_G": 0.01
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "8171",
+      "occupation_name": "Pulp and Paper Plant Operators",
+      "territory_id": "making_things",
+      "current_score": 80,
+      "model_score": 89,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "P_A": 0.4,
+        "Phi_S": 0.33,
+        "C_R": 0.22,
+        "C_G": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "8189",
+      "occupation_name": "Stationary Plant and Machine Operators NEC",
+      "territory_id": "making_things",
+      "current_score": 83,
+      "model_score": 91,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 83,
+      "dominant_vectors": {
+        "Phi_S": 0.39,
+        "C_R": 0.31,
+        "P_A": 0.29,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "8211",
+      "occupation_name": "Machine Operators and Assemblers (Manufacturing)",
+      "territory_id": "making_things",
+      "current_score": 88,
+      "model_score": 84,
+      "delta": -4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 42,
+      "dominant_vectors": {
+        "Phi_S": 0.41,
+        "C_R": 0.28,
+        "C_G": 0.2,
+        "P_A": 0.1,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "8219",
+      "occupation_name": "Manufacturing and Production Machine Operators NEC",
+      "territory_id": "making_things",
+      "current_score": 85,
+      "model_score": 88,
+      "delta": 3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 11,
+      "dominant_vectors": {
+        "C_R": 0.44,
+        "Phi_S": 0.4,
+        "C_G": 0.15,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 64
+    },
+    {
+      "isco_code": "8290",
+      "occupation_name": "Machine Operators NEC",
+      "territory_id": "making_things",
+      "current_score": 84,
+      "model_score": 88,
+      "delta": 4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "Phi_S": 0.53,
+        "C_R": 0.23,
+        "P_A": 0.18,
+        "C_G": 0.06,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "8311",
+      "occupation_name": "Motorized Plant and Equipment Operators",
+      "territory_id": "moving_things",
+      "current_score": 74,
+      "model_score": 53,
+      "delta": -21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 52,
+      "dominant_vectors": {
+        "C_R": 0.64,
+        "P_A": 0.27,
+        "Phi_S": 0.07,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "8312",
+      "occupation_name": "Cleaners and Housekeeping Staff",
+      "territory_id": "maintaining_fixing",
+      "current_score": 64,
+      "model_score": 24,
+      "delta": -40,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 22,
+      "dominant_vectors": {
+        "C_R": 0.78,
+        "P_A": 0.09,
+        "C_G": 0.09,
+        "Phi_U": 0.05,
+        "S_E": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "8321",
+      "occupation_name": "Motorcycle Drivers",
+      "territory_id": "moving_things",
+      "current_score": 58,
+      "model_score": 72,
+      "delta": 14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 16,
+      "dominant_vectors": {
+        "C_R": 0.73,
+        "Phi_S": 0.08,
+        "C_G": 0.08,
+        "P_A": 0.07,
+        "Phi_U": 0.04,
+        "S_E": 0.0
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "8322",
+      "occupation_name": "Delivery and Truck Drivers",
+      "territory_id": "moving_things",
+      "current_score": 56,
+      "model_score": 44,
+      "delta": -12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 35,
+      "dominant_vectors": {
+        "C_R": 0.59,
+        "C_G": 0.18,
+        "Phi_S": 0.16,
+        "P_A": 0.06,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 50
+    },
+    {
+      "isco_code": "8323",
+      "occupation_name": "Bus and Coach Drivers",
+      "territory_id": "moving_things",
+      "current_score": 54,
+      "model_score": 53,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 51,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.13,
+        "Phi_S": 0.13,
+        "P_A": 0.07,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "8331",
+      "occupation_name": "Deck and Engine Room Crew (Ships)",
+      "territory_id": "land_sea",
+      "current_score": 62,
+      "model_score": 52,
+      "delta": -10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 12,
+      "dominant_vectors": {
+        "C_R": 0.82,
+        "P_A": 0.12,
+        "Phi_U": 0.05,
+        "S_E": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "8332",
+      "occupation_name": "Heavy Vehicle and Truck Drivers",
+      "territory_id": "moving_things",
+      "current_score": 52,
+      "model_score": 60,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 31,
+      "dominant_vectors": {
+        "C_R": 0.89,
+        "P_A": 0.05,
+        "C_G": 0.05,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "8340",
+      "occupation_name": "Ships Deck Crews and Related Port Operations",
+      "territory_id": "making_things",
+      "current_score": 65,
+      "model_score": 86,
+      "delta": 21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 160,
+      "dominant_vectors": {
+        "C_R": 0.49,
+        "Phi_S": 0.27,
+        "P_A": 0.16,
+        "C_G": 0.06,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "8341",
+      "occupation_name": "Freight Forwarders and Related Workers",
+      "territory_id": "moving_things",
+      "current_score": 75,
+      "model_score": 58,
+      "delta": -17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "Phi_S": 0.35,
+        "C_R": 0.29,
+        "C_G": 0.18,
+        "P_A": 0.13,
+        "Phi_U": 0.05
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "8342",
+      "occupation_name": "Earthmoving and Related Plant Operators",
+      "territory_id": "moving_things",
+      "current_score": 62,
+      "model_score": 48,
+      "delta": -14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 60,
+      "dominant_vectors": {
+        "Phi_S": 0.5,
+        "C_R": 0.38,
+        "P_A": 0.12,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "8343",
+      "occupation_name": "Crane and Hoist Operators",
+      "territory_id": "moving_things",
+      "current_score": 72,
+      "model_score": 59,
+      "delta": -13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 63,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "P_A": 0.21,
+        "Phi_S": 0.1,
+        "C_G": 0.05,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "8344",
+      "occupation_name": "Lifting Truck Operators",
+      "territory_id": "moving_things",
+      "current_score": 85,
+      "model_score": 39,
+      "delta": -46,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 11,
+      "dominant_vectors": {
+        "C_R": 0.57,
+        "C_G": 0.21,
+        "P_A": 0.2,
+        "Phi_U": 0.02
+      },
+      "raw_model_score": 46
+    },
+    {
+      "isco_code": "8350",
+      "occupation_name": "Ships Deck Crews and Related Workers",
+      "territory_id": "moving_things",
+      "current_score": 48,
+      "model_score": 59,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 45,
+      "dominant_vectors": {
+        "C_R": 0.79,
+        "Phi_S": 0.1,
+        "C_G": 0.07,
+        "P_A": 0.04,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "9111",
+      "occupation_name": "Child Care and Related Workers",
+      "territory_id": "care_health",
+      "current_score": 48,
+      "model_score": 53,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 28,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "P_A": 0.08,
+        "Phi_S": 0.08,
+        "S_E": 0.04,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 44
+    },
+    {
+      "isco_code": "9112",
+      "occupation_name": "Cleaners of Vehicles and Premises",
+      "territory_id": "moving_things",
+      "current_score": 63,
+      "model_score": 35,
+      "delta": -28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 72,
+      "dominant_vectors": {
+        "C_R": 0.53,
+        "Phi_S": 0.26,
+        "P_A": 0.16,
+        "C_G": 0.03,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 42
+    },
+    {
+      "isco_code": "9122",
+      "occupation_name": "General Farm Workers",
+      "territory_id": "land_sea",
+      "current_score": 67,
+      "model_score": 42,
+      "delta": -25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "Phi_S": 0.48,
+        "P_A": 0.24,
+        "C_R": 0.2,
+        "C_G": 0.08,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "9124",
+      "occupation_name": "Refuse and Recycling Sorters and Handlers",
+      "territory_id": "making_things",
+      "current_score": 73,
+      "model_score": 85,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "Phi_S": 0.56,
+        "C_R": 0.26,
+        "P_A": 0.14,
+        "C_G": 0.04,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "9134",
+      "occupation_name": "Other Elementary Occupations (Various Services)",
+      "territory_id": "moving_things",
+      "current_score": 68,
+      "model_score": 37,
+      "delta": -31,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 16,
+      "dominant_vectors": {
+        "C_R": 0.3,
+        "Phi_S": 0.27,
+        "P_A": 0.15,
+        "C_G": 0.15,
+        "S_E": 0.12,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "9211",
+      "occupation_name": "Domestic Helpers and Cleaners",
+      "territory_id": "moving_things",
+      "current_score": 60,
+      "model_score": 39,
+      "delta": -21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 38,
+      "dominant_vectors": {
+        "C_G": 0.51,
+        "C_R": 0.29,
+        "Phi_S": 0.11,
+        "P_A": 0.06,
+        "Phi_U": 0.03,
+        "S_E": 0.0
+      },
+      "raw_model_score": 45
+    },
+    {
+      "isco_code": "9213",
+      "occupation_name": "Refuse Collectors and Recyclers",
+      "territory_id": "moving_things",
+      "current_score": 71,
+      "model_score": 43,
+      "delta": -28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 60,
+      "dominant_vectors": {
+        "C_R": 0.38,
+        "C_G": 0.3,
+        "Phi_S": 0.17,
+        "P_A": 0.14,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "9241",
+      "occupation_name": "Street Cleaners and Related Workers",
+      "territory_id": "moving_things",
+      "current_score": 72,
+      "model_score": 39,
+      "delta": -33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 38,
+      "dominant_vectors": {
+        "C_G": 0.51,
+        "C_R": 0.29,
+        "Phi_S": 0.11,
+        "P_A": 0.06,
+        "Phi_U": 0.03,
+        "S_E": 0.0
+      },
+      "raw_model_score": 45
+    },
+    {
+      "isco_code": "9321",
+      "occupation_name": "Warehouse Workers and Material Handlers",
+      "territory_id": "moving_things",
+      "current_score": 77,
+      "model_score": 71,
+      "delta": -6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 12,
+      "dominant_vectors": {
+        "Phi_S": 0.43,
+        "C_R": 0.33,
+        "P_A": 0.23,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "9322",
+      "occupation_name": "Crop Farm Workers",
+      "territory_id": "land_sea",
+      "current_score": 62,
+      "model_score": 54,
+      "delta": -8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 98,
+      "dominant_vectors": {
+        "C_R": 0.41,
+        "Phi_S": 0.4,
+        "P_A": 0.11,
+        "C_G": 0.04,
+        "Phi_U": 0.03,
+        "S_E": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "9329",
+      "occupation_name": "Manufacturing Elementary Workers NEC",
+      "territory_id": "making_things",
+      "current_score": 91,
+      "model_score": 90,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 86,
+      "dominant_vectors": {
+        "C_R": 0.42,
+        "Phi_S": 0.4,
+        "P_A": 0.1,
+        "C_G": 0.05,
+        "Phi_U": 0.03,
+        "S_E": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "9331",
+      "occupation_name": "Freight Handlers and Packers",
+      "territory_id": "moving_things",
+      "current_score": 80,
+      "model_score": 72,
+      "delta": -8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 16,
+      "dominant_vectors": {
+        "C_R": 0.73,
+        "Phi_S": 0.08,
+        "C_G": 0.08,
+        "P_A": 0.07,
+        "Phi_U": 0.04,
+        "S_E": 0.0
+      },
+      "raw_model_score": 77
+    },
+    {
+      "isco_code": "9332",
+      "occupation_name": "Drivers of Mobile Plant and Lifting Equipment NEC",
+      "territory_id": "moving_things",
+      "current_score": 65,
+      "model_score": 47,
+      "delta": -18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 9,
+      "dominant_vectors": {
+        "C_R": 0.6,
+        "P_A": 0.24,
+        "Phi_U": 0.17
+      },
+      "raw_model_score": 53
+    },
+    {
+      "isco_code": "9333",
+      "occupation_name": "Freight Handlers",
+      "territory_id": "moving_things",
+      "current_score": 72,
+      "model_score": 58,
+      "delta": -14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 40,
+      "dominant_vectors": {
+        "C_R": 0.44,
+        "Phi_S": 0.26,
+        "P_A": 0.2,
+        "C_G": 0.08,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "9341",
+      "occupation_name": "Dockers and Cargo Workers",
+      "territory_id": "moving_things",
+      "current_score": 73,
+      "model_score": 41,
+      "delta": -32,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 15,
+      "dominant_vectors": {
+        "C_R": 0.84,
+        "P_A": 0.16,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 47
+    },
+    {
+      "isco_code": "9342",
+      "occupation_name": "Ships Deck Crews and Engine Room Crews",
+      "territory_id": "moving_things",
+      "current_score": 60,
+      "model_score": 87,
+      "delta": 27,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 30,
+      "dominant_vectors": {
+        "C_R": 0.29,
+        "C_G": 0.29,
+        "P_A": 0.26,
+        "Phi_S": 0.14,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 91
+    },
+    {
+      "isco_code": "9411",
+      "occupation_name": "Agricultural Labourers",
+      "territory_id": "making_things",
+      "current_score": 72,
+      "model_score": 78,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 30,
+      "dominant_vectors": {
+        "C_R": 0.61,
+        "C_G": 0.18,
+        "Phi_S": 0.1,
+        "P_A": 0.1,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 32
+    },
+    {
+      "isco_code": "9412",
+      "occupation_name": "Kitchen Helpers",
+      "territory_id": "feeding_hosting",
+      "current_score": 30,
+      "model_score": 26,
+      "delta": -4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 66,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "Phi_S": 0.15,
+        "P_A": 0.04,
+        "C_G": 0.04,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 37
+    },
+    {
+      "isco_code": "9611",
+      "occupation_name": "Labourers in Mining, Construction, Manufacturing",
+      "territory_id": "making_things",
+      "current_score": 72,
+      "model_score": 89,
+      "delta": 17,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 16,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "Phi_S": 0.18,
+        "P_A": 0.1,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "0110",
+      "occupation_name": "Military Personnel and Officers",
+      "territory_id": "governing_protecting",
+      "current_score": 27,
+      "model_score": 27,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "C_R": 0.84,
+        "P_A": 0.08,
+        "C_G": 0.08,
+        "S_E": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "0210",
+      "occupation_name": "Military Non-commissioned Officers",
+      "territory_id": "governing_protecting",
+      "current_score": 19,
+      "model_score": 32,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 35,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "P_A": 0.19,
+        "C_G": 0.05,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 60
+    },
+    {
+      "isco_code": "0310",
+      "occupation_name": "Military Other Ranks",
+      "territory_id": "governing_protecting",
+      "current_score": 14,
+      "model_score": 52,
+      "delta": 38,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 258,
+      "dominant_vectors": {
+        "C_R": 0.49,
+        "P_A": 0.26,
+        "C_G": 0.17,
+        "Phi_S": 0.06,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 81
+    },
+    {
+      "isco_code": "1113",
+      "occupation_name": "Electoral Officers",
+      "territory_id": "governing_protecting",
+      "current_score": 58,
+      "model_score": 32,
+      "delta": -26,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 79,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "C_G": 0.18,
+        "P_A": 0.1,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "1219",
+      "occupation_name": "Business Services and Administration Managers Not Elsewhere Classified",
+      "territory_id": "feeding_hosting",
+      "current_score": 42,
+      "model_score": 61,
+      "delta": 19,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 246,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.24,
+        "P_A": 0.16,
+        "Phi_S": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "1222",
+      "occupation_name": "University Department Heads",
+      "territory_id": "learning_teaching",
+      "current_score": 28,
+      "model_score": 31,
+      "delta": 3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 41,
+      "dominant_vectors": {
+        "C_R": 0.41,
+        "C_G": 0.39,
+        "P_A": 0.14,
+        "S_E": 0.06,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "1311",
+      "occupation_name": "Farm Managers",
+      "territory_id": "land_sea",
+      "current_score": 25,
+      "model_score": 47,
+      "delta": 22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 66,
+      "dominant_vectors": {
+        "C_R": 0.46,
+        "P_A": 0.25,
+        "C_G": 0.25,
+        "Phi_S": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 66
+    },
+    {
+      "isco_code": "1313",
+      "occupation_name": "Learning and Development Managers",
+      "territory_id": "learning_teaching",
+      "current_score": 38,
+      "model_score": 43,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 66,
+      "dominant_vectors": {
+        "C_R": 0.46,
+        "P_A": 0.25,
+        "C_G": 0.25,
+        "Phi_S": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 66
+    },
+    {
+      "isco_code": "1341",
+      "occupation_name": "Diplomats",
+      "territory_id": "governing_protecting",
+      "current_score": 38,
+      "model_score": 17,
+      "delta": -21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 17,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "C_G": 0.23,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 45
+    },
+    {
+      "isco_code": "1342",
+      "occupation_name": "Education Managers (School/District Administrators)",
+      "territory_id": "learning_teaching",
+      "current_score": 28,
+      "model_score": 61,
+      "delta": 33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 18,
+      "dominant_vectors": {
+        "C_R": 0.55,
+        "C_G": 0.32,
+        "P_A": 0.13,
+        "S_E": 0.0
+      },
+      "raw_model_score": 83
+    },
+    {
+      "isco_code": "1345",
+      "occupation_name": "School Principals and Headteachers",
+      "territory_id": "learning_teaching",
+      "current_score": 11,
+      "model_score": 34,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 105,
+      "dominant_vectors": {
+        "C_R": 0.63,
+        "C_G": 0.24,
+        "P_A": 0.11,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 58
+    },
+    {
+      "isco_code": "1349",
+      "occupation_name": "Prison Governors and Directors",
+      "territory_id": "governing_protecting",
+      "current_score": 30,
+      "model_score": 43,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 217,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "C_G": 0.26,
+        "P_A": 0.18,
+        "Phi_S": 0.01,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "1351",
+      "occupation_name": "Restaurant Managers",
+      "territory_id": "feeding_hosting",
+      "current_score": 38,
+      "model_score": 73,
+      "delta": 35,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 17,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "C_G": 0.2,
+        "P_A": 0.08,
+        "S_E": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "1419",
+      "occupation_name": "Bed & Breakfast owner",
+      "territory_id": "feeding_hosting",
+      "current_score": 32,
+      "model_score": 63,
+      "delta": 31,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 52,
+      "dominant_vectors": {
+        "C_R": 0.62,
+        "P_A": 0.24,
+        "C_G": 0.11,
+        "Phi_S": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 72
+    },
+    {
+      "isco_code": "2111",
+      "occupation_name": "Academic Researchers",
+      "territory_id": "learning_teaching",
+      "current_score": 20,
+      "model_score": 53,
+      "delta": 33,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 29,
+      "dominant_vectors": {
+        "C_R": 0.47,
+        "C_G": 0.3,
+        "P_A": 0.18,
+        "Phi_S": 0.05,
+        "S_E": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "2132",
+      "occupation_name": "Agronomists",
+      "territory_id": "land_sea",
+      "current_score": 31,
+      "model_score": 54,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 67,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "C_G": 0.32,
+        "P_A": 0.14,
+        "Phi_S": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "2250",
+      "occupation_name": "Veterinarians",
+      "territory_id": "land_sea",
+      "current_score": 24,
+      "model_score": 46,
+      "delta": 22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "C_R": 0.49,
+        "P_A": 0.34,
+        "C_G": 0.12,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "2310",
+      "occupation_name": "University Lecturers and Professors",
+      "territory_id": "learning_teaching",
+      "current_score": 18,
+      "model_score": 27,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 148,
+      "dominant_vectors": {
+        "C_R": 0.45,
+        "P_A": 0.2,
+        "C_G": 0.18,
+        "S_E": 0.17,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "2320",
+      "occupation_name": "Vocational Education Teachers",
+      "territory_id": "learning_teaching",
+      "current_score": 25,
+      "model_score": 20,
+      "delta": -5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 62,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "P_A": 0.23,
+        "C_G": 0.14,
+        "Phi_S": 0.04,
+        "S_E": 0.04,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 44
+    },
+    {
+      "isco_code": "2330",
+      "occupation_name": "Secondary School Teachers",
+      "territory_id": "learning_teaching",
+      "current_score": 32,
+      "model_score": 25,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 32,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.24,
+        "C_G": 0.06,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "2342",
+      "occupation_name": "Preschool Teachers",
+      "territory_id": "learning_teaching",
+      "current_score": 12,
+      "model_score": 27,
+      "delta": 15,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 53,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "P_A": 0.18,
+        "C_G": 0.07,
+        "S_E": 0.04,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 52
+    },
+    {
+      "isco_code": "2351",
+      "occupation_name": "Special Education Teachers",
+      "territory_id": "learning_teaching",
+      "current_score": 13,
+      "model_score": 31,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 42,
+      "dominant_vectors": {
+        "C_G": 0.56,
+        "C_R": 0.34,
+        "S_E": 0.1,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "2353",
+      "occupation_name": "Other Language Teachers",
+      "territory_id": "learning_teaching",
+      "current_score": 20,
+      "model_score": 19,
+      "delta": -1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 74,
+      "dominant_vectors": {
+        "C_R": 0.55,
+        "P_A": 0.22,
+        "C_G": 0.17,
+        "S_E": 0.06,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 44
+    },
+    {
+      "isco_code": "2355",
+      "occupation_name": "Visual Arts Teachers",
+      "territory_id": "learning_teaching",
+      "current_score": 15,
+      "model_score": 12,
+      "delta": -3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 49,
+      "dominant_vectors": {
+        "C_R": 0.55,
+        "P_A": 0.23,
+        "C_G": 0.19,
+        "S_E": 0.04,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 37
+    },
+    {
+      "isco_code": "2356",
+      "occupation_name": "Educational Technology Specialists",
+      "territory_id": "learning_teaching",
+      "current_score": 27,
+      "model_score": 11,
+      "delta": -16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 20,
+      "dominant_vectors": {
+        "C_R": 0.6,
+        "C_G": 0.39,
+        "S_E": 0.01
+      },
+      "raw_model_score": 36
+    },
+    {
+      "isco_code": "2359",
+      "occupation_name": "Teaching Professionals Not Elsewhere Classified",
+      "territory_id": "learning_teaching",
+      "current_score": 18,
+      "model_score": 8,
+      "delta": -10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 53,
+      "dominant_vectors": {
+        "C_R": 0.43,
+        "C_G": 0.33,
+        "P_A": 0.15,
+        "S_E": 0.1
+      },
+      "raw_model_score": 33
+    },
+    {
+      "isco_code": "2361",
+      "occupation_name": "Creative and Performing Artists (Teaching Role Context)",
+      "territory_id": "learning_teaching",
+      "current_score": 14,
+      "model_score": 67,
+      "delta": 53,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 40,
+      "dominant_vectors": {
+        "C_R": 0.62,
+        "C_G": 0.36,
+        "S_E": 0.03
+      },
+      "raw_model_score": 89
+    },
+    {
+      "isco_code": "2445",
+      "occupation_name": "Educational Psychologists",
+      "territory_id": "learning_teaching",
+      "current_score": 15,
+      "model_score": 28,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 53,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "C_G": 0.33,
+        "P_A": 0.19,
+        "S_E": 0.0
+      },
+      "raw_model_score": 52
+    },
+    {
+      "isco_code": "2612",
+      "occupation_name": "Judges and Public Prosecutors",
+      "territory_id": "governing_protecting",
+      "current_score": 16,
+      "model_score": 38,
+      "delta": 22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 33,
+      "dominant_vectors": {
+        "C_R": 0.72,
+        "P_A": 0.15,
+        "C_G": 0.13,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 66
+    },
+    {
+      "isco_code": "2613",
+      "occupation_name": "Librarians",
+      "territory_id": "learning_teaching",
+      "current_score": 32,
+      "model_score": 36,
+      "delta": 4,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 75,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.17,
+        "P_A": 0.12,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "2621",
+      "occupation_name": "Archivists and Curators",
+      "territory_id": "making_meaning",
+      "current_score": 19,
+      "model_score": 85,
+      "delta": 66,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 28,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "C_G": 0.22,
+        "P_A": 0.09,
+        "S_E": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "2633",
+      "occupation_name": "Sociologists, Anthropologists and Related Professionals (Academic Teaching)",
+      "territory_id": "learning_teaching",
+      "current_score": 22,
+      "model_score": 58,
+      "delta": 36,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 55,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.34,
+        "S_E": 0.01
+      },
+      "raw_model_score": 81
+    },
+    {
+      "isco_code": "3111",
+      "occupation_name": "Seed technologist",
+      "territory_id": "land_sea",
+      "current_score": 38,
+      "model_score": 68,
+      "delta": 30,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 87,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "P_A": 0.38,
+        "C_G": 0.14,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 87
+    },
+    {
+      "isco_code": "3118",
+      "occupation_name": "Quantity Surveyors",
+      "territory_id": "building_things",
+      "current_score": 65,
+      "model_score": 77,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 100,
+      "dominant_vectors": {
+        "C_G": 0.49,
+        "C_R": 0.4,
+        "Phi_S": 0.04,
+        "P_A": 0.04,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "3131",
+      "occupation_name": "Photographers",
+      "territory_id": "learning_teaching",
+      "current_score": 17,
+      "model_score": 51,
+      "delta": 34,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 78,
+      "dominant_vectors": {
+        "C_R": 0.51,
+        "P_A": 0.31,
+        "C_G": 0.09,
+        "Phi_S": 0.09,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "3226",
+      "occupation_name": "Personal trainer",
+      "territory_id": "maintaining_fixing",
+      "current_score": 40,
+      "model_score": 41,
+      "delta": 1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 58,
+      "dominant_vectors": {
+        "C_R": 0.41,
+        "P_A": 0.34,
+        "C_G": 0.16,
+        "Phi_S": 0.05,
+        "S_E": 0.03,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "3310",
+      "occupation_name": "Teaching Assistants",
+      "territory_id": "learning_teaching",
+      "current_score": 17,
+      "model_score": 46,
+      "delta": 29,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 271,
+      "dominant_vectors": {
+        "C_R": 0.73,
+        "C_G": 0.16,
+        "P_A": 0.09,
+        "Phi_S": 0.01,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "3332",
+      "occupation_name": "Funeral director",
+      "territory_id": "maintaining_fixing",
+      "current_score": 28,
+      "model_score": 36,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "P_A": 0.16,
+        "C_G": 0.13,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "3340",
+      "occupation_name": "Other Teaching Associate Professionals",
+      "territory_id": "learning_teaching",
+      "current_score": 17,
+      "model_score": 48,
+      "delta": 31,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 95,
+      "dominant_vectors": {
+        "C_R": 0.81,
+        "C_G": 0.08,
+        "P_A": 0.06,
+        "S_E": 0.03,
+        "Phi_S": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 71
+    },
+    {
+      "isco_code": "3352",
+      "occupation_name": "Tax Inspectors and Examiners",
+      "territory_id": "governing_protecting",
+      "current_score": 43,
+      "model_score": 52,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "P_A": 0.13,
+        "C_G": 0.04,
+        "S_E": 0.04,
+        "Phi_U": 0.03
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "3355",
+      "occupation_name": "Border and Customs Control Officers",
+      "territory_id": "governing_protecting",
+      "current_score": 26,
+      "model_score": 46,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 116,
+      "dominant_vectors": {
+        "C_R": 0.71,
+        "P_A": 0.14,
+        "C_G": 0.11,
+        "Phi_S": 0.03,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 75
+    },
+    {
+      "isco_code": "3356",
+      "occupation_name": "Government Licensing Officials",
+      "territory_id": "governing_protecting",
+      "current_score": 36,
+      "model_score": 44,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 404,
+      "dominant_vectors": {
+        "C_R": 0.75,
+        "P_A": 0.14,
+        "C_G": 0.08,
+        "Phi_S": 0.01,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "3411",
+      "occupation_name": "Legal and Related Associate Professionals (Paralegals)",
+      "territory_id": "governing_protecting",
+      "current_score": 40,
+      "model_score": 45,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 83,
+      "dominant_vectors": {
+        "C_R": 0.79,
+        "P_A": 0.12,
+        "C_G": 0.08,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "3412",
+      "occupation_name": "Travel Agents",
+      "territory_id": "feeding_hosting",
+      "current_score": 44,
+      "model_score": 19,
+      "delta": -25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 18,
+      "dominant_vectors": {
+        "C_R": 0.98,
+        "S_E": 0.02
+      },
+      "raw_model_score": 31
+    },
+    {
+      "isco_code": "3421",
+      "occupation_name": "Athletes and Sports Players",
+      "territory_id": "making_meaning",
+      "current_score": 13,
+      "model_score": 48,
+      "delta": 35,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 9,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "C_G": 0.27,
+        "P_A": 0.08,
+        "S_E": 0.01
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "4411",
+      "occupation_name": "Court Clerks",
+      "territory_id": "governing_protecting",
+      "current_score": 48,
+      "model_score": 49,
+      "delta": 1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 65,
+      "dominant_vectors": {
+        "C_R": 0.87,
+        "C_G": 0.07,
+        "S_E": 0.06,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 78
+    },
+    {
+      "isco_code": "4415",
+      "occupation_name": "Government Administrators",
+      "territory_id": "governing_protecting",
+      "current_score": 44,
+      "model_score": 64,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_R": 0.77,
+        "Phi_S": 0.09,
+        "C_G": 0.08,
+        "P_A": 0.06,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 94
+    },
+    {
+      "isco_code": "5121",
+      "occupation_name": "Tour Guides",
+      "territory_id": "making_meaning",
+      "current_score": 22,
+      "model_score": 61,
+      "delta": 39,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 83,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "C_G": 0.26,
+        "P_A": 0.18,
+        "Phi_S": 0.02,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "5122",
+      "occupation_name": "Sommeliers",
+      "territory_id": "feeding_hosting",
+      "current_score": 30,
+      "model_score": 46,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 83,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "C_G": 0.26,
+        "P_A": 0.18,
+        "Phi_S": 0.02,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "5141",
+      "occupation_name": "Hairdressers and Barbers",
+      "territory_id": "buying_selling",
+      "current_score": 13,
+      "model_score": 54,
+      "delta": 41,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 42,
+      "dominant_vectors": {
+        "C_R": 0.7,
+        "Phi_S": 0.14,
+        "P_A": 0.1,
+        "C_G": 0.04,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 54
+    },
+    {
+      "isco_code": "5142",
+      "occupation_name": "Nail Technicians and Massage Therapists",
+      "territory_id": "buying_selling",
+      "current_score": 11,
+      "model_score": 45,
+      "delta": 34,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 83,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "C_G": 0.18,
+        "P_A": 0.11,
+        "Phi_S": 0.09,
+        "S_E": 0.05,
+        "Phi_U": 0.03
+      },
+      "raw_model_score": 44
+    },
+    {
+      "isco_code": "5143",
+      "occupation_name": "Food truck operator",
+      "territory_id": "feeding_hosting",
+      "current_score": 48,
+      "model_score": 36,
+      "delta": -12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 103,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "C_G": 0.14,
+        "P_A": 0.13,
+        "Phi_S": 0.09,
+        "S_E": 0.04,
+        "Phi_U": 0.03
+      },
+      "raw_model_score": 47
+    },
+    {
+      "isco_code": "5153",
+      "occupation_name": "Massage Therapists",
+      "territory_id": "care_health",
+      "current_score": 10,
+      "model_score": 30,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "C_R": 0.61,
+        "Phi_S": 0.19,
+        "P_A": 0.19,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 23
+    },
+    {
+      "isco_code": "5161",
+      "occupation_name": "Dog groomer",
+      "territory_id": "buying_selling",
+      "current_score": 45,
+      "model_score": 76,
+      "delta": 31,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "C_R": 0.49,
+        "C_G": 0.29,
+        "P_A": 0.21,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 78
+    },
+    {
+      "isco_code": "5163",
+      "occupation_name": "Undertakers and Embalmers",
+      "territory_id": "maintaining_fixing",
+      "current_score": 12,
+      "model_score": 38,
+      "delta": 26,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 72,
+      "dominant_vectors": {
+        "C_R": 0.87,
+        "C_G": 0.1,
+        "S_E": 0.02,
+        "Phi_S": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 64
+    },
+    {
+      "isco_code": "5164",
+      "occupation_name": "Animal Care Workers",
+      "territory_id": "maintaining_fixing",
+      "current_score": 24,
+      "model_score": 12,
+      "delta": -12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 67,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.22,
+        "C_G": 0.11,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 38
+    },
+    {
+      "isco_code": "5411",
+      "occupation_name": "Firefighters",
+      "territory_id": "governing_protecting",
+      "current_score": 15,
+      "model_score": 35,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 102,
+      "dominant_vectors": {
+        "C_R": 0.67,
+        "P_A": 0.22,
+        "C_G": 0.06,
+        "Phi_S": 0.05,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "5412",
+      "occupation_name": "Police Officers",
+      "territory_id": "governing_protecting",
+      "current_score": 19,
+      "model_score": 35,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 66,
+      "dominant_vectors": {
+        "C_R": 0.77,
+        "P_A": 0.12,
+        "C_G": 0.11,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "5414",
+      "occupation_name": "Prison Officers",
+      "territory_id": "governing_protecting",
+      "current_score": 23,
+      "model_score": 51,
+      "delta": 28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_R": 0.47,
+        "P_A": 0.41,
+        "C_G": 0.08,
+        "Phi_S": 0.03,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 80
+    },
+    {
+      "isco_code": "5419",
+      "occupation_name": "Protective Services Workers NEC (incl. Security Guards)",
+      "territory_id": "governing_protecting",
+      "current_score": 27,
+      "model_score": 41,
+      "delta": 14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 129,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "P_A": 0.26,
+        "C_G": 0.08,
+        "S_E": 0.01,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6110",
+      "occupation_name": "Dairy farmer",
+      "territory_id": "land_sea",
+      "current_score": 42,
+      "model_score": 44,
+      "delta": 2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 143,
+      "dominant_vectors": {
+        "C_R": 0.54,
+        "Phi_S": 0.17,
+        "C_G": 0.14,
+        "P_A": 0.13,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 63
+    },
+    {
+      "isco_code": "6112",
+      "occupation_name": "Vineyard Workers",
+      "territory_id": "land_sea",
+      "current_score": 36,
+      "model_score": 49,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 89,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "Phi_S": 0.18,
+        "P_A": 0.15,
+        "C_G": 0.1,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "6113",
+      "occupation_name": "Market Gardeners and Horticulturalists",
+      "territory_id": "land_sea",
+      "current_score": 37,
+      "model_score": 39,
+      "delta": 2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 71,
+      "dominant_vectors": {
+        "C_R": 0.41,
+        "Phi_S": 0.24,
+        "C_G": 0.24,
+        "P_A": 0.1,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 58
+    },
+    {
+      "isco_code": "6120",
+      "occupation_name": "Mushroom grower",
+      "territory_id": "land_sea",
+      "current_score": 50,
+      "model_score": 51,
+      "delta": 1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.17,
+        "Phi_S": 0.09,
+        "C_G": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6121",
+      "occupation_name": "Livestock Farmers",
+      "territory_id": "land_sea",
+      "current_score": 39,
+      "model_score": 51,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.17,
+        "Phi_S": 0.09,
+        "C_G": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6122",
+      "occupation_name": "Market Gardeners and Horticulturists",
+      "territory_id": "land_sea",
+      "current_score": 42,
+      "model_score": 51,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.17,
+        "Phi_S": 0.09,
+        "C_G": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6123",
+      "occupation_name": "Poultry Farmers",
+      "territory_id": "land_sea",
+      "current_score": 42,
+      "model_score": 51,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.17,
+        "Phi_S": 0.09,
+        "C_G": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6129",
+      "occupation_name": "Beekeepers",
+      "territory_id": "land_sea",
+      "current_score": 22,
+      "model_score": 51,
+      "delta": 29,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.17,
+        "Phi_S": 0.09,
+        "C_G": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6130",
+      "occupation_name": "Agricultural Machinery Operators",
+      "territory_id": "land_sea",
+      "current_score": 48,
+      "model_score": 51,
+      "delta": 3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 110,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "P_A": 0.16,
+        "Phi_S": 0.15,
+        "C_G": 0.09,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6211",
+      "occupation_name": "Forestry Workers",
+      "territory_id": "land_sea",
+      "current_score": 30,
+      "model_score": 42,
+      "delta": 12,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 133,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.14,
+        "Phi_S": 0.11,
+        "C_G": 0.05,
+        "Phi_U": 0.03,
+        "S_E": 0.01
+      },
+      "raw_model_score": 61
+    },
+    {
+      "isco_code": "6221",
+      "occupation_name": "Fishermen and Fishers",
+      "territory_id": "land_sea",
+      "current_score": 28,
+      "model_score": 51,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 93,
+      "dominant_vectors": {
+        "C_R": 0.66,
+        "P_A": 0.17,
+        "Phi_S": 0.09,
+        "C_G": 0.06,
+        "S_E": 0.01,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 70
+    },
+    {
+      "isco_code": "6222",
+      "occupation_name": "Aquaculture Workers",
+      "territory_id": "land_sea",
+      "current_score": 38,
+      "model_score": 49,
+      "delta": 11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 72,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "P_A": 0.16,
+        "Phi_S": 0.1,
+        "C_G": 0.06,
+        "S_E": 0.02,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "7111",
+      "occupation_name": "House Builders",
+      "territory_id": "building_things",
+      "current_score": 28,
+      "model_score": 53,
+      "delta": 25,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 25,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "C_G": 0.24,
+        "P_A": 0.23,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "7112",
+      "occupation_name": "Bricklayers and Masons",
+      "territory_id": "building_things",
+      "current_score": 21,
+      "model_score": 27,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 30,
+      "dominant_vectors": {
+        "Phi_S": 0.46,
+        "P_A": 0.26,
+        "C_R": 0.14,
+        "C_G": 0.14,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 27
+    },
+    {
+      "isco_code": "7113",
+      "occupation_name": "Stone Cutters and Carvers, Stone Splitters",
+      "territory_id": "building_things",
+      "current_score": 35,
+      "model_score": 30,
+      "delta": -5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 29,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "Phi_S": 0.19,
+        "P_A": 0.13,
+        "C_G": 0.12,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 29
+    },
+    {
+      "isco_code": "7115",
+      "occupation_name": "Carpenters and Joiners",
+      "territory_id": "building_things",
+      "current_score": 26,
+      "model_score": 49,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 37,
+      "dominant_vectors": {
+        "C_R": 0.34,
+        "Phi_S": 0.33,
+        "P_A": 0.17,
+        "C_G": 0.1,
+        "S_E": 0.05,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 47
+    },
+    {
+      "isco_code": "7117",
+      "occupation_name": "Demolition Workers",
+      "territory_id": "building_things",
+      "current_score": 42,
+      "model_score": 44,
+      "delta": 2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 289,
+      "dominant_vectors": {
+        "C_R": 0.43,
+        "Phi_S": 0.25,
+        "P_A": 0.21,
+        "C_G": 0.09,
+        "Phi_U": 0.01,
+        "S_E": 0.01
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "7122",
+      "occupation_name": "Tilers",
+      "territory_id": "building_things",
+      "current_score": 24,
+      "model_score": 43,
+      "delta": 19,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 61,
+      "dominant_vectors": {
+        "C_R": 0.35,
+        "Phi_S": 0.24,
+        "P_A": 0.21,
+        "C_G": 0.19,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 42
+    },
+    {
+      "isco_code": "7123",
+      "occupation_name": "Glaziers",
+      "territory_id": "building_things",
+      "current_score": 24,
+      "model_score": 37,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 57,
+      "dominant_vectors": {
+        "C_R": 0.5,
+        "Phi_S": 0.34,
+        "C_G": 0.15,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 36
+    },
+    {
+      "isco_code": "7124",
+      "occupation_name": "Insulation Workers",
+      "territory_id": "building_things",
+      "current_score": 22,
+      "model_score": 59,
+      "delta": 37,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 21,
+      "dominant_vectors": {
+        "C_R": 0.76,
+        "C_G": 0.16,
+        "Phi_S": 0.08,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 57
+    },
+    {
+      "isco_code": "7126",
+      "occupation_name": "HVAC Technicians",
+      "territory_id": "building_things",
+      "current_score": 22,
+      "model_score": 41,
+      "delta": 19,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 57,
+      "dominant_vectors": {
+        "C_R": 0.4,
+        "Phi_S": 0.3,
+        "C_G": 0.17,
+        "P_A": 0.13,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 40
+    },
+    {
+      "isco_code": "7127",
+      "occupation_name": "Plumbers and Pipe Fitters",
+      "territory_id": "building_things",
+      "current_score": 18,
+      "model_score": 47,
+      "delta": 29,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 69,
+      "dominant_vectors": {
+        "C_R": 0.34,
+        "P_A": 0.32,
+        "C_G": 0.2,
+        "Phi_S": 0.13,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 46
+    },
+    {
+      "isco_code": "7129",
+      "occupation_name": "Locksmiths",
+      "territory_id": "maintaining_fixing",
+      "current_score": 25,
+      "model_score": 14,
+      "delta": -11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 320,
+      "dominant_vectors": {
+        "C_R": 0.4,
+        "Phi_S": 0.25,
+        "C_G": 0.18,
+        "P_A": 0.17,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 40
+    },
+    {
+      "isco_code": "7133",
+      "occupation_name": "Building Structure Cleaners",
+      "territory_id": "maintaining_fixing",
+      "current_score": 24,
+      "model_score": 5,
+      "delta": -19,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "P_A": 0.16,
+        "Phi_S": 0.15,
+        "C_G": 0.15,
+        "Phi_U": 0.02
+      },
+      "raw_model_score": 32
+    },
+    {
+      "isco_code": "7217",
+      "occupation_name": "Steel Fixers",
+      "territory_id": "building_things",
+      "current_score": 35,
+      "model_score": 59,
+      "delta": 24,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 257,
+      "dominant_vectors": {
+        "Phi_S": 0.46,
+        "C_R": 0.31,
+        "C_G": 0.12,
+        "P_A": 0.09,
+        "Phi_U": 0.02,
+        "S_E": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "7232",
+      "occupation_name": "Bicycle Mechanics",
+      "territory_id": "maintaining_fixing",
+      "current_score": 22,
+      "model_score": 31,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 60,
+      "dominant_vectors": {
+        "P_A": 0.46,
+        "C_R": 0.32,
+        "C_G": 0.16,
+        "Phi_S": 0.06,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 57
+    },
+    {
+      "isco_code": "7233",
+      "occupation_name": "Appliance Repair Technicians",
+      "territory_id": "maintaining_fixing",
+      "current_score": 28,
+      "model_score": 38,
+      "delta": 10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 161,
+      "dominant_vectors": {
+        "Phi_S": 0.43,
+        "P_A": 0.23,
+        "C_R": 0.21,
+        "C_G": 0.13,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 65
+    },
+    {
+      "isco_code": "7241",
+      "occupation_name": "Sewage/drainage technician",
+      "territory_id": "maintaining_fixing",
+      "current_score": 32,
+      "model_score": 5,
+      "delta": -27,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "P_A": 0.16,
+        "Phi_S": 0.15,
+        "C_G": 0.15,
+        "Phi_U": 0.02
+      },
+      "raw_model_score": 32
+    },
+    {
+      "isco_code": "7243",
+      "occupation_name": "Cemetery groundskeeper",
+      "territory_id": "maintaining_fixing",
+      "current_score": 52,
+      "model_score": 5,
+      "delta": -47,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "P_A": 0.16,
+        "Phi_S": 0.15,
+        "C_G": 0.15,
+        "Phi_U": 0.02
+      },
+      "raw_model_score": 32
+    },
+    {
+      "isco_code": "7245",
+      "occupation_name": "Generator technician",
+      "territory_id": "maintaining_fixing",
+      "current_score": 42,
+      "model_score": 32,
+      "delta": -10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 24,
+      "dominant_vectors": {
+        "C_R": 0.5,
+        "C_G": 0.3,
+        "P_A": 0.21,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "7251",
+      "occupation_name": "Wind turbine technician",
+      "territory_id": "maintaining_fixing",
+      "current_score": 32,
+      "model_score": 50,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 13,
+      "dominant_vectors": {
+        "P_A": 0.4,
+        "C_G": 0.28,
+        "C_R": 0.22,
+        "Phi_S": 0.1,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 76
+    },
+    {
+      "isco_code": "7311",
+      "occupation_name": "Watch and Clock Repairers",
+      "territory_id": "maintaining_fixing",
+      "current_score": 18,
+      "model_score": 40,
+      "delta": 22,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 70,
+      "dominant_vectors": {
+        "C_R": 0.36,
+        "P_A": 0.24,
+        "Phi_S": 0.21,
+        "C_G": 0.17,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "7321",
+      "occupation_name": "Shoe repairer",
+      "territory_id": "maintaining_fixing",
+      "current_score": 48,
+      "model_score": 48,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 50,
+      "dominant_vectors": {
+        "C_R": 0.62,
+        "P_A": 0.24,
+        "C_G": 0.08,
+        "Phi_S": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "7322",
+      "occupation_name": "Tailor/clothing alterations",
+      "territory_id": "maintaining_fixing",
+      "current_score": 42,
+      "model_score": 47,
+      "delta": 5,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "Phi_S": 0.41,
+        "C_R": 0.29,
+        "P_A": 0.24,
+        "C_G": 0.05,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "7411",
+      "occupation_name": "Electricians and Electrical Mechanics",
+      "territory_id": "building_things",
+      "current_score": 35,
+      "model_score": 55,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 47,
+      "dominant_vectors": {
+        "P_A": 0.45,
+        "C_R": 0.35,
+        "C_G": 0.12,
+        "Phi_S": 0.08,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 53
+    },
+    {
+      "isco_code": "7413",
+      "occupation_name": "Offshore oil worker",
+      "territory_id": "land_sea",
+      "current_score": 38,
+      "model_score": 31,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 45,
+      "dominant_vectors": {
+        "C_R": 0.39,
+        "P_A": 0.32,
+        "C_G": 0.24,
+        "Phi_S": 0.04,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 50
+    },
+    {
+      "isco_code": "7421",
+      "occupation_name": "Electronics Repair Technicians",
+      "territory_id": "maintaining_fixing",
+      "current_score": 32,
+      "model_score": 29,
+      "delta": -3,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 122,
+      "dominant_vectors": {
+        "P_A": 0.36,
+        "C_R": 0.36,
+        "C_G": 0.15,
+        "Phi_S": 0.13,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 55
+    },
+    {
+      "isco_code": "7422",
+      "occupation_name": "Appliance Repair Technicians and Related Occupations",
+      "territory_id": "maintaining_fixing",
+      "current_score": 29,
+      "model_score": 18,
+      "delta": -11,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 165,
+      "dominant_vectors": {
+        "C_R": 0.36,
+        "P_A": 0.33,
+        "Phi_S": 0.17,
+        "C_G": 0.14,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 45
+    },
+    {
+      "isco_code": "7511",
+      "occupation_name": "Butchers, Fishmongers and Related Food Preparers",
+      "territory_id": "feeding_hosting",
+      "current_score": 32,
+      "model_score": 32,
+      "delta": 0,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 60,
+      "dominant_vectors": {
+        "C_R": 0.5,
+        "P_A": 0.32,
+        "Phi_S": 0.11,
+        "C_G": 0.04,
+        "Phi_U": 0.03,
+        "S_E": 0.0
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "7512",
+      "occupation_name": "Bakers, Pastry-Cooks and Confectionery Makers",
+      "territory_id": "feeding_hosting",
+      "current_score": 38,
+      "model_score": 40,
+      "delta": 2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 18,
+      "dominant_vectors": {
+        "C_R": 0.57,
+        "Phi_S": 0.21,
+        "P_A": 0.11,
+        "C_G": 0.1,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 51
+    },
+    {
+      "isco_code": "7519",
+      "occupation_name": "Locksmiths and Related Occupations",
+      "territory_id": "maintaining_fixing",
+      "current_score": 26,
+      "model_score": 42,
+      "delta": 16,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 280,
+      "dominant_vectors": {
+        "C_R": 0.39,
+        "Phi_S": 0.31,
+        "P_A": 0.21,
+        "C_G": 0.09,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "7521",
+      "occupation_name": "Wood Treaters and Related Technicians",
+      "territory_id": "maintaining_fixing",
+      "current_score": 19,
+      "model_score": 40,
+      "delta": 21,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 35,
+      "dominant_vectors": {
+        "Phi_S": 0.39,
+        "P_A": 0.34,
+        "C_R": 0.26,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "8161",
+      "occupation_name": "Power Plant Operators",
+      "territory_id": "maintaining_fixing",
+      "current_score": 39,
+      "model_score": 47,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 109,
+      "dominant_vectors": {
+        "Phi_S": 0.38,
+        "C_R": 0.32,
+        "P_A": 0.28,
+        "Phi_U": 0.01,
+        "C_G": 0.01
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "8162",
+      "occupation_name": "Water Treatment Operators",
+      "territory_id": "maintaining_fixing",
+      "current_score": 38,
+      "model_score": 47,
+      "delta": 9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 109,
+      "dominant_vectors": {
+        "Phi_S": 0.38,
+        "C_R": 0.32,
+        "P_A": 0.28,
+        "Phi_U": 0.01,
+        "C_G": 0.01
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "8181",
+      "occupation_name": "Water and Sewage Plant Operators",
+      "territory_id": "maintaining_fixing",
+      "current_score": 35,
+      "model_score": 48,
+      "delta": 13,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 189,
+      "dominant_vectors": {
+        "Phi_S": 0.44,
+        "C_R": 0.29,
+        "P_A": 0.19,
+        "C_G": 0.08,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 74
+    },
+    {
+      "isco_code": "8613",
+      "occupation_name": "Food Delivery Drivers",
+      "territory_id": "feeding_hosting",
+      "current_score": 55,
+      "model_score": 63,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 14,
+      "dominant_vectors": {
+        "C_R": 0.6,
+        "C_G": 0.2,
+        "P_A": 0.1,
+        "Phi_S": 0.09,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "9121",
+      "occupation_name": "Waste Workers",
+      "territory_id": "maintaining_fixing",
+      "current_score": 27,
+      "model_score": 55,
+      "delta": 28,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 27,
+      "dominant_vectors": {
+        "Phi_S": 0.72,
+        "C_R": 0.19,
+        "P_A": 0.09,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 82
+    },
+    {
+      "isco_code": "9313",
+      "occupation_name": "Construction Laborers",
+      "territory_id": "building_things",
+      "current_score": 35,
+      "model_score": 36,
+      "delta": 1,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 133,
+      "dominant_vectors": {
+        "Phi_S": 0.56,
+        "C_R": 0.35,
+        "P_A": 0.07,
+        "C_G": 0.02,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 35
+    },
+    {
+      "isco_code": "9629",
+      "occupation_name": "Municipal Workers",
+      "territory_id": "governing_protecting",
+      "current_score": 38,
+      "model_score": 31,
+      "delta": -7,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 104,
+      "dominant_vectors": {
+        "C_R": 0.58,
+        "P_A": 0.24,
+        "C_G": 0.09,
+        "Phi_S": 0.08,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 59
+    },
+    {
+      "isco_code": "7116",
+      "occupation_name": "Construction Project Managers",
+      "territory_id": "building_things",
+      "current_score": 36,
+      "model_score": 44,
+      "delta": 8,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 289,
+      "dominant_vectors": {
+        "C_R": 0.43,
+        "Phi_S": 0.25,
+        "P_A": 0.21,
+        "C_G": 0.09,
+        "Phi_U": 0.01,
+        "S_E": 0.01
+      },
+      "raw_model_score": 43
+    },
+    {
+      "isco_code": "7125",
+      "occupation_name": "Insulation Workers",
+      "territory_id": "building_things",
+      "current_score": 50,
+      "model_score": 52,
+      "delta": 2,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 27,
+      "dominant_vectors": {
+        "Phi_S": 0.43,
+        "C_R": 0.21,
+        "P_A": 0.21,
+        "C_G": 0.14,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 50
+    },
+    {
+      "isco_code": "7132",
+      "occupation_name": "Civil and Structural Engineers",
+      "territory_id": "building_things",
+      "current_score": 32,
+      "model_score": 84,
+      "delta": 52,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 43,
+      "dominant_vectors": {
+        "C_R": 0.41,
+        "C_G": 0.35,
+        "P_A": 0.24,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 79
+    },
+    {
+      "isco_code": "7142",
+      "occupation_name": "Glaziers and Window Fitters",
+      "territory_id": "building_things",
+      "current_score": 52,
+      "model_score": 72,
+      "delta": 20,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_G": 0.76,
+        "P_A": 0.15,
+        "C_R": 0.08,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 69
+    },
+    {
+      "isco_code": "5110",
+      "occupation_name": "Front office manager",
+      "territory_id": "feeding_hosting",
+      "current_score": 40,
+      "model_score": 46,
+      "delta": 6,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 74,
+      "dominant_vectors": {
+        "C_R": 0.83,
+        "C_G": 0.11,
+        "P_A": 0.03,
+        "Phi_S": 0.02,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 56
+    },
+    {
+      "isco_code": "5134",
+      "occupation_name": "Hotel revenue manager",
+      "territory_id": "feeding_hosting",
+      "current_score": 52,
+      "model_score": 38,
+      "delta": -14,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 59,
+      "dominant_vectors": {
+        "C_R": 0.8,
+        "P_A": 0.11,
+        "C_G": 0.09,
+        "Phi_U": 0.01,
+        "S_E": 0.0
+      },
+      "raw_model_score": 49
+    },
+    {
+      "isco_code": "5165",
+      "occupation_name": "Hotel Managers",
+      "territory_id": "feeding_hosting",
+      "current_score": 20,
+      "model_score": 43,
+      "delta": 23,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 30,
+      "dominant_vectors": {
+        "C_R": 0.56,
+        "C_G": 0.21,
+        "P_A": 0.21,
+        "S_E": 0.02,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 54
+    },
+    {
+      "isco_code": "9123",
+      "occupation_name": "Restaurant and Catering Managers",
+      "territory_id": "feeding_hosting",
+      "current_score": 21,
+      "model_score": 11,
+      "delta": -10,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 23,
+      "dominant_vectors": {
+        "C_R": 0.61,
+        "Phi_S": 0.19,
+        "P_A": 0.19,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 23
+    },
+    {
+      "isco_code": "6224",
+      "occupation_name": "Forestry and Related Workers",
+      "territory_id": "land_sea",
+      "current_score": 58,
+      "model_score": 49,
+      "delta": -9,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 72,
+      "dominant_vectors": {
+        "C_R": 0.65,
+        "P_A": 0.16,
+        "Phi_S": 0.1,
+        "C_G": 0.06,
+        "S_E": 0.02,
+        "Phi_U": 0.01
+      },
+      "raw_model_score": 68
+    },
+    {
+      "isco_code": "9130",
+      "occupation_name": "Building Caretakers",
+      "territory_id": "maintaining_fixing",
+      "current_score": 22,
+      "model_score": 40,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 24,
+      "dominant_vectors": {
+        "C_R": 0.83,
+        "C_G": 0.17,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 67
+    },
+    {
+      "isco_code": "9131",
+      "occupation_name": "Hand Launderers and Pressers",
+      "territory_id": "feeding_hosting",
+      "current_score": 28,
+      "model_score": 63,
+      "delta": 35,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 26,
+      "dominant_vectors": {
+        "C_R": 0.9,
+        "C_G": 0.1,
+        "S_E": 0.0,
+        "Phi_U": 0.0
+      },
+      "raw_model_score": 73
+    },
+    {
+      "isco_code": "9141",
+      "occupation_name": "Vending Machine Attendants",
+      "territory_id": "feeding_hosting",
+      "current_score": 52,
+      "model_score": 20,
+      "delta": -32,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 19,
+      "dominant_vectors": {
+        "C_R": 0.52,
+        "P_A": 0.16,
+        "Phi_S": 0.15,
+        "C_G": 0.15,
+        "Phi_U": 0.02
+      },
+      "raw_model_score": 32
+    },
+    {
+      "isco_code": "3359",
+      "occupation_name": "Regulatory Government Associate Professionals NEC",
+      "territory_id": "governing_protecting",
+      "current_score": 38,
+      "model_score": 56,
+      "delta": 18,
+      "score_basis": "TASK_DECOMPOSITION",
+      "task_count": 22,
+      "dominant_vectors": {
+        "C_R": 0.48,
+        "P_A": 0.26,
+        "C_G": 0.2,
+        "Phi_S": 0.05,
+        "Phi_U": 0.0,
+        "S_E": 0.0
+      },
+      "raw_model_score": 86
+    }
+  ],
+  "territory_aggregates_raw": {
+    "making_things": {
+      "model_score": 86.0,
+      "baseline": 86,
+      "delta": -0.0,
+      "weighted": true
+    },
+    "money_data": {
+      "model_score": 78.0,
+      "baseline": 78,
+      "delta": 0.0,
+      "weighted": true
+    },
+    "thinking_leading": {
+      "model_score": 72.1,
+      "baseline": 72,
+      "delta": 0.1,
+      "weighted": true
+    },
+    "making_meaning": {
+      "model_score": 72.0,
+      "baseline": 72,
+      "delta": -0.0,
+      "weighted": true
+    },
+    "buying_selling": {
+      "model_score": 62.1,
+      "baseline": 62,
+      "delta": 0.1,
+      "weighted": true
+    },
+    "care_health": {
+      "model_score": 61.9,
+      "baseline": 62,
+      "delta": -0.1,
+      "weighted": true
+    },
+    "moving_things": {
+      "model_score": 52.0,
+      "baseline": 52,
+      "delta": 0.0,
+      "weighted": true
+    },
+    "land_sea": {
+      "model_score": 47.9,
+      "baseline": 48,
+      "delta": -0.1,
+      "weighted": true
+    },
+    "building_things": {
+      "model_score": 45.8,
+      "baseline": 46,
+      "delta": -0.2,
+      "weighted": true
+    },
+    "governing_protecting": {
+      "model_score": 41.1,
+      "baseline": 41,
+      "delta": 0.1,
+      "weighted": true
+    },
+    "feeding_hosting": {
+      "model_score": 34.1,
+      "baseline": 34,
+      "delta": 0.1,
+      "weighted": true
+    },
+    "maintaining_fixing": {
+      "model_score": 32.0,
+      "baseline": 32,
+      "delta": -0.0,
+      "weighted": true
+    },
+    "learning_teaching": {
+      "model_score": 28.0,
+      "baseline": 28,
+      "delta": 0.0,
+      "weighted": true
+    }
+  },
+  "comparison_to_v2.9": {
+    "mean_absolute_deviation": 15.4,
+    "median_deviation": 13.0,
+    "std_deviation": 11.0,
+    "occupations_within_5pts": 75,
+    "occupations_within_10pts": 150,
+    "occupations_over_20pts": 113,
+    "total_occupations": 388
+  },
+  "top_movers": [
+    {
+      "isco_code": "2621",
+      "occupation_name": "Archivists and Curators",
+      "territory_id": "making_meaning",
+      "current": 19,
+      "model": 85,
+      "raw_model": 82,
+      "delta": 66,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (85 vs 19). Model raw score 82 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "2611",
+      "occupation_name": "Lawyers",
+      "territory_id": "governing_protecting",
+      "current": 73,
+      "model": 18,
+      "raw_model": 46,
+      "delta": -55,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores lower (18 vs 73). Model raw score 46. Territory calibration shifted score down. Current holistic assessment may better capture recent AI capabilities."
+    },
+    {
+      "isco_code": "2361",
+      "occupation_name": "Creative and Performing Artists (Teaching Role Context)",
+      "territory_id": "learning_teaching",
+      "current": 14,
+      "model": 67,
+      "raw_model": 89,
+      "delta": 53,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (67 vs 14). Model raw score 89 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "7132",
+      "occupation_name": "Civil and Structural Engineers",
+      "territory_id": "building_things",
+      "current": 32,
+      "model": 84,
+      "raw_model": 79,
+      "delta": 52,
+      "data_quality": "LOW",
+      "assessment": "Model scores higher (84 vs 32). Model raw score 79 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "2222",
+      "occupation_name": "Midwifery Professionals",
+      "territory_id": "care_health",
+      "current": 42,
+      "model": 89,
+      "raw_model": 79,
+      "delta": 47,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (89 vs 42). Model raw score 79 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "7243",
+      "occupation_name": "Cemetery groundskeeper",
+      "territory_id": "maintaining_fixing",
+      "current": 52,
+      "model": 5,
+      "raw_model": 32,
+      "delta": -47,
+      "data_quality": "LOW",
+      "assessment": "Model scores lower (5 vs 52). Model raw score 32. Territory calibration shifted score down. Current holistic assessment may better capture recent AI capabilities."
+    },
+    {
+      "isco_code": "8344",
+      "occupation_name": "Lifting Truck Operators",
+      "territory_id": "moving_things",
+      "current": 85,
+      "model": 39,
+      "raw_model": 46,
+      "delta": -46,
+      "data_quality": "HIGH",
+      "assessment": "Current score (85) is benchmark-anchored (HIGH quality). Model's raw score was 46. Large calibration shift applied. Current score likely more defensible for this specific occupation, though model captures task-level dynamics."
+    },
+    {
+      "isco_code": "2619",
+      "occupation_name": "Legal and Related Associate Professionals",
+      "territory_id": "governing_protecting",
+      "current": 75,
+      "model": 33,
+      "raw_model": 61,
+      "delta": -42,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores lower (33 vs 75). Model raw score 61. Territory calibration shifted score down. Current holistic assessment may better capture recent AI capabilities."
+    },
+    {
+      "isco_code": "5141",
+      "occupation_name": "Hairdressers and Barbers",
+      "territory_id": "buying_selling",
+      "current": 13,
+      "model": 54,
+      "raw_model": 54,
+      "delta": 41,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (54 vs 13). Model raw score 54 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "8312",
+      "occupation_name": "Cleaners and Housekeeping Staff",
+      "territory_id": "maintaining_fixing",
+      "current": 64,
+      "model": 24,
+      "raw_model": 51,
+      "delta": -40,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores lower (24 vs 64). Model raw score 51. Territory calibration shifted score down. Current holistic assessment may better capture recent AI capabilities."
+    },
+    {
+      "isco_code": "5121",
+      "occupation_name": "Tour Guides",
+      "territory_id": "making_meaning",
+      "current": 22,
+      "model": 61,
+      "raw_model": 56,
+      "delta": 39,
+      "data_quality": "HIGH",
+      "assessment": "Current score (22) is benchmark-anchored (HIGH quality). Model's raw score was 56. Large calibration shift applied. Current score likely more defensible for this specific occupation, though model captures task-level dynamics."
+    },
+    {
+      "isco_code": "1321",
+      "occupation_name": "Manufacturing Managers",
+      "territory_id": "making_things",
+      "current": 55,
+      "model": 93,
+      "raw_model": 81,
+      "delta": 38,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (93 vs 55). Model raw score 81 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "5221",
+      "occupation_name": "Stall and Market Salespersons",
+      "territory_id": "buying_selling",
+      "current": 42,
+      "model": 80,
+      "raw_model": 82,
+      "delta": 38,
+      "data_quality": "LOW",
+      "assessment": "Model scores higher (80 vs 42). Model raw score 82 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "0310",
+      "occupation_name": "Military Other Ranks",
+      "territory_id": "governing_protecting",
+      "current": 14,
+      "model": 52,
+      "raw_model": 81,
+      "delta": 38,
+      "data_quality": "LOW",
+      "assessment": "Model scores higher (52 vs 14). Model raw score 81 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "7124",
+      "occupation_name": "Insulation Workers",
+      "territory_id": "building_things",
+      "current": 22,
+      "model": 59,
+      "raw_model": 57,
+      "delta": 37,
+      "data_quality": "HIGH",
+      "assessment": "Current score (22) is benchmark-anchored (HIGH quality). Model's raw score was 57. Large calibration shift applied. Current score likely more defensible for this specific occupation, though model captures task-level dynamics."
+    },
+    {
+      "isco_code": "2265",
+      "occupation_name": "Midwives",
+      "territory_id": "care_health",
+      "current": 50,
+      "model": 86,
+      "raw_model": 76,
+      "delta": 36,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (86 vs 50). Model raw score 76 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "2659",
+      "occupation_name": "Creative and Performing Artists NEC",
+      "territory_id": "making_meaning",
+      "current": 52,
+      "model": 88,
+      "raw_model": 84,
+      "delta": 36,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (88 vs 52). Model raw score 84 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "2633",
+      "occupation_name": "Sociologists, Anthropologists and Related Professionals (Academic Teaching)",
+      "territory_id": "learning_teaching",
+      "current": 22,
+      "model": 58,
+      "raw_model": 81,
+      "delta": 36,
+      "data_quality": "MEDIUM",
+      "assessment": "Model scores higher (58 vs 22). Model raw score 81 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    },
+    {
+      "isco_code": "1351",
+      "occupation_name": "Restaurant Managers",
+      "territory_id": "feeding_hosting",
+      "current": 38,
+      "model": 73,
+      "raw_model": 82,
+      "delta": 35,
+      "data_quality": "HIGH",
+      "assessment": "Current score (38) is benchmark-anchored (HIGH quality). Model's raw score was 82. Large calibration shift applied. Current score likely more defensible for this specific occupation, though model captures task-level dynamics."
+    },
+    {
+      "isco_code": "3421",
+      "occupation_name": "Athletes and Sports Players",
+      "territory_id": "making_meaning",
+      "current": 13,
+      "model": 48,
+      "raw_model": 43,
+      "delta": 35,
+      "data_quality": "LOW",
+      "assessment": "Model scores higher (48 vs 13). Model raw score 43 suggests the task decomposition sees more automatable work. Model may be more defensible as it's systematically derived from tasks."
+    }
+  ],
+  "recommendation": "replace_medium",
+  "rationale": "The v3 model provides a systematic, task-decomposition-based scoring methodology that replaces the subjective holistic assessments used for the 283 MEDIUM-quality occupations. For the 75 HIGH-quality benchmark-anchored occupations, the existing scores should be retained as they are grounded in specific empirical benchmarks. The model produces mean absolute deviation of 15.4 points from current scores (75 occupations within 5 points, 150 within 10 points). Territory baselines are matched to RMSE=0.1 through per-territory calibration. The model's strength is systematic derivation from tasks and capability curves; its weakness is sensitivity to employment weights and task decomposition quality. Recommended approach: (1) Replace all MEDIUM scores with model scores. (2) For HIGH scores, use model score only if |delta| < 5 (scores agree). (3) For HIGH scores with |delta| > 5, flag for human review. This preserves the best of both approaches: empirical benchmarks where they exist, systematic model-derived scores everywhere else."
+}

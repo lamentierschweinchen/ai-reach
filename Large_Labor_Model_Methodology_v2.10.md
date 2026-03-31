@@ -1,6 +1,6 @@
 # Large Labor Model — Methodology
 
-**Version 2.9 — March 2026**
+**Version 2.10 — March 2026**
 
 This document describes how the Large Labor Model dataset was produced. It is written so that someone with no prior knowledge of the project can understand how every number in the dataset was derived, what assumptions were made, and where the model is weakest. It is the single reference for anyone who wants to challenge, extend, or build on this work.
 
@@ -109,6 +109,8 @@ The replaceability layer covers 1970–2026 (historical, no scenario) and 2027�
 388 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score and 2030 projections under all three scenarios.
 
 Occupation scores were derived from a combination of benchmark research and model training knowledge. The scoring basis for individual occupations is not independently verifiable to the same standard as territory-level scores. This is a known limitation. The occupation layer exists primarily for the public-facing "find your job" feature and should be understood as indicative rather than definitive.
+
+**Employment weights (v2.10):** Each occupation carries a `employment_weight_pct` field indicating its share of its territory's total global employment. Weights are derived from US BLS OES May 2024 data (154.2M workers, 830 SOC codes), mapped through a SOC 2018→SOC 2010→ISCO-08 crosswalk chain, then adjusted to ILO 1-digit ISCO global proportions. ISCO 6 (Skilled Agricultural) is supplemented with FAO employment data since US coverage is negligible. Weights sum to 100% within each territory and are used for occupation diamond sizing in the visualization.
 
 ### 3.4 Technology events
 
@@ -397,6 +399,13 @@ Corrections and extensions should reference the dataset's native structure: terr
 
 ## 11. Changelog
 
+### v2.10 (March 2026)
+
+- Employment weights added to all 388 occupations (BLS OES → SOC→ISCO crosswalk → ILO global adjustment)
+- v3 scoring framework documented in metadata: 6-vector capability model (C_R, C_G, P_A, Phi_S, Phi_U, S_E) with empirically calibrated curves
+- Raw model scores from v3 research saved as reference (`v3_raw_model_scores.json`) — not applied to any scores
+- No replaceability scores changed
+
 ### v2.9 (March 2026)
 
 - Conservative and accelerated scenarios removed from production dataset (archived in scenarios_archive_v2.9.json)
@@ -485,6 +494,6 @@ Corrections and extensions should reference the dataset's native structure: terr
 
 If referencing this dataset or methodology:
 
-Large Labor Model, v2.9. Dataset and methodology. March 2026. largelabormodel.com.
+Large Labor Model, v2.10. Dataset and methodology. March 2026. largelabormodel.com.
 
 The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.
