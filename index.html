@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Large Labour Model — When Will AI Reach Your Profession?</title>
+<title>Large Labor Model — When Will AI Reach Your Profession?</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 @font-face {
@@ -325,11 +325,7 @@ header {
     gap: 0;
     min-height: 0;
   }
-  .wordmark { font-size: 17px; visibility: hidden; position: relative; }
-  .wordmark::after {
-    content: 'LLM';
-    visibility: visible; position: absolute; left: 0; top: 0;
-  }
+  .wordmark { font-size: 13px; letter-spacing: 0.02em; white-space: nowrap; }
   .tagline { display: none; }
   .search-wrap {
     flex: 0 0 auto; order: 0;
@@ -367,25 +363,26 @@ header {
     font-size: 20px; width: 44px; height: 44px; cursor: pointer;
   }
   #mobile-menu {
-    position: fixed; inset: 0; z-index: 300;
-    display: flex; flex-direction: column; justify-content: flex-end;
+    position: fixed; top: calc(52px + var(--sat)); right: 12px;
+    z-index: 300; width: auto; min-width: 180px;
   }
   #mobile-menu .menu-scrim {
-    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+    position: fixed; inset: 0; background: transparent; z-index: -1;
   }
   #mobile-menu .menu-sheet {
-    position: relative; z-index: 1;
-    background: #111; border-top: 1px solid var(--border);
-    padding: 16px 20px calc(16px + var(--sab));
-    display: flex; flex-direction: column; gap: 0;
+    background: rgba(17,17,17,0.98); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 0;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
   }
   #mobile-menu .menu-item {
     background: none; border: none; color: #fff;
-    font-family: var(--font-body); font-size: 16px;
-    text-align: left; padding: 14px 0;
+    font-family: var(--font-body); font-size: 14px;
+    text-align: left; padding: 12px 16px; width: 100%;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
   }
+  #mobile-menu .menu-item:last-child { border-bottom: none; }
 
   /* ── Canvas / back-btn / detail-panel positioning ── */
   #main-canvas { top: calc(52px + var(--sat)); bottom: calc(80px + var(--sab)); }
@@ -437,13 +434,16 @@ header {
     margin: 8px auto 4px;
   }
 
-  /* ── Milestone toast — top of canvas, not covering bottom blocks ── */
+  /* ── Milestone toast — just above timeline bar ── */
   #milestone-toast {
-    bottom: auto;
-    top: calc(var(--sat) + 60px);
+    bottom: calc(80px + var(--sab) + 8px);
+    top: auto;
     left: 50%; transform: translateX(-50%);
     max-width: calc(100% - 32px);
+    font-size: 12px;
   }
+  #milestone-toast .toast-year { font-size: 10px; }
+  #milestone-toast .toast-label { font-size: 12px; font-weight: 500; }
 
   #repl-hint { font-size: 11px; padding: 10px 16px; }
 
@@ -453,11 +453,11 @@ header {
 
   /* ── Splash screen (Step 11) ── */
   #intro-overlay {
-    padding: calc(var(--sat) + 5vh) 6vw 5vh;
-    flex-direction: column; align-items: flex-start; gap: 16px; overflow-y: auto;
+    padding: calc(var(--sat) + 3vh) 6vw 3vh;
+    flex-direction: column; align-items: flex-start; gap: 12px; overflow-y: auto;
   }
   .intro-left { flex: none; }
-  .intro-left .intro-body:last-child { display: none; }
+  .intro-body-secondary { display: none; }
   .intro-right { align-self: center; }
   .intro-title { font-size: clamp(28px, 7vw, 38px); margin-bottom: 10px; }
   .intro-subtitle { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 14px; }
@@ -528,9 +528,10 @@ header {
 
 <div id="intro-overlay">
   <div class="intro-left">
-    <div class="intro-title">Large Labour Model</div>
+    <div class="intro-title">Large Labor Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
-    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based professions.<br><br>By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable — and what that may mean for your job.</div>
+    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based professions.</div>
+    <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable — and what that may mean for your job.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
       <span class="intro-interact-heading">How it works</span>
       <div class="intro-interact-row">
@@ -552,7 +553,7 @@ header {
 
 <header>
   <div>
-    <div class="wordmark" style="cursor:pointer" onclick="resetTimeline()">Large Labour Model</div>
+    <div class="wordmark" style="cursor:pointer" onclick="resetTimeline()">Large Labor Model</div>
     <div class="tagline">WHEN WILL AI REACH YOUR JOB?</div>
   </div>
   <div class="header-right">
@@ -1308,6 +1309,8 @@ function resizeCanvas() {
   canvas.style.width = cw + 'px';
   canvas.style.height = ch + 'px';
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.imageSmoothingEnabled = false;
+  ctx.textRendering = 'optimizeLegibility';
   W = cw;
   H = ch;
   if (!isMobile()) shapeStates = {};
@@ -1599,7 +1602,7 @@ function drawAllShapes() {
 
     if (minDim > 30 && drawAlpha > 0.15) {
       ctx.save();
-      const textColor = (isMobile() && DARK_TEXT_TERRITORIES.includes(t.id)) ? '#1A1A1A' : '#FFFFFF';
+      const textColor = DARK_TEXT_TERRITORIES.includes(t.id) ? '#1A1A1A' : '#FFFFFF';
 
       // Sector title — use pretext for accurate measurement and intelligent wrapping
       const nameSize = Math.round(Math.max(9, Math.min(15, minDim * 0.08)));
@@ -1609,6 +1612,7 @@ function drawAllShapes() {
       ctx.fillStyle = textColor;
       ctx.font = nameFont;
       ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
       ctx.letterSpacing = '0.08em';
       const displayName = t.name.toUpperCase();
 
@@ -1618,9 +1622,9 @@ function drawAllShapes() {
       const nameVisible = minDim > 50 || (minDim > 30 && availW > 60);
 
       const mobile = isMobile();
-      const scoreSize = Math.round(Math.max(16, Math.min(32, minDim * 0.2)));
+      const scoreSize = Math.round(Math.max(mobile ? 12 : 16, Math.min(32, minDim * 0.2)));
       const scoreH = scoreSize;
-      const bothFit = !mobile || (nameH + scoreH + 8 < availH && minDim > 55);
+      const bothFit = !mobile || (nameH + scoreH + 4 < availH && minDim > 40);
 
       let nameBlockBottom = s.cy;
       if (nameVisible) {
@@ -1631,17 +1635,17 @@ function drawAllShapes() {
         nameBlockBottom = nameBlockTop + nameH;
 
         if (nameLines.length === 1) {
-          ctx.fillText(nameLines[0].text, s.cx, nameBlockTop + nameLH / 2);
+          ctx.fillText(nameLines[0].text, Math.round(s.cx), Math.round(nameBlockTop + nameLH / 2));
         } else {
           // Pretext handles intelligent line breaking — render each line
           nameLines.forEach((line, i) => {
-            ctx.fillText(line.text, s.cx, nameBlockTop + i * nameLH + nameLH / 2);
+            ctx.fillText(line.text, Math.round(s.cx), Math.round(nameBlockTop + i * nameLH + nameLH / 2));
           });
         }
       }
 
       // Show percentage below name — position dynamically to avoid collision
-      if (!isMacro && reach >= 1 && nameVisible && bothFit && minDim > 40) {
+      if (!isMacro && reach >= 1 && nameVisible && bothFit && minDim > 30) {
         const gap = 4;
         const scoreY = nameBlockBottom + gap + scoreH / 2;
         // Only show if it fits within the block
@@ -1649,7 +1653,7 @@ function drawAllShapes() {
           ctx.fillStyle = textColor;
           ctx.globalAlpha = drawAlpha * (isMobile() ? 0.85 : 0.6);
           ctx.font = `700 ${scoreSize}px "Inter"`;
-          ctx.fillText(Math.round(reach) + '%', s.cx, scoreY);
+          ctx.fillText(Math.round(reach) + '%', Math.round(s.cx), Math.round(scoreY));
         }
       }
 
@@ -1665,7 +1669,7 @@ function drawAllShapes() {
         ctx.fillStyle = textColor;
         ctx.globalAlpha = drawAlpha * 0.28 * workerAlpha;
         ctx.font = `400 ${wfSize}px "Inter"`;
-        ctx.fillText(wfStr + ' workers', s.cx, s.cy + minDim * 0.32);
+        ctx.fillText(wfStr + ' workers', Math.round(s.cx), Math.round(s.cy + minDim * 0.32));
       }
 
       ctx.restore();
@@ -1989,6 +1993,8 @@ function zoomIn(id) {
 function zoomOut() {
   zoomTarget = 0;
   zoomedTerritory = null;
+  // Force all shape alphas back to full so blocks don't stay muddy
+  Object.values(shapeStates).forEach(s => { s.alpha = 0.88; });
   document.getElementById('back-btn').classList.remove('visible');
   const panel = document.getElementById('detail-panel');
   panel.classList.remove('open');
