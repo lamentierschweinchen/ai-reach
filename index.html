@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Large Labour Model — When Will AI Reach Your Profession?</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
@@ -25,6 +25,8 @@
   --surface: #111111;
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
 }
 
 html, body {
@@ -314,58 +316,104 @@ header {
 
 /* ── MOBILE RESPONSIVE ── */
 @media (max-width: 600px) {
+  /* ── Header: single-row compact (Step 9 + Step 6 safe area) ── */
   header {
-    flex-wrap: wrap;
-    padding: 8px 12px;
-    gap: 6px;
+    flex-wrap: nowrap;
+    padding: calc(var(--sat) + 8px) 12px 8px;
+    height: calc(52px + var(--sat));
+    gap: 0;
+    min-height: 0;
   }
-  .wordmark { font-size: 16px; }
+  .wordmark { font-size: 17px; }
   .tagline { display: none; }
-  .search-wrap { flex: 1 1 100%; order: 3; }
-  .header-right { gap: 8px; }
-  .methodology-btn { font-size: 8px; padding: 4px 10px; }
-
-  header { min-height: 0; }
-  #main-canvas { top: 70px; bottom: 80px; }
-
-  #global-stats {
-    left: 12px; bottom: 90px; gap: 12px;
+  .search-wrap {
+    flex: 0 0 auto; order: 0;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
   }
-  .global-stat-num { font-size: 16px; }
-  .global-stat-label { font-size: 6px; }
+  .search-wrap input {
+    display: none; /* hidden by default; shown when search is "open" */
+  }
+  .search-wrap .search-icon {
+    position: static; transform: none;
+    font-size: 16px; cursor: pointer;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .search-wrap.open {
+    position: fixed; top: 0; left: 0; right: 0;
+    width: 100%; height: calc(52px + var(--sat));
+    padding: calc(var(--sat) + 6px) 12px 6px;
+    background: rgba(0,0,0,0.96); z-index: 200;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .search-wrap.open input {
+    display: block; flex: 1;
+    font-size: 16px; /* prevents iOS zoom on focus */
+    padding: 8px 12px;
+    height: 40px;
+  }
+  .search-wrap.open .search-icon { display: none; }
+  .header-right { gap: 4px; }
+  .methodology-btn { display: none; } /* moves to menu */
 
-  #era-label { right: 12px; bottom: 90px; }
-  #era-label .era-name { font-size: 11px; }
-  #era-label .era-detail { font-size: 6.5px; display: none; }
+  /* ── Canvas / back-btn / detail-panel positioning ── */
+  #main-canvas { top: calc(52px + var(--sat)); bottom: calc(80px + var(--sab)); }
+  #back-btn { top: calc(62px + var(--sat)); }
 
+  /* ── Timeline (Steps 7 + 8) ── */
   #timeline {
-    height: 80px; padding: 0 12px;
+    height: calc(80px + var(--sab));
+    padding: 0 12px;
+    padding-bottom: var(--sab);
   }
-  .timeline-scrubber { width: 16px; height: 16px; }
+  .timeline-scrubber { width: 24px; height: 24px; }
+  .timeline-scrubber:hover, .timeline-scrubber.dragging { width: 28px; height: 28px; }
+  .timeline-track { height: 4px; }
+  .timeline-track::before { top: -20px; bottom: -20px; /* 44px total touch target */ }
+  .milestone-dot { display: none; /* milestones surface via toast during playback only */ }
   .zone-label.projected { font-size: 6px; }
-  .timeline-track::before { top: -12px; bottom: -12px; }
   .year-display { font-size: 20px; }
   .play-btn { width: 24px; height: 24px; font-size: 10px; }
 
+  /* ── Detail panel: full-width bottom-sheet (Step 10) ── */
   #detail-panel {
-    width: 100%; top: 70px; bottom: 80px;
+    width: 100%;
+    top: calc(52px + var(--sat));
+    bottom: calc(80px + var(--sab));
+    left: 0; right: 0;
+    transform: translateY(100%);
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+  #detail-panel.open {
+    transform: translateY(0);
   }
   .panel-territory-name { font-size: 22px; }
   .panel-stat-value { font-size: 24px; }
   .panel-description { font-size: 13px; }
 
-  #milestone-toast { bottom: 96px; }
+  /* ── Milestone toast ── */
+  #milestone-toast { bottom: calc(96px + var(--sab)); }
 
   #repl-hint { font-size: 11px; padding: 10px 16px; }
 
-  #intro-overlay { padding: 5vh 6vw; flex-direction: column; align-items: flex-start; gap: 16px; overflow-y: auto; }
+  /* ── Hidden elements on mobile (Step 12) ── */
+  #global-stats { display: none; }
+  #era-label { display: none; }
+
+  /* ── Splash screen (Step 11) ── */
+  #intro-overlay {
+    padding: calc(var(--sat) + 5vh) 6vw 5vh;
+    flex-direction: column; align-items: flex-start; gap: 16px; overflow-y: auto;
+  }
   .intro-left { flex: none; }
   .intro-left .intro-body:last-child { display: none; }
   .intro-right { align-self: center; }
   .intro-title { font-size: clamp(32px, 9vw, 48px); margin-bottom: 16px; }
   .intro-subtitle { font-size: 13px; letter-spacing: 0.12em; margin-bottom: 20px; }
   .intro-body { font-size: 13px; line-height: 1.55; margin-bottom: 16px; }
-  .intro-enter { padding: 14px 40px; font-size: 12px; }
+  .intro-enter { padding: 18px 40px; font-size: 13px; width: 100%; margin-bottom: 16px; }
 }
 
 /* Back button for zoom */
@@ -1170,11 +1218,31 @@ const ctx = canvas.getContext('2d');
 let W, H;
 
 const isMobile = () => window.innerWidth <= 600;
+const isPortrait = () => window.innerHeight > window.innerWidth;
+
+const PORTRAIT_POSITIONS = {
+  'making_things':        { baseX: 0.22, baseY: 0.08, rotation: 14,  z: 7, w: 125, h: 110 },
+  'making_meaning':       { baseX: 0.58, baseY: 0.13, rotation: -14, z: 4, w: 88,  h: 76  },
+  'building_things':      { baseX: 0.78, baseY: 0.14, rotation: 8,   z: 5, w: 105, h: 92  },
+  'land_sea':             { baseX: 0.14, baseY: 0.24, rotation: -10, z: 3, w: 110, h: 100 },
+  'buying_selling':       { baseX: 0.48, baseY: 0.32, rotation: -6,  z: 6, w: 130, h: 115 },
+  'thinking_leading':     { baseX: 0.78, baseY: 0.35, rotation: -8,  z: 4, w: 95,  h: 85  },
+  'money_data':           { baseX: 0.68, baseY: 0.48, rotation: -12, z: 8, w: 100, h: 90  },
+  'care_health':          { baseX: 0.20, baseY: 0.50, rotation: 7,   z: 5, w: 100, h: 88  },
+  'moving_things':        { baseX: 0.50, baseY: 0.56, rotation: 11,  z: 6, w: 100, h: 88  },
+  'learning_teaching':    { baseX: 0.72, baseY: 0.68, rotation: 9,   z: 5, w: 92,  h: 80  },
+  'feeding_hosting':      { baseX: 0.30, baseY: 0.70, rotation: -5,  z: 4, w: 95,  h: 82  },
+  'maintaining_fixing':   { baseX: 0.58, baseY: 0.82, rotation: 13,  z: 3, w: 90,  h: 75  },
+  'governing_protecting': { baseX: 0.18, baseY: 0.85, rotation: 6,   z: 3, w: 100, h: 78  },
+};
+
+// Territories that need dark text (white fails WCAG AA on these backgrounds)
+const DARK_TEXT_TERRITORIES = ['buying_selling', 'maintaining_fixing', 'making_meaning', 'learning_teaching'];
 
 function resizeCanvas() {
   const dpr = window.devicePixelRatio || 1;
   const cw = window.innerWidth;
-  const headerH = isMobile() ? 70 : 46;
+  const headerH = isMobile() ? 52 : 46;
   const timelineH = isMobile() ? 80 : 88;
   const ch = window.innerHeight - headerH - timelineH;
   canvas.width = cw * dpr;
@@ -1184,7 +1252,8 @@ function resizeCanvas() {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   W = cw;
   H = ch;
-  shapeStates = {};
+  if (!isMobile()) shapeStates = {};
+  // On mobile, keep shapeStates so blocks lerp smoothly to new positions
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1306,12 +1375,23 @@ function drawAllShapes() {
     const baseH = Math.sqrt(area / aspect);
     const baseW = baseH * aspect;
 
-    let targetCx = t.baseX * W;
-    let targetCy = t.baseY * H;
-    const minW = isMobile() ? 75 : 140;
-    const minH = isMobile() ? 60 : 115;
-    let targetW = Math.max(minW, baseW * (isMobile() ? 0.65 : 1));
-    let targetH = Math.max(minH, baseH * (isMobile() ? 0.65 : 1));
+    const pp = (isMobile() && isPortrait()) ? PORTRAIT_POSITIONS[t.id] : null;
+    let targetCx, targetCy, targetW, targetH;
+
+    if (pp) {
+      targetCx = pp.baseX * W;
+      targetCy = pp.baseY * H;
+      const scale = W / 375;
+      targetW = pp.w * scale;
+      targetH = pp.h * scale;
+    } else {
+      targetCx = t.baseX * W;
+      targetCy = t.baseY * H;
+      const minW = isMobile() ? 75 : 140;
+      const minH = isMobile() ? 60 : 115;
+      targetW = Math.max(minW, baseW * (isMobile() ? 0.65 : 1));
+      targetH = Math.max(minH, baseH * (isMobile() ? 0.65 : 1));
+    }
     const reachAlpha = 0.88;
     let targetAlpha = reachAlpha * s.morphProgress;
     if (s.isMacro) {
@@ -1393,6 +1473,18 @@ function drawAllShapes() {
     }
   }
 
+  // Portrait z-order: sort items by PORTRAIT_POSITIONS.z so higher-z blocks render on top
+  if (isMobile() && isPortrait()) {
+    const stableItems = items.map((item, i) => ({ item, origIdx: i }));
+    stableItems.sort((a, b) => {
+      const zA = PORTRAIT_POSITIONS[a.item.t.id]?.z || 0;
+      const zB = PORTRAIT_POSITIONS[b.item.t.id]?.z || 0;
+      return zA - zB; // ascending: low-z renders first (behind), high-z renders last (on top)
+    });
+    items.length = 0;
+    stableItems.forEach(s => items.push(s.item));
+  }
+
   // Store rendered shape data for hit-testing (front-to-back order, last = topmost)
   renderedShapes = [];
 
@@ -1409,7 +1501,9 @@ function drawAllShapes() {
     }
 
     // Draw shape (always cut-out style)
-    const pts = generateShapePath(s.cx, s.cy, drawW, drawH, t.rotation, hashStr(t.id));
+    const pp2 = (isMobile() && isPortrait()) ? PORTRAIT_POSITIONS[t.id] : null;
+    const rot = pp2 ? pp2.rotation : t.rotation;
+    const pts = generateShapePath(s.cx, s.cy, drawW, drawH, rot, hashStr(t.id));
     const color = isMacro ? getShapeColor(t.color, 15) : getShapeColor(t.color, reach);
     drawShape(ctx, pts, color, drawAlpha);
 
@@ -1447,7 +1541,7 @@ function drawAllShapes() {
 
     if (minDim > 30 && drawAlpha > 0.15) {
       ctx.save();
-      const textColor = '#FFFFFF';
+      const textColor = (isMobile() && DARK_TEXT_TERRITORIES.includes(t.id)) ? '#1A1A1A' : '#FFFFFF';
 
       // Sector title — use pretext for accurate measurement and intelligent wrapping
       const nameSize = Math.max(9, Math.min(15, minDim * 0.08));
@@ -1498,7 +1592,7 @@ function drawAllShapes() {
       // Fade out when zoomed into this territory (info is in the detail panel)
       const isZoomed = zoomedTerritory === t.id && zoomProgress > 0.1;
       const workerAlpha = isZoomed ? Math.max(0, 1 - (zoomProgress - 0.1) / 0.4) : 1;
-      if (minDim > 55 && workerAlpha > 0.01) {
+      if (minDim > 55 && workerAlpha > 0.01 && !isMobile()) {
         const wf = getWorkforce(year);
         const workers = Math.round(share / 100 * wf);
         const wfStr = workers >= 1000 ? (workers / 1000).toFixed(1) + 'B' : workers + 'M';
@@ -1773,6 +1867,29 @@ canvas.addEventListener('click', e => {
   if (!hoveredTerritory) return;
   zoomIn(hoveredTerritory);
 });
+
+// Touch feedback flash (mobile only — briefly brighten tapped block)
+canvas.addEventListener('touchstart', function(e) {
+  if (!isMobile()) return;
+  const touch = e.touches[0];
+  const rect = canvas.getBoundingClientRect();
+  const mx = touch.clientX - rect.left;
+  const my = touch.clientY - rect.top;
+
+  for (let i = renderedShapes.length - 1; i >= 0; i--) {
+    const rs = renderedShapes[i];
+    if (rs.alpha < 0.15) continue;
+    if (pointInShape(mx, my, rs.points)) {
+      const s = shapeStates[rs.territory.id];
+      if (s) {
+        const origAlpha = s.alpha;
+        s.alpha = Math.min(1, s.alpha + 0.15);
+        setTimeout(() => { s.alpha = origAlpha; }, 120);
+      }
+      break;
+    }
+  }
+}, {passive: true});
 
 // Touch support for canvas (mobile tap-to-select)
 canvas.addEventListener('touchend', e => {
@@ -2199,6 +2316,35 @@ searchInput.addEventListener('input', () => {
   searchResultsEl.classList.add('visible');
 });
 document.addEventListener('click', e => { if (!e.target.closest('.search-wrap')) searchResultsEl.classList.remove('visible'); });
+
+// Mobile search: tap icon to expand full-width overlay, back arrow to close
+if (isMobile()) {
+  const searchWrap = document.querySelector('.search-wrap');
+  const searchIcon = document.querySelector('.search-icon');
+
+  searchIcon.addEventListener('click', (e) => {
+    if (!searchWrap.classList.contains('open')) {
+      e.preventDefault();
+      e.stopPropagation();
+      searchWrap.classList.add('open');
+
+      // Add a back arrow before the input
+      if (!searchWrap.querySelector('.search-back')) {
+        const back = document.createElement('span');
+        back.className = 'search-back';
+        back.textContent = '←';
+        back.style.cssText = 'font-size:20px;cursor:pointer;padding:8px;color:#fff;flex-shrink:0;';
+        back.addEventListener('click', () => {
+          searchWrap.classList.remove('open');
+          searchInput.value = '';
+          searchResultsEl.classList.remove('visible');
+        });
+        searchWrap.insertBefore(back, searchInput);
+      }
+      setTimeout(() => searchInput.focus(), 50);
+    }
+  });
+}
 
 // ═══════════════════════════════════════════════════════════════
 // KEYBOARD
