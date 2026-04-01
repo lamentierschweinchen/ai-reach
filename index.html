@@ -92,6 +92,7 @@ header {
   border-color: rgba(255,255,255,0.4);
   color: #cccccc;
 }
+.mobile-menu-btn { display: none; }
 
 /* ── CANVAS ── */
 #main-canvas {
@@ -324,7 +325,11 @@ header {
     gap: 0;
     min-height: 0;
   }
-  .wordmark { font-size: 17px; }
+  .wordmark { font-size: 17px; visibility: hidden; position: relative; }
+  .wordmark::after {
+    content: 'LLM';
+    visibility: visible; position: absolute; left: 0; top: 0;
+  }
   .tagline { display: none; }
   .search-wrap {
     flex: 0 0 auto; order: 0;
@@ -336,7 +341,7 @@ header {
   }
   .search-wrap .search-icon {
     position: static; transform: none;
-    font-size: 16px; cursor: pointer;
+    font-size: 20px; cursor: pointer;
     width: 44px; height: 44px;
     display: flex; align-items: center; justify-content: center;
   }
@@ -344,7 +349,7 @@ header {
     position: fixed; top: 0; left: 0; right: 0;
     width: 100%; height: calc(52px + var(--sat));
     padding: calc(var(--sat) + 6px) 12px 6px;
-    background: rgba(0,0,0,0.96); z-index: 200;
+    background: #000; z-index: 200;
     display: flex; align-items: center; gap: 8px;
   }
   .search-wrap.open input {
@@ -355,7 +360,32 @@ header {
   }
   .search-wrap.open .search-icon { display: none; }
   .header-right { gap: 4px; }
-  .methodology-btn { display: none; } /* moves to menu */
+  .methodology-btn { display: none; }
+  .mobile-menu-btn {
+    display: flex; align-items: center; justify-content: center;
+    background: none; border: none; color: rgba(255,255,255,0.5);
+    font-size: 20px; width: 44px; height: 44px; cursor: pointer;
+  }
+  #mobile-menu {
+    position: fixed; inset: 0; z-index: 300;
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  #mobile-menu .menu-scrim {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+  }
+  #mobile-menu .menu-sheet {
+    position: relative; z-index: 1;
+    background: #111; border-top: 1px solid var(--border);
+    padding: 16px 20px calc(16px + var(--sab));
+    display: flex; flex-direction: column; gap: 0;
+  }
+  #mobile-menu .menu-item {
+    background: none; border: none; color: #fff;
+    font-family: var(--font-body); font-size: 16px;
+    text-align: left; padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
 
   /* ── Canvas / back-btn / detail-panel positioning ── */
   #main-canvas { top: calc(52px + var(--sat)); bottom: calc(80px + var(--sab)); }
@@ -372,7 +402,10 @@ header {
   .timeline-track { height: 4px; }
   .timeline-track::before { top: -20px; bottom: -20px; /* 44px total touch target */ }
   .milestone-dot { display: none; /* milestones surface via toast during playback only */ }
-  .zone-label.projected { font-size: 6px; }
+  .zone-label.projected { display: none; }
+  .zone-label { display: none; }
+  .timeline-projected-zone { display: none; }
+  .timeline-years { display: none; }
   .year-display { font-size: 20px; }
   .play-btn { width: 24px; height: 24px; font-size: 10px; }
 
@@ -389,12 +422,28 @@ header {
   #detail-panel.open {
     transform: translateY(0);
   }
+  .panel-close {
+    font-size: 22px; width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    position: absolute; top: 8px; right: 8px;
+  }
   .panel-territory-name { font-size: 22px; }
   .panel-stat-value { font-size: 24px; }
   .panel-description { font-size: 13px; }
+  #detail-panel::before {
+    content: ''; display: block;
+    width: 36px; height: 4px;
+    background: rgba(255,255,255,0.15); border-radius: 2px;
+    margin: 8px auto 4px;
+  }
 
-  /* ── Milestone toast ── */
-  #milestone-toast { bottom: calc(96px + var(--sab)); }
+  /* ── Milestone toast — top of canvas, not covering bottom blocks ── */
+  #milestone-toast {
+    bottom: auto;
+    top: calc(var(--sat) + 60px);
+    left: 50%; transform: translateX(-50%);
+    max-width: calc(100% - 32px);
+  }
 
   #repl-hint { font-size: 11px; padding: 10px 16px; }
 
@@ -410,9 +459,9 @@ header {
   .intro-left { flex: none; }
   .intro-left .intro-body:last-child { display: none; }
   .intro-right { align-self: center; }
-  .intro-title { font-size: clamp(32px, 9vw, 48px); margin-bottom: 16px; }
-  .intro-subtitle { font-size: 13px; letter-spacing: 0.12em; margin-bottom: 20px; }
-  .intro-body { font-size: 13px; line-height: 1.55; margin-bottom: 16px; }
+  .intro-title { font-size: clamp(28px, 7vw, 38px); margin-bottom: 10px; }
+  .intro-subtitle { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 14px; }
+  .intro-body { font-size: 12px; line-height: 1.5; margin-bottom: 12px; }
   .intro-enter { padding: 18px 40px; font-size: 13px; width: 100%; margin-bottom: 16px; }
 }
 
@@ -508,13 +557,22 @@ header {
   </div>
   <div class="header-right">
     <div class="search-wrap">
-      <span class="search-icon">⌕</span>
+      <span class="search-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"><circle cx="7.5" cy="7.5" r="5.5"/><line x1="11.5" y1="11.5" x2="16" y2="16"/></svg></span>
       <input type="text" id="job-search" placeholder="Find your job" autocomplete="off" spellcheck="false">
       <div class="search-results" id="search-results"></div>
     </div>
     <button class="methodology-btn" onclick="window.location.href='/about'">About</button>
+    <button class="mobile-menu-btn" onclick="document.getElementById('mobile-menu').style.display='flex'">☰</button>
   </div>
 </header>
+
+<div id="mobile-menu" style="display:none">
+  <div class="menu-scrim" onclick="document.getElementById('mobile-menu').style.display='none'"></div>
+  <div class="menu-sheet">
+    <button class="menu-item" onclick="window.location.href='/about'">About the work</button>
+    <button class="menu-item" onclick="window.location.href='/about#data'">About the data</button>
+  </div>
+</div>
 
 <canvas id="main-canvas"></canvas>
 
@@ -557,7 +615,7 @@ header {
 
 <div id="timeline">
   <div class="timeline-top">
-    <button class="play-btn" id="play-btn">▶</button>
+    <button class="play-btn" id="play-btn"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M1 1L9 6L1 11V1Z" fill="white"/></svg></button>
     <div class="year-display" id="year-display">1800</div>
     <div class="timeline-track-wrap">
       <div class="zone-label projected">Projected ›</div>
@@ -1222,7 +1280,7 @@ const isPortrait = () => window.innerHeight > window.innerWidth;
 
 const PORTRAIT_POSITIONS = {
   'making_things':        { baseX: 0.22, baseY: 0.08, rotation: 14,  z: 7, w: 125, h: 110 },
-  'making_meaning':       { baseX: 0.58, baseY: 0.13, rotation: -14, z: 4, w: 88,  h: 76  },
+  'making_meaning':       { baseX: 0.50, baseY: 0.15, rotation: -14, z: 6, w: 88,  h: 76  },
   'building_things':      { baseX: 0.78, baseY: 0.14, rotation: 8,   z: 5, w: 105, h: 92  },
   'land_sea':             { baseX: 0.14, baseY: 0.24, rotation: -10, z: 3, w: 110, h: 100 },
   'buying_selling':       { baseX: 0.48, baseY: 0.32, rotation: -6,  z: 6, w: 130, h: 115 },
@@ -1232,8 +1290,8 @@ const PORTRAIT_POSITIONS = {
   'moving_things':        { baseX: 0.50, baseY: 0.56, rotation: 11,  z: 6, w: 100, h: 88  },
   'learning_teaching':    { baseX: 0.72, baseY: 0.68, rotation: 9,   z: 5, w: 92,  h: 80  },
   'feeding_hosting':      { baseX: 0.30, baseY: 0.70, rotation: -5,  z: 4, w: 95,  h: 82  },
-  'maintaining_fixing':   { baseX: 0.58, baseY: 0.82, rotation: 13,  z: 3, w: 90,  h: 75  },
-  'governing_protecting': { baseX: 0.18, baseY: 0.85, rotation: 6,   z: 3, w: 100, h: 78  },
+  'maintaining_fixing':   { baseX: 0.58, baseY: 0.78, rotation: 13,  z: 3, w: 90,  h: 75  },
+  'governing_protecting': { baseX: 0.18, baseY: 0.80, rotation: 6,   z: 3, w: 100, h: 78  },
 };
 
 // Territories that need dark text (white fails WCAG AA on these backgrounds)
@@ -1544,7 +1602,7 @@ function drawAllShapes() {
       const textColor = (isMobile() && DARK_TEXT_TERRITORIES.includes(t.id)) ? '#1A1A1A' : '#FFFFFF';
 
       // Sector title — use pretext for accurate measurement and intelligent wrapping
-      const nameSize = Math.max(9, Math.min(15, minDim * 0.08));
+      const nameSize = Math.round(Math.max(9, Math.min(15, minDim * 0.08)));
       const nameFont = `700 ${nameSize}px "Inter"`;
       const nameLH = nameSize + 3;
       ctx.globalAlpha = drawAlpha;
@@ -1560,15 +1618,17 @@ function drawAllShapes() {
       const nameVisible = minDim > 50 || (minDim > 30 && availW > 60);
 
       const mobile = isMobile();
-      const scoreSize = Math.max(16, Math.min(32, minDim * 0.2));
+      const scoreSize = Math.round(Math.max(16, Math.min(32, minDim * 0.2)));
       const scoreH = scoreSize;
       const bothFit = !mobile || (nameH + scoreH + 8 < availH && minDim > 55);
 
+      let nameBlockBottom = s.cy;
       if (nameVisible) {
         const nameLines = nameLayout.lines;
         const hasScore = reach > 0 && bothFit;
         // Center the name block vertically, shifted up if score will appear below
         const nameBlockTop = s.cy - nameH / 2 - (hasScore ? minDim * 0.06 : 0);
+        nameBlockBottom = nameBlockTop + nameH;
 
         if (nameLines.length === 1) {
           ctx.fillText(nameLines[0].text, s.cx, nameBlockTop + nameLH / 2);
@@ -1580,12 +1640,17 @@ function drawAllShapes() {
         }
       }
 
-      // Show percentage only if name is also visible and both fit
+      // Show percentage below name — position dynamically to avoid collision
       if (!isMacro && reach >= 1 && nameVisible && bothFit && minDim > 40) {
-        ctx.fillStyle = textColor;
-        ctx.globalAlpha = drawAlpha * 0.6;
-        ctx.font = `700 ${scoreSize}px "Inter"`;
-        ctx.fillText(Math.round(reach) + '%', s.cx, s.cy + minDim * 0.1);
+        const gap = 4;
+        const scoreY = nameBlockBottom + gap + scoreH / 2;
+        // Only show if it fits within the block
+        if (scoreY + scoreH / 2 < s.cy + availH / 2) {
+          ctx.fillStyle = textColor;
+          ctx.globalAlpha = drawAlpha * (isMobile() ? 0.85 : 0.6);
+          ctx.font = `700 ${scoreSize}px "Inter"`;
+          ctx.fillText(Math.round(reach) + '%', s.cx, scoreY);
+        }
       }
 
       // Worker count label — lower third of tile, secondary opacity
@@ -1925,7 +1990,57 @@ function zoomOut() {
   zoomTarget = 0;
   zoomedTerritory = null;
   document.getElementById('back-btn').classList.remove('visible');
-  document.getElementById('detail-panel').classList.remove('open');
+  const panel = document.getElementById('detail-panel');
+  panel.classList.remove('open');
+  panel.style.transform = '';
+  // Clean up mobile search state on zoom out
+  if (isMobile()) {
+    const searchWrap = document.querySelector('.search-wrap');
+    if (searchWrap) searchWrap.classList.remove('open');
+  }
+}
+
+// Swipe-down to dismiss detail panel (mobile)
+if (typeof window !== 'undefined') {
+  (function() {
+    const panel = document.getElementById('detail-panel');
+    if (!panel) return;
+    let startY = 0, currentTouchY = 0, isDragging = false;
+
+    panel.addEventListener('touchstart', (e) => {
+      if (!isMobile()) return;
+      if (panel.scrollTop > 5) return;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+      panel.style.transition = 'none';
+    });
+
+    panel.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      currentTouchY = e.touches[0].clientY;
+      const dy = currentTouchY - startY;
+      if (dy > 0) {
+        panel.style.transform = `translateY(${dy}px)`;
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    panel.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      const dy = currentTouchY - startY;
+      panel.style.transition = '';
+      if (dy > 120) {
+        zoomOut();
+      } else {
+        panel.style.transform = '';
+        if (panel.classList.contains('open')) {
+          panel.style.transform = 'translateY(0)';
+          setTimeout(() => { panel.style.transform = ''; }, 50);
+        }
+      }
+    });
+  })();
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2266,7 +2381,7 @@ function play() {
   isPlaying = true;
   activeMilestone = null;
   hideMilestonePanel();
-  document.getElementById('play-btn').textContent = '⏸';
+  document.getElementById('play-btn').innerHTML = '<svg width="10" height="12" viewBox="0 0 10 12" fill="none"><rect x="1" y="1" width="2.5" height="10" fill="white"/><rect x="6.5" y="1" width="2.5" height="10" fill="white"/></svg>';
   let lastTime = performance.now();
   function frame(now) {
     if (!isPlaying) return;
@@ -2275,7 +2390,7 @@ function play() {
     const prevYear = currentYear;
     currentYear += getPlaySpeed(currentYear) * dt;
     checkMilestoneToast(prevYear, currentYear);
-    if (currentYear >= END_YEAR) { currentYear=END_YEAR; isPlaying=false; document.getElementById('play-btn').textContent='▶'; }
+    if (currentYear >= END_YEAR) { currentYear=END_YEAR; isPlaying=false; document.getElementById('play-btn').innerHTML='<svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M1 1L9 6L1 11V1Z" fill="white"/></svg>'; }
     updateTimelineUI();
     if (zoomedTerritory) updatePanel(zoomedTerritory);
     if (isPlaying) animFrame = requestAnimationFrame(frame);
@@ -2284,7 +2399,7 @@ function play() {
 }
 
 function pause() {
-  isPlaying=false; document.getElementById('play-btn').textContent='▶';
+  isPlaying=false; document.getElementById('play-btn').innerHTML='<svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M1 1L9 6L1 11V1Z" fill="white"/></svg>';
   if (animFrame) cancelAnimationFrame(animFrame);
 }
 
@@ -2310,7 +2425,15 @@ searchInput.addEventListener('input', () => {
     const div = document.createElement('div');
     div.className = 'search-result-item';
     div.innerHTML = `<div>${m.job}</div><div class="job-territory">${m.territoryName} · ${reach}% replaceability</div>`;
-    div.addEventListener('click',()=>{ zoomIn(m.territory); searchInput.value=m.job; searchResultsEl.classList.remove('visible'); });
+    div.addEventListener('click',()=>{
+      zoomIn(m.territory);
+      searchInput.value=m.job;
+      searchResultsEl.classList.remove('visible');
+      if (isMobile()) {
+        const sw = document.querySelector('.search-wrap');
+        if (sw) { sw.classList.remove('open'); searchInput.value = ''; }
+      }
+    });
     searchResultsEl.appendChild(div);
   });
   searchResultsEl.classList.add('visible');
