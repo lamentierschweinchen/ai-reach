@@ -204,7 +204,7 @@ ol.body-text li {
 
   <h1 class="section-title" style="margin-top: 0;">Large Labor Model — Methodology</h1>
 
-  <p class="body-text"><strong>Version 2.2 — March 2026</strong></p>
+  <p class="body-text"><strong>Version 3.0 — April 2026</strong></p>
 
   <p class="body-text">This document describes how the Large Labor Model dataset was produced. It is written so that someone with no prior knowledge of the project can understand how every number in the dataset was derived, what assumptions were made, and where the model is weakest. It is the single reference for anyone who wants to challenge, extend, or build on this work.</p>
 
@@ -299,7 +299,7 @@ ol.body-text li {
 
   <p class="body-text"><strong>2015–2026:</strong> Benchmark-anchored scoring. Each territory's score at each year is tied to a specific commercial capability milestone (e.g., Waymo commercial operations for Moving Things, SWE-bench performance for Thinking &amp; Leading, Xiaomi dark factory for Making Things). The 2026 scores serve as the baseline for all projections and are locked.</p>
 
-  <p class="body-text"><strong>2027–2041:</strong> Projected under three scenarios (see Section 4). Anchor years: 2027, 2028, 2029, 2030, 2032, 2035, 2040, 2041. The visualization interpolates linearly between anchor points.</p>
+  <p class="body-text"><strong>2027–2041:</strong> Projected under the moderate capability trajectory (see Section 4). Anchor years: 2027, 2028, 2029, 2030, 2032, 2035, 2040, 2041. The visualisation interpolates linearly between anchor points.</p>
 
   <p class="body-text"><strong>Scoring scale:</strong></p>
 
@@ -319,16 +319,16 @@ ol.body-text li {
   <p class="body-text"><strong>Methodology constraints:</strong></p>
 
   <ul class="body-text">
-    <li>Monotonicity: scores are non-decreasing within each territory-scenario. AI capability does not regress.</li>
-    <li>Cross-scenario ordering: accelerated ≥ moderate ≥ conservative at every anchor year.</li>
-    <li>Both constraints are validated programmatically. The current dataset has zero violations.</li>
+    <li>Monotonicity: scores are non-decreasing within each territory. AI capability does not regress. This is validated programmatically; the current dataset has zero violations.</li>
   </ul>
 
   <h3 class="section-subtitle">3.3 Occupation data</h3>
 
-  <p class="body-text">405 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score and 2030 projections under all three scenarios.</p>
+  <p class="body-text">388 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score.</p>
 
-  <p class="body-text">Occupation scores were derived from a combination of benchmark research and model training knowledge. The scoring basis for individual occupations is not independently verifiable to the same standard as territory-level scores. This is a known limitation. The occupation layer exists primarily for the public-facing "find your job" feature and should be understood as indicative rather than definitive.</p>
+  <p class="body-text">In v3.0, occupation scores are derived from a 6-vector task decomposition model. Each occupation is decomposed into its constituent tasks (sourced from O*NET via a BLS SOC-to-ISCO-08 crosswalk). Each task is assigned to one of six capability vectors (cognitive routine, cognitive generative, perceptual analytical, physical structured, physical unstructured, social embodied), given a difficulty threshold, and weighted by time share. The occupation's score is the sum of time-weighted tasks where the vector's 2026 capability exceeds the task's difficulty threshold.</p>
+
+  <p class="body-text">This replaces the holistic assessment methodology used in earlier versions. 99 occupations now have TASK_DECOMPOSITION scoring basis, 45 are benchmark-anchored (OBSERVED), and the remainder use earlier derivation methods pending future review. Employment weights for each occupation are computed via a BLS OES → SOC 2018 → SOC 2010 → ISCO-08 crosswalk chain, adjusted to ILO 1-digit ISCO global proportions.</p>
 
   <h3 class="section-subtitle">3.4 Technology events</h3>
 
@@ -354,25 +354,17 @@ ol.body-text li {
   <!-- SECTION 4 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="scenarios">4. Scenarios</h2>
+  <h2 class="section-title" id="scenarios">4. Capability trajectory</h2>
 
-  <p class="body-text">Three capability trajectories model how fast the technical frontier advances. These are not labor market scenarios — they do not model policy responses, capital investment cycles, or social adaptation. They model only how quickly AI and robotics becomes technically capable of performing human work.</p>
+  <p class="body-text">The visualisation shows a single projection based on a moderate capability trajectory.</p>
 
-  <h3 class="section-subtitle">4.1 Conservative</h3>
+  <p class="body-text">The METR 4-month capability doubling rate continues through 2028, then stabilises. Frontier AI reaches human-level performance on most cognitive tasks by 2027–2028. Commercially available robotics crosses dexterity thresholds for most structured physical environments by 2029–2030.</p>
 
-  <p class="body-text">AI capability growth continues but decelerates from 2025 rates. Benchmark improvement reverts toward 2019–2022 pace by 2027. Physical manipulation advances slowly. The frontier reaches human-level performance on most cognitive tasks by 2030.</p>
+  <p class="body-text">The displacement model (Section 5) converts this trajectory into projected employment changes. The trajectory itself — how fast AI and robotics become technically capable — is separate from the displacement model's parameters, which govern how fast that capability translates into actual job losses.</p>
 
-  <p class="body-text">In the displacement model, the conservative scenario applies no AI-driven workforce reduction. It represents the ILO consensus employment baseline — where employment would go if AI displacement did not occur. Employment grows slowly, driven by population growth and structural economic change.</p>
+  <h3 class="section-subtitle">4.1 Earlier scenario work</h3>
 
-  <h3 class="section-subtitle">4.2 Moderate</h3>
-
-  <p class="body-text">The METR 4-month capability doubling rate continues through 2028, then stabilizes. Frontier AI reaches human-level performance on most cognitive tasks by 2027–2028. Commercially available robotics crosses dexterity thresholds for most structured physical environments by 2029–2030.</p>
-
-  <p class="body-text">This is the display scenario. The visualization shows the moderate projection only.</p>
-
-  <h3 class="section-subtitle">4.3 Accelerated</h3>
-
-  <p class="body-text">Capability improvement accelerates beyond 2025 levels. Frontier AI reaches AGI-adjacent performance by 2027. Commercially available robotics crosses thresholds for unstructured physical environments by 2028. By 2030, the only remaining technical frontiers are direct physical contact with humans and genuinely novel creative output.</p>
+  <p class="body-text">Earlier versions of the dataset computed projections under three scenarios — conservative, moderate, and accelerated — representing different assumptions about the pace of capability advancement. The conservative scenario applied no displacement (pure ILO consensus baseline). The accelerated scenario used a higher conversion rate (0.60) and a faster lag schedule. After review, the moderate scenario was determined to best reflect the available evidence and is the sole projection shown. The conservative and accelerated scenarios are archived and may be reintroduced if a scenario toggle is added to the visualisation.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 5 -->
@@ -399,11 +391,11 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
   <p class="body-text">Where:</p>
 
   <ul class="body-text">
-    <li><strong>repl(T, Y, S)</strong> is the replaceability score for territory T at year Y under scenario S</li>
-    <li><strong>repl_2026(T)</strong> is the locked 2026 baseline score (no scenario)</li>
-    <li><strong>consensus_workers(T, Y)</strong> is the conservative (ILO consensus) workforce projection</li>
-    <li><strong>conv_rate(S)</strong> is the scenario-specific conversion rate</li>
-    <li><strong>lag_release(S, Y)</strong> is the scenario-specific lag absorption at year Y</li>
+    <li><strong>repl(T, Y)</strong> is the replaceability score for territory T at year Y</li>
+    <li><strong>repl_2026(T)</strong> is the locked 2026 baseline score</li>
+    <li><strong>consensus_workers(T, Y)</strong> is the ILO consensus workforce projection (where employment would go if AI displacement did not occur)</li>
+    <li><strong>conv_rate</strong> is the conversion rate (1/3 for the displayed projection)</li>
+    <li><strong>lag_release(Y)</strong> is the lag absorption at year Y</li>
     <li><strong>pending(T)</strong> is the backlog of existing capability not yet absorbed (85% of the 2026 score)</li>
   </ul>
 
@@ -415,52 +407,41 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <h3 class="section-subtitle">5.3 Parameters</h3>
 
-  <p class="body-text"><strong>Conversion rates</strong> (what fraction of each new replaceability point becomes an actual job loss):</p>
+  <p class="body-text"><strong>Conversion rate:</strong> 1/3 (0.333). One-third of each new replaceability point becomes displacement.</p>
+
+  <p class="body-text"><strong>Lag release schedule</strong> (what fraction of the 2026 capability backlog has been absorbed by each year):</p>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
-      <tr><th>Scenario</th><th>Rate</th></tr>
+      <tr><th>Year</th><th>Lag release</th></tr>
     </thead>
     <tbody>
-      <tr><td>Conservative</td><td>No displacement applied. The conservative scenario is the ILO consensus baseline — it represents where employment would go if AI displacement did not occur. The displacement formula is not run on this scenario.</td></tr>
-      <tr><td>Moderate</td><td>1/3 (0.333). One-third of new capability becomes displacement.</td></tr>
-      <tr><td>Accelerated</td><td>0.60. Three-fifths of new capability becomes displacement.</td></tr>
+      <tr><td>2026</td><td>5%</td></tr>
+      <tr><td>2030</td><td>28%</td></tr>
+      <tr><td>2035</td><td>48%</td></tr>
+      <tr><td>2040</td><td>58%</td></tr>
+      <tr><td>2041</td><td>60%</td></tr>
     </tbody>
   </table></div>
 
-  <p class="body-text"><strong>Lag release schedule</strong> (what fraction of the 2026 capability backlog has been absorbed by each year). These values apply to the moderate and accelerated scenarios only. The conservative scenario does not use the displacement formula.</p>
-
-  <div class="method-table-wrap"><table class="method-table">
-    <thead>
-      <tr><th>Year</th><th>Moderate</th><th>Accelerated</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>2026</td><td>5%</td><td>12%</td></tr>
-      <tr><td>2030</td><td>28%</td><td>55%</td></tr>
-      <tr><td>2035</td><td>48%</td><td>75%</td></tr>
-      <tr><td>2040</td><td>58%</td><td>85%</td></tr>
-      <tr><td>2041</td><td>60%</td><td>87%</td></tr>
-    </tbody>
-  </table></div>
-
-  <p class="body-text">The lag schedule decelerates: the gaps between anchor points are +23pp (2026–2030), +20pp (2030–2035), +10pp (2035–2040), +2pp (2040–2041) for the moderate scenario. This reflects the assumption that the easiest-to-displace roles are absorbed first, and the remaining backlog becomes progressively harder to convert into actual displacement.</p>
+  <p class="body-text">The lag schedule decelerates: the gaps between anchor points are +23pp (2026–2030), +20pp (2030–2035), +10pp (2035–2040), +2pp (2040–2041). This reflects the assumption that the easiest-to-displace roles are absorbed first, and the remaining backlog becomes progressively harder to convert into actual displacement.</p>
 
   <h3 class="section-subtitle">5.4 Headline outputs</h3>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
-      <tr><th>Year</th><th>Conservative</th><th>Moderate</th><th>Accelerated</th></tr>
+      <tr><th>Year</th><th>Projected workforce</th></tr>
     </thead>
     <tbody>
-      <tr><td>2026</td><td>3,551M</td><td>3,417M</td><td>3,151M</td></tr>
-      <tr><td>2030</td><td>3,606M</td><td>2,946M</td><td>2,134M</td></tr>
-      <tr><td>2035</td><td>3,700M</td><td>2,580M</td><td>1,692M</td></tr>
-      <tr><td>2040</td><td>3,800M</td><td>2,427M</td><td>1,470M</td></tr>
-      <tr><td>2041</td><td>3,820M</td><td>2,395M</td><td>1,426M</td></tr>
+      <tr><td>2026</td><td>3,466M</td></tr>
+      <tr><td>2030</td><td>2,946M</td></tr>
+      <tr><td>2035</td><td>2,578M</td></tr>
+      <tr><td>2040</td><td>2,421M</td></tr>
+      <tr><td>2041</td><td>2,389M</td></tr>
     </tbody>
   </table></div>
 
-  <p class="body-text">The moderate scenario shows a 30% workforce decline from 2026 to 2041.</p>
+  <p class="body-text">The projection shows a 31% workforce decline from 2026 to 2041.</p>
 
   <h3 class="section-subtitle">5.5 What the model does not do</h3>
 
@@ -528,6 +509,14 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <p class="body-text"><strong>Feeding &amp; Hosting (moderate):</strong> 2027–2032 scores lowered by 5–8 points. Basis: The leading kitchen automation robot (Flippy) has approximately 14 active commercial installations. The leading validated success (Sweetgreen Infinite Kitchen) operates at 12 locations and still requires roughly half the normal staff. No general cooking robot, hotel room-cleaning robot, or humanoid hospitality worker is commercially deployed anywhere.</p>
 
+  <h3 class="section-subtitle">6.4 v3.0: Task decomposition model</h3>
+
+  <p class="body-text">In v3.0, occupation-level scores were rederived using a systematic task decomposition model. Each of the 388 occupations was decomposed into its constituent tasks, each assigned to one of six capability vectors with empirically calibrated S-curve parameters anchored to SWE-bench, GPQA, IFR robot density, humanoid shipment data, and Waymo safety statistics.</p>
+
+  <p class="body-text">138 occupations underwent individual review through a dedicated research session, producing 1,478 task corrections (1,032 vector reassignments, 446 time-weight adjustments). A second pass recalibrated the maintaining_fixing territory (25 occupations). Military occupation scores were set manually due to poor O*NET-to-ISCO mapping for military roles.</p>
+
+  <p class="body-text">Three territory baselines were adjusted based on the evidence from the corrected occupation scores: Making Things (86→78), Moving Things (52→57), and Learning &amp; Teaching (28→31). These changes cascaded through the displacement formula, producing a net shift of approximately +3M workers at 2040 (0.6%).</p>
+
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 7 -->
   <!-- ═══════════════════════════════════════════ -->
@@ -541,19 +530,19 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
       <tr><th>Territory</th><th>2026 Score</th><th>Justification</th></tr>
     </thead>
     <tbody>
-      <tr><td>Making Things</td><td>86</td><td>Xiaomi zero-worker factory (81K sqm, 24/7); China 470 robots per 10K manufacturing workers. High-capital frontier is essentially fully automatable. Global average lower due to legacy equipment.</td></tr>
+      <tr><td>Making Things</td><td>78</td><td>Xiaomi zero-worker factory (81K sqm, 24/7); China 470 robots per 10K manufacturing workers. High-capital frontier is essentially fully automatable. Territory score reflects the full employment-weighted scope including non-frontier manufacturing (repair, non-automated segments), not frontier capability alone.</td></tr>
       <tr><td>Money &amp; Data</td><td>78</td><td>Frontier AI performs most financial analysis, document processing, compliance review, and data management at professional level. Complex multi-party judgment and novel legal structures remain.</td></tr>
       <tr><td>Thinking &amp; Leading</td><td>72</td><td>SWE-bench 71.7% (2024); AI writes 30–50% of code at frontier companies. Professional services (consulting, management, legal research) substantially automatable. Senior architecture and novel system design remain.</td></tr>
       <tr><td>Making Meaning</td><td>72</td><td>Generative AI produces professional-quality text, image, video, and music. Commercial deployment in advertising, content production, design. Genuinely novel creative output and aesthetic judgment remain.</td></tr>
       <tr><td>Care &amp; Health</td><td>62</td><td>873 FDA-cleared AI radiology tools. AI matches human diagnostic accuracy on many imaging tasks. Telehealth AI operational. Fine physical manipulation, novel diagnosis, and therapeutic relationship remain.</td></tr>
       <tr><td>Buying &amp; Selling</td><td>62</td><td>E-commerce AI, automated customer service, inventory optimization, dynamic pricing all commercially deployed. Complex negotiation and relationship sales remain.</td></tr>
-      <tr><td>Moving Things</td><td>52</td><td>Waymo commercial robotaxi in multiple cities. Amazon 1M+ warehouse robots. Autonomous trucking in pilot. Last-mile in unstructured environments and adverse conditions remain.</td></tr>
+      <tr><td>Moving Things</td><td>57</td><td>Waymo commercial robotaxi in multiple cities. Amazon 1M+ warehouse robots. Autonomous trucking in pilot. Warehouse automation (AGVs, autonomous forklifts at 77–85% replaceability for warehouse roles) pushes the territory average above the driving-task anchor alone. Last-mile in unstructured environments and adverse conditions remain.</td></tr>
       <tr><td>Land &amp; Sea</td><td>48</td><td>GPS auto-steer, drone spraying, autonomous grain harvesting commercially deployed. Precision weeding lasers operational. Fruit harvesting in early commercial. Unstructured terrain, biological variability, and the global South's minimal mechanization anchor the score.</td></tr>
       <tr><td>Building Things</td><td>46</td><td>Construction drones (45–67% contractor adoption), rebar robots, 3D concrete printing scaling. MEP trades (plumbing, electrical, HVAC) at zero robotic automation. Unstructured environments, multi-trade coordination unsolved.</td></tr>
       <tr><td>Governing &amp; Protecting</td><td>41</td><td>AI surveillance, predictive policing, document automation in government. Military autonomous systems in deployment. Democratic accountability, judgment in novel situations, and physical enforcement remain deeply human.</td></tr>
       <tr><td>Feeding &amp; Hosting</td><td>34</td><td>Digital ordering/payment mature. Restaurant delivery robots (160K+ units globally). Basic food assembly automation (Sweetgreen). No general cooking, room-cleaning, or complex hospitality service robots deployed.</td></tr>
       <tr><td>Maintaining &amp; Fixing</td><td>32</td><td>Industrial inspection platforms (Boston Dynamics Spot, pipe crawlers, utility drones) commercially deployed. SCADA/IoT for process monitoring. Zero commercial robotic solutions for physical repair (HVAC, plumbing, electrical).</td></tr>
-      <tr><td>Learning &amp; Teaching</td><td>18</td><td>AI tutoring systems (Khan Academy + GPT-4) operational. Automated grading for structured assessments. Embodied presence, real-time social adaptation, and the developmental relationship remain far from any technical solution.</td></tr>
+      <tr><td>Learning &amp; Teaching</td><td>31</td><td>AI tutoring systems (Khanmigo, 1.4M users; Harvard 2025 RCT showing 2x learning gains) operational. Automated grading for structured assessments (Gradescope, CoGrader). Administrative compliance tools (IEP CoPilot). Embodied presence, real-time social adaptation, and the developmental relationship remain far from any technical solution.</td></tr>
     </tbody>
   </table></div>
 
@@ -603,9 +592,17 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <p class="body-text">The five physical-labor territories (Land &amp; Sea, Building Things, Moving Things, Feeding &amp; Hosting, Maintaining &amp; Fixing) carry wider uncertainty bands than cognitive territories. The two independent research models agreed within 1–5 points on cognitive territories at 2030 but disagreed by 16–27 points on physical territories. The central question — how fast will humanoid robots cross from research platforms to productive commercial tools — remains genuinely unresolved as of Q1 2026.</p>
 
-  <h3 class="section-subtitle">9.5 Occupation scores lack independent verification</h3>
+  <h3 class="section-subtitle">9.5 Occupation scoring model limitations</h3>
 
-  <p class="body-text">The 405 occupation-level scores are derived from a combination of benchmark research and AI training knowledge. Many carry a "MEDIUM — Derived from training knowledge" basis. These scores have not been independently validated by domain experts in each occupation. They are provided as indicative estimates, not as peer-reviewed assessments.</p>
+  <p class="body-text">In v3.0, occupation scores are derived from a task decomposition model using six capability vectors. This is a significant improvement over the holistic assessments used in earlier versions, but limitations remain.</p>
+
+  <p class="body-text">The task decompositions are sourced from O*NET, which is US-centric and tends to overweight administrative and documentation tasks relative to the core physical or social functions that define many roles. 138 occupations received individual review and correction; the remaining 250 use uncorrected O*NET task distributions.</p>
+
+  <p class="body-text">Each task is assigned to a single capability vector, but some tasks span multiple vectors. "Negotiate with a subcontractor" involves both cognitive reasoning (C_G) and social-embodied interaction (S_E); the model forces a choice.</p>
+
+  <p class="body-text">The binary threshold mechanism (a task is either fully automatable or not at all) does not capture partial automation. In reality, AI might handle 60% of a task's subtasks, but the model scores it as either 0% or 100%.</p>
+
+  <p class="body-text">Territory aggregates (employment-weighted averages of occupation scores) do not perfectly match territory baselines. The current RMSE is 7.5 points. The largest gaps are in territories where the occupation mix measured by the model differs from what the territory-level benchmark anchored to.</p>
 
   <h3 class="section-subtitle">9.6 No reinstatement or redistribution</h3>
 
@@ -627,7 +624,7 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <h3 class="section-subtitle">10.2 Extending the occupation layer</h3>
 
-  <p class="body-text">The occupation layer covers 405 ISCO-08 4-digit occupations. There are approximately 430 total. Adding missing occupations follows the same scoring methodology: assign a territory, assess the 2026 replaceability based on commercially available technology, and project 2030 scores under the three scenarios.</p>
+  <p class="body-text">The occupation layer covers 388 ISCO-08 4-digit occupations. There are approximately 430 total. Adding missing occupations follows the same scoring methodology: assign a territory, assess the 2026 replaceability based on commercially available technology, and project 2030 scores.</p>
 
   <h3 class="section-subtitle">10.3 Adding a territory</h3>
 
@@ -646,6 +643,21 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
   <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="changelog">11. Changelog</h2>
+
+  <h3 class="section-subtitle">v3.0 (April 2026)</h3>
+
+  <ul class="body-text">
+    <li>Occupation scoring: 388 occupations scored via 6-vector task decomposition model (27,460 tasks, empirically calibrated capability curves). 138 occupations individually reviewed with 1,478 task corrections. 99 occupations now have TASK_DECOMPOSITION scoring basis.</li>
+    <li>Employment weights: global employment weights integrated for all occupations via BLS OES → ISCO-08 crosswalk, adjusted to ILO global proportions.</li>
+    <li>Territory baseline changes: Making Things 86→78 (full employment-weighted scope), Moving Things 52→57 (warehouse automation), Learning &amp; Teaching 28→31 (incremental AI education evidence).</li>
+    <li>Territory reassignments: Photographers (3131) learning_teaching→making_meaning, Personal trainer (3226) maintaining_fixing→care_health, Agricultural Labourers (9411) making_things→land_sea.</li>
+    <li>Military occupation scores (0110, 0210, 0310) manually set at 30–35 (O*NET mapping inadequate for military roles).</li>
+    <li>maintaining_fixing territory recalibrated: 25 occupations retagged for physical repair emphasis. Territory aggregate 36 (baseline 32).</li>
+    <li>Displacement cascade recomputed for 3 changed territories. Net impact: +3M workers at 2040 (0.6%).</li>
+    <li>10 duplicate occupation names resolved. 15 territory field format inconsistencies fixed. 3 gap-fill records corrected. 2 ISCO mapping discrepancies documented.</li>
+    <li>Scenarios: conservative and accelerated scenarios archived. Moderate is the sole displayed projection.</li>
+    <li>Occupation count: 405→388 (consolidation from v2.3 onward, documented in earlier changelogs).</li>
+  </ul>
 
   <h3 class="section-subtitle">v2.2 (March 2026)</h3>
 
@@ -679,7 +691,7 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <p class="body-text">If referencing this dataset or methodology:</p>
 
-  <p class="body-text">Large Labor Model, v2.2. Dataset and methodology. March 2026. largelabormodel.com.</p>
+  <p class="body-text">Large Labor Model, v3.0. Dataset and methodology. April 2026. largelabormodel.com.</p>
 
   <p class="body-text">The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.</p>
 

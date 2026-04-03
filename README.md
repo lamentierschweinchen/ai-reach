@@ -52,7 +52,7 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 
 ## Dataset
 
-**Current version:** 2.10 (March 2026)
+**Current version:** 3.0 (April 2026)
 
 | Layer | Records | Coverage |
 |---|---|---|
@@ -67,9 +67,18 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 - World Bank WDI (secondary validation)
 - Displacement formula with documented parameters (2026–2041 projections)
 
-The **moderate scenario** is displayed. Conservative and accelerated scenarios were computed during development and are archived separately for potential future use.
+### Projection
 
-The full methodology is available at largelabormodel.com and in `Large_Labor_Model_Methodology_v2.10.md`.
+The visualisation shows a single projection under a moderate capability trajectory: the METR 4-month doubling rate continues through 2028, then stabilises. The displacement model converts capability gains into projected workforce reduction using a one-third conversion rate and a 15-year lag absorption schedule. See the full methodology for details.
+
+### Replaceability Index
+
+- Scores by territory and occupation, 1970–2041, with annual resolution
+- v3.0: occupation scores derived from 6-vector task decomposition model (27,460 tasks)
+- Sources: METR time-horizon data, AI benchmark trajectories, SWE-bench, GPQA, IFR robot density, robotics capability research, commercial deployment data
+- Barrier tags recorded per territory: REGULATORY / ECONOMIC / HUMANOID_DEPENDENT / HUMAN_PREFERENCE
+
+The full methodology is available at largelabormodel.com and in the methodology page.
 
 ---
 
