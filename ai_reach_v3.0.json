@@ -21789,7 +21789,7 @@
       "displacement_2035_moderate": 41.4,
       "displacement_2040_moderate": 48.7,
       "display_name": "Accountants and Auditors",
-      "display_in_territory": false,
+      "display_in_territory": true,
       "employment_weight_pct": 9.846,
       "global_estimated_employment": 666000,
       "employment_weight_note": "BLS crosswalk. US=1,569,030, ISCO-2 factor=0.424."
@@ -22390,7 +22390,7 @@
       "displacement_2035_moderate": 38.2,
       "displacement_2040_moderate": 44.9,
       "display_name": "IT Business Analysts",
-      "display_in_territory": true,
+      "display_in_territory": false,
       "employment_weight_pct": 3.365,
       "global_estimated_employment": 227632,
       "employment_weight_note": "BLS crosswalk. US=536,280, ISCO-2 factor=0.424."
@@ -39389,10 +39389,10 @@
           "replaceability_score": 0
         },
         {
-          "display_name": "Plantation Workers",
-          "description": "Sugar, cotton, tobacco, tea, rubber plantation labor. Includes enslaved labor through abolition periods.",
+          "display_name": "Herders & Drovers",
+          "description": "Livestock droving, cattle herding, sheep mustering, and animal husbandry labor across pastoral and agricultural regions.",
           "approximate_share_pct": 5,
-          "share_trend": "Shifting geographically; globally significant through 1870",
+          "share_trend": "Declining with rail transport and fencing; regionally persistent through 1870",
           "replaceability_score": 0
         },
         {

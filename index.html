@@ -476,11 +476,6 @@ header {
 #back-btn.visible { display: block; }
 
 /* ── HOW-TO INTERACT BUTTONS (landing page) ── */
-.intro-interact-heading {
-  font-family: 'Inter', sans-serif; font-weight: 400;
-  font-size: 14px; letter-spacing: 0.08em; color: #FFFFFF;
-  margin-bottom: 12px; display: block;
-}
 .intro-interact-row {
   display: flex; gap: 10px; flex-wrap: wrap;
 }
@@ -533,7 +528,6 @@ header {
     <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based professions.</div>
     <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable — and what that may mean for your job.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
-      <span class="intro-interact-heading">How it works</span>
       <div class="intro-interact-row">
         <div class="intro-interact-btn-wrap">
           <button class="intro-interact-btn" type="button">Explore</button>
@@ -1589,8 +1583,8 @@ function drawAllShapes() {
     // Projected data shimmer — subtle pulsing border for post-2026
     if (!isMacro && currentYear > 2026 && reach > 0) {
       const shimmerPhase = (Date.now() % 3000) / 3000;
-      const shimmerAlpha = 0.15 + 0.15 * Math.sin(shimmerPhase * Math.PI * 2);
-      drawShapeOutline(ctx, pts, t.color, shimmerAlpha, 1);
+      const shimmerAlpha = 0.25 + 0.25 * Math.sin(shimmerPhase * Math.PI * 2);
+      drawShapeOutline(ctx, pts, t.color, shimmerAlpha, 1.5);
     }
 
     // Labels with minimum padding
@@ -1744,10 +1738,11 @@ function drawJobSubShapes() {
 
   // Grid layout: 4 columns × 2 rows, items placed to avoid center title zone
   const margin = Math.min(s.w, s.h) * 0.06;
+  const bottomMargin = Math.min(s.w, s.h) * 0.10;
   const innerL = s.cx - s.w/2 + margin;
   const innerR = s.cx + s.w/2 - margin;
   const innerT = s.cy - s.h/2 + margin;
-  const innerB = s.cy + s.h/2 - margin;
+  const innerB = s.cy + s.h/2 - bottomMargin;
   const gridW = innerR - innerL;
   const gridH = innerB - innerT;
 
@@ -1773,13 +1768,13 @@ function drawJobSubShapes() {
     const jcx = innerL + gridW * xFrac;
     const jcy = innerT + gridH * yFrac;
 
-    const baseJobSize = subSize * 0.75;
+    const baseJobSize = subSize * 0.85;
     let jw;
     if (sub.isHistorical && sub.sharePct != null) {
       const shareScale = 0.6 + (sub.sharePct / 50) * 0.4;
-      jw = Math.min(baseJobSize * shareScale, subSize * 0.9);
+      jw = Math.min(baseJobSize * shareScale, subSize * 0.95);
     } else {
-      jw = Math.min(baseJobSize + rawScore * 0.12, subSize * 0.9);
+      jw = Math.min(baseJobSize + rawScore * 0.12, subSize * 0.95);
     }
     const jh = jw * 0.82;
 
@@ -1809,7 +1804,7 @@ function drawJobSubShapes() {
 
       const label = d.sub.name.toUpperCase();
       const maxLabelW = jw - 8;
-      let labelSize = Math.min(11, Math.max(7, jw * 0.11));
+      let labelSize = Math.min(13, Math.max(8, jw * 0.13));
       let labelFont = `500 ${labelSize}px "Inter"`;
       const maxLines = 3;
 
@@ -2093,7 +2088,7 @@ function updatePanel(id) {
   const meta = V2.territory_metadata && V2.territory_metadata[t.id];
   document.getElementById('panel-name').textContent = meta ? meta.display_name : t.name;
   document.getElementById('panel-name').style.color = t.color;
-  document.getElementById('panel-isic').textContent = (meta ? 'ISIC ' + meta.isic : 'ISIC ' + t.isic.join(', ')) + ' · ' + share.toFixed(1) + '% of workforce';
+  document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
   document.getElementById('panel-desc').textContent = meta ? meta.description : t.desc;
   document.getElementById('panel-reach-num').textContent = reach + '%';
   document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
