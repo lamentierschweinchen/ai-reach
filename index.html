@@ -1736,15 +1736,12 @@ function drawJobSubShapes() {
   const n = subShapes.length;
   if (n === 0) return;
 
-  // Grid layout: 4 columns × 2 rows, items placed to avoid center title zone
-  const margin = Math.min(s.w, s.h) * 0.06;
-  const bottomMargin = Math.min(s.w, s.h) * 0.10;
-  const innerL = s.cx - s.w/2 + margin;
-  const innerR = s.cx + s.w/2 - margin;
-  const innerT = s.cy - s.h/2 + margin;
-  const innerB = s.cy + s.h/2 - bottomMargin;
-  const gridW = innerR - innerL;
-  const gridH = innerB - innerT;
+  // Grid layout: 4 columns × 2 rows, items placed to avoid center title zone.
+  // Grid lives in parent's LOCAL (unrotated) frame; positions are rotated into
+  // world space so sub-shapes fit inside the rotated parent territory.
+  const margin = Math.min(s.w, s.h) * 0.09;
+  const innerW = s.w - margin * 2;
+  const innerH = s.h - margin * 2;
 
   // For 8: two rows of 4, compact grid
   // For other counts: standard grid
@@ -1756,7 +1753,9 @@ function drawJobSubShapes() {
     positions.push([(c + 0.5) / cols, (r + 0.5) / rows]);
   }
 
-  const subSize = Math.min(gridW / cols, gridH / rows);
+  const subSize = Math.min(innerW / cols, innerH / rows);
+  const rotRad = (t.rotation || 0) * Math.PI / 180;
+  const cosR = Math.cos(rotRad), sinR = Math.sin(rotRad);
 
   // Pre-compute layout data for all sub-shapes
   const subLayouts = subShapes.map((sub, i) => {
@@ -1765,16 +1764,20 @@ function drawJobSubShapes() {
     const rawScore = Math.max(0, Math.min(99, Math.round(sub.score)));
     const displayValue = sub.isHistorical ? null : rawScore;
 
-    const jcx = innerL + gridW * xFrac;
-    const jcy = innerT + gridH * yFrac;
+    // Position in parent's local (unrotated) frame, centered on origin
+    const localX = innerW * (xFrac - 0.5);
+    const localY = innerH * (yFrac - 0.5);
+    // Rotate into world space with parent's rotation
+    const jcx = s.cx + localX * cosR - localY * sinR;
+    const jcy = s.cy + localX * sinR + localY * cosR;
 
-    const baseJobSize = subSize * 0.85;
+    const baseJobSize = subSize * 0.78;
     let jw;
     if (sub.isHistorical && sub.sharePct != null) {
       const shareScale = 0.6 + (sub.sharePct / 50) * 0.4;
-      jw = Math.min(baseJobSize * shareScale, subSize * 0.95);
+      jw = Math.min(baseJobSize * shareScale, subSize * 0.88);
     } else {
-      jw = Math.min(baseJobSize + rawScore * 0.12, subSize * 0.95);
+      jw = Math.min(baseJobSize + rawScore * 0.10, subSize * 0.88);
     }
     const jh = jw * 0.82;
 
@@ -1803,24 +1806,30 @@ function drawJobSubShapes() {
       ctx.fillStyle = '#FFFFFF';
 
       const label = d.sub.name.toUpperCase();
-      const maxLabelW = jw - 8;
+      const maxLabelW = jw - 4;
       let labelSize = Math.min(13, Math.max(8, jw * 0.13));
       let labelFont = `500 ${labelSize}px "Inter"`;
       const maxLines = 3;
+      const words = label.split(/\s+/);
+      const maxWordWidthAt = (font) => {
+        let mw = 0;
+        for (const w of words) { const ww = measureTextWidth(w, font); if (ww > mw) mw = ww; }
+        return mw;
+      };
 
       let labelResult = measureTextLayout(label, labelFont, maxLabelW, labelSize + 2);
 
-      // Check if any word is wider than maxLabelW (would cause mid-word break)
-      // Also shrink if text needs more than maxLines
-      const hasOverflow = labelResult.lines.some(l => l.width > maxLabelW + 1);
-      if ((labelResult.lineCount > maxLines || hasOverflow) && labelSize > 5) {
-        let lo = 5, hi = labelSize;
-        while (hi - lo > 0.5) {
+      // Detect mid-word break: any single word wider than maxLabelW causes pretext to split it.
+      // Also shrink if text needs more than maxLines.
+      const hasWordOverflow = maxWordWidthAt(labelFont) > maxLabelW;
+      if ((labelResult.lineCount > maxLines || hasWordOverflow) && labelSize > 4) {
+        let lo = 4, hi = labelSize;
+        while (hi - lo > 0.25) {
           const mid = (lo + hi) / 2;
           const testFont = `500 ${mid}px "Inter"`;
           const testResult = measureTextLayout(label, testFont, maxLabelW, mid + 2);
-          const testOverflow = testResult.lines.some(l => l.width > maxLabelW + 1);
-          if (testResult.lineCount <= maxLines && !testOverflow) { lo = mid; } else { hi = mid; }
+          const testWordOverflow = maxWordWidthAt(testFont) > maxLabelW;
+          if (testResult.lineCount <= maxLines && !testWordOverflow) { lo = mid; } else { hi = mid; }
         }
         labelSize = lo;
         labelFont = `500 ${labelSize}px "Inter"`;
