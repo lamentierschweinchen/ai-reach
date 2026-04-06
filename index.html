@@ -583,6 +583,17 @@ header {
 
 <div id="detail-panel">
   <button class="panel-close" id="panel-close">✕</button>
+  <div id="panel-your-job" style="display:none">
+    <div class="panel-stat-label" style="margin-bottom:4px; opacity:0.5; font-size:9px; text-transform:uppercase; letter-spacing:1px">Your job</div>
+    <div id="your-job-name" style="font-size:16px; font-weight:700; margin-bottom:8px"></div>
+    <div id="your-job-score-wrap" style="display:flex; align-items:baseline; gap:8px; margin-bottom:6px">
+      <div id="your-job-score" style="font-size:28px; font-weight:700"></div>
+      <div style="opacity:0.5; font-size:11px">replaceability</div>
+    </div>
+    <div class="reach-bar-wrap" style="margin-bottom:10px"><div id="your-job-bar" class="reach-bar-fill"></div></div>
+    <div id="your-job-detail" style="font-size:11px; opacity:0.6; line-height:1.5; margin-bottom:12px"></div>
+    <div style="border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:12px"></div>
+  </div>
   <div class="panel-territory-name" id="panel-name">—</div>
   <div class="panel-isic" id="panel-isic">—</div>
   <div class="panel-description" id="panel-desc">—</div>
@@ -817,7 +828,8 @@ function buildLookupTables() {
           territoryName: occ.territory,
           score: occ.replaceability_2026,
           isco: occ.isco_code,
-          occupationName: occ.occupation_name
+          occupationName: occ.occupation_name,
+          occ: occ
         });
       }
     });
@@ -1028,6 +1040,7 @@ let toastTimeout = null;
 let zoomedTerritory = null;
 let zoomProgress = 0;
 let zoomTarget = 0;
+let selectedJob = null; // Set when user clicks a search result; cleared on zoomOut
 
 // Animation state for smooth transitions
 let shapeStates = {};
@@ -2051,6 +2064,7 @@ function zoomIn(id) {
 function zoomOut() {
   zoomTarget = 0;
   zoomedTerritory = null;
+  selectedJob = null;
   // Force all shape alphas back to full so blocks don't stay muddy
   Object.values(shapeStates).forEach(s => { s.alpha = 0.88; });
   document.getElementById('back-btn').classList.remove('visible');
@@ -2115,6 +2129,26 @@ function updatePanel(id) {
   const macro = !t ? MACRO_SHAPES.find(x => x.id === id) : null;
   const entry = t || macro;
   if (!entry) return;
+
+  // ── "Your Job" card ──
+  const yourJobEl = document.getElementById('panel-your-job');
+  if (selectedJob && selectedJob.territory === id && selectedJob.occ) {
+    const occ = selectedJob.occ;
+    const score = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
+    document.getElementById('your-job-name').textContent = selectedJob.job;
+    document.getElementById('your-job-score').textContent = score + '%';
+    document.getElementById('your-job-score').style.color = getBarColor(score);
+    const bar = document.getElementById('your-job-bar');
+    bar.style.width = score + '%';
+    bar.style.background = getBarColor(score);
+    const details = [];
+    if (occ.benchmark_anchor_2026) details.push(occ.benchmark_anchor_2026);
+    if (occ.key_barrier_note) details.push('Barrier: ' + occ.key_barrier_note);
+    document.getElementById('your-job-detail').textContent = details.join(' · ') || '';
+    yourJobEl.style.display = 'block';
+  } else {
+    yourJobEl.style.display = 'none';
+  }
 
   if (macro) {
     // Macro territory panel — historical view
@@ -2480,6 +2514,7 @@ searchInput.addEventListener('input', () => {
   if (q.length < 2) { searchResultsEl.classList.remove('visible'); return; }
   const matches = JOB_SEARCH_DATA.filter(j=>j.job.toLowerCase().includes(q))
     .sort((a,b)=> (a.job.toLowerCase().startsWith(q)?0:1) - (b.job.toLowerCase().startsWith(q)?0:1))
+    .filter((m, i, arr) => arr.findIndex(x => x.isco === m.isco) === i)
     .slice(0,8);
   searchResultsEl.innerHTML = '';
   if (!matches.length) { searchResultsEl.classList.remove('visible'); return; }
@@ -2490,6 +2525,7 @@ searchInput.addEventListener('input', () => {
     div.className = 'search-result-item';
     div.innerHTML = `<div>${m.job}</div><div class="job-territory">${m.territoryName} · ${reach}% replaceability</div>`;
     div.addEventListener('click',()=>{
+      selectedJob = m;
       zoomIn(m.territory);
       searchInput.value=m.job;
       searchResultsEl.classList.remove('visible');
