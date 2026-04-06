@@ -2135,7 +2135,8 @@ function updatePanel(id) {
   if (selectedJob && selectedJob.territory === id && selectedJob.occ) {
     const occ = selectedJob.occ;
     const score = Math.max(0, Math.min(99, getOccupationScore(occ, currentYear)));
-    document.getElementById('your-job-name').textContent = selectedJob.job;
+    const titleCase = s => s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    document.getElementById('your-job-name').textContent = titleCase(selectedJob.job);
     document.getElementById('your-job-score').textContent = score + '%';
     document.getElementById('your-job-score').style.color = getBarColor(score);
     const bar = document.getElementById('your-job-bar');
@@ -2517,7 +2518,11 @@ searchInput.addEventListener('input', () => {
       const aStarts = a.job.toLowerCase().startsWith(q) ? 0 : 1;
       const bStarts = b.job.toLowerCase().startsWith(q) ? 0 : 1;
       if (aStarts !== bStarts) return aStarts - bStarts;
-      return b.score - a.score; // prefer higher-scoring occupation
+      // prefer singular over plural, then higher score
+      const aPlural = a.job.toLowerCase().endsWith('s') ? 1 : 0;
+      const bPlural = b.job.toLowerCase().endsWith('s') ? 1 : 0;
+      if (aPlural !== bPlural) return aPlural - bPlural;
+      return b.score - a.score;
     })
     .filter((m, i, arr) => arr.findIndex(x => x.isco === m.isco) === i)
     .filter((m, i, arr) => {
@@ -2527,16 +2532,18 @@ searchInput.addEventListener('input', () => {
     .slice(0,8);
   searchResultsEl.innerHTML = '';
   if (!matches.length) { searchResultsEl.classList.remove('visible'); return; }
+  const titleCase = s => s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
   matches.forEach(m => {
     const t = TERRITORIES.find(x=>x.id===m.territory);
     const reach = t ? Math.round(getTerritoryReach(t,currentYear)) : 0;
+    const displayName = titleCase(m.job);
     const div = document.createElement('div');
     div.className = 'search-result-item';
-    div.innerHTML = `<div>${m.job}</div><div class="job-territory">${m.territoryName} · ${reach}% replaceability</div>`;
+    div.innerHTML = `<div>${displayName}</div><div class="job-territory">${m.territoryName} · ${reach}% replaceability</div>`;
     div.addEventListener('click',()=>{
       selectedJob = m;
       zoomIn(m.territory);
-      searchInput.value=m.job;
+      searchInput.value=titleCase(m.job);
       searchResultsEl.classList.remove('visible');
       if (isMobile()) {
         const sw = document.querySelector('.search-wrap');
