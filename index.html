@@ -139,7 +139,7 @@ header {
 .panel-close:hover { color: var(--text); }
 .panel-territory-name { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
 .panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
-.panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.68); margin-bottom: 18px; }
+.panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.68); margin-bottom: 18px; text-wrap: pretty; }
 
 .panel-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .panel-stat-label { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
@@ -160,7 +160,7 @@ header {
 
 .panel-barrier {
   margin-top: 12px; padding: 7px 10px; background: rgba(255,255,255,0.02);
-  border-left: 2px solid var(--accent); font-size: 10px; line-height: 1.45; color: rgba(255,255,255,0.55);
+  border-left: 2px solid var(--accent); font-size: 10px; line-height: 1.45; color: rgba(255,255,255,0.55); text-wrap: pretty;
 }
 .panel-barrier strong { color: var(--accent); font-weight: 400; }
 
@@ -295,7 +295,7 @@ header {
 .intro-body {
   font-family: 'Inter', sans-serif; font-weight: 400;
   font-size: 16px; line-height: 1.6; color: #888888;
-  max-width: 480px; margin-bottom: 20px;
+  max-width: 480px; margin-bottom: 20px; text-wrap: pretty;
 }
 .intro-enter {
   font-family: 'Inter', sans-serif; font-weight: 500;
@@ -505,7 +505,7 @@ header {
   transform: translateX(-50%);
   background: rgba(0,0,0,0.97); border: 1.5px solid rgba(255,255,255,0.85); border-radius: 10px;
   padding: 10px 16px; font-size: 12px; line-height: 1.5; color: var(--text);
-  min-width: 220px; max-width: 300px; white-space: normal;
+  min-width: 220px; max-width: 300px; white-space: normal; text-wrap: pretty;
   opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
   z-index: 600;
 }
@@ -525,8 +525,8 @@ header {
   <div class="intro-left">
     <div class="intro-title">Large Labor Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
-    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based professions.</div>
-    <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable — and what that may mean for your job.</div>
+    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based&nbsp;professions.</div>
+    <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable — and what that may mean for your&nbsp;job.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
       <div class="intro-interact-row">
         <div class="intro-interact-btn-wrap">
@@ -591,7 +591,7 @@ header {
       <div style="opacity:0.5; font-size:11px">replaceability</div>
     </div>
     <div class="reach-bar-wrap" style="margin-bottom:10px"><div id="your-job-bar" class="reach-bar-fill"></div></div>
-    <div id="your-job-detail" style="font-size:11px; opacity:0.6; line-height:1.5; margin-bottom:12px"></div>
+    <div id="your-job-detail" style="font-size:11px; opacity:0.6; line-height:1.5; margin-bottom:12px; text-wrap:pretty"></div>
     <div style="border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:12px"></div>
   </div>
   <div class="panel-territory-name" id="panel-name">—</div>
