@@ -2513,8 +2513,17 @@ searchInput.addEventListener('input', () => {
   const q = searchInput.value.trim().toLowerCase();
   if (q.length < 2) { searchResultsEl.classList.remove('visible'); return; }
   const matches = JOB_SEARCH_DATA.filter(j=>j.job.toLowerCase().includes(q))
-    .sort((a,b)=> (a.job.toLowerCase().startsWith(q)?0:1) - (b.job.toLowerCase().startsWith(q)?0:1))
+    .sort((a,b)=> {
+      const aStarts = a.job.toLowerCase().startsWith(q) ? 0 : 1;
+      const bStarts = b.job.toLowerCase().startsWith(q) ? 0 : 1;
+      if (aStarts !== bStarts) return aStarts - bStarts;
+      return b.score - a.score; // prefer higher-scoring occupation
+    })
     .filter((m, i, arr) => arr.findIndex(x => x.isco === m.isco) === i)
+    .filter((m, i, arr) => {
+      const norm = s => s.toLowerCase().replace(/s$/, '');
+      return arr.findIndex(x => norm(x.job) === norm(m.job)) === i;
+    })
     .slice(0,8);
   searchResultsEl.innerHTML = '';
   if (!matches.length) { searchResultsEl.classList.remove('visible'); return; }
