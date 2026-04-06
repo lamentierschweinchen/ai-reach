@@ -1672,6 +1672,60 @@ function drawAllShapes() {
 
   if (zoomProgress > 0.3 && zoomedTerritory) {
     drawJobSubShapes();
+
+    // Re-draw zoomed territory title ON TOP of sub-shapes
+    const zt = TERRITORIES.find(x => x.id === zoomedTerritory) || MACRO_SHAPES.find(x => x.id === zoomedTerritory);
+    const zs = zt ? shapeStates[zt.id] : null;
+    if (zt && zs) {
+      const isMacroZ = zt.id.startsWith('macro_');
+      const reachZ = isMacroZ ? 0 : Math.round(getTerritoryReach(zt, currentYear));
+      const drawWZ = zs.w, drawHZ = zs.h;
+      const paddingXZ = Math.max(16, drawWZ * 0.08);
+      const paddingYZ = Math.max(12, drawHZ * 0.08);
+      const availWZ = drawWZ - paddingXZ * 2;
+      const availHZ = drawHZ - paddingYZ * 2;
+      const minDimZ = Math.min(availWZ, availHZ);
+
+      if (minDimZ > 30) {
+        ctx.save();
+        const textColorZ = DARK_TEXT_TERRITORIES.includes(zt.id) ? '#1A1A1A' : '#FFFFFF';
+        const nameSizeZ = Math.round(Math.max(9, Math.min(15, minDimZ * 0.08)));
+        const nameFontZ = `700 ${nameSizeZ}px "Inter"`;
+        const nameLHZ = nameSizeZ + 3;
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = textColorZ;
+        ctx.font = nameFontZ;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.letterSpacing = '0.08em';
+        const displayNameZ = zt.name.toUpperCase();
+        const nameLayoutZ = measureTextLayout(displayNameZ, nameFontZ, availWZ, nameLHZ);
+        const nameHZ = nameLayoutZ.height;
+        const scoreSizeZ = Math.round(Math.max(16, Math.min(32, minDimZ * 0.2)));
+        const scoreHZ = scoreSizeZ;
+        const hasScoreZ = reachZ > 0;
+        const nameBlockTopZ = zs.cy - nameHZ / 2 - (hasScoreZ ? minDimZ * 0.06 : 0);
+
+        if (nameLayoutZ.lines.length === 1) {
+          ctx.fillText(nameLayoutZ.lines[0].text, Math.round(zs.cx), Math.round(nameBlockTopZ + nameLHZ / 2));
+        } else {
+          nameLayoutZ.lines.forEach((line, i) => {
+            ctx.fillText(line.text, Math.round(zs.cx), Math.round(nameBlockTopZ + i * nameLHZ + nameLHZ / 2));
+          });
+        }
+
+        if (!isMacroZ && reachZ >= 1) {
+          const nameBlockBottomZ = nameBlockTopZ + nameHZ;
+          const gapZ = 4;
+          const scoreYZ = nameBlockBottomZ + gapZ + scoreHZ / 2;
+          ctx.fillStyle = textColorZ;
+          ctx.globalAlpha = 0.6;
+          ctx.font = `700 ${scoreSizeZ}px "Inter"`;
+          ctx.fillText(Math.round(reachZ) + '%', Math.round(zs.cx), Math.round(scoreYZ));
+        }
+        ctx.restore();
+      }
+    }
   }
 
   const avgReach = totalReachWeighted.weight > 0 ?
@@ -2071,7 +2125,7 @@ function updatePanel(id) {
     const macroMeta = V2.territory_metadata && V2.territory_metadata[id];
     document.getElementById('panel-name').textContent = macroMeta ? macroMeta.display_name : entry.name;
     document.getElementById('panel-name').style.color = entry.color;
-    document.getElementById('panel-isic').textContent = (macroMeta ? macroMeta.isic + ' · ' : '') + share.toFixed(1) + '% of workforce';
+    document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
     const hist = historicalOccupations[id];
     document.getElementById('panel-desc').textContent = macroMeta ? macroMeta.description : (hist ? hist.description : '');
     document.getElementById('panel-reach-num').textContent = '0%';
