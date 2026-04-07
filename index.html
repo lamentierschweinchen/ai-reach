@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Large Labor Model — When Will AI Reach Your Profession?</title>
+<title>Large Labor Model — When Will AI Reach Your Job?</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 @font-face {
@@ -512,7 +512,7 @@ header {
   <div class="intro-left">
     <div class="intro-title">Large Labor Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
-    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based&nbsp;professions.</div>
+    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to roughly one in four, and AI has become capable of performing most tasks across knowledge-based&nbsp;professions.</div>
     <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically&nbsp;replaceable.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
       <div class="intro-interact-row">
@@ -681,7 +681,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v3.0.json');
+  const resp = await fetch('ai_reach_v3.1.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -896,7 +896,7 @@ const TERRITORIES = [
     barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.' },
   { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#D4A800',
     baseX:0.55, baseY:0.35, rotation:-4,
-    desc:'Retail and wholesale trade. The largest employer by headcount.',
+    desc:'Retail and wholesale trade — the work of selling things and serving customers face to face.',
     barrier:'Scale of existing employment — 18% of global workforce.' },
   { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#1A3AC8',
     baseX:0.75, baseY:0.08, rotation:10,
@@ -908,7 +908,7 @@ const TERRITORIES = [
     barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.' },
   { id:'care_health', name:'Care & Health', isic:['Q'], color:'#D4006A',
     baseX:0.88, baseY:0.50, rotation:5,
-    desc:'Human health and social work. AI matches expert accuracy on imaging and diagnostics. The legal, credentialing, and human-contact dimensions of care remain technically out of reach.',
+    desc:'Human health and social work. AI matches expert accuracy on imaging and diagnostics. The legal, credentialing, and human-contact dimensions of care remain as barriers to deployment.',
     barrier:'Legal liability, credentialing, and deep human preference.' },
   { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#00B8C8',
     baseX:0.72, baseY:0.60, rotation:-10,
