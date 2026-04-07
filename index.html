@@ -108,17 +108,6 @@ header {
 #tooltip .tt-stats { display: none; }
 #tooltip .tt-hint { display: none; }
 
-/* ── REPLACEABILITY HINT ── */
-#repl-hint {
-  position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.85); border: 1px solid rgba(255,0,0,0.3);
-  color: #FFFFFF; font-family: var(--font-body); font-size: 13px;
-  letter-spacing: 0.06em; padding: 12px 24px; z-index: 95;
-  opacity: 0; pointer-events: none; transition: opacity 0.6s ease;
-  backdrop-filter: blur(8px);
-}
-#repl-hint.visible { opacity: 1; }
-
 /* ── DETAIL PANEL (for zoomed view) ── */
 #detail-panel {
   position: fixed; right: 0; top: 46px; bottom: 88px; width: 340px;
@@ -445,8 +434,6 @@ header {
   #milestone-toast .toast-year { font-size: 10px; }
   #milestone-toast .toast-label { font-size: 12px; font-weight: 500; }
 
-  #repl-hint { font-size: 11px; padding: 10px 16px; }
-
   /* ── Hidden elements on mobile (Step 12) ── */
   #global-stats { display: none; }
   #era-label { display: none; }
@@ -570,8 +557,6 @@ header {
 </div>
 
 <canvas id="main-canvas"></canvas>
-
-<div id="repl-hint">Squares are now clickable — explore each sector</div>
 
 <div id="tooltip">
   <div class="tt-name" id="tt-name"></div>
@@ -1337,19 +1322,11 @@ function render() {
   ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, W, H);
 
-  // Check if replaceability data just became active (trigger clickability hint)
   if (!replPulseTriggered && isPlaying) {
     const anyReach = TERRITORIES.some(t => getTerritoryReach(t, currentYear) > 0);
     if (anyReach) {
       replPulseTriggered = true;
       replPulseFrame = 0;
-      // Show one-time hint if not shown before in this session
-      if (!sessionStorage.getItem('replHintShown')) {
-        const hint = document.getElementById('repl-hint');
-        hint.classList.add('visible');
-        sessionStorage.setItem('replHintShown', '1');
-        setTimeout(() => hint.classList.remove('visible'), 3000);
-      }
     }
   }
   if (replPulseTriggered && replPulseFrame < REPL_PULSE_DURATION) {
@@ -1583,7 +1560,6 @@ function drawAllShapes() {
       drawShapeOutline(ctx, pts, '#FFFFFF', 0.25, 1.5);
     }
 
-    // Replaceability pulse glow (one-time when squares become clickable)
     if (!isMacro && replPulseTriggered && replPulseFrame < REPL_PULSE_DURATION) {
       const pulseAlpha = 0.5 * (1 - replPulseFrame / REPL_PULSE_DURATION);
       drawShapeOutline(ctx, pts, '#FFFFFF', pulseAlpha, 2.5);
@@ -2632,5 +2608,6 @@ window.zoomIn = zoomIn;
 // Start loading data
 loadData();
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
