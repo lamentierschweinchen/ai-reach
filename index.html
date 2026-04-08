@@ -315,7 +315,7 @@ header {
     min-height: 0;
   }
   .wordmark { font-size: 13px; letter-spacing: 0.02em; white-space: nowrap; }
-  .tagline { display: none; }
+  .tagline { font-size: 6px; letter-spacing: 0.1em; color: #555; margin-top: 1px; }
   .search-wrap {
     flex: 0 0 auto; order: 0;
     width: 44px; height: 44px;
@@ -375,7 +375,7 @@ header {
 
   /* ── Canvas / back-btn / detail-panel positioning ── */
   #main-canvas { top: calc(52px + var(--sat)); bottom: calc(80px + var(--sab)); }
-  #back-btn { top: calc(62px + var(--sat)); }
+  #back-btn { display: none !important; }
 
   /* ── Timeline (Steps 7 + 8) ── */
   #timeline {
@@ -391,7 +391,9 @@ header {
   .zone-label.projected { display: none; }
   .zone-label { display: none; }
   .timeline-projected-zone { display: none; }
-  .timeline-years { display: none; }
+  .timeline-years { font-size: 7px; height: 10px; color: #555; }
+  .timeline-years span:first-child { transform: translateX(0); }
+  .timeline-years span:last-child { transform: translateX(-100%); }
   .year-display { font-size: 20px; }
   .play-btn { width: 24px; height: 24px; font-size: 10px; }
 
@@ -416,6 +418,7 @@ header {
   .panel-territory-name { font-size: 22px; }
   .panel-stat-value { font-size: 24px; }
   .panel-description { font-size: 13px; }
+  #mini-chart { height: 90px; }
   #detail-panel::before {
     content: ''; display: block;
     width: 36px; height: 4px;
@@ -440,16 +443,19 @@ header {
 
   /* ── Splash screen (Step 11) ── */
   #intro-overlay {
-    padding: calc(var(--sat) + 3vh) 6vw 3vh;
-    flex-direction: column; align-items: flex-start; gap: 12px; overflow-y: auto;
+    padding: calc(var(--sat) + 3vh) 6vw calc(var(--sab) + 3vh);
+    flex-direction: column; align-items: flex-start; gap: 0; overflow-y: auto;
+    justify-content: center;
   }
   .intro-left { flex: none; }
-  .intro-body-secondary { display: none; }
-  .intro-right { align-self: center; }
-  .intro-title { font-size: clamp(28px, 7vw, 38px); margin-bottom: 10px; }
-  .intro-subtitle { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 14px; }
-  .intro-body { font-size: 12px; line-height: 1.5; margin-bottom: 12px; }
-  .intro-enter { padding: 18px 40px; font-size: 13px; width: 100%; margin-bottom: 16px; }
+  .intro-body-secondary { font-size: 12px; line-height: 1.5; margin-bottom: 20px; color: #888; }
+  .intro-right { flex: none; align-self: stretch; margin-top: 28px; }
+  .intro-title { font-size: clamp(28px, 7vw, 38px); margin-bottom: 8px; }
+  .intro-subtitle { font-size: 10px; letter-spacing: 0.14em; margin-bottom: 20px; color: #555; }
+  .intro-body { font-size: 13px; line-height: 1.55; margin-bottom: 10px; color: #777; }
+  .intro-enter { padding: 20px 40px; font-size: 13px; width: 100%; margin-bottom: 0; clip-path: polygon(2% 8%, 97% 0%, 100% 90%, 1% 98%); }
+  .intro-interact-row { margin-top: 4px; }
+  .intro-interact-btn { font-size: 10px; padding: 6px 14px; border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.5); }
 }
 
 /* Back button for zoom */
@@ -501,9 +507,12 @@ header {
   transition-delay: 0.1s;
 }
 @media (max-width: 600px) {
-  .intro-interact-row { flex-direction: column; gap: 8px; }
-  .intro-interact-popup { left: 0; transform: none; min-width: 180px; }
+  .intro-interact-row { flex-direction: row; gap: 10px; }
+  .intro-interact-popup { display: none; }
+  .desktop-only { display: none; }
+  .mobile-only { display: inline; }
 }
+.mobile-only { display: none; }
 </style>
 </head>
 <body>
@@ -522,7 +531,7 @@ header {
         </div>
         <div class="intro-interact-btn-wrap">
           <button class="intro-interact-btn" type="button">Control time</button>
-          <div class="intro-interact-popup">Drag the timeline circle to travel through centuries, or press [spacebar] to pause the animation</div>
+          <div class="intro-interact-popup">Drag the timeline circle to travel through centuries, or <span class="desktop-only">press [spacebar]</span><span class="mobile-only">tap ▶</span> to pause the animation</div>
         </div>
       </div>
     </div>
@@ -551,6 +560,7 @@ header {
 <div id="mobile-menu" style="display:none">
   <div class="menu-scrim" onclick="document.getElementById('mobile-menu').style.display='none'"></div>
   <div class="menu-sheet">
+    <button class="menu-item" onclick="resetTimeline();document.getElementById('mobile-menu').style.display='none'">Reset view</button>
     <button class="menu-item" onclick="window.location.href='/about'">About the work</button>
     <button class="menu-item" onclick="window.location.href='/about#data'">About the data</button>
   </div>
@@ -2491,6 +2501,9 @@ searchInput.addEventListener('input', () => {
   if (q.length < 2) { searchResultsEl.classList.remove('visible'); return; }
   const matches = JOB_SEARCH_DATA.filter(j=>j.job.toLowerCase().includes(q))
     .sort((a,b)=> {
+      const aExact = a.job.toLowerCase() === q ? 0 : 1;
+      const bExact = b.job.toLowerCase() === q ? 0 : 1;
+      if (aExact !== bExact) return aExact - bExact;
       const aStarts = a.job.toLowerCase().startsWith(q) ? 0 : 1;
       const bStarts = b.job.toLowerCase().startsWith(q) ? 0 : 1;
       if (aStarts !== bStarts) return aStarts - bStarts;

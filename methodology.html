@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>About — Large Labor Model</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
@@ -178,7 +178,8 @@ html, body {
 }
 
 @media (max-width: 600px) {
-  .page { padding: 8vh 6vw 6vh; max-width: 100%; }
+  .page { padding: calc(env(safe-area-inset-top, 0px) + 4vh) 6vw calc(env(safe-area-inset-bottom, 0px) + 4vh); max-width: 100%; }
+  .wordmark::before { content: '\2190\00a0'; font-weight: 400; }
   .toggle-btn { font-size: 11px; padding: 10px 16px; }
   .body-text { font-size: 14px; }
   .authors { flex-direction: column; gap: 20px; align-items: flex-start; }
