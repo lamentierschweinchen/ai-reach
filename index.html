@@ -44,7 +44,9 @@ header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 24px;
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(16px);
+  /* No backdrop-filter: iOS Safari degrades canvas layer rasterization
+     quality when a backdrop-filter is present elsewhere on the page.
+     The 88% opaque background looks nearly identical without the blur. */
   background: rgba(0,0,0,0.88);
 }
 .wordmark { font-family: var(--font-body); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; }
