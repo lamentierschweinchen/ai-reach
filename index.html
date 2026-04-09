@@ -568,6 +568,36 @@ header {
 
 <canvas id="main-canvas"></canvas>
 
+<script>
+// Set canvas dimensions synchronously BEFORE the deferred module script runs.
+// iOS Safari allocates the compositor layer for the canvas at layout time using
+// whatever dimensions are set at that moment. A default <canvas> element is
+// 300x150, which is small enough that iOS picks a low rasterization scale for
+// the layer. When the module script later resizes the canvas via resizeCanvas(),
+// the backing store grows but iOS does NOT upgrade the compositor layer's scale
+// - it stays locked in at the low-quality allocation from layer creation time.
+// Result: blurry canvas text on first load until a pinch-zoom forces iOS to
+// re-allocate the compositor layer at the current canvas size.
+//
+// Android Chrome and desktop Chrome rasterize at device DPR unconditionally.
+//
+// Fix: set the canvas to its final dimensions immediately, before iOS sees it.
+(function() {
+  var c = document.getElementById('main-canvas');
+  if (!c) return;
+  var dpr = window.devicePixelRatio || 1;
+  var cw = window.innerWidth;
+  var isMob = cw <= 600;
+  var headerH = isMob ? 52 : 46;
+  var timelineH = isMob ? 80 : 88;
+  var ch = window.innerHeight - headerH - timelineH;
+  c.width = cw * dpr;
+  c.height = ch * dpr;
+  c.style.width = cw + 'px';
+  c.style.height = ch + 'px';
+})();
+</script>
+
 <div id="tooltip">
   <div class="tt-name" id="tt-name"></div>
   <div class="tt-stats" id="tt-stats"></div>
