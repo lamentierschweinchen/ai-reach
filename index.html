@@ -100,7 +100,6 @@ header {
   cursor: default;
   transform: translateZ(0);
   backface-visibility: hidden;
-  will-change: transform;
 }
 
 /* ── TOOLTIP ── */
@@ -2617,21 +2616,7 @@ function resetTimeline() {
 
 function enterSite() {
   document.getElementById('intro-overlay').classList.add('fade-out');
-  setTimeout(()=> {
-    document.getElementById('intro-overlay').style.display='none';
-    // iOS Safari rasterizes obscured canvas layers at low quality to save
-    // GPU. Now that the intro is gone, force re-rasterization at full quality
-    // by briefly toggling the canvas's transform, which invalidates the
-    // cached compositor layer.
-    const c = document.getElementById('main-canvas');
-    c.style.transform = 'translateZ(1px)';
-    requestAnimationFrame(() => {
-      c.style.transform = '';
-      _textCache.clear();
-      clearCache();
-      resizeCanvas();
-    });
-  }, 1000);
+  setTimeout(()=> document.getElementById('intro-overlay').style.display='none', 1000);
   setTimeout(()=>{ currentYear=1800; updateTimelineUI(); setTimeout(play, 500); }, 300);
 }
 
