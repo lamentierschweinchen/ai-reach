@@ -1627,7 +1627,13 @@ function drawAllShapes() {
         const nameBlockTop = s.cy - nameH / 2 - (hasScore ? minDim * 0.06 : 0);
         nameBlockBottom = nameBlockTop + nameH;
 
-        if (nameLines.length === 1) {
+        if (nameLines.length === 0 && displayName.length > 0) {
+          // Fallback: pretext returned no lines (unbreakable word wider than
+          // availW on some platforms, e.g. Android Chrome for "SERVICES").
+          // Draw the text directly on a single line so the label never vanishes.
+          ctx.fillText(displayName, Math.round(s.cx), Math.round(s.cy - (hasScore ? minDim * 0.06 : 0)));
+          nameBlockBottom = s.cy - (hasScore ? minDim * 0.06 : 0) + nameSize / 2;
+        } else if (nameLines.length === 1) {
           ctx.fillText(nameLines[0].text, Math.round(s.cx), Math.round(nameBlockTop + nameLH / 2));
         } else {
           // Pretext handles intelligent line breaking — render each line
