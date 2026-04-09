@@ -98,6 +98,8 @@ header {
 #main-canvas {
   position: fixed; top: 46px; left: 0; right: 0; bottom: 88px;
   cursor: default;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 /* ── TOOLTIP ── */
@@ -694,6 +696,21 @@ async function loadData() {
   const resp = await fetch('ai_reach_v3.1.json');
   V2 = await resp.json();
   buildLookupTables();
+
+  // Ensure Inter is fully loaded before first canvas render to prevent
+  // pretext from caching fallback-font metrics (causes blurry/misaligned
+  // text on iOS Safari first load until a pinch-zoom forces re-layout)
+  try {
+    await Promise.all([
+      document.fonts.load('700 15px "Inter"'),
+      document.fonts.load('700 12px "Inter"'),
+      document.fonts.load('700 24px "Inter"'),
+      document.fonts.load('400 12px "Inter"'),
+      document.fonts.load('400 10px "Inter"'),
+      document.fonts.ready,
+    ]);
+  } catch (e) { /* fall through — render with whatever we have */ }
+
   initApp();
 }
 
@@ -2608,6 +2625,13 @@ function initApp() {
   buildTimeline();
   updateTimelineUI();
   requestAnimationFrame(render);
+  // Belt-and-suspenders: one more resize + cache clear after layout settles,
+  // catches iOS Safari viewport stabilization and font cache edge cases
+  requestAnimationFrame(() => {
+    _textCache.clear();
+    clearCache();
+    resizeCanvas();
+  });
 }
 
 window.addEventListener('resize', resizeCanvas);
