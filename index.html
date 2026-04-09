@@ -1619,7 +1619,13 @@ function drawAllShapes() {
         ? { lines: [{ text: displayName, width: ctx.measureText(displayName).width }], height: nameSize }
         : measureTextLayout(displayName, nameFont, availW, nameLH);
       const nameH = nameLayout.height;
-      const nameVisible = minDim > 50 || (minDim > 30 && availW > 60);
+      // Single-word labels can't wrap and are drawn directly, so they don't
+      // need the stricter multi-word visibility threshold. Lower bar = labels
+      // stay visible on smaller shapes (e.g. macro_services at 1800, which
+      // sits at minDim~47 just under the 50px cutoff).
+      const nameVisible = isSingleWord
+        ? minDim > 30
+        : (minDim > 50 || (minDim > 30 && availW > 60));
 
       const mobile = isMobile();
       const scoreSize = Math.round(Math.max(mobile ? 12 : 16, Math.min(32, minDim * 0.2)));
