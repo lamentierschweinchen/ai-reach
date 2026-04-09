@@ -1597,7 +1597,7 @@ function drawAllShapes() {
       ctx.save();
       const textColor = DARK_TEXT_TERRITORIES.includes(t.id) ? '#1A1A1A' : '#FFFFFF';
 
-      // Sector title — use pretext for accurate measurement and intelligent wrapping
+      // Sector title
       const nameSize = Math.round(Math.max(9, Math.min(15, minDim * 0.08)));
       const nameFont = `700 ${nameSize}px "Inter"`;
       const nameLH = nameSize + 3;
@@ -1608,9 +1608,16 @@ function drawAllShapes() {
       ctx.textBaseline = 'middle';
       ctx.letterSpacing = '0.08em';
       const displayName = t.name.toUpperCase();
+      const isSingleWord = !displayName.includes(' ');
 
-      // Use pretext for accurate height/width measurement
-      const nameLayout = measureTextLayout(displayName, nameFont, availW, nameLH);
+      // For multi-word labels, use pretext for intelligent wrapping.
+      // For single-word labels, bypass pretext entirely — it cannot break
+      // unbreakable words and has returned platform-specific empty results
+      // (e.g. "SERVICES" missing on Android Chrome). Use ctx.measureText
+      // with dynamic font shrinking to guarantee the label always renders.
+      const nameLayout = isSingleWord
+        ? { lines: [{ text: displayName, width: ctx.measureText(displayName).width }], height: nameSize }
+        : measureTextLayout(displayName, nameFont, availW, nameLH);
       const nameH = nameLayout.height;
       const nameVisible = minDim > 50 || (minDim > 30 && availW > 60);
 
@@ -1627,10 +1634,21 @@ function drawAllShapes() {
         const nameBlockTop = s.cy - nameH / 2 - (hasScore ? minDim * 0.06 : 0);
         nameBlockBottom = nameBlockTop + nameH;
 
-        if (nameLines.length === 0 && displayName.length > 0) {
-          // Fallback: pretext returned no lines (unbreakable word wider than
-          // availW on some platforms, e.g. Android Chrome for "SERVICES").
-          // Draw the text directly on a single line so the label never vanishes.
+        if (isSingleWord) {
+          // Direct draw with dynamic font fitting — shrink until it fits availW.
+          // Use ctx.measureText which reflects the actual rendering font (respects
+          // the currently-loaded Inter, unlike pretext's cached measurements).
+          let fs = nameSize;
+          let measured = ctx.measureText(displayName).width;
+          while (measured > availW && fs > 6) {
+            fs--;
+            ctx.font = `700 ${fs}px "Inter"`;
+            measured = ctx.measureText(displayName).width;
+          }
+          ctx.fillText(displayName, Math.round(s.cx), Math.round(nameBlockTop + fs / 2));
+          nameBlockBottom = nameBlockTop + fs;
+        } else if (nameLines.length === 0 && displayName.length > 0) {
+          // Multi-word label where pretext returned empty — draw directly as fallback
           ctx.fillText(displayName, Math.round(s.cx), Math.round(s.cy - (hasScore ? minDim * 0.06 : 0)));
           nameBlockBottom = s.cy - (hasScore ? minDim * 0.06 : 0) + nameSize / 2;
         } else if (nameLines.length === 1) {
