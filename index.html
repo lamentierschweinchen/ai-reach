@@ -128,7 +128,9 @@ header {
 .panel-close:hover { color: var(--text); }
 .panel-territory-name { font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.15; margin-bottom: 3px; }
 .panel-isic { font-size: 8.5px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
-.panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.68); margin-bottom: 18px; text-wrap: pretty; }
+.panel-description { font-family: var(--font-body); font-weight: 400; font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.68); margin-bottom: 10px; text-wrap: pretty; }
+.panel-note { font-family: var(--font-body); font-style: italic; font-size: 12px; line-height: 1.5; color: rgba(255,255,255,0.45); margin-bottom: 18px; text-wrap: pretty; }
+.panel-note:empty { margin-bottom: 0; }
 
 .panel-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .panel-stat-label { font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
@@ -521,13 +523,13 @@ header {
   <div class="intro-left">
     <div class="intro-title">Large Labor Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
-    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to roughly one in four, and AI has become capable of performing most tasks across knowledge-based&nbsp;professions.</div>
-    <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically&nbsp;replaceable.</div>
+    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based&nbsp;professions.</div>
+    <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable—and how this might affect the future of&nbsp;work.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
       <div class="intro-interact-row">
         <div class="intro-interact-btn-wrap">
           <button class="intro-interact-btn" type="button">Explore</button>
-          <div class="intro-interact-popup">Use the search bar to find your specific job</div>
+          <div class="intro-interact-popup">Use the search bar to find your job</div>
         </div>
         <div class="intro-interact-btn-wrap">
           <button class="intro-interact-btn" type="button">Control time</button>
@@ -537,7 +539,7 @@ header {
     </div>
   </div>
   <div class="intro-right">
-    <button class="intro-enter" onclick="enterSite()">Enter</button>
+    <button class="intro-enter" onclick="enterSite()">Explore</button>
   </div>
 </div>
 
@@ -620,8 +622,9 @@ header {
     <div style="border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:12px"></div>
   </div>
   <div class="panel-territory-name" id="panel-name">—</div>
-  <div class="panel-isic" id="panel-isic">—</div>
+  <div class="panel-isic" id="panel-isic"></div>
   <div class="panel-description" id="panel-desc">—</div>
+  <div class="panel-note" id="panel-note"></div>
   <div class="panel-stats">
     <div><div class="panel-stat-label">Replaceability</div><div class="panel-stat-value" id="panel-reach-num">—</div></div>
     <div><div class="panel-stat-label">Workforce Share</div><div class="panel-stat-value" id="panel-share-num">—</div></div>
@@ -632,7 +635,7 @@ header {
     <svg id="mini-chart" viewBox="0 0 300 70" preserveAspectRatio="none"></svg>
   </div>
   <div class="panel-section">
-    <div class="panel-stat-label" style="margin-bottom:10px">Job groups within territory</div>
+    <div class="panel-stat-label" style="margin-bottom:10px">Job groups</div>
     <div id="panel-job-groups"></div>
   </div>
   <div class="panel-barrier" id="panel-barrier"></div>
@@ -721,7 +724,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v3.1.json');
+  const resp = await fetch('ai_reach_v3.2.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -917,59 +920,34 @@ function buildLookupTables() {
 // ═══════════════════════════════════════════════════════════════
 const START_YEAR = 1800, END_YEAR = 2041, SPLIT_YEAR = 2026;
 
+// Layout/visual-only metadata. All user-facing copy lives in ai_reach_v3.2.json → territory_metadata.
 const TERRITORIES = [
   { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#1A5C2A',
-    baseX:0.12, baseY:0.14, rotation:-8,
-    desc:'Agriculture, forestry, fishing. The oldest human work. Precision agriculture and autonomous machinery are transforming high-capital farming; subsistence agriculture holds by sheer scale.',
-    barrier:'Capital deployment lag — frontier farms are highly automated, but 70% of global agriculture is smallholder.' },
+    baseX:0.12, baseY:0.14, rotation:-8 },
   { id:'making_things', name:'Making Things', isic:['C'], color:'#E8570A',
-    baseX:0.40, baseY:0.10, rotation:12,
-    desc:'Manufacturing. The frontier is fully dark. The global average is decades behind it.',
-    barrier:'Capital deployment lag — Xiaomi runs lights-out factories, but global average varies 10x between countries.' },
+    baseX:0.40, baseY:0.10, rotation:12 },
   { id:'building_things', name:'Building Things', isic:['F'], color:'#5C1010',
-    baseX:0.08, baseY:0.40, rotation:-5,
-    desc:'Construction. Unstructured environments remain the hardest for robotics.',
-    barrier:'Unstructured environments — every site is different. Humanoid robots at $10–15k would change this.' },
+    baseX:0.08, baseY:0.58, rotation:-5 },
   { id:'moving_things', name:'Moving Things', isic:['H'], color:'#5A4FD4',
-    baseX:0.30, baseY:0.50, rotation:7,
-    desc:'Transport, logistics, warehousing. Highway autonomy is operational. Last-mile is not.',
-    barrier:'Last-mile complexity and regulation. Highway AV operational; urban delivery still hard.' },
+    baseX:0.30, baseY:0.50, rotation:7 },
   { id:'buying_selling', name:'Buying & Selling', isic:['G'], color:'#D4A800',
-    baseX:0.55, baseY:0.35, rotation:-4,
-    desc:'Retail and wholesale trade — the work of selling things and serving customers face to face.',
-    barrier:'Scale of existing employment — 18% of global workforce.' },
+    baseX:0.58, baseY:0.35, rotation:-4 },
   { id:'money_data', name:'Money & Data', isic:['J','K','L'], color:'#1A3AC8',
-    baseX:0.75, baseY:0.08, rotation:10,
-    desc:'Finance, insurance, real estate, information. LLMs accelerated decades of quiet automation.',
-    barrier:'Regulatory and liability frameworks. Technically replaceable, legally complicated.' },
+    baseX:0.75, baseY:0.08, rotation:10 },
   { id:'thinking_leading', name:'Thinking & Leading', isic:['M','N'], color:'#5B3F9E',
-    baseX:0.92, baseY:0.22, rotation:-7,
-    desc:'Professional, scientific, technical, management. SWE-bench: 4.4% → 71.7% in one year.',
-    barrier:'Senior judgment and system architecture. AI handles tasks; humans design systems.' },
+    baseX:0.92, baseY:0.22, rotation:-7 },
   { id:'care_health', name:'Care & Health', isic:['Q'], color:'#D4006A',
-    baseX:0.88, baseY:0.50, rotation:5,
-    desc:'Human health and social work. AI matches expert accuracy on imaging and diagnostics. The legal, credentialing, and human-contact dimensions of care remain as barriers to deployment.',
-    barrier:'Legal liability, credentialing, and deep human preference.' },
+    baseX:0.88, baseY:0.50, rotation:5 },
   { id:'learning_teaching', name:'Learning & Teaching', isic:['P'], color:'#00B8C8',
-    baseX:0.72, baseY:0.60, rotation:-10,
-    desc:'Education. AI tutors work. But lead teaching and mentorship resist automation.',
-    barrier:'Human preference and trust. Parents and students want human teachers.' },
+    baseX:0.72, baseY:0.60, rotation:-10 },
   { id:'making_meaning', name:'Making Meaning', isic:['R'], color:'#E87DA8',
-    baseX:0.52, baseY:0.62, rotation:8,
-    desc:'Arts, media, creative industries. Generative AI arrived suddenly, not gradually.',
-    barrier:'Identity and authorship — the barrier is whether audiences value human-made work.' },
+    baseX:0.52, baseY:0.62, rotation:8 },
   { id:'governing_protecting', name:'Governing & Protecting', isic:['O'], color:'#0D5C4A',
-    baseX:0.70, baseY:0.85, rotation:-3,
-    desc:'Public administration, defense. The slowest territory. Government moves at government speed.',
-    barrier:'Institutional inertia and political accountability.' },
+    baseX:0.70, baseY:0.85, rotation:-3 },
   { id:'feeding_hosting', name:'Feeding & Hosting', isic:['I'], color:'#A06800',
-    baseX:0.25, baseY:0.72, rotation:6,
-    desc:'Accommodation, food service. Fast food is automating. Hospitality is not.',
-    barrier:'Human preference. Hospitality is a performance.' },
+    baseX:0.42, baseY:0.80, rotation:6 },
   { id:'maintaining_fixing', name:'Maintaining & Fixing', isic:['D','E','S'], color:'#4AC41A',
-    baseX:0.12, baseY:0.58, rotation:-9,
-    desc:'Utilities, repair, personal services. Humanoid robots at $10–15k are the unlock.',
-    barrier:'Humanoid cost curve. Current robots cannot navigate home environments economically.' },
+    baseX:0.25, baseY:0.74, rotation:-9 },
 ];
 
 const ERAS = [
@@ -980,8 +958,8 @@ const ERAS = [
   {start:1980,end:2000,name:'Digital Revolution',detail:'Computing, early internet'},
   {start:2000,end:2012,name:'Information Age',detail:'Web economy, smartphones'},
   {start:2012,end:2022,name:'Deep Learning Era',detail:'Neural networks, computer vision'},
-  {start:2022,end:2026,name:'Generative AI Arrives',detail:'LLMs, multimodal, humanoid robots'},
-  {start:2026,end:2041,name:'The Transition',detail:'AI + robotics reshape labor'},
+  {start:2022,end:2026,name:'Arrival of Generative AI',detail:'LLMs, multimodal, humanoid robots'},
+  {start:2026,end:2041,name:'The Age of New Intelligence',detail:'AI + robotics reshape labor'},
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -2202,9 +2180,15 @@ function updatePanel(id) {
     const macroMeta = V2.territory_metadata && V2.territory_metadata[id];
     document.getElementById('panel-name').textContent = macroMeta ? macroMeta.display_name : entry.name;
     document.getElementById('panel-name').style.color = entry.color;
-    document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
+    document.getElementById('panel-isic').textContent = macroMeta && macroMeta.isic ? macroMeta.isic : '';
     const hist = historicalOccupations[id];
     document.getElementById('panel-desc').textContent = macroMeta ? macroMeta.description : (hist ? hist.description : '');
+
+    // Panel note (rendered below description)
+    const macroPanelNote = (macroMeta && macroMeta.panel_note) ? macroMeta.panel_note : '';
+    const panelNoteEl = document.getElementById('panel-note');
+    if (panelNoteEl) panelNoteEl.textContent = macroPanelNote;
+
     document.getElementById('panel-reach-num').textContent = '0%';
     document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
 
@@ -2212,8 +2196,8 @@ function updatePanel(id) {
     bar.style.width = '0%';
     bar.style.background = getBarColor(0);
 
-    const macroNote = macroMeta && macroMeta.panel_note ? macroMeta.panel_note : (hist && hist.note ? hist.note : '');
-    document.getElementById('panel-barrier').innerHTML = macroNote ? `<strong>Note:</strong> ${macroNote}` : '';
+    // Macro view doesn't have year-specific replaceability, so no barrier text
+    document.getElementById('panel-barrier').innerHTML = '';
 
     drawMiniChart(entry);
     drawJobGroups(entry);
@@ -2228,8 +2212,14 @@ function updatePanel(id) {
   const meta = V2.territory_metadata && V2.territory_metadata[t.id];
   document.getElementById('panel-name').textContent = meta ? meta.display_name : t.name;
   document.getElementById('panel-name').style.color = t.color;
-  document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
-  document.getElementById('panel-desc').textContent = meta ? meta.description : t.desc;
+  document.getElementById('panel-isic').textContent = meta && meta.isic ? meta.isic : '';
+  document.getElementById('panel-desc').textContent = meta ? meta.description : '';
+
+  // Panel note (rendered below description — currently only Land & Sea has one)
+  const panelNote = (meta && meta.panel_note) ? meta.panel_note : '';
+  const panelNoteEl = document.getElementById('panel-note');
+  if (panelNoteEl) panelNoteEl.textContent = panelNote;
+
   document.getElementById('panel-reach-num').textContent = reach + '%';
   document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
 
@@ -2237,10 +2227,10 @@ function updatePanel(id) {
   bar.style.width = reach + '%';
   bar.style.background = getBarColor(reach);
 
-  // Barrier from V2 replaceability data or territory definition
+  // Barrier from V2 replaceability data. Use the descriptive note only — no raw enum prefix.
   const replRec = V2.replaceability.find(r => r.territory_id === id && r.year === 2026 && !r.scenario);
-  const barrierText = replRec ? `${replRec.primary_barrier}: ${replRec.key_barrier_note}` : t.barrier;
-  document.getElementById('panel-barrier').innerHTML = `<strong>Key barrier:</strong> ${barrierText}`;
+  const barrierText = replRec && replRec.key_barrier_note ? replRec.key_barrier_note : '';
+  document.getElementById('panel-barrier').innerHTML = barrierText ? `<strong>Key barrier:</strong> ${barrierText}` : '';
 
   drawMiniChart(t);
   drawJobGroups(t);
