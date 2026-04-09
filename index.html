@@ -1635,18 +1635,14 @@ function drawAllShapes() {
         nameBlockBottom = nameBlockTop + nameH;
 
         if (isSingleWord) {
-          // Direct draw with dynamic font fitting — shrink until it fits availW.
-          // Use ctx.measureText which reflects the actual rendering font (respects
-          // the currently-loaded Inter, unlike pretext's cached measurements).
-          let fs = nameSize;
-          let measured = ctx.measureText(displayName).width;
-          while (measured > availW && fs > 6) {
-            fs--;
-            ctx.font = `700 ${fs}px "Inter"`;
-            measured = ctx.measureText(displayName).width;
-          }
-          ctx.fillText(displayName, Math.round(s.cx), Math.round(nameBlockTop + fs / 2));
-          nameBlockBottom = nameBlockTop + fs;
+          // Direct draw at nameSize. Do NOT use ctx.measureText for fitting:
+          // before the Inter webfont loads, fallback fonts report much wider
+          // widths, which would cause aggressive shrinking to tiny illegible
+          // sizes (e.g. "SERVICES" collapsing to 6px on Android until the
+          // font swap completes). It's better to let text overflow the shape
+          // by a few pixels than to have it invisible.
+          ctx.fillText(displayName, Math.round(s.cx), Math.round(nameBlockTop + nameSize / 2));
+          nameBlockBottom = nameBlockTop + nameSize;
         } else if (nameLines.length === 0 && displayName.length > 0) {
           // Multi-word label where pretext returned empty — draw directly as fallback
           ctx.fillText(displayName, Math.round(s.cx), Math.round(s.cy - (hasScore ? minDim * 0.06 : 0)));
