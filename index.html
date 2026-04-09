@@ -1300,8 +1300,17 @@ const PORTRAIT_POSITIONS = {
 // Territories that need dark text (white fails WCAG AA on these backgrounds)
 const DARK_TEXT_TERRITORIES = ['buying_selling', 'maintaining_fixing', 'making_meaning', 'learning_teaching'];
 
+// iOS Safari's compositor sometimes rasterizes canvas layers inside
+// position:fixed elements at a lower effective scale than device DPR,
+// producing soft text on first load until a pinch-zoom forces re-raster.
+// Oversample the backing store 1.5x on iOS so the compositor has excess
+// resolution to work with even when it downscales.
+const IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
 function resizeCanvas() {
-  const dpr = window.devicePixelRatio || 1;
+  const baseDpr = window.devicePixelRatio || 1;
+  const dpr = IS_IOS ? baseDpr * 1.5 : baseDpr;
   const cw = window.innerWidth;
   const headerH = isMobile() ? 52 : 46;
   const timelineH = isMobile() ? 80 : 88;
