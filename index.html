@@ -597,6 +597,16 @@ header {
   c.height = ch * dpr;
   c.style.width = cw + 'px';
   c.style.height = ch + 'px';
+  // Pre-warm the 2D context and draw a pixel synchronously. iOS Safari
+  // defers compositor layer allocation until the canvas has a rendering
+  // context AND has been painted at least once. Doing both here — with
+  // the canvas already at its final dimensions — forces iOS to allocate
+  // the layer at full device DPR from the start, not after pinch-zoom.
+  var g = c.getContext('2d');
+  if (g) {
+    g.fillStyle = '#000';
+    g.fillRect(0, 0, c.width, c.height);
+  }
 })();
 </script>
 
