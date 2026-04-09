@@ -1615,9 +1615,7 @@ function drawAllShapes() {
       ctx.font = nameFont;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      // iOS Safari has rendering issues combining variable fonts (Inter-Variable)
-      // with ctx.letterSpacing (new Canvas 2D API, Safari 17+). Disable on iOS.
-      ctx.letterSpacing = IS_IOS ? '0px' : '0.08em';
+      ctx.letterSpacing = '0.08em';
       const displayName = t.name.toUpperCase();
       const isSingleWord = !displayName.includes(' ');
 
@@ -1733,7 +1731,7 @@ function drawAllShapes() {
         ctx.font = nameFontZ;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.letterSpacing = IS_IOS ? '0px' : '0.08em';
+        ctx.letterSpacing = '0.08em';
         const displayNameZ = zt.name.toUpperCase();
         const nameLayoutZ = measureTextLayout(displayNameZ, nameFontZ, availWZ, nameLHZ);
         const nameHZ = nameLayoutZ.height;
