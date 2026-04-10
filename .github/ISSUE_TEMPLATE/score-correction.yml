@@ -1,0 +1,99 @@
+name: Score correction
+description: Propose a change to a replaceability score with cited evidence.
+title: "[Score] Territory · Year · current → proposed"
+labels: ["score-correction", "needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for contributing. Score corrections must be **specific and evidence-backed**.
+
+        The standard for evidence is **commercial availability**, not lab demos. A research paper showing 95% accuracy on a benchmark does not raise a score. A product you can buy — or a documented deployment — does.
+
+        Read [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for the full contribution framework.
+
+  - type: dropdown
+    id: territory
+    attributes:
+      label: Territory
+      description: Which territory does this score belong to?
+      options:
+        - Land & Sea
+        - Making Things
+        - Building Things
+        - Moving Things
+        - Buying & Selling
+        - Money & Data
+        - Thinking & Leading
+        - Care & Health
+        - Learning & Teaching
+        - Making Meaning
+        - Governing & Protecting
+        - Feeding & Hosting
+        - Maintaining & Fixing
+    validations:
+      required: true
+
+  - type: input
+    id: year
+    attributes:
+      label: Year
+      description: Which year's score is being corrected? (e.g., 2026)
+      placeholder: "2026"
+    validations:
+      required: true
+
+  - type: input
+    id: current_score
+    attributes:
+      label: Current score
+      description: The score as it appears in `ai_reach_v3.2.json` today.
+      placeholder: "56"
+    validations:
+      required: true
+
+  - type: input
+    id: proposed_score
+    attributes:
+      label: Proposed score
+      description: What should the score be?
+      placeholder: "62"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: direction
+    attributes:
+      label: Direction
+      options:
+        - Raise (new commercial capability not reflected)
+        - Lower (current score overstates available technology)
+        - Hold (rejecting a previous correction)
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: |
+        What commercially available system supports this score? Include product name, vendor, deployment scale, and date. For lower-direction proposals, explain what the current score is anchored to that is no longer accurate.
+      placeholder: |
+        Waymo crossed 200,000 paid driverless trips per week in March 2026 (Waymo Q1 2026 update). Cumulative unsupervised miles now exceed 50 million...
+    validations:
+      required: true
+
+  - type: input
+    id: source_url
+    attributes:
+      label: Source URL
+      description: Link to a paper, product page, earnings call, benchmark result, or deployment report.
+      placeholder: "https://..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional notes
+      description: Any context about the methodology, the territory's barrier type, or related corrections.

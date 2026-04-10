@@ -1,3 +1,49 @@
+# Vercel
 .vercel
+
+# OS files
 .DS_Store
 **/.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local Claude tooling
+.claude/
+CLAUDE.md
+graphify-out/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Python build artifacts (for build scripts in words/)
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Working directories — review artifacts, copy briefs, scratchpad
+words/
+copy-review/
+_research/
+*.bak
+
+# v4 data crawl workstream — not yet evaluated, hidden from main repo
+ai_reach_v4.0.json
+v4_*.md
+v4_*.bib
+v4_*.json
+
+# Temporary working spreadsheets in repo root
+LLM_Copy_Audit*.xlsx
+
+# Pre-launch implementation briefs (kept locally only)
+DESIGN_POLISH_BRIEF.md
+MOBILE_POLISH_BRIEF.md

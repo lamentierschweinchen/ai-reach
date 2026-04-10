@@ -1,18 +1,25 @@
 # Large Labor Model
 
+[![site](https://img.shields.io/badge/site-largelabormodel.com-2042E3?style=flat-square)](https://largelabormodel.com)
+[![dataset](https://img.shields.io/badge/dataset-v3.2-1A5C2A?style=flat-square)](./ai_reach_v3.2.json)
+[![code license](https://img.shields.io/badge/code-MIT-blue?style=flat-square)](./LICENSE)
+[![data license](https://img.shields.io/badge/data-CC%20BY%204.0-orange?style=flat-square)](./LICENSE)
+
 An interactive research and art project mapping AI's technical capability to replace human labor — from the first point at which global employment can be measured to the furthest point at which it can be reasonably projected.
 
-**largelabormodel.com**
+**[largelabormodel.com](https://largelabormodel.com)**
 
-Created by Lukas Seel and Enya Trenholm-Jensen. Open source. March 2026.
+Created by Lukas Seel and Enya Trenholm-Jensen. Open source. April 2026.
+
+![Hero — 2041 view of all 13 modern territories with replaceability scores](docs/hero-2041.png)
 
 ---
 
 ## What it is
 
-The Large Labor Model traces human labor across 13 territories of work from 1800 to 2041. It maps two things:
+The Large Labor Model traces human labor across **15 territories of work** (13 modern + 2 historical aggregates) from 1800 to 2041. It maps two things:
 
-**Labor shares** — how many people work in each territory, globally, based on ILO data.
+**Labor shares** — how many people work in each territory, globally, based on ILO data and historical reconstructions.
 
 **Replaceability** — when AI or robotics becomes technically capable of performing each territory's core tasks, scored 0–100 based on what is commercially available at the frontier.
 
@@ -40,79 +47,130 @@ This is a model, not a prediction. Every number is an invitation to engage, refi
 | Moving Things | H | Transport, logistics, warehousing |
 | Buying & Selling | G | Retail and wholesale trade |
 | Money & Data | J, K, L | Finance, insurance, information, real estate |
-| Care & Health | Q | Human health and social work |
+| Care & Health | Q | Human health and social work, personal care |
 | Learning & Teaching | P | Education |
 | Making Meaning | R | Arts, media, creative industries |
 | Governing & Protecting | O | Public administration, defense |
 | Feeding & Hosting | I | Accommodation, food service |
 | Maintaining & Fixing | D, E, S | Utilities, repair, personal services |
-| Thinking & Leading | M, N | Professional, scientific, technical, management |
+| Thinking & Leading | M, N | Management, consulting, science, professional strategy |
+
+Plus **2 historical aggregate territories** (Industry and Services) that cover the period before granular sectoral data was available — they disaggregate progressively into the 13 modern territories between 1900 and 1980.
+
+### Editorial principles
+
+Two principles shape how occupations are placed into territories:
+
+1. **Nature of work, not industry sector.** A barber's work is personal care, so barbers belong to Care & Health regardless of whether they work in a salon (retail) or a hotel (hospitality). A car mechanic's work is repair, so mechanics belong to Maintaining & Fixing regardless of whether they work for a manufacturer or a dealership.
+
+2. **Functional managers go with their function.** A Finance Manager belongs to Money & Data, not Thinking & Leading. Thinking & Leading is reserved for organizational generalists (Chief Executives, Management Consultants), pure knowledge workers (Mathematicians, Sociologists, Humanities Academics), and people functions (HR Specialists, Development Officers).
 
 ---
 
 ## Dataset
 
-**Current version:** 3.0 (April 2026)
+**Current version:** 3.2 (April 2026) — see [`methodology-full.html`](./methodology-full.html) for the full changelog.
 
 | Layer | Records | Coverage |
 |---|---|---|
-| Labor shares | 608 | 1800–2041, moderate scenario |
-| Replaceability scores | 327 | 1970–2041, moderate scenario |
-| Occupations | 388 | ISCO-08 4-digit, searchable |
-| Technology events | 57 | 1764–2041 |
+| Labor shares | 608 | 1800–2041 |
+| Replaceability scores (territory-level) | 327 | 1970–2041 |
+| Occupations (per-occupation scores) | 388 | ISCO-08 4-digit, searchable |
+| Displayed occupations (canvas) | 104 | 8 per modern territory |
+| Technology events | 57 | 1764–2026 |
+| Historical occupations | 24 | 8 per historical aggregate (3 categories) |
+| Sources | 414 | Per-record citation |
 
 **Source architecture:**
-- ILOSTAT modeled estimates (primary, 1991–2025)
-- GGDC 10-Sector Database (pre-1991, splice-adjusted to ILOSTAT classification)
-- World Bank WDI (secondary validation)
-- Displacement formula with documented parameters (2026–2041 projections)
+- **ILOSTAT** modeled estimates (primary, 1991–2025)
+- **GGDC 10-Sector Database** (1870–1991, splice-adjusted to ILOSTAT classification)
+- **Bairoch (1988), Mitchell (2003), Cambridge Group** (pre-1870 reconstructions)
+- **World Bank WDI** (secondary validation)
+- **Displacement formula** with documented parameters (2026–2041 projections)
 
-### Projection
+### Replaceability scoring
 
-The visualisation shows a single projection under a moderate capability trajectory: the METR 4-month doubling rate continues through 2028, then stabilises. The displacement model converts capability gains into projected workforce reduction using a one-third conversion rate and a 15-year lag absorption schedule. See the full methodology for details.
-
-### Replaceability Index
-
-- Scores by territory and occupation, 1970–2041, with annual resolution
-- v3.0: occupation scores derived from 6-vector task decomposition model (27,460 tasks)
+- Scores tied to commercially available capability milestones (e.g., Waymo for Moving Things, SWE-bench for Thinking & Leading, Xiaomi dark factory for Making Things)
+- Per-occupation scores derived from a **6-vector task decomposition model** (27,460 tasks across 388 occupations)
 - Sources: METR time-horizon data, AI benchmark trajectories, SWE-bench, GPQA, IFR robot density, robotics capability research, commercial deployment data
-- Barrier tags recorded per territory: REGULATORY / ECONOMIC / HUMANOID_DEPENDENT / HUMAN_PREFERENCE
+- Per-occupation barrier tags: REGULATORY / ECONOMIC / HUMANOID_DEPENDENT / HUMAN_PREFERENCE
 
-The full methodology is available at largelabormodel.com and in the methodology page.
+### Projection (2027–2041)
+
+The visualization shows a single projection under a moderate capability trajectory. The displacement model converts capability gains into projected workforce reduction using a one-third conversion rate and a 15-year lag absorption schedule. See the full methodology for details and the most consequential parameters to challenge.
 
 ---
 
 ## How it works
 
-The visualization is a single `index.html` loading a single JSON dataset. No build step, no framework. Canvas-rendered. Deployed on Vercel.
+The visualization is a single `index.html` loading a single JSON dataset. No build step, no framework, no dependencies. Canvas-rendered. Deployed on Vercel.
 
-**To run locally:**
-```
+### Run locally
+
+```bash
 git clone https://github.com/lamentierschweinchen/ai-reach.git
 cd ai-reach
-# Open index.html in a browser, or:
-python -m http.server 8000
-# Then visit http://localhost:8000
+python3 -m http.server 8000
+# Visit http://localhost:8000
+```
+
+### File layout
+
+```
+ai-reach/
+├── index.html              # Main visualization (~2,700 lines, canvas + DOM)
+├── methodology.html        # Short methodology page (linked from the site)
+├── methodology-full.html   # Full methodology + changelog
+├── ai_reach_v3.2.json      # Current dataset (the only file index.html fetches)
+├── DATA_ARCHITECTURE.md    # Schema and rendering pipeline reference
+├── LICENSE                 # MIT (code) + CC BY 4.0 (data)
+├── CONTRIBUTING.md         # How to propose corrections and additions
+├── CITATION.cff            # Citation metadata
+├── docs/
+│   └── hero-2041.png       # Repo hero image (the 2041 view)
+├── archive/                # Historical dataset versions
+│   ├── ai_reach_v3.0.json
+│   ├── ai_reach_v3.1.json
+│   └── README.md
+├── fonts/Inter-Variable.ttf
+└── favicon.svg
 ```
 
 ---
 
 ## Contributing
 
-This is an open source project. Corrections, extensions, and challenges are welcome.
+Open source by design. Specific, evidence-backed corrections are exactly what we want. See [**CONTRIBUTING.md**](./CONTRIBUTING.md) for the full guide.
 
-**To correct a score:** Reference the specific territory, year, and scenario. State the current score. Provide evidence — a commercially available product that raises it, or the absence of one that should lower it.
+The short version:
 
-**To challenge the displacement model:** The lag schedule and conversion rate are the most consequential parameters. Sector-specific technology adoption data that suggests a different absorption curve would directly improve the model.
+- **Score correction**: Open an issue using the *Score correction* template. Include territory, year, current score, proposed score, and a link to the commercially available product or deployment that supports the change.
+- **Bug report**: Use the *Bug report* template.
+- **Methodology critique**: Open a discussion or an issue. Read [`methodology-full.html`](./methodology-full.html) first — most of the model's assumptions are documented there with notes on which are most worth challenging.
 
-See the methodology document for the full contribution framework.
+The standard for evidence is **commercial availability**, not lab demos. A research paper showing 95% accuracy on a benchmark does not raise a score. A product you can buy — or a documented deployment — does.
+
+---
+
+## Citation
+
+```
+Seel, L. & Trenholm-Jensen, E. (2026). Large Labor Model (v3.2) [Dataset].
+https://largelabormodel.com
+```
+
+GitHub auto-generates a "Cite this repository" widget from [`CITATION.cff`](./CITATION.cff).
 
 ---
 
 ## License
 
-Open source. Dataset, methodology, and visualization code available for reuse, adaptation, and critique.
+- **Code** (`index.html`, `methodology.html`, `methodology-full.html`, all JavaScript): [MIT](./LICENSE)
+- **Data** (`ai_reach_v3.2.json` and successor versions, methodology content): [CC BY 4.0](./LICENSE)
+- **Inter typeface**: SIL Open Font License 1.1
+
+You are free to share, adapt, and build on the dataset for any purpose, commercial or otherwise, with attribution.
 
 ---
 
-*Large Labor Model. Grounded in the landscape of early 2026 — a moment when AI capabilities have made extraordinary leaps that most research has not yet caught up with.*
+*Large Labor Model is grounded in early 2026 — a moment when AI capabilities have made extraordinary leaps that most research has not yet caught up with. Helping the model catch up is the work.*

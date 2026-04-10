@@ -1,0 +1,82 @@
+# Large Labor Model — Licenses
+
+This project ships under two licenses, one for code and one for data.
+
+---
+
+## Code: MIT License
+
+Copyright (c) 2026 Lukas Seel and Enya Trenholm-Jensen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+The MIT License applies to all code files in this repository, including but
+not limited to: `index.html`, `methodology.html`, `methodology-full.html`, and
+any JavaScript or supporting code.
+
+---
+
+## Data: Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Lukas Seel and Enya Trenholm-Jensen
+
+The Large Labor Model dataset (including but not limited to `ai_reach_v3.2.json`
+and any successor versions, `archive/ai_reach_v3.0.json`, `archive/ai_reach_v3.1.json`,
+and the structured content of the methodology pages) is licensed under the
+Creative Commons Attribution 4.0 International License.
+
+You are free to:
+
+- **Share** — copy and redistribute the dataset in any medium or format
+- **Adapt** — remix, transform, and build upon the dataset for any purpose,
+  even commercially
+
+Under the following terms:
+
+- **Attribution** — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any reasonable
+  manner, but not in any way that suggests the licensors endorse you or your
+  use.
+
+Suggested citation:
+
+> Seel, L. & Trenholm-Jensen, E. (2026). *Large Labor Model* (v3.2) [Dataset].
+> https://largelabormodel.com
+
+The full text of the CC BY 4.0 license is available at:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+---
+
+## Third-party content
+
+- **Inter** typeface (`fonts/Inter-Variable.ttf`): SIL Open Font License 1.1.
+  Copyright Rasmus Andersson and the Inter Project Authors.
+  https://github.com/rsms/inter
+
+- **Underlying data sources** (ILOSTAT, GGDC 10-Sector Database, World Bank
+  WDI, Bairoch 1988, Mitchell 2003, Cambridge Group, Maddison Project,
+  ILO Employment and Social Trends 2026): each carries its own license
+  and citation requirements. The Large Labor Model dataset is a derivative
+  work that aggregates and reinterprets these sources; users redistributing
+  the dataset should consult `methodology-full.html` for the full source list
+  and respect the original publishers' terms.
+
+- **AI benchmark sources** (SWE-bench, GPQA, METR, IFR robot density data):
+  cited per their published terms in the methodology document.

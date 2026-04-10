@@ -1,0 +1,67 @@
+name: Bug report
+description: Report a problem with the visualization, the data, or the documentation.
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. The more specific the report, the faster it can be fixed.
+
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where is the bug?
+      options:
+        - Visualization (canvas, side panel, timeline)
+        - Search (job lookup)
+        - Methodology page
+        - Dataset (`ai_reach_v3.2.json` content error)
+        - Mobile-specific
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Describe the bug in one or two sentences.
+      placeholder: "Clicking on the X territory at year Y shows Z, but the panel description says..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      description: What should have happened instead?
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: URL or location
+      description: |
+        For visualization bugs, the largelabormodel.com URL or the territory + year combination.
+        For dataset bugs, the ISCO code or territory_id of the affected record.
+      placeholder: "largelabormodel.com (Care & Health, 2030) — or — ISCO 2164"
+
+  - type: input
+    id: env
+    attributes:
+      label: Browser & OS
+      description: e.g., "Safari 17.4 on iOS 17.5", "Chrome 124 on macOS"
+      placeholder: "Chrome 124 on macOS"
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot or console output
+      description: Drag a screenshot here or paste any browser console errors.
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context

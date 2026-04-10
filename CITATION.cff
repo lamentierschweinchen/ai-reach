@@ -1,0 +1,45 @@
+# This CITATION.cff file lets GitHub auto-generate a "Cite this repository" widget.
+# Schema reference: https://citation-file-format.github.io/
+
+cff-version: 1.2.0
+message: "If you use the Large Labor Model dataset or methodology, please cite it as below."
+type: dataset
+title: "Large Labor Model"
+abstract: >
+  An interactive research and art project mapping AI's technical capability to
+  replace human labor across 15 territories of work, from 1800 to 2041. Tracks
+  two layers — labor shares (workforce distribution by sector) and replaceability
+  (technical capability of commercially available AI/robotics) — and the gap
+  between them.
+authors:
+  - family-names: Seel
+    given-names: Lukas
+  - family-names: Trenholm-Jensen
+    given-names: Enya
+version: "3.2"
+date-released: "2026-04-09"
+url: "https://largelabormodel.com"
+repository-code: "https://github.com/lamentierschweinchen/ai-reach"
+license: MIT
+license-url: "https://github.com/lamentierschweinchen/ai-reach/blob/main/LICENSE"
+keywords:
+  - artificial intelligence
+  - labor economics
+  - data visualization
+  - automation
+  - workforce
+  - replaceability
+  - ISCO
+  - ISIC
+  - open data
+preferred-citation:
+  type: dataset
+  title: "Large Labor Model (v3.2)"
+  authors:
+    - family-names: Seel
+      given-names: Lukas
+    - family-names: Trenholm-Jensen
+      given-names: Enya
+  year: 2026
+  url: "https://largelabormodel.com"
+  version: "3.2"
