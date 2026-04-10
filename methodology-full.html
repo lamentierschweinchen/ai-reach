@@ -243,7 +243,11 @@ ol.body-text li {
 
   <h2 class="section-title" id="territories">2. Territory definitions</h2>
 
-  <p class="body-text">Human work is organized into 13 territories. Each maps to one or more sections of the International Standard Industrial Classification (ISIC Rev. 4). The territory names are editorial — designed to be legible to a general audience rather than to an economist. The ISIC mapping ensures that every territory corresponds to a standard, internationally comparable definition of economic activity.</p>
+  <p class="body-text">Human work is organized into 15 territories: 13 modern territories visible from the late 20th century onward, plus 2 historical aggregate territories (Industry and Services) that cover the period before granular sectoral data was available. Each modern territory maps to one or more sections of the International Standard Industrial Classification (ISIC Rev. 4). The territory names are editorial — designed to be legible to a general audience rather than to an economist. The ISIC mapping ensures that every modern territory corresponds to a standard, internationally comparable definition of economic activity.</p>
+
+  <p class="body-text"><strong>Assignment principle.</strong> Occupations are assigned by the <em>nature of the work</em>, not by the industry sector where the work happens. A barber's work is personal care, so barbers belong to Care &amp; Health regardless of whether they work in a salon (retail) or a hotel (hospitality). A car mechanic's work is repair, so mechanics belong to Maintaining &amp; Fixing regardless of whether they work for a manufacturer or a dealership. This principle resolves the ambiguity that arises when industry sectors and occupational categories disagree.</p>
+
+  <p class="body-text"><strong>Functional managers.</strong> Managers whose role is defined by a specific function (Finance Managers, IT Managers, Marketing Managers, Sales Directors) are assigned to the territory of their function — Money &amp; Data, Money &amp; Data, Making Meaning, and Buying &amp; Selling respectively — rather than to Thinking &amp; Leading. Thinking &amp; Leading is reserved for organizational generalists (Chief Executives, Management Consultants, Operations Managers), pure knowledge workers (Mathematicians, Sociologists, Humanities Academics), and people functions (HR Specialists, Development Officers).</p>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
@@ -330,6 +334,8 @@ ol.body-text li {
   <p class="body-text">In v3.0, occupation scores are derived from a 6-vector task decomposition model. Each occupation is decomposed into its constituent tasks (sourced from O*NET via a BLS SOC-to-ISCO-08 crosswalk). Each task is assigned to one of six capability vectors (cognitive routine, cognitive generative, perceptual analytical, physical structured, physical unstructured, social embodied), given a difficulty threshold, and weighted by time share. The occupation's score is the sum of time-weighted tasks where the vector's 2026 capability exceeds the task's difficulty threshold.</p>
 
   <p class="body-text">This replaces the holistic assessment methodology used in earlier versions. 99 occupations now have TASK_DECOMPOSITION scoring basis, 45 are benchmark-anchored (OBSERVED), and the remainder use earlier derivation methods pending future review. Employment weights for each occupation are computed via a BLS OES → SOC 2018 → SOC 2010 → ISCO-08 crosswalk chain, adjusted to ILO 1-digit ISCO global proportions.</p>
+
+  <p class="body-text"><strong>Display selection.</strong> Each territory displays exactly 8 occupations as sub-shapes on the canvas (104 total across the 13 modern territories). The selection balances workforce weight against iconic representation: the largest occupation by employment weight is always included, but slots are also reserved for roles that define the territory in the public imagination even when their headcount is small (Surgeons, Architects, Veterinarians, Athletes). Display names are constrained to 25 characters, plural, and Title Case. The remaining occupations stay in the dataset and remain searchable; they are simply not surfaced as canvas elements.</p>
 
   <h3 class="section-subtitle">3.4 Technology events</h3>
 
@@ -645,6 +651,30 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <h2 class="section-title" id="changelog">11. Changelog</h2>
 
+  <h3 class="section-subtitle">v3.2 (April 2026)</h3>
+
+  <ul class="body-text">
+    <li>Editorial pass on all user-facing copy: 51 occupation display names standardized to Title Case + plural, abbreviations expanded, typos fixed, three near-duplicate display names disambiguated (Construction Managers / Project Managers, Aircraft Engine Mechanics / Aircraft Technicians, Wood Treaters / Wood Treatment Technicians).</li>
+    <li>50 territory reassignments based on the "nature of work" principle: personal care occupations (Hairdressers, Barbers, Nail Technicians, Pet Groomers) moved from Buying &amp; Selling to Care &amp; Health; Funeral Directors and Undertakers from Maintaining &amp; Fixing to Care &amp; Health; auto mechanics from Making Things to Maintaining &amp; Fixing; cleaning and sanitation roles from Moving Things to Maintaining &amp; Fixing; library staff from Money &amp; Data to Learning &amp; Teaching.</li>
+    <li>Functional manager principle ("Option B") applied: Finance Managers, IT Managers, Marketing Managers, and similar functional roles moved out of Thinking &amp; Leading and into the territory of their function. Thinking &amp; Leading now reserved for organizational generalists, pure knowledge workers, and people functions.</li>
+    <li>Display set rebalanced: each of the 13 modern territories now displays exactly 8 occupations (104 total), selected by a balance of workforce weight and iconic representation. Several territories had previously been weight-blind (e.g., Construction Laborers and Factory Workers were not displayed despite being the largest occupations in their territories).</li>
+    <li>Religious Professionals moved from Care &amp; Health to Making Meaning (clergy and pastoral work fit cultural meaning-making). Pastoral Workers in the historical land_sea aggregate replaced by Hunters and Trappers (more historically distinct from the existing Herders &amp; Drovers entry). Fishermen renamed to Fishers.</li>
+    <li>External review of all 388 per-occupation key barrier notes by a dedicated reviewer instance: 374 marked OK as-is, 14 flagged for project-lead review. 11 primary_barrier enum mismatches corrected (e.g., Insulation Workers REGULATORY → HUMANOID_DEPENDENT, Licensing Officials HUMAN_PREFERENCE → REGULATORY). 4 additional Learning &amp; Teaching enum corrections from a follow-up sweep.</li>
+    <li>3 key_barrier_note rewrites: Catering Managers (was the literal placeholder "Gap-fill record"), Paralegals (row misalignment — note was about events), Athletes (note was about coaches). 1 internal capability-vector reference (Phi_S) leaked into a Kitchen Helpers note and was removed.</li>
+    <li>Timeline events sorted chronologically (Blackboard 1841 was previously misordered between 1879 and 1906). 4 event names switched to past tense for consistency (iPhone Launched, AWS Launched, App Store Ecosystem Launched, Gemini Launched by Google). 3 factual corrections in impact descriptions. 6 pre-1800 events flagged with a pre_display field so they can be filtered from the timeline UI.</li>
+    <li>Code-side cleanups: hardcoded territory descriptions and barrier strings removed from index.html (now loaded from JSON only). Raw enum prefixes (e.g., "HUMANOID_DEPENDENT:") no longer rendered in the panel barrier display. Panel note rendering added for Land &amp; Sea. ISIC sector code shown in the panel sub-label instead of a duplicate "% of workforce" field.</li>
+    <li>Data structure cleanups: <code>panel_note</code> field normalized across all 15 territories. <code>primary_barrier_label</code> (human-readable) added to all 388 occupations and 327 replaceability records. 4 historical source entries normalized from <code>{source_id, name}</code> to the canonical <code>{id, title}</code> schema.</li>
+    <li>Outstanding for v4: ~200 ISCO codes still misaligned with official ISCO-08 standard (tracked separately for the v4 data crawl). Several duplicate occupation clusters (6 software developer codes, 6 sysadmin codes, 4 database codes, 4 HR codes) deferred to v4 consolidation. Suspicious employment weights in Care &amp; Health and Maintaining &amp; Fixing flagged for v4 verification.</li>
+  </ul>
+
+  <h3 class="section-subtitle">v3.1 (April 2026)</h3>
+
+  <ul class="body-text">
+    <li>Post-production data quality corrections following v3.0 release.</li>
+    <li>R2030 recomputation with floor enforcement: where the task decomposition model produced 2030 scores below 2026 scores (a model artifact, not a real regression), the 2030 score was floored to the 2026 value. 62 occupations affected.</li>
+    <li>3 occupations with unreliable task decompositions (Midwives 2222, Cashiers 5223, Blacksmiths 7121) switched to TERRITORY_SCALED projection basis instead of task decomposition.</li>
+  </ul>
+
   <h3 class="section-subtitle">v3.0 (April 2026)</h3>
 
   <ul class="body-text">
@@ -692,7 +722,7 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <p class="body-text">If referencing this dataset or methodology:</p>
 
-  <p class="body-text">Large Labor Model, v3.0. Dataset and methodology. April 2026. largelabormodel.com.</p>
+  <p class="body-text">Large Labor Model, v3.2. Dataset and methodology. April 2026. largelabormodel.com.</p>
 
   <p class="body-text">The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.</p>
 
