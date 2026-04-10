@@ -210,6 +210,8 @@ header {
 .milestone-dot:hover { background: #FFFFFF; border-color: #FFFFFF; width: 11px; height: 11px; box-shadow: 0 0 8px rgba(255,255,255,0.4); }
 .milestone-dot:hover::before { background: rgba(255,255,255,0.5); }
 .milestone-dot:hover .milestone-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+.milestone-slot1 { top: calc(50% + 7px); }
+.milestone-slot1::before { bottom: auto; top: 100%; margin-bottom: 0; margin-top: 2px; }
 .milestone-featured {
   width: 9px; height: 9px;
   background: #FFFFFF; border-color: rgba(255,255,255,0.6);
@@ -890,22 +892,22 @@ function buildLookupTables() {
     (ev.type === 'INVENTION' || ev.type === 'DEPLOYMENT' || ev.type === 'BENCHMARK')
   );
 
-  // Pre-2022: deduplicate by year, keep 1 per year
-  const pre2022 = {};
-  highConfStructural.filter(ev => ev.year < 2022).forEach(ev => {
-    if (!pre2022[ev.year]) pre2022[ev.year] = ev;
+  // Pre-2019: deduplicate by year, keep 1 per year
+  const pre2019 = {};
+  highConfStructural.filter(ev => ev.year < 2019).forEach(ev => {
+    if (!pre2019[ev.year]) pre2019[ev.year] = { ...ev, pos: ev.year, slot: 0 };
   });
-  let pre2022List = Object.values(pre2022).sort((a,b) => a.year - b.year);
+  let pre2019List = Object.values(pre2019).sort((a,b) => a.year - b.year);
   // Thin out pre-1900 if too many
-  if (pre2022List.filter(m => m.year < 1900).length > 12) {
-    const early = pre2022List.filter(m => m.year < 1900).filter((_, i) => i % 2 === 0);
-    const late = pre2022List.filter(m => m.year >= 1900);
-    pre2022List = [...early, ...late];
+  if (pre2019List.filter(m => m.year < 1900).length > 12) {
+    const early = pre2019List.filter(m => m.year < 1900).filter((_, i) => i % 2 === 0);
+    const late = pre2019List.filter(m => m.year >= 1900);
+    pre2019List = [...early, ...late];
   }
 
-  // Post-2022: exactly 2 per year, spaced at ~Jan and ~Jul
-  const post2022List = [];
-  for (let yr = 2022; yr <= END_YEAR; yr++) {
+  // 2019+: up to 2 per year, spaced at ~Jan and ~Jul
+  const post2019List = [];
+  for (let yr = 2019; yr <= END_YEAR; yr++) {
     const yearEvents = ALL_EVENTS.filter(ev => ev.year === yr)
       .sort((a,b) => {
         // Prioritize HIGH confidence, then INVENTION/BENCHMARK
@@ -915,14 +917,14 @@ function buildLookupTables() {
       });
     const picked = yearEvents.slice(0, 2);
     if (picked.length >= 1) {
-      post2022List.push({ ...picked[0], year: yr + 0.0 }); // ~January position
+      post2019List.push({ ...picked[0], year: yr, pos: yr + 0.15, slot: 0 });
     }
     if (picked.length >= 2) {
-      post2022List.push({ ...picked[1], year: yr + 0.5 }); // ~July position
+      post2019List.push({ ...picked[1], year: yr, pos: yr + 0.85, slot: 1 });
     }
   }
 
-  MILESTONES = [...pre2022List, ...post2022List].sort((a,b) => a.year - b.year);
+  MILESTONES = [...pre2019List, ...post2019List].sort((a,b) => a.pos - b.pos);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2190,7 +2192,7 @@ function updatePanel(id) {
     const macroMeta = V2.territory_metadata && V2.territory_metadata[id];
     document.getElementById('panel-name').textContent = macroMeta ? macroMeta.display_name : entry.name;
     document.getElementById('panel-name').style.color = entry.color;
-    document.getElementById('panel-isic').textContent = macroMeta && macroMeta.isic ? macroMeta.isic : '';
+    document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
     const hist = historicalOccupations[id];
     document.getElementById('panel-desc').textContent = macroMeta ? macroMeta.description : (hist ? hist.description : '');
 
@@ -2222,7 +2224,7 @@ function updatePanel(id) {
   const meta = V2.territory_metadata && V2.territory_metadata[t.id];
   document.getElementById('panel-name').textContent = meta ? meta.display_name : t.name;
   document.getElementById('panel-name').style.color = t.color;
-  document.getElementById('panel-isic').textContent = meta && meta.isic ? meta.isic : '';
+  document.getElementById('panel-isic').textContent = share.toFixed(1) + '% of workforce';
   document.getElementById('panel-desc').textContent = meta ? meta.description : '';
 
   // Panel note (rendered below description — currently only Land & Sea has one)
@@ -2396,8 +2398,8 @@ function buildTimeline() {
   const mc = document.getElementById('milestones-container');
   MILESTONES.forEach(m => {
     const d = document.createElement('div');
-    d.className = 'milestone-dot' + (featuredYears.has(m.year) ? ' milestone-featured' : '');
-    d.style.left = yearToPercent(m.year)+'%';
+    d.className = 'milestone-dot' + (featuredYears.has(m.year) ? ' milestone-featured' : '') + (m.slot === 1 ? ' milestone-slot1' : '');
+    d.style.left = yearToPercent(m.pos != null ? m.pos : m.year)+'%';
     d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}</div>`;
     d.addEventListener('click', e => {
       e.stopPropagation();
