@@ -1,12 +1,13 @@
 # Large Labor Model v5.0 — Changelog
 
-**Released:** 2026-04-19
+**Released:** 2026-04-19 (Phase 12 historical backfill + late fixes applied 2026-04-20)
 **Previous version:** v3.2
 
 ---
 
 ## Headline changes
 
+- **Historical backfill 1970 → 2014 (Phase 12, added 2026-04-20).** v5.0 now ships 585 new `territory_replaceability` records covering 1970–2014, produced by a dedicated Phase 12 pipeline: two parallel honest-deployment research instances (GPT-5.4 + Claude Opus 4.7) reconstructed the 1970–2025 capability-vector trajectory with URL-cited milestone anchors; programmatic reconciliation applied honest-deployment discipline (`mid = min(A_mid, B_mid)`); per-occupation replaceability computed via logistic crossover against current task decompositions; employment-weighted per territory. Fixes a late-caught regression where the canvas displayed 0% replaceability for every territory before 2015.
 - **Ground-up rebuild, not a patch.** Every scoring column in v5 was recomputed from a new Phase 4 task decomposition, a dual-recalibrated 2026 capability vector, and an empirically fit replacement formula. v3.2 served only as post-hoc sanity check; never staged as input to any v5 phase.
 - **Canonical ISCO-08 codes for all 481 occupations.** v3.2 had inherited ~200 wrong ISCO codes and 89 fabricated codes from v3.0 (e.g., "Chief Executives" at 1111 — the real 1111 is Legislators; "Physicists and Astronomers" at 2112 — the real 2112 is Meteorologists). v5 re-anchors every entry to the ILO ISCO-08 hierarchy, with specialised splits (e.g., `2512-ml`, `2261-orthodontist`) using a documented parent + suffix convention.
 - **Replaceability and Replacement are now cleanly separated.** Replaceability (the 2026 score) answers "if swapped to an autonomous system today, does it work? — tech × economics × availability." Replacement (the displacement curves) answers "how fast does that capability translate into actual workforce displacement?" Regulatory and human-preference frictions live in the Phase 6 replacement model, not in the replaceability score. The distinction was corrected in Phase 11 after a review-caught conflation (see §2.6b in the editorial process record).
@@ -22,7 +23,7 @@
 | Occupations | 388 | **481** |
 | Labor records (territory × year) | 608 | **635** |
 | Technology timeline events | 57 | **77** |
-| Territory × year replaceability entries | 327 | **351** |
+| Territory × year replaceability entries | 327 | **936** (585 historical 1970–2014 + 351 modern 2015–2041) |
 | Historical macro groupings | 3 | **3** |
 | Modern territories | 13 | **13** |
 | Inline task decompositions | — | **4,830 tasks across 481 occupations** |
@@ -237,6 +238,21 @@ v3.2's hand-curated editorial substrate was the most valuable inheritance. v5 pr
 - **Phase 6 barrier-model form.** Multiplicative barrier multipliers work well across most of the distribution but produce counterintuitive results at high r26 × REGULATORY (lawyers at r41 = 100). A floor-adjusted barrier model for regulatory frictions is a likely v6 change.
 
 - **Task-classification ceiling persists.** Phase 4's three-way reconciliation achieved 84.2% agreement; the 15.8% split cases were defaulted to the Codex adversarial pass and flagged. The Phase 11 audits re-examined a large subset (notably high-r26 physical occupations via Audit 2 and every task in every territory via Audit 3) but exhaustive per-split human adjudication was out of scope.
+
+- **Historical backfill uses current task decompositions + weights.** Phase 12 produces honest historical capability values but applies them against today's occupation task lists and within-territory employment weights. The number reads as "what share of today's labor would have been technically replaceable at that year's capability" — not "what share of 1985's actual labor force." Reconstructing historical occupation composition at the 481-occupation granularity is deferred to a future version.
+
+---
+
+## Late-cycle fixes (2026-04-20)
+
+After the initial 2026-04-19 release, a spot-check surfaced a set of small-but-real issues that were fixed on the dev branch before production deploy:
+
+- **Stale capability trajectories summary in dataset metadata.** `metadata.capability_trajectories_summary` was carrying pre-parallel-shift Phase 7 values (C_R 2041 0.98 rather than 0.87, etc.). The block was regenerated from the post-shift `phase7/reconciler/capability_trajectories_2026_2041.json` and a traceability note was added.
+- **Methodology doc cited the same stale 2041 anchors.** The v5_methodology.md paragraphs for 2041 mid and high anchors were patched to cite post-shift values, with a note pointing to the `*_phase7_original` fields in the trajectory file for traceability.
+- **`metadata.scenarios_shipped` flag added.** v5.0 ships the moderate (mid) scenario as the editorially-reviewed display; low and high bands are structural only (produced deterministically from Phase 7 low/high trajectories; not reviewed occupation-by-occupation). The flag encodes this disclosure for downstream consumers.
+- **Common-titles contamination cleanup.** A cross-occupation contamination pattern (the strings "caddymaster", "community life director", "aquatics supervisor", "bar and restaurant manager", etc.) was present in 7 ISCO 5xxx service-sector occupations. Titles stripped and 6 occupations augmented with domain-correct replacements (ISCO 3423, 5113, 5141, 5142, 5164, 5311, 5322).
+- **Business-development coverage.** ISCO 3322 Commercial Sales Representatives common_titles were updated to include modern BD-track titles (account executive, business development representative, business development associate, sales development representative).
+- **UI schema-compat shim.** `index.html` was updated with a one-line alias (`V2.replaceability ?? V2.territory_replaceability`) so the v5.0 rename of the territory-level replaceability array doesn't break the canvas. Both v3.2 and v5 schemas now render with the same front-end code.
 
 ---
 

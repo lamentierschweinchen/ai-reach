@@ -1,8 +1,8 @@
 # Large Labor Model v5.0 — Methodology
 
 **Version:** 5.0
-**Published:** 2026-04-19
-**Horizon:** 2026 → 2041
+**Published:** 2026-04-19 (updated 2026-04-20)
+**Horizon:** 1970 → 2041 (historical backfill + forward projection)
 
 ---
 
@@ -156,6 +156,45 @@ The terminal year is **2041** (= 2026 + 15). Fifteen years out is far enough for
 
 All projection anchors (2030, 2035, 2040, 2041) come with low/mid/high bands. 2041 is the primary horizon anchor; 2040 is retained for continuity with v3.2 readers and because many third-party comparisons use a 2040 target date.
 
+The lower bound of the territory-level replaceability series is **1970** following the Phase 12 historical backfill (see next section). Before 1970, the dataset carries sector-level labor composition (via `historical_occupations` macro groupings) but not capability-vector-derived territory replaceability scores. Pre-1970 capability evidence is too thin (industrial robot density pre-1993 is estimated, not measured; digital-computing business deployment is a mostly-qualitative narrative) to support per-territory numbers with the same discipline as 1970+.
+
+---
+
+## Historical backfill (Phase 12, 1970 → 2014)
+
+v5.0 ships a full 1970–2014 capability-vector trajectory and derived territory replaceability records. The trajectory was produced by two parallel honest-deployment research instances (GPT-5.4 + Claude Opus 4.7), each researching 15–25 milestone years with URL-cited anchors and producing low/mid/high values per vector per year. The two outputs were reconciled under the same discipline as Phase 7: `mid = min(A_mid, B_mid)`, `low = min(A_low, B_low)`, `high = max(A_high, B_high)` capped at 0.85 pre-2015, monotonicity enforced going forward.
+
+Milestone anchors include: first commercial ATMs (1967–1970), CNC + microprocessor commercialization (1972–1975), VisiCalc / Lotus 1-2-3 (1979–1983), ERP precursors (SAP R/3 1992), IFR industrial-robot data series (1993), commercial web (1995), Deep Blue (1997), Google Translate (2006), Kiva / Amazon Robotics acquisition (2012), Watson Jeopardy (2011), Kubernetes + RPA (2014), AlexNet (2012), Waymo commercial launch (Dec 2018), Transformer paper (2017), GPT-2/3/ChatGPT/GPT-4 (2019–2023), Amazon Sequoia/Proteus (2023), humanoid pilots (2024).
+
+Key reconciled trajectory values (mid band):
+
+| Year | C_R  | C_G  | P_A  | Phi_S | Phi_U | S_E  |
+|------|------|------|------|-------|-------|------|
+| 1970 | 0.07 | 0.005| 0.10 | 0.005 | 0.02  | 0.005|
+| 1985 | 0.16 | 0.009| 0.25 | 0.02  | 0.02  | 0.011|
+| 2000 | 0.36 | 0.02 | 0.42 | 0.05  | 0.03  | 0.05 |
+| 2010 | 0.47 | 0.04 | 0.51 | 0.07  | 0.04  | 0.09 |
+| 2020 | 0.59 | 0.08 | 0.65 | 0.21  | 0.06  | 0.18 |
+| 2025 | 0.74 | 0.56 | 0.74 | 0.44  | 0.14  | 0.33 |
+| 2026 | 0.76 | 0.57 | 0.75 | 0.46  | 0.15  | 0.35 |
+
+The trajectory shows:
+- C_R and P_A rise steadily across the whole period (ATM + spreadsheet + ERP + SaaS + RPA for C_R; industrial robot stock growth for P_A).
+- Phi_S is near-zero until the Waymo commercial launch in late 2018.
+- S_E is near-zero pre-2010, rises with cloud + orchestration, sharp late rise with agentic coding (2023+).
+- C_G is near-zero for most of 1970–2020; the entire rise from ~0.05 to 0.57 happens between 2017 (Transformer paper) and 2026.
+- Phi_U stays near zero throughout — humanoid hardware is still in pilots.
+
+Ordering through the historical period (C_R ≥ P_A > Phi_S ≈ S_E > C_G > Phi_U) reverses in the 2020s as C_G overtakes S_E, then Phi_S, consistent with the LLM-transformer era shift.
+
+**Crossover function.** Historical per-occupation replaceability is computed via logistic crossover — `1 / (1 + exp(-8 · (capability − difficulty)))` — rather than the strict threshold used for near-term projections. This gives partial credit as capability approaches task-difficulty thresholds, which is the right behaviour when capability is low (the strict-threshold model collapses to zero across most occupations at 1970's capability values, which would be false). The logistic form matches the emergent-automation intuition: POS systems gave real-if-partial cashier replaceability in 2005 even though the C_R capability was below full task thresholds.
+
+**Territory aggregation.** For each year, territory replaceability is the employment-weighted mean of in-territory occupation replaceabilities, using current (2026) employment weights within territory. This is an editorial decision: we don't have occupation-level employment weights back to 1970 at the 481-occupation granularity (ILOSTAT began in 1991), and reconstructing historical occupation weights would be a separate research project. The current framing is: "what share of today's labor composition, within each territory, would have been technically replaceable at each historical year's capability values?"
+
+**Comparison to v3.2.** Phase 12 backfill generally produces higher historical values than v3.2's (e.g., Buying & Selling 2014 at 47% vs v3.2's 7%; Making Things 2014 at 31% vs v3.2's 15%). The gap is driven by Phase 12 applying the same task-math discipline used for 2026+ scoring, whereas v3.2's historical scoring was more conservative by construction. Both can be defended; v5's numbers are more internally consistent with the model's own mechanics.
+
+**Calibration caveat — replaceability vs. replacement.** The 1985 Money & Data value at 4.4% and 2010 Buying & Selling value at 41% are both "replaceability" numbers, not "what actually happened" numbers. Real 1985 back-office displacement and real 2010 retail cashier displacement were both smaller because barriers (cost, preference, regulation) bind. The model's core distinction applies retrospectively as well as prospectively.
+
 ---
 
 ## Data sources
@@ -206,6 +245,10 @@ This is a structured estimate, not a forecast. The honest statement of what the 
 
 11. **Low/high scenario bands are structural, not editorially reviewed.** v5.0 ships the moderate (mid) scenario as the reviewed display. Low and high band values are preserved per occupation for audit-trail purposes, but are produced deterministically from Phase 7's capability-trajectory low/high curves applied against Phase 4 task difficulties — they were not reviewed occupation-by-occupation. This produces editorially-implausible shapes in thin-margin cases (e.g., preschool educators' r30_high jumps from 8 to 100 when Phi_U high = 0.67 crosses Phi_U task thresholds of 0.55-0.60). Re-examination of the low/high bands is a v5.1 deliverable; for now, reader attention should stay on the moderate band. `metadata.scenarios_shipped` encodes this disclosure.
 
+12. **Historical backfill uses current task decompositions and current within-territory employment weights.** Phase 12 produces honest historical capability values; it applies them against today's occupation task lists, weighted by today's in-territory employment shares. This gives "what share of today's labor would have been technically replaceable at that year's capability" — not "what share of 1985's actual labor force was technically replaceable by 1985 technology." Reconstructing historical occupation-level task compositions and employment weights at the 481-occupation granularity would require a separate research project (ILOSTAT's occupation series begins only in 1991). This is a known editorial caveat for the historical series, documented at `metadata.phase12_historical_backfill`.
+
+13. **Pre-1970 has no territory replaceability series.** Capability evidence pre-1970 is too thin (industrial robot density pre-1993 is estimated, digital-computing business deployment is mostly-qualitative) to support per-territory numbers with the same discipline as 1970+. Pre-1970 shows labor composition via `historical_occupations` macro aggregates (land_sea / macro_industry / macro_services) but no territory-level replaceability scores. The UI renders historical composition in the period.
+
 ---
 
 ## Versioning and reproducibility
@@ -224,6 +267,7 @@ v5.0 is built by an 11-phase pipeline. Each phase has a canonical output, a revi
 - **Phase 9:** Timeline events audit (researcher + verifier).
 - **Phase 10:** Adversarial validation (isolated instance).
 - **Phase 11:** Editorial sign-off + release, with emergency interventions documented in [v5_editorial_process.md](v5_editorial_process.md).
+- **Phase 12:** Historical capability-vector backfill 1970 → 2014 (2 parallel honest-deployment research instances — GPT-5.4 + Claude Opus 4.7 — + programmatic reconciliation + era-weighted territory aggregation).
 
 Every phase checkpoint signoff is preserved. A rollback path to v3.2 exists as the previous published version. Intermediate v5 artifacts (calibrator JSON, scorer outputs, reconciler outputs, validator reports) are preserved under `v5-build/phase{N}/` in the build repo.
 
