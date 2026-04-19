@@ -757,6 +757,12 @@ let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_se
 async function loadData() {
   const resp = await fetch('ai_reach_v5.0.json');
   V2 = await resp.json();
+  // v5 schema compatibility: territory-level replaceability renamed from
+  // `replaceability` → `territory_replaceability`. Alias so the rest of the
+  // app keeps working against either schema.
+  if (!V2.replaceability && V2.territory_replaceability) {
+    V2.replaceability = V2.territory_replaceability;
+  }
   buildLookupTables();
   initApp();
 }
