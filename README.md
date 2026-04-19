@@ -1,7 +1,7 @@
 # Large Labor Model
 
 [![site](https://img.shields.io/badge/site-largelabormodel.com-2042E3?style=flat-square)](https://largelabormodel.com)
-[![dataset](https://img.shields.io/badge/dataset-v3.2-1A5C2A?style=flat-square)](./ai_reach_v3.2.json)
+[![dataset](https://img.shields.io/badge/dataset-v5.0-1A5C2A?style=flat-square)](./ai_reach_v5.0.json)
 [![code license](https://img.shields.io/badge/code-MIT-blue?style=flat-square)](./LICENSE)
 [![data license](https://img.shields.io/badge/data-CC%20BY%204.0-orange?style=flat-square)](./LICENSE)
 
@@ -69,17 +69,18 @@ Two principles shape how occupations are placed into territories:
 
 ## Dataset
 
-**Current version:** 3.2 (April 2026) — see [`methodology-full.html`](./methodology-full.html) for the full changelog.
+**Current version:** 5.0 (April 2026) — a ground-up rebuild with task decomposition, empirically-calibrated replacement formula, and editorially-reviewed moderate scenario. See [`docs/v5_changelog.md`](./docs/v5_changelog.md), [`docs/v5_methodology.md`](./docs/v5_methodology.md), and [`docs/v5_editorial_process.md`](./docs/v5_editorial_process.md). v3.2 remains in [`archive/`](./archive/) for lineage.
 
 | Layer | Records | Coverage |
 |---|---|---|
-| Labor shares | 608 | 1800–2041 |
-| Replaceability scores (territory-level) | 327 | 1970–2041 |
-| Occupations (per-occupation scores) | 388 | ISCO-08 4-digit, searchable |
+| Labor shares | 635 | 1800–2041 |
+| Replaceability scores (territory-level) | 351 | 1970–2041 |
+| Occupations (per-occupation scores) | 481 | ISCO-08 4-digit + specialized splits, searchable |
 | Displayed occupations (canvas) | 104 | 8 per modern territory |
-| Technology events | 57 | 1764–2026 |
+| Tasks (per-occupation task decomposition) | 4,830 | 2–14 tasks per occupation, vector-classified |
+| Technology events | 77 | 1764–2026 |
 | Historical occupations | 24 | 8 per historical aggregate (3 categories) |
-| Sources | 414 | Per-record citation |
+| Sources | 6,686 | Per-record citation |
 
 **Source architecture:**
 - **ILOSTAT** modeled estimates (primary, 1991–2025)
@@ -97,7 +98,7 @@ Two principles shape how occupations are placed into territories:
 
 ### Projection (2027–2041)
 
-The visualization shows a single projection under a moderate capability trajectory. The displacement model converts capability gains into projected workforce reduction using a one-third conversion rate and a 15-year lag absorption schedule. See the full methodology for details and the most consequential parameters to challenge.
+The visualization shows a single projection under the moderate capability trajectory. The displacement model converts capability gains into projected workforce reduction using an empirically-calibrated conversion rate (0.30) and a 15-year lag schedule (7/18/30/42/44% absorption) fit against seven historical automation cases and the Anthropic Economic Index cross-section. Low and high scenario bands are preserved per-occupation as structural metadata but are not yet editorially reviewed — v5.0 ships moderate only. See [`docs/v5_methodology.md`](./docs/v5_methodology.md) for parameters, assumptions, and the full honest-limitations inventory.
 
 ---
 
@@ -121,7 +122,7 @@ ai-reach/
 ├── index.html              # Main visualization (~2,700 lines, canvas + DOM)
 ├── methodology.html        # Short methodology page (linked from the site)
 ├── methodology-full.html   # Full methodology + changelog
-├── ai_reach_v3.2.json      # Current dataset (the only file index.html fetches)
+├── ai_reach_v5.0.json      # Current dataset (the only file index.html fetches)
 ├── DATA_ARCHITECTURE.md    # Schema and rendering pipeline reference
 ├── LICENSE                 # MIT (code) + CC BY 4.0 (data)
 ├── CONTRIBUTING.md         # How to propose corrections and additions
@@ -155,7 +156,7 @@ The standard for evidence is **commercial availability**, not lab demos. A resea
 ## Citation
 
 ```
-Seel, L. & Trenholm-Jensen, E. (2026). Large Labor Model (v3.2) [Dataset].
+Seel, L. & Trenholm-Jensen, E. (2026). Large Labor Model (v5.0) [Dataset].
 https://largelabormodel.com
 ```
 
@@ -166,7 +167,7 @@ GitHub auto-generates a "Cite this repository" widget from [`CITATION.cff`](./CI
 ## License
 
 - **Code** (`index.html`, `methodology.html`, `methodology-full.html`, all JavaScript): [MIT](./LICENSE)
-- **Data** (`ai_reach_v3.2.json` and successor versions, methodology content): [CC BY 4.0](./LICENSE)
+- **Data** (`ai_reach_v5.0.json` and successor versions, methodology content): [CC BY 4.0](./LICENSE)
 - **Inter typeface**: SIL Open Font License 1.1
 
 You are free to share, adapt, and build on the dataset for any purpose, commercial or otherwise, with attribution.

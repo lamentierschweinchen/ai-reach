@@ -755,7 +755,7 @@ let ALL_EVENTS = [];        // all events for toast during playback
 let macroLookup = {};       // macroLookup[macro_id][year] = share_pct ('land_sea', 'macro_industry', 'macro_services')
 
 async function loadData() {
-  const resp = await fetch('ai_reach_v3.2.json');
+  const resp = await fetch('ai_reach_v5.0.json');
   V2 = await resp.json();
   buildLookupTables();
   initApp();
@@ -951,7 +951,7 @@ function buildLookupTables() {
 // ═══════════════════════════════════════════════════════════════
 const START_YEAR = 1800, END_YEAR = 2041, SPLIT_YEAR = 2026;
 
-// Layout/visual-only metadata. All user-facing copy lives in ai_reach_v3.2.json → territory_metadata.
+// Layout/visual-only metadata. All user-facing copy lives in ai_reach_v5.0.json → territory_metadata.
 const TERRITORIES = [
   { id:'land_sea', name:'Land & Sea', isic:['A','B'], color:'#1A5C2A',
     baseX:0.12, baseY:0.14, rotation:-8 },
