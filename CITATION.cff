@@ -16,8 +16,8 @@ authors:
     given-names: Lukas
   - family-names: Trenholm-Jensen
     given-names: Enya
-version: "3.2"
-date-released: "2026-04-09"
+version: "5.0"
+date-released: "2026-04-20"
 url: "https://largelabormodel.com"
 repository-code: "https://github.com/lamentierschweinchen/ai-reach"
 license: MIT
@@ -34,7 +34,7 @@ keywords:
   - open data
 preferred-citation:
   type: dataset
-  title: "Large Labor Model (v3.2)"
+  title: "Large Labor Model (v5.0)"
   authors:
     - family-names: Seel
       given-names: Lukas
@@ -42,4 +42,4 @@ preferred-citation:
       given-names: Enya
   year: 2026
   url: "https://largelabormodel.com"
-  version: "3.2"
+  version: "5.0"

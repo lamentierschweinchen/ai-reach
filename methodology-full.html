@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Methodology — Large Labor Model</title>
+<meta name="description" content="How the Large Labor Model v5 measures AI replaceability — capability vectors, task decomposition, replacement formula, historical backfill 1970 → 2041.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
 @font-face {
@@ -88,6 +89,11 @@ html { scroll-behavior: smooth; }
   font-weight: 500;
 }
 
+.body-text em {
+  font-style: italic;
+  color: #AAAAAA;
+}
+
 ul.body-text {
   padding-left: 24px;
 }
@@ -131,6 +137,11 @@ ol.body-text li {
   color: #888888; vertical-align: top;
 }
 
+.method-table td.mono {
+  font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 13px;
+}
+
 .formula-block {
   background: rgba(255,255,255,0.04); border-left: 2px solid #2042E3;
   padding: 16px 20px; margin: 24px 0;
@@ -139,11 +150,27 @@ ol.body-text li {
   white-space: pre-wrap;
 }
 
+.callout {
+  background: rgba(32,66,227,0.06);
+  border-left: 2px solid #2042E3;
+  padding: 16px 20px;
+  margin: 24px 0;
+  color: #BBBBBB;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.callout strong { color: #FFFFFF; font-weight: 500; }
+
+a.inline { color: #6B8AFF; text-decoration: none; border-bottom: 1px solid rgba(107,138,255,0.35); }
+a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+
 /* ── BUTTONS ── */
 .btn-row {
   display: flex;
   gap: 16px;
   margin-top: 48px;
+  flex-wrap: wrap;
 }
 
 .cta-btn {
@@ -179,6 +206,7 @@ ol.body-text li {
   .method-table { font-size: 12px; }
   .cta-btn { font-size: 12px; padding: 12px 32px; }
   .nav-item { padding: 10px 12px; font-size: 11px; }
+  .callout { font-size: 13px; padding: 12px 14px; }
 }
 </style>
 </head>
@@ -191,63 +219,61 @@ ol.body-text li {
   <nav class="section-nav">
     <a href="#what" class="nav-item">1</a>
     <a href="#territories" class="nav-item">2</a>
-    <a href="#sources" class="nav-item">3</a>
-    <a href="#scenarios" class="nav-item">4</a>
+    <a href="#vectors" class="nav-item">3</a>
+    <a href="#scoring" class="nav-item">4</a>
     <a href="#displacement" class="nav-item">5</a>
-    <a href="#pipeline" class="nav-item">6</a>
-    <a href="#baselines" class="nav-item">7</a>
-    <a href="#timeline" class="nav-item">8</a>
-    <a href="#limitations" class="nav-item">9</a>
-    <a href="#contribute" class="nav-item">10</a>
+    <a href="#trajectory" class="nav-item">6</a>
+    <a href="#scenarios" class="nav-item">7</a>
+    <a href="#pipeline" class="nav-item">8</a>
+    <a href="#sources" class="nav-item">9</a>
+    <a href="#limitations" class="nav-item">10</a>
     <a href="#changelog" class="nav-item">11</a>
     <a href="#citation" class="nav-item">12</a>
   </nav>
 
-  <h1 class="section-title" style="margin-top: 0;">Large Labor Model — Methodology</h1>
+  <h1 class="section-title" style="margin-top: 0;">Methodology</h1>
 
-  <p class="body-text"><strong>Version 3.0 — April 2026</strong></p>
+  <p class="body-text"><strong>Version 5.0 — Released April 19, 2026</strong> · Historical backfill and late fixes applied April 20, 2026.</p>
 
-  <p class="body-text">This document describes how the Large Labor Model dataset was produced. It is written so that someone with no prior knowledge of the project can understand how every number in the dataset was derived, what assumptions were made, and where the model is weakest. It is the single reference for anyone who wants to challenge, extend, or build on this work.</p>
+  <p class="body-text">This document describes how the Large Labor Model v5 dataset was produced. It is written so that a reader with no prior knowledge of the project can understand how every number was derived, what assumptions were made, and where the model is weakest. Nothing in the dataset is inherited from prior versions unexamined; v5 is a ground-up rebuild on a reviewed 12-phase pipeline.</p>
+
+  <p class="body-text">Companion documents, all shipped in the repository: the <a class="inline" href="./docs/v5_changelog.md">full changelog</a>, the <a class="inline" href="./docs/v5_methodology.md">methodology reference markdown</a>, and the <a class="inline" href="./docs/v5_editorial_process.md">editorial process record</a> documenting the emergency interventions during Phase 11.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 1 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="what">1. What this project measures</h2>
+  <h2 class="section-title" id="what">1. What this measures</h2>
 
-  <p class="body-text">The Large Labor Model maps two things across time:</p>
+  <p class="body-text">The Large Labor Model maps two separate things over time:</p>
 
-  <p class="body-text"><strong>Labor shares</strong> — how many people work in each category of human activity, globally, from 1800 to 2041.</p>
+  <p class="body-text"><strong>Labor shares.</strong> How many people work in each category of human activity, globally, from 1800 to 2041. Historical data from Bairoch, Maddison, Mitchell, GGDC 10-sector, and ILOSTAT. Forward projections from the displacement model.</p>
 
-  <p class="body-text"><strong>Replaceability</strong> — when AI or robotics becomes technically capable of performing the core tasks of each category, scored 0–100.</p>
+  <p class="body-text"><strong>Replaceability.</strong> When AI or robotics becomes technically capable of performing the core tasks of each occupation, scored 0–100. Computed from the six-vector task decomposition. Covers 1970 → 2041 for modern territories.</p>
 
-  <p class="body-text">These are separate measurements. Replaceability tracks the technical frontier. Labor shares track the actual economy. The gap between the two — between what AI <em>can</em> do and what has actually <em>changed</em> in the labor market — is not a flaw in the model. It is one of the most important things the model shows.</p>
+  <p class="body-text">These are separate measurements. Replaceability tracks the technical frontier. Labor shares track the economy. The gap between the two — between what AI <em>can</em> do and what has actually <em>changed</em> in the labor market — is not a flaw in the model. It is one of the most important things the model shows.</p>
 
-  <h3 class="section-subtitle">1.1 Replaceability defined</h3>
+  <h3 class="section-subtitle">1.1 Replaceability ≠ Replacement</h3>
 
-  <p class="body-text">A replaceability score answers one question: <strong>can the best commercially available AI or robotics perform the core tasks of this role?</strong></p>
+  <p class="body-text">The load-bearing editorial distinction of v5, refined across the build and corrected in Phase 11 after a review-caught conflation:</p>
 
-  <p class="body-text">The threshold is commercial availability — a product you can buy. A prototype in a lab does not raise the score. Geographic variation in deployment, economic viability at average scale, regulatory permission, and social preference do not affect the score. All of these are recorded separately as barrier annotations.</p>
+  <div class="callout"><strong>Replaceability</strong> = tech capability × economic viability × commercial availability. A high score means the technology exists and works on the occupation's tasks, the unit economics are plausible at realistic wage points, and the product is available to buy today. It does <em>not</em> bake in regulatory or preference barriers.<br><br><strong>Replacement</strong> = adoption lag × regulatory friction × human-preference inertia × capital cycles. This is the dynamic question of how fast replaceability translates into actual workforce displacement. It lives in the Phase 6 replacement formula, not in the replaceability score.</div>
 
-  <p class="body-text">This means a territory can score 90 (almost fully replaceable) while employment in that territory has barely changed. That is not a contradiction — it is the replaceability/replacement distinction at work.</p>
+  <p class="body-text">The canonical example: a robo-barista. Capability exists, economics can work, products are on the market — replaceability is high. But customers still prefer human baristas, many jurisdictions regulate food service, and adoption moves slowly. So <em>replacement</em> lags dramatically. The clean framing forces these two numbers to be read separately.</p>
 
-  <h3 class="section-subtitle">1.2 Replacement defined</h3>
-
-  <p class="body-text">Replacement is when workers actually lose jobs. This lags replaceability by months to decades, depending on capital costs, regulation, institutional inertia, social preference, and political will.</p>
-
-  <p class="body-text">The displacement model (Section 5) converts replaceability into projected employment change. The labor share data tracks actual historical employment. Together they show: here is what AI can technically do, and here is what has actually happened to jobs. The distance between those two lines is the project's central provocation.</p>
+  <p class="body-text">The same logic applies retrospectively. In 2010, POS + self-checkout technology made a large share of cashier tasks replaceable. Actual cashier displacement by 2014 was much smaller. That gap is barriers, not capability.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 2 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="territories">2. Territory definitions</h2>
+  <h2 class="section-title" id="territories">2. Territories and occupations</h2>
 
-  <p class="body-text">Human work is organized into 15 territories: 13 modern territories visible from the late 20th century onward, plus 2 historical aggregate territories (Industry and Services) that cover the period before granular sectoral data was available. Each modern territory maps to one or more sections of the International Standard Industrial Classification (ISIC Rev. 4). The territory names are editorial — designed to be legible to a general audience rather than to an economist. The ISIC mapping ensures that every modern territory corresponds to a standard, internationally comparable definition of economic activity.</p>
+  <p class="body-text">Human work is organized into 15 territories: 13 modern territories visible from the late 20th century onward, plus 2 historical aggregate territories (Industry and Services) and Land &amp; Sea (which spans both eras). Each modern territory maps to one or more sections of the International Standard Industrial Classification (ISIC Rev. 4). Territory names are editorial — legible to a general audience — while the ISIC mapping keeps the underlying definitions standard and internationally comparable.</p>
 
-  <p class="body-text"><strong>Assignment principle.</strong> Occupations are assigned by the <em>nature of the work</em>, not by the industry sector where the work happens. A barber's work is personal care, so barbers belong to Care &amp; Health regardless of whether they work in a salon (retail) or a hotel (hospitality). A car mechanic's work is repair, so mechanics belong to Maintaining &amp; Fixing regardless of whether they work for a manufacturer or a dealership. This principle resolves the ambiguity that arises when industry sectors and occupational categories disagree.</p>
+  <p class="body-text"><strong>Assignment principle.</strong> Occupations are assigned by the <em>nature of the work</em>, not by the industry sector where the work happens. A barber's work is personal care, so barbers belong to Care &amp; Health regardless of whether they work in a salon or a hotel. A car mechanic's work is repair, so mechanics belong to Maintaining &amp; Fixing regardless of where they work. This resolves the ambiguity between industry and occupation classifications.</p>
 
-  <p class="body-text"><strong>Functional managers.</strong> Managers whose role is defined by a specific function (Finance Managers, IT Managers, Marketing Managers, Sales Directors) are assigned to the territory of their function — Money &amp; Data, Money &amp; Data, Making Meaning, and Buying &amp; Selling respectively — rather than to Thinking &amp; Leading. Thinking &amp; Leading is reserved for organizational generalists (Chief Executives, Management Consultants, Operations Managers), pure knowledge workers (Mathematicians, Sociologists, Humanities Academics), and people functions (HR Specialists, Development Officers).</p>
+  <p class="body-text"><strong>Functional managers.</strong> Managers whose role is defined by a specific function (Finance Managers, IT Managers, Marketing Managers) are assigned to the territory of their function — Money &amp; Data, Money &amp; Data, Making Meaning — rather than to Thinking &amp; Leading. Thinking &amp; Leading is reserved for organizational generalists (Chief Executives, Management Consultants), pure knowledge workers (Mathematicians, Sociologists), and people functions (HR Specialists).</p>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
@@ -270,380 +296,265 @@ ol.body-text li {
     </tbody>
   </table></div>
 
-  <p class="body-text">The territory groupings are an editorial layer over the native ISIC classification. The underlying data is keyed to ISIC sections so that regrouping territories does not require re-collecting data.</p>
+  <h3 class="section-subtitle">2.1 481 occupations</h3>
+
+  <p class="body-text">v5 covers <strong>481 occupations</strong>, up from 388 in v3.2. Each is anchored to an ISO standard ISCO-08 4-digit unit group code where one exists; 10 specialized splits use documented parent + suffix conventions (e.g., <code>2512-ml</code> for ML engineers as a split from 2512 Software Developers). Every occupation carries a common-titles list drawn from O*NET, BLS, and live LinkedIn 2025–2026 job-posting scrapes; a display name; a territory assignment; and a task decomposition.</p>
+
+  <p class="body-text">The Phase 2 coverage expansion added missing ISCO-08 unit groups and specialized splits where a single code conflates genuinely distinct real-world roles (ML engineers vs. general software developers, tax accountants vs. general accountants, network operations technicians vs. general IT support). The split convention preserves traceability: the parent ISCO code is always preserved, so specialized splits can be rolled up into their parent without data loss.</p>
+
+  <h3 class="section-subtitle">2.2 Task decomposition</h3>
+
+  <p class="body-text">Every occupation is decomposed into 2–14 tasks (median ~10), each carrying:</p>
+
+  <ul class="body-text">
+    <li><strong>Capability vector</strong> — one of six (see Section 3)</li>
+    <li><strong>Difficulty threshold</strong> — a value on the same 0–1 scale as the vector, representing "the capability level at which the task becomes automatable"</li>
+    <li><strong>Time weight</strong> — percentage of the occupation's working time spent on this task, summing to ~100%</li>
+  </ul>
+
+  <p class="body-text">Phase 4 produced the task set by merging three independent retrieval sources — O*NET task statements via SOC → ISCO crosswalk (15,575 raw tasks), BLS Generalized Work Activities + OOH (11,234 raw tasks), and a context-free reconciler that applied canonical vector definitions without occupation priors. Three-way reconciliation achieved 84.2% agreement; split cases were defaulted to the adversarial pass and flagged. Phase 11 ran three adversarial audit rounds that removed 825 scrape artifacts in aggregate and reclassified hundreds of tasks whose vector assignments were wrong in specific patterns (physical work tagged cognitive; field service tagged industrial; performance work tagged generative).</p>
+
+  <p class="body-text">Total inline task decompositions: <strong>4,830 tasks</strong>. Each carries a source attribution (O*NET, BLS, or dual-sourced) and participates in the replaceability computation described in Section 4.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 3 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="sources">3. Data sources and quality</h2>
+  <h2 class="section-title" id="vectors">3. The six capability vectors</h2>
 
-  <h3 class="section-subtitle">3.1 Labor share data</h3>
-
-  <p class="body-text">The labor share layer covers 1800–2025 (historical) and 2026–2041 (projected).</p>
-
-  <p class="body-text"><strong>1800–1870 (LOW quality):</strong> Employment shares reconstructed from Bairoch (1988), cross-checked against Mitchell (2003) and Cambridge Group occupational reconstructions. Global workforce totals derived from Maddison Project population estimates combined with estimated labor force participation rates. Only three macro sectors are distinguishable at this resolution: agriculture (Land &amp; Sea), industry (macro_industry), and services (macro_services). These are editorial reconstructions, not observed data.</p>
-
-  <p class="body-text"><strong>1900–1970 (MEDIUM quality):</strong> Progressive disaggregation as census data and national accounts support more granular sectoral estimates. Transition from three macro sectors to the full 13-territory resolution occurs between 1950 and 1991, with the exact year depending on data availability for each territory. Primary sources: Mitchell (2003), ILO historical estimates, GGDC 10-Sector Database.</p>
-
-  <p class="body-text"><strong>1991–2025 (HIGH quality):</strong> Full 13-territory resolution. Primary source: ILOSTAT modelled estimates (November 2024 vintage for most records). These are econometric model outputs produced by the ILO, not raw survey data, but they represent the international standard for globally comparable labor market statistics. Coverage: 189 countries.</p>
-
-  <p class="body-text"><strong>Quality flags:</strong> Every labor record carries a data_quality field (LOW, MEDIUM, or HIGH) indicating the reliability of the underlying source material.</p>
-
-  <p class="body-text"><strong>Missing data:</strong> Null values remain null. The dataset does not fabricate data for periods or territories where no reliable source exists.</p>
-
-  <p class="body-text"><strong>Sum constraint:</strong> Labor shares sum to 100% at every historical year. This is enforced by proportional normalization where raw sources produce sums that deviate from 100%.</p>
-
-  <p class="body-text"><strong>Known issue — ILO vintage drift:</strong> The dataset uses the November 2024 vintage of ILO modelled estimates for most 2024–2025 figures. The ILO's November 2025 vintage (published in the Employment and Social Trends 2026 report, January 2026) places 2025 global employment at approximately 3,599 million — 49 million (1.4%) above this dataset's 3,550 million. The gap is partly driven by the ILO's revised treatment of India's Periodic Labour Force Survey data. This drift does not affect the model's internal consistency but means the conservative baseline sits slightly below current ILO consensus.</p>
-
-  <h3 class="section-subtitle">3.2 Replaceability data</h3>
-
-  <p class="body-text">The replaceability layer covers 1970–2026 (historical, no scenario) and 2027–2041 (projected, three scenarios).</p>
-
-  <p class="body-text"><strong>1970–2014:</strong> Retrospective calibration anchored to known technology milestones. Scores are low (typically 0–15) and reflect narrow subtask automation only. These values establish the baseline from which the acceleration becomes visible.</p>
-
-  <p class="body-text"><strong>2015–2026:</strong> Benchmark-anchored scoring. Each territory's score at each year is tied to a specific commercial capability milestone (e.g., Waymo commercial operations for Moving Things, SWE-bench performance for Thinking &amp; Leading, Xiaomi dark factory for Making Things). The 2026 scores serve as the baseline for all projections and are locked.</p>
-
-  <p class="body-text"><strong>2027–2041:</strong> Projected under the moderate capability trajectory (see Section 4). Anchor years: 2027, 2028, 2029, 2030, 2032, 2035, 2040, 2041. The visualisation interpolates linearly between anchor points.</p>
-
-  <p class="body-text"><strong>Scoring scale:</strong></p>
+  <p class="body-text">Every AI/robotics capability is projected onto one of six vectors. These were chosen because they produce distinct deployment curves — cognitive-routine work scales with software ubiquity, physical automation scales with industrial capital, driving scales with sensor + map + insurance regimes, unstructured physical scales with humanoid hardware. Collapsing them into a single "AI capability" number obscures the divergent deployment stories.</p>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
-      <tr><th>Score</th><th>Meaning</th><th>Example</th></tr>
+      <tr><th>Vector</th><th>What it measures</th><th>2026 value</th></tr>
     </thead>
     <tbody>
-      <tr><td>~5</td><td>Narrow subtask automation; role not substitutable</td><td>Single-task construction robot (2015)</td></tr>
-      <tr><td>~25</td><td>AI handles specific bounded tasks; majority beyond frontier</td><td>Agricultural GPS auto-steer + drone spraying (2020)</td></tr>
-      <tr><td>~50</td><td>Frontier AI capable of most core functions; not all</td><td>Radiology AI matching human accuracy (2024)</td></tr>
-      <tr><td>~75</td><td>Capable of full role with minimal human involvement</td><td>SWE-bench 71.7%; AI writes 30–50% of production code (2024)</td></tr>
-      <tr><td>~90+</td><td>Complete technical substitution possible at frontier</td><td>Xiaomi zero-worker smartphone factory (2024)</td></tr>
+      <tr><td><strong>C_R</strong> — Routine Cognitive</td><td>Codifiable procedural cognitive work: data entry, filing, routine coding, form processing, ledger keeping, rule-based medical coding</td><td class="mono">0.76</td></tr>
+      <tr><td><strong>C_G</strong> — Generative Cognitive</td><td>Open-ended judgment and creation: novel analysis, synthesis, strategy, original writing, novel diagnosis, senior legal/medical reasoning</td><td class="mono">0.57</td></tr>
+      <tr><td><strong>P_A</strong> — Physical Automation</td><td>Highly repeatable physical motion in controlled, engineered environments: factory assembly, CNC, plant-line machinery</td><td class="mono">0.75</td></tr>
+      <tr><td><strong>Phi_S</strong> — Selective Physical</td><td>Sensor-based structured-environment physical: route-based driving (Waymo), warehouse picking, mail delivery</td><td class="mono">0.46</td></tr>
+      <tr><td><strong>Phi_U</strong> — Unstructured Physical</td><td>Unpredictable real-world physical: surgery, in-home plumbing, home care, live embodied performance, variable-terrain farm work</td><td class="mono">0.15</td></tr>
+      <tr><td><strong>S_E</strong> — System Engineering</td><td>Multi-agent/multi-stakeholder orchestration: enterprise architecture, platform engineering, air traffic control, emergency coordination</td><td class="mono">0.35</td></tr>
     </tbody>
   </table></div>
 
-  <p class="body-text"><strong>Methodology constraints:</strong></p>
+  <p class="body-text">The 2026 values are the Phase 11 post-recalibration set. Phase 5's original blind calibration produced higher benchmark-anchored values (C_R 0.87, C_G 0.62, P_A 0.78, Phi_S 0.60, Phi_U 0.15, S_E 0.42). Phase 11 ran two independent recalibrators (Claude Opus 4.7 and GPT-5.4) under the same brief: re-interpret each benchmark citation as a production-reliability number, discounting for remote-operator backstops, confident-failure rates, narrow operational-design domains, and agentic brittleness. Both instances converged within ±0.03 on every vector. The shipping set is the blended midpoint.</p>
 
-  <ul class="body-text">
-    <li>Monotonicity: scores are non-decreasing within each territory. AI capability does not regress. This is validated programmatically; the current dataset has zero violations.</li>
-  </ul>
+  <p class="body-text">The largest correction is Phi_S (−0.14). This is the vector where benchmark and demonstration evidence most overstates production capability under honest-deployment accounting. Waymo's ~150K weekly rides is real deployment, but it runs a narrow operational-design domain and depends on remote-operator backstops for edge cases. Phi_U is defended unchanged at 0.15 because it was already at the conservative floor in Phase 5 — no 2026 deployment evidence moves it.</p>
 
-  <h3 class="section-subtitle">3.3 Occupation data</h3>
-
-  <p class="body-text">388 occupations mapped to ISCO-08 4-digit codes, each assigned to one territory. Every occupation carries a 2026 replaceability score.</p>
-
-  <p class="body-text">In v3.0, occupation scores are derived from a 6-vector task decomposition model. Each occupation is decomposed into its constituent tasks (sourced from O*NET via a BLS SOC-to-ISCO-08 crosswalk). Each task is assigned to one of six capability vectors (cognitive routine, cognitive generative, perceptual analytical, physical structured, physical unstructured, social embodied), given a difficulty threshold, and weighted by time share. The occupation's score is the sum of time-weighted tasks where the vector's 2026 capability exceeds the task's difficulty threshold.</p>
-
-  <p class="body-text">This replaces the holistic assessment methodology used in earlier versions. 99 occupations now have TASK_DECOMPOSITION scoring basis, 45 are benchmark-anchored (OBSERVED), and the remainder use earlier derivation methods pending future review. Employment weights for each occupation are computed via a BLS OES → SOC 2018 → SOC 2010 → ISCO-08 crosswalk chain, adjusted to ILO 1-digit ISCO global proportions.</p>
-
-  <p class="body-text"><strong>Display selection.</strong> Each territory displays exactly 8 occupations as sub-shapes on the canvas (104 total across the 13 modern territories). The selection balances workforce weight against iconic representation: the largest occupation by employment weight is always included, but slots are also reserved for roles that define the territory in the public imagination even when their headcount is small (Surgeons, Architects, Veterinarians, Athletes). Display names are constrained to 25 characters, plural, and Title Case. The remaining occupations stay in the dataset and remain searchable; they are simply not surfaced as canvas elements.</p>
-
-  <h3 class="section-subtitle">3.4 Technology events</h3>
-
-  <p class="body-text">57 milestone events from 1764 to 2026, each assigned to a primary territory. These serve as annotation markers on the timeline, not as inputs to the model. A maximum of two events per year are displayed.</p>
-
-  <p class="body-text">Events were selected for labor relevance — moments when a technology became commercially available and changed or threatened to change how work is done. Culturally famous milestones (Turing's paper, ENIAC, the founding of Google) are included only when they correspond to a change in the commercial capability frontier, not for historical significance alone.</p>
-
-  <h3 class="section-subtitle">3.5 Source hierarchy</h3>
-
-  <p class="body-text">The dataset contains 414 source records. The source hierarchy for labor data is:</p>
-
-  <ol class="body-text">
-    <li>ILO ILOSTAT modelled estimates (primary for 1991–2025)</li>
-    <li>World Bank World Development Indicators (cross-check)</li>
-    <li>GGDC 10-Sector Database (historical disaggregation)</li>
-    <li>Bairoch (1988), Mitchell (2003), Cambridge Group (pre-1870 reconstructions)</li>
-    <li>Maddison Project Database (population and GDP only — not employment)</li>
-  </ol>
-
-  <p class="body-text">For replaceability scores, sources are primarily benchmark datasets (SWE-bench, METR, IFR robot density), commercial deployment data (company reports, earnings calls, industry databases), and academic research (Frey &amp; Osborne, Eloundou et al., Gmyrek et al., Anthropic Economic Index).</p>
+  <p class="body-text">Vector ordering (C_R &gt; P_A &gt; C_G &gt; Phi_S &gt; S_E &gt; Phi_U) is preserved across the recalibration. Ordering is load-bearing: if it inverted, something would be wrong with the deployment evidence or the vector definitions.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 4 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="scenarios">4. Capability trajectory</h2>
+  <h2 class="section-title" id="scoring">4. How replaceability is scored</h2>
 
-  <p class="body-text">The visualisation shows a single projection based on a moderate capability trajectory.</p>
+  <p class="body-text">For each occupation and each year, replaceability is computed by comparing each task's capability vector value (at that year) against the task's difficulty threshold. Tasks that cross the threshold contribute their time weight to the score.</p>
 
-  <p class="body-text">The METR 4-month capability doubling rate continues through 2028, then stabilises. Frontier AI reaches human-level performance on most cognitive tasks by 2027–2028. Commercially available robotics crosses dexterity thresholds for most structured physical environments by 2029–2030.</p>
+  <div class="formula-block">replaceability(occupation, year) =
+    Σ<sub>tasks</sub> time_weight(task) · crossover(capability[task.vector][year], task.difficulty)
 
-  <p class="body-text">The displacement model (Section 5) converts this trajectory into projected employment changes. The trajectory itself — how fast AI and robotics become technically capable — is separate from the displacement model's parameters, which govern how fast that capability translates into actual job losses.</p>
+where crossover(cap, diff) =
+    1                           if cap ≥ diff    (strict threshold, used 2026+)
+    1 / (1 + exp(-8·(cap−diff)))  (logistic, used for historical 1970–2014)
+  </div>
 
-  <h3 class="section-subtitle">4.1 Earlier scenario work</h3>
+  <p class="body-text">Forward projections use the strict threshold form — capability either exceeds the task threshold or it doesn't. The strict form matches how automation is procured: a buyer decides at some point "the system is reliable enough for this task" and deploys it.</p>
 
-  <p class="body-text">Earlier versions of the dataset computed projections under three scenarios — conservative, moderate, and accelerated — representing different assumptions about the pace of capability advancement. The conservative scenario applied no displacement (pure ILO consensus baseline). The accelerated scenario used a higher conversion rate (0.60) and a faster lag schedule. After review, the moderate scenario was determined to best reflect the available evidence and is the sole projection shown. The conservative and accelerated scenarios are archived and may be reintroduced if a scenario toggle is added to the visualisation.</p>
+  <p class="body-text">Historical projections use a logistic crossover with k=8, giving partial credit as capability approaches the task difficulty. The logistic form is necessary because 1970-era capability values (C_R ~0.07, P_A ~0.10) are below nearly every task difficulty threshold in the Phase 4 decomposition — the strict threshold would collapse to zero across the whole dataset, which is clearly false (ATMs and CNC machines really did exist and really did replace real tasks). The logistic form captures the reality that early automation did a fractional share of the job well.</p>
+
+  <p class="body-text"><strong>Territory aggregation.</strong> Territory-level replaceability is the employment-weighted mean of in-territory occupation replaceabilities, using current (2026) in-territory employment weights. Weights come from ILOSTAT 2025, BLS OES, and mapped via SOC → ISCO. For historical years, this produces "what share of today's labor composition, within each territory, would have been technically replaceable at that year's capability values" — a deliberate editorial choice documented at <code>metadata.phase12_historical_backfill</code>.</p>
+
+  <h3 class="section-subtitle">4.1 Global replaceability</h3>
+
+  <p class="body-text">The global replaceability metric shown in the visualization header is the global-workforce-weighted mean of territory replaceabilities. For 2026 it is <strong>mean r26 = 45.0</strong> across 481 occupations. The dataset has 25 occupations scoring r26 = 100 (primarily clerical roles where all tasks have difficulty thresholds well below C_R = 0.76, and packaging/bottling machine operation where P_A = 0.75 saturates the task set). At the other end, 26 occupations score r26 ≤ 5 — humanoid-dependent physical roles (surgeons, plumbers, child care workers) where Phi_U = 0.15 is well below almost every task threshold.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 5 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="displacement">5. The displacement model</h2>
+  <h2 class="section-title" id="displacement">5. The replacement model</h2>
 
-  <p class="body-text">The displacement model converts replaceability scores into projected employment changes. It answers: given that AI can technically do X, how many jobs actually disappear?</p>
+  <p class="body-text">Replaceability is converted into actual workforce displacement through a calibrated formula that captures three distinct frictions: adoption lag, barrier-type-specific drag, and era-stratified already-absorbed displacement.</p>
 
-  <h3 class="section-subtitle">5.1 The formula</h3>
-
-  <p class="body-text">For each territory T, year Y, and scenario S:</p>
-
-  <div class="formula-block">total_reduction = delta_repl_term + lag_term
-
-delta_repl_term = conv_rate(S) &times; max(0, repl(T, Y, S) &minus; repl_2026(T)) / 100
-
-lag_term = lag_release(S, Y) &times; pending(T) / 100
-
-pending(T) = repl_2026(T) &times; 0.85
-
-workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</div>
-
-  <p class="body-text">Where:</p>
-
-  <ul class="body-text">
-    <li><strong>repl(T, Y)</strong> is the replaceability score for territory T at year Y</li>
-    <li><strong>repl_2026(T)</strong> is the locked 2026 baseline score</li>
-    <li><strong>consensus_workers(T, Y)</strong> is the ILO consensus workforce projection (where employment would go if AI displacement did not occur)</li>
-    <li><strong>conv_rate</strong> is the conversion rate (1/3 for the displayed projection)</li>
-    <li><strong>lag_release(Y)</strong> is the lag absorption at year Y</li>
-    <li><strong>pending(T)</strong> is the backlog of existing capability not yet absorbed (85% of the 2026 score)</li>
-  </ul>
-
-  <h3 class="section-subtitle">5.2 What the two terms mean</h3>
-
-  <p class="body-text"><strong>The delta replaceability term</strong> captures new capability arriving after 2026. Each new point of replaceability is converted into displacement at the scenario's conversion rate. If Money &amp; Data goes from 78 (2026) to 94 (2030 moderate), that is 16 new points. One-third of 16 is approximately 5.3 — meaning about 5.3% of that territory's workforce is displaced by post-2026 capability gains.</p>
-
-  <p class="body-text"><strong>The lag term</strong> captures the backlog. In 2026, a substantial amount of technical capability already exists that has not yet been absorbed into actual job losses. Radiology AI works, but radiologists still have jobs. The lag term says: this backlog gets absorbed over time, on a schedule. The 0.85 multiplier means 85% of the 2026 score is treated as pending absorption — the remaining 15% is assumed to have already been absorbed into the pre-2026 employment baseline.</p>
-
-  <h3 class="section-subtitle">5.3 Parameters</h3>
-
-  <p class="body-text"><strong>Conversion rate:</strong> 1/3 (0.333). One-third of each new replaceability point becomes displacement.</p>
-
-  <p class="body-text"><strong>Lag release schedule</strong> (what fraction of the 2026 capability backlog has been absorbed by each year):</p>
+  <div class="formula-block">displacement(t) = min(
+    (conversion_rate × (replaceability_t − replaceability_2026) × lag(t))
+    × barrier_multiplier(primary_barrier)
+    + already_absorbed(occupation, era),
+  replaceability_t)
+  </div>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
-      <tr><th>Year</th><th>Lag release</th></tr>
+      <tr><th>Parameter</th><th>Value</th><th>Notes</th></tr>
     </thead>
     <tbody>
-      <tr><td>2026</td><td>5%</td></tr>
-      <tr><td>2030</td><td>28%</td></tr>
-      <tr><td>2035</td><td>48%</td></tr>
-      <tr><td>2040</td><td>58%</td></tr>
-      <tr><td>2041</td><td>60%</td></tr>
+      <tr><td>conversion_rate</td><td class="mono">0.30</td><td>Fraction of replaceability-capability gain that translates into workforce reduction at steady state. Fit against 7 historical automation cases (telephone operators 1920–2023, bank tellers, travel agents, cashiers, translators, customer service reps, bookkeeping clerks).</td></tr>
+      <tr><td>lag schedule</td><td class="mono">2026: 7%<br>2030: 18%<br>2035: 30%<br>2040: 42%<br>2041: 44%</td><td>Piecewise, interpolated between anchors. Slower than v3.2 (5 / 28 / 48 / 58 / 60). Historical automation cases averaged 15+ years from capability emergence to majority displacement; v5 honors that.</td></tr>
+      <tr><td>barrier multipliers</td><td class="mono">NONE: 1.00<br>ECONOMIC: 0.95<br>HUMANOID_DEPENDENT: 0.75<br>HUMAN_PREFERENCE: 0.50<br>REGULATORY: 0.35</td><td>Strengthened from Phase 6's original (0.70 and 0.50) during Phase 11 to preserve fit against the Anthropic Economic Index cross-section after r26 was rescored to pure task-math. Cross-section R² rises from 0.61 plain → 0.85+ with barrier stratification.</td></tr>
+      <tr><td>already_absorbed</td><td class="mono">era-stratified</td><td>Per-occupation floor representing displacement that already happened before 2026 (e.g., telephone operators, typists). Prevents the model from "re-displacing" already-absorbed cases.</td></tr>
     </tbody>
   </table></div>
 
-  <p class="body-text">The lag schedule decelerates: the gaps between anchor points are +23pp (2026–2030), +20pp (2030–2035), +10pp (2035–2040), +2pp (2040–2041). This reflects the assumption that the easiest-to-displace roles are absorbed first, and the remaining backlog becomes progressively harder to convert into actual displacement.</p>
+  <p class="body-text">Parameters were fit against the 7 historical automation cases and the 28-occupation cross-section from the Anthropic Economic Index (Massenkoff &amp; McCrory, March 2026). Historical-case R² under the fitted formula is 0.85+; plain (no-barrier, uniform-absorbed) R² is 0.61.</p>
 
-  <h3 class="section-subtitle">5.4 Headline outputs</h3>
-
-  <div class="method-table-wrap"><table class="method-table">
-    <thead>
-      <tr><th>Year</th><th>Projected workforce</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>2026</td><td>3,466M</td></tr>
-      <tr><td>2030</td><td>2,946M</td></tr>
-      <tr><td>2035</td><td>2,578M</td></tr>
-      <tr><td>2040</td><td>2,421M</td></tr>
-      <tr><td>2041</td><td>2,389M</td></tr>
-    </tbody>
-  </table></div>
-
-  <p class="body-text">The projection shows a 31% workforce decline from 2026 to 2041.</p>
-
-  <h3 class="section-subtitle">5.5 What the model does not do</h3>
-
-  <p class="body-text"><strong>No reinstatement effects.</strong> The model does not create new jobs in response to AI-driven productivity gains. Workers displaced by the displacement formula exit the employed workforce and are not redistributed. This is a deliberate editorial choice reflecting the project's assessment that the ceiling on human AI-supervisor roles is structurally low, mass reskilling has no historical precedent at the speed required, and the project's purpose is to show the full scale of displacement pressure before institutional responses are considered.</p>
-
-  <p class="body-text"><strong>No within-territory redistribution.</strong> Workers displaced from one territory are not moved to another. Each territory's displacement is computed independently.</p>
-
-  <p class="body-text"><strong>No policy modeling.</strong> Regulatory responses, UBI, retraining programs, and changes to labor law are not modeled. These are the subject of the political conversation the project aims to provoke, not inputs to the model.</p>
-
-  <h3 class="section-subtitle">5.6 Sensitivity</h3>
-
-  <p class="body-text">The lag release schedule is the single most consequential free parameter in the model. Small changes produce large changes in output:</p>
-
-  <ul class="body-text">
-    <li>Moderate lag at 2040 = 58% → total workforce 2,427M (29% decline from conservative)</li>
-    <li>Moderate lag at 2040 = 30% → total workforce approximately 2,760M (18% decline)</li>
-    <li>Moderate lag at 2040 = 80% → total workforce approximately 2,120M (38% decline)</li>
-  </ul>
-
-  <p class="body-text">The conversion rate is the second most sensitive parameter. Changing moderate from 1/3 to 1/4 reduces the 2040 decline by approximately 3–4 percentage points.</p>
-
-  <p class="body-text">The lag schedule is modeled, not empirically measured. It reflects the project's assessment of institutional absorption speed based on historical technology adoption patterns. It is not a prediction. Alternative schedules would produce materially different projections.</p>
+  <p class="body-text">Mean 2041-moderate displacement across 481 occupations is <strong>27%</strong>, range 9–48%. This is the honest interpretive anchor for 2041: replaceability saturates but displacement carries the variance.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 6 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="pipeline">6. The production pipeline</h2>
+  <h2 class="section-title" id="trajectory">6. Capability trajectories 1970 → 2041</h2>
 
-  <p class="body-text">The dataset was produced through an 8-phase pipeline using multiple AI model instances in an adversarial research-and-reconciliation architecture. Each phase used two independent research models (typically one Claude instance and one Gemini instance) that produced outputs without seeing each other's work. A third model instance served as editor/reconciler, adjudicating disagreements based on evidence quality and methodology compliance. All phases were subsequently validated by Claude (Opus 4.6), which served as the final editorial layer — checking internal consistency, cross-scenario ordering, monotonicity, formula correctness, and evidence grounding. Manual review by the project lead covered structural decisions, editorial judgment, and spot-checking of individual records, but did not independently verify every source citation.</p>
-
-  <h3 class="section-subtitle">6.1 Phases</h3>
+  <p class="body-text">v5 carries a full 1970 → 2041 trajectory for every capability vector. The forward portion (2026 → 2041) came from Phase 7 — two parallel forecasters (Claude + GPT) researching published capability curves, humanoid shipment forecasts, benchmark trajectories, and deployment pilots; reconciled under <code>mid = min(A_mid, B_mid)</code> so no single forecaster's aggressiveness pulled the central case. The backward portion (1970 → 2014) came from Phase 12 — same reconciliation discipline, same two-instance structure, parallel honest-deployment research over assembly-line through ChatGPT milestones.</p>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
-      <tr><th>Phase</th><th>Content</th><th>Research models</th><th>Reconciler</th><th>Final editor</th></tr>
+      <tr><th>Year</th><th>C_R</th><th>C_G</th><th>P_A</th><th>Phi_S</th><th>Phi_U</th><th>S_E</th></tr>
     </thead>
     <tbody>
-      <tr><td>1</td><td>Historical labor shares 1800–2024</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
-      <tr><td>2</td><td>Labor projections 2025–2040</td><td>Gemini + GPT</td><td>Claude</td><td>Claude (Opus 4.6)</td></tr>
-      <tr><td>3</td><td>Territory replaceability 2015–2026</td><td>Claude + GPT</td><td>Gemini</td><td>Claude (Opus 4.6)</td></tr>
-      <tr><td>4A/B</td><td>Occupation replaceability (405 occupations)</td><td>Claude + GPT</td><td>Gemini</td><td>Claude (Opus 4.6)</td></tr>
-      <tr><td>5</td><td>Replaceability projections 2027–2040</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
-      <tr><td>6</td><td>Technology events timeline</td><td>Claude + Gemini</td><td>GPT</td><td>Claude (Opus 4.6)</td></tr>
-      <tr><td>7</td><td>Manual integration + source deduplication</td><td>—</td><td>—</td><td>Manual + Claude (Opus 4.6)</td></tr>
-      <tr><td>8</td><td>Final validation</td><td>—</td><td>—</td><td>Automated + manual</td></tr>
+      <tr><td>1970</td><td class="mono">0.07</td><td class="mono">0.005</td><td class="mono">0.10</td><td class="mono">0.005</td><td class="mono">0.02</td><td class="mono">0.005</td></tr>
+      <tr><td>1985</td><td class="mono">0.16</td><td class="mono">0.009</td><td class="mono">0.25</td><td class="mono">0.02</td><td class="mono">0.02</td><td class="mono">0.011</td></tr>
+      <tr><td>2000</td><td class="mono">0.36</td><td class="mono">0.02</td><td class="mono">0.42</td><td class="mono">0.05</td><td class="mono">0.03</td><td class="mono">0.05</td></tr>
+      <tr><td>2010</td><td class="mono">0.47</td><td class="mono">0.04</td><td class="mono">0.51</td><td class="mono">0.07</td><td class="mono">0.04</td><td class="mono">0.09</td></tr>
+      <tr><td>2020</td><td class="mono">0.59</td><td class="mono">0.08</td><td class="mono">0.65</td><td class="mono">0.21</td><td class="mono">0.06</td><td class="mono">0.18</td></tr>
+      <tr><td>2025</td><td class="mono">0.74</td><td class="mono">0.56</td><td class="mono">0.74</td><td class="mono">0.44</td><td class="mono">0.14</td><td class="mono">0.33</td></tr>
+      <tr><td><strong>2026</strong></td><td class="mono"><strong>0.76</strong></td><td class="mono"><strong>0.57</strong></td><td class="mono"><strong>0.75</strong></td><td class="mono"><strong>0.46</strong></td><td class="mono"><strong>0.15</strong></td><td class="mono"><strong>0.35</strong></td></tr>
+      <tr><td>2030</td><td class="mono">0.83</td><td class="mono">0.74</td><td class="mono">0.82</td><td class="mono">0.62</td><td class="mono">0.32</td><td class="mono">0.60</td></tr>
+      <tr><td>2035</td><td class="mono">0.86</td><td class="mono">0.82</td><td class="mono">0.89</td><td class="mono">0.72</td><td class="mono">0.54</td><td class="mono">0.73</td></tr>
+      <tr><td>2041</td><td class="mono">0.87</td><td class="mono">0.86</td><td class="mono">0.92</td><td class="mono">0.76</td><td class="mono">0.66</td><td class="mono">0.78</td></tr>
     </tbody>
   </table></div>
 
-  <p class="body-text">Automated validation checks: monotonicity (all territory-scenario trajectories non-decreasing), cross-scenario ordering (accelerated ≥ moderate ≥ conservative at every anchor year), labor share summation (100% at every anchor year), and displacement formula consistency. Manual validation caught errors that automated checks cannot — most notably a phantom parameter value (conservative conversion rate listed as 0.30 but never applied) that persisted through multiple automated validation passes.</p>
+  <p class="body-text">The shape is deliberate:</p>
 
-  <h3 class="section-subtitle">6.2 How reconciliation worked</h3>
+  <ul class="body-text">
+    <li><strong>C_R and P_A rise steadily</strong> across the whole period. ATMs, spreadsheets, ERP, SaaS, RPA, and LLM code-assist for C_R; industrial-robot density growth for P_A.</li>
+    <li><strong>Phi_S is near-zero pre-Waymo (2018)</strong>, then rises sharply. Before Waymo commercial launch in December 2018, nothing deployed at scale as route-based autonomous driving.</li>
+    <li><strong>S_E is near-zero pre-2010</strong>, rises with cloud + orchestration (Kubernetes 2014), sharp late rise with agentic coding (2023+).</li>
+    <li><strong>C_G is the sharpest recent shift</strong>. Near-zero for 1970–2020; the entire rise from ~0.05 to 0.57 happens between the Transformer paper (2017) and 2026.</li>
+    <li><strong>Phi_U stays near zero</strong> throughout the historical period. Humanoid hardware is still in pilots in 2026 and the 2041-mid reading of 0.66 is the model's single largest bet. Low-band 0.29 is the conservative reading; high-band 0.995 is the aggressive reading.</li>
+  </ul>
 
-  <p class="body-text">When the two research models agreed within 5 points, the reconciler typically accepted the average or the more specifically benchmarked value. When they disagreed by 6–10 points, the reconciler chose the model with stronger benchmark evidence. When they disagreed by more than 10 points, the reconciler averaged but flagged the record for manual review.</p>
+  <h3 class="section-subtitle">6.1 Phase 11 parallel shift</h3>
 
-  <p class="body-text">The largest single disagreement in the dataset was Land &amp; Sea at 2030 moderate: Claude scored 71, Gemini scored 44. The reconciled value is 58 (midpoint). This 27-point gap reflects genuine uncertainty about agricultural robotics timelines and is the widest in the entire dataset.</p>
+  <p class="body-text">After the Phase 11 recalibration lowered 2026 anchors, the Phase 7 forward trajectory was parallel-shifted so that the 2026 anchor equals the recalibrated value while preserving the trajectory growth shape. Pre-shift Phase 7 mid values are retained in the trajectory file under <code>*_phase7_original</code> fields for traceability.</p>
 
-  <p class="body-text">Cognitive territories showed tight agreement (1–5 points) across all years. Physical territories showed systematic disagreement (16–27 points) at 2030, narrowing to 7–12 points by 2040. The disagreement is concentrated on one question: how fast will humanoid robots cross commercial availability thresholds for physical labor? As of Q1 2026, the evidence favors the more conservative projections — Unitree has shipped approximately 15,000 units globally, primarily as research platforms, and Tesla Optimus remains in the R&amp;D phase.</p>
+  <h3 class="section-subtitle">6.2 Phase 12 historical backfill</h3>
 
-  <h3 class="section-subtitle">6.3 Post-production revisions (v2.2)</h3>
-
-  <p class="body-text">Following the initial reconciliation, a targeted evidence review in March 2026 revised two territories:</p>
-
-  <p class="body-text"><strong>Building Things (moderate):</strong> 2028–2032 scores lowered by 1–3 points. Basis: MEP trades (plumbing, electrical, HVAC) represent 30–40% of construction labor and have zero commercially available robotic solutions. The Zacua/Hilti 2026 Construction Robotics Report places construction robotics spend at less than 0.03% of global construction expenditure.</p>
-
-  <p class="body-text"><strong>Feeding &amp; Hosting (moderate):</strong> 2027–2032 scores lowered by 5–8 points. Basis: The leading kitchen automation robot (Flippy) has approximately 14 active commercial installations. The leading validated success (Sweetgreen Infinite Kitchen) operates at 12 locations and still requires roughly half the normal staff. No general cooking robot, hotel room-cleaning robot, or humanoid hospitality worker is commercially deployed anywhere.</p>
-
-  <h3 class="section-subtitle">6.4 v3.0: Task decomposition model</h3>
-
-  <p class="body-text">In v3.0, occupation-level scores were rederived using a systematic task decomposition model. Each of the 388 occupations was decomposed into its constituent tasks, each assigned to one of six capability vectors with empirically calibrated S-curve parameters anchored to SWE-bench, GPQA, IFR robot density, humanoid shipment data, and Waymo safety statistics.</p>
-
-  <p class="body-text">138 occupations underwent individual review through a dedicated research session, producing 1,478 task corrections (1,032 vector reassignments, 446 time-weight adjustments). A second pass recalibrated the maintaining_fixing territory (25 occupations). Military occupation scores were set manually due to poor O*NET-to-ISCO mapping for military roles.</p>
-
-  <p class="body-text">Three territory baselines were adjusted based on the evidence from the corrected occupation scores: Making Things (86→78), Moving Things (52→57), and Learning &amp; Teaching (28→31). These changes cascaded through the displacement formula, producing a net shift of approximately +3M workers at 2040 (0.6%).</p>
+  <p class="body-text">Added 2026-04-20 after a spot-check surfaced that the v5.0 release was displaying 0% replaceability for every territory before 2015. Two instances (GPT-5.4 + Claude Opus 4.7) independently researched 1970–2025 with 15–25 URL-cited milestone anchors per vector: first commercial ATMs (1967–1970), CNC + microprocessor commercialization (1972–1975), VisiCalc / Lotus 1-2-3 (1979–1983), ERP precursors (SAP R/3 1992), IFR industrial-robot data series (1993), commercial web (1995), Deep Blue (1997), Google Translate (2006), Watson Jeopardy (2011), Kiva + Amazon Robotics acquisition (2012), AlexNet (2012), Kubernetes + RPA (2014), AlphaGo (2016), Transformer paper (2017), Waymo commercial (Dec 2018), GPT-2/3/ChatGPT/GPT-4 (2019–2023), Amazon Sequoia/Proteus (2023), humanoid pilots (2024). Both instances produced 56-year × 6-vector × 3-band trajectories; reconciler applied <code>mid = min(A_mid, B_mid)</code>, pre-2015 cap at 0.85, and monotonicity enforcement. The reconciled trajectory was applied via logistic crossover to produce 585 historical territory-replaceability records (13 territories × 45 years).</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 7 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="baselines">7. 2026 replaceability baselines</h2>
+  <h2 class="section-title" id="scenarios">7. Three scenarios</h2>
 
-  <p class="body-text">These are the locked baseline scores from which all projections depart. Each score is briefly justified below.</p>
+  <p class="body-text">Every occupation and every year carries low / mid / high bands for replaceability and displacement. The mid (moderate) scenario is the editorially-reviewed default — displayed on the canvas, cited in headlines.</p>
 
-  <div class="method-table-wrap"><table class="method-table">
-    <thead>
-      <tr><th>Territory</th><th>2026 Score</th><th>Justification</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Making Things</td><td>78</td><td>Xiaomi zero-worker factory (81K sqm, 24/7); China 470 robots per 10K manufacturing workers. High-capital frontier is essentially fully automatable. Territory score reflects the full employment-weighted scope including non-frontier manufacturing (repair, non-automated segments), not frontier capability alone.</td></tr>
-      <tr><td>Money &amp; Data</td><td>78</td><td>Frontier AI performs most financial analysis, document processing, compliance review, and data management at professional level. Complex multi-party judgment and novel legal structures remain.</td></tr>
-      <tr><td>Thinking &amp; Leading</td><td>72</td><td>SWE-bench 71.7% (2024); AI writes 30–50% of code at frontier companies. Professional services (consulting, management, legal research) substantially automatable. Senior architecture and novel system design remain.</td></tr>
-      <tr><td>Making Meaning</td><td>72</td><td>Generative AI produces professional-quality text, image, video, and music. Commercial deployment in advertising, content production, design. Genuinely novel creative output and aesthetic judgment remain.</td></tr>
-      <tr><td>Care &amp; Health</td><td>62</td><td>873 FDA-cleared AI radiology tools. AI matches human diagnostic accuracy on many imaging tasks. Telehealth AI operational. Fine physical manipulation, novel diagnosis, and therapeutic relationship remain.</td></tr>
-      <tr><td>Buying &amp; Selling</td><td>62</td><td>E-commerce AI, automated customer service, inventory optimization, dynamic pricing all commercially deployed. Complex negotiation and relationship sales remain.</td></tr>
-      <tr><td>Moving Things</td><td>57</td><td>Waymo commercial robotaxi in multiple cities. Amazon 1M+ warehouse robots. Autonomous trucking in pilot. Warehouse automation (AGVs, autonomous forklifts at 77–85% replaceability for warehouse roles) pushes the territory average above the driving-task anchor alone. Last-mile in unstructured environments and adverse conditions remain.</td></tr>
-      <tr><td>Land &amp; Sea</td><td>48</td><td>GPS auto-steer, drone spraying, autonomous grain harvesting commercially deployed. Precision weeding lasers operational. Fruit harvesting in early commercial. Unstructured terrain, biological variability, and the global South's minimal mechanization anchor the score.</td></tr>
-      <tr><td>Building Things</td><td>46</td><td>Construction drones (45–67% contractor adoption), rebar robots, 3D concrete printing scaling. MEP trades (plumbing, electrical, HVAC) at zero robotic automation. Unstructured environments, multi-trade coordination unsolved.</td></tr>
-      <tr><td>Governing &amp; Protecting</td><td>41</td><td>AI surveillance, predictive policing, document automation in government. Military autonomous systems in deployment. Democratic accountability, judgment in novel situations, and physical enforcement remain deeply human.</td></tr>
-      <tr><td>Feeding &amp; Hosting</td><td>34</td><td>Digital ordering/payment mature. Restaurant delivery robots (160K+ units globally). Basic food assembly automation (Sweetgreen). No general cooking, room-cleaning, or complex hospitality service robots deployed.</td></tr>
-      <tr><td>Maintaining &amp; Fixing</td><td>32</td><td>Industrial inspection platforms (Boston Dynamics Spot, pipe crawlers, utility drones) commercially deployed. SCADA/IoT for process monitoring. Zero commercial robotic solutions for physical repair (HVAC, plumbing, electrical).</td></tr>
-      <tr><td>Learning &amp; Teaching</td><td>31</td><td>AI tutoring systems (Khanmigo, 1.4M users; Harvard 2025 RCT showing 2x learning gains) operational. Automated grading for structured assessments (Gradescope, CoGrader). Administrative compliance tools (IEP CoPilot). Embodied presence, real-time social adaptation, and the developmental relationship remain far from any technical solution.</td></tr>
-    </tbody>
-  </table></div>
+  <ul class="body-text">
+    <li><strong>Low (conservative).</strong> Slower capability trajectory, stronger barrier drag, tempered task-math.</li>
+    <li><strong>Mid (moderate) — displayed view.</strong> Computed as <code>min(A_mid, B_mid)</code> across two independent Phase 7 forecasters, then parallel-shifted to the recalibrated 2026 anchor. Mid is the <em>tempered</em> read, never the average; scenario preference never leaks into the central case.</li>
+    <li><strong>High (accelerated).</strong> Faster capability, weaker barriers, aggressive task-math. Anchored on the more aggressive forecaster's mid reading (also post-shift).</li>
+  </ul>
+
+  <p class="body-text">2041 mid anchors (post-shift): C_R 0.87, C_G 0.86, P_A 0.92, Phi_S 0.76, Phi_U 0.66, S_E 0.78. 2041 high anchors: C_R 0.91, C_G 0.95, P_A 1.00, Phi_S 0.88, Phi_U 0.995, S_E 0.93.</p>
+
+  <div class="callout"><strong>Important caveat.</strong> v5.0 ships the moderate scenario as the editorially-reviewed display. Low and high band values are preserved per occupation as structural metadata, but they are produced deterministically from Phase 7's capability-trajectory low/high curves applied against Phase 4 task difficulties — they were not reviewed occupation-by-occupation. This produces editorially-implausible shapes in thin-margin cases (e.g., preschool educators' r30-high jumps from 8 to 100 when Phi_U high=0.67 crosses Phi_U task thresholds of 0.55-0.60). Re-examination of the low/high bands is a v5.1 deliverable. For now, reader attention should stay on the moderate band. <code>metadata.scenarios_shipped</code> encodes this disclosure.</div>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 8 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="timeline">8. Timeline and endpoint rationale</h2>
+  <h2 class="section-title" id="pipeline">8. The production pipeline</h2>
 
-  <h3 class="section-subtitle">8.1 Start: 1800</h3>
+  <p class="body-text">v5.0 was built on a reviewer-directed 12-phase pipeline. Each phase has a canonical output, a reviewer-signed checkpoint, and archived inputs/outputs. The build uses adversarial multi-instance separation: builders never validate their own output; separate instances do auditing, reconciliation, and documentation.</p>
 
-  <p class="body-text">1800 is not the start of industrialization — the Industrial Revolution began in Britain decades earlier, and manufacturing overtook agriculture in England around 1740 (Cambridge Group). 1800 is the earliest date at which a defensible estimate of global labor distribution can be constructed from the available historical sources (Bairoch 1988). The pre-1850 data is LOW quality and covers only three macro sectors. It exists in the visualization to provide the "before" baseline that the project's argument depends on: a world in which the overwhelming majority of human labor was agricultural.</p>
+  <div class="method-table-wrap"><table class="method-table">
+    <thead>
+      <tr><th>Phase</th><th>What it produces</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0</td><td>Schema lock + spec (<code>v5_schema.json</code>, Draft 2020-12)</td></tr>
+      <tr><td>1</td><td>ISCO-08 canonical reference (436 unit groups + 10 approved custom codes)</td></tr>
+      <tr><td>2</td><td>Occupation inventory + territory mapping (481 occupations locked)</td></tr>
+      <tr><td>3</td><td>Labor data rebuild with occupation-up methodology (635 records, 1800–2025)</td></tr>
+      <tr><td>4</td><td>Task decomposition (3-way reconciled; 4,830 tasks)</td></tr>
+      <tr><td>5</td><td>Replaceability 2026 scoring (blind calibrator + 3 scorers + reconciler)</td></tr>
+      <tr><td>6</td><td>Replacement formula calibration (7 historical cases + 28-occupation cross-section)</td></tr>
+      <tr><td>7</td><td>Capability trajectories 2026 → 2041 (2 forecasters + reconciler, three-scenario)</td></tr>
+      <tr><td>8</td><td>Barrier notes + common titles (3-source merge + targeted anti-template rerun)</td></tr>
+      <tr><td>9</td><td>Timeline events audit (researcher + verifier)</td></tr>
+      <tr><td>10</td><td>Adversarial validation (isolated instance, 25 required checks)</td></tr>
+      <tr><td>11</td><td>Editorial sign-off + emergency interventions (see editorial process record)</td></tr>
+      <tr><td>12</td><td>Historical capability-vector backfill 1970 → 2014</td></tr>
+    </tbody>
+  </table></div>
 
-  <h3 class="section-subtitle">8.2 Baseline: 2026</h3>
+  <h3 class="section-subtitle">8.1 Phase 11 emergency interventions</h3>
 
-  <p class="body-text">2026 is the present year. Replaceability scores at 2026 are anchored to commercially available technology as of Q1 2026. All projections depart from this baseline. The 2026 scores are locked and not subject to scenario variation.</p>
+  <p class="body-text">Phase 11 was supposed to be editorial sign-off + release. Instead it surfaced multiple deep issues that required intervention before ship. A full post-mortem is in the <a class="inline" href="./docs/v5_editorial_process.md">editorial process record</a>. Headline interventions:</p>
 
-  <h3 class="section-subtitle">8.3 End: 2041</h3>
+  <ul class="body-text">
+    <li><strong>Replaceability ≠ Replacement framing correction.</strong> The original §2.6b framing included regulatory/preference barriers in replaceability; review caught the conflation. 162 occupations with REGULATORY or HUMAN_PREFERENCE barriers were re-scored to pure task-math, moving those frictions into the replacement formula where they belong.</li>
+    <li><strong>Four-instance adversarial task audit (Audit 1).</strong> Caught 461 scrape artifacts — navigation menus, page titles, ISCO unit-group definitions, fragments — that had survived Phase 4 reconciliation. ~87 vector reclassifications applied where 2-model agreement existed.</li>
+    <li><strong>Focused audit on high-r26 occupations (Audit 2).</strong> Found systemic C_R/C_G → Phi_U/Phi_S/P_A mis-vectoring in physical roles (retail, driving instruction, industrial operations). 272 corrections applied.</li>
+    <li><strong>13-territory deep audit (Audit 3).</strong> One instance per territory, web-enabled, domain-expert per batch. 1,166 findings; adversarial QC pair retained 1,100 after dropping 7 over-reaches and re-interpreting 2 edge cases. 299 additional scrape-artifact removals.</li>
+    <li><strong>Capability vector recalibration.</strong> Two parallel instances (Opus + GPT) under a benchmark-to-deployment honest lens. Tight convergence. 2026 anchors lowered; trajectory parallel-shifted.</li>
+  </ul>
 
-  <p class="body-text">2041 = 2026 + 15 years. Fifteen years represents the outer boundary at which the model's core assumptions — capability trajectories, lag absorption rates, and structural economic parameters — can be reasonably grounded in observable evidence and historical analogues. Beyond this horizon, the compounding uncertainty in all parameters would make the model's outputs indistinguishable from speculation.</p>
-
-  <p class="body-text">The date 1800–2041 is also an aesthetic choice. A timeline ending at a round number (2040) reads as arbitrary. 2041 reads as deliberate — a signal that the endpoint was chosen, not defaulted to.</p>
-
-  <h3 class="section-subtitle">8.4 Known boundary artifacts</h3>
-
-  <p class="body-text">The 2025–2026 boundary is a methodological seam where backward-calibrated historical data meets forward-calibrated projections. Some territories show apparent plateaus at this boundary (e.g., Land &amp; Sea holding at 48 for both 2025 and 2026). These are artifacts of the calibration methodology, not genuine capability stalls.</p>
+  <p class="body-text">These interventions matter because scrape artifacts, vector mis-calibration, and the benchmark-vs-deployment gap are systemic issues that could have shipped undetected. The 2-audit + dual-recalibration process at Phase 11 caught them. This is why the project uses adversarial multi-instance separation.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 9 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="limitations">9. Known limitations</h2>
+  <h2 class="section-title" id="sources">9. Data sources</h2>
 
-  <h3 class="section-subtitle">9.1 The conservative baseline has drifted from ILO consensus</h3>
+  <p class="body-text">Primary sources backing v5:</p>
 
-  <p class="body-text">The dataset's conservative scenario uses the November 2024 vintage of ILO modelled estimates. The ILO's November 2025 vintage (published January 2026 in Employment and Social Trends 2026) places 2025 global employment approximately 49 million higher. The conservative baseline is therefore slightly below current ILO consensus. The percentage-based displacement calculations are minimally affected, but absolute workforce numbers in all scenarios are correspondingly low by approximately 1.4%.</p>
+  <ul class="body-text">
+    <li><strong>ILO ISCO-08</strong> — canonical occupation codes and definitions. ILO PDF (2009-07-09 final) + ILO CSV (hash-matched) + IHE FHIR CodeSystem cross-check.</li>
+    <li><strong>O*NET</strong> (US Department of Labor) — task statements and common occupational titles via SOC → ISCO crosswalk. 15,575 raw tasks from Phase 4 Instance A.</li>
+    <li><strong>BLS</strong> — OES (Occupational Employment Statistics) and OOH (Occupational Outlook Handbook). 11,234 raw tasks from Phase 4 Instance B.</li>
+    <li><strong>Live LinkedIn</strong> guest-search scrapes (2025–2026) for current job-title nomenclature — Phase 8 common titles (2,968 titles).</li>
+    <li><strong>ILOSTAT</strong> <code>EMP_TEMP_SEX_OCU_NB</code> family for 1991–2025 occupation-level global employment.</li>
+    <li><strong>GGDC 10-Sector Database</strong> for 1870–1990 sector-level historical reconstruction.</li>
+    <li><strong>World Bank</strong> <code>MS.MIL.TOTL.P1</code> (IISS Military Balance) for 1988–2025 armed forces coverage. ILOSTAT modelled-global does not publish ISCO major group 0; the WB/IISS series closes the gap for Governing &amp; Protecting.</li>
+    <li><strong>Bairoch + Maddison</strong> reconstructions for 1800–1869 macro aggregates.</li>
+    <li><strong>Anthropic Economic Index</strong> (Massenkoff &amp; McCrory, March 2026) — 28-occupation cross-section of theoretical-vs-observed AI coverage; primary Phase 6 calibration anchor and Phase 11 cross-check.</li>
+    <li><strong>METR time-horizon benchmarks</strong> for agentic task completion.</li>
+    <li><strong>IFR World Robotics 2025</strong> — installed industrial robot stock and density.</li>
+    <li><strong>Humanoid pilot data</strong> (Figure 02 at BMW, Tesla Optimus, Amazon Vulcan) — used to bound upside, not drive central estimates.</li>
+    <li><strong>Epoch AI, GPQA, HLE, SWE-bench Verified / Pro, ARC-AGI-3</strong> — benchmark landscape for the six vectors.</li>
+  </ul>
 
-  <h3 class="section-subtitle">9.2 Pre-1870 data is editorial</h3>
-
-  <p class="body-text">The 12 records covering 1800–1870 are reconstructions from secondary historical sources, not observed labor statistics. They provide directional shape (agriculture declining, industry rising) but should not be treated as precise measurements.</p>
-
-  <h3 class="section-subtitle">9.3 The 2019–2020 replaceability discontinuity</h3>
-
-  <p class="body-text">Care &amp; Health and Money &amp; Data both show +16 point jumps from 2019 to 2020 — the largest single-year movements in the dataset. These reflect the simultaneous arrival of GPT-3 (the first commercially available general-purpose language model, June 2020) and pandemic-driven acceleration of digital health and financial services. The jumps are annotated in the dataset but represent a calibration choice that reasonable analysts might score differently.</p>
-
-  <h3 class="section-subtitle">9.4 Physical territory projection uncertainty</h3>
-
-  <p class="body-text">The five physical-labor territories (Land &amp; Sea, Building Things, Moving Things, Feeding &amp; Hosting, Maintaining &amp; Fixing) carry wider uncertainty bands than cognitive territories. The two independent research models agreed within 1–5 points on cognitive territories at 2030 but disagreed by 16–27 points on physical territories. The central question — how fast will humanoid robots cross from research platforms to productive commercial tools — remains genuinely unresolved as of Q1 2026.</p>
-
-  <h3 class="section-subtitle">9.5 Occupation scoring model limitations</h3>
-
-  <p class="body-text">In v3.0, occupation scores are derived from a task decomposition model using six capability vectors. This is a significant improvement over the holistic assessments used in earlier versions, but limitations remain.</p>
-
-  <p class="body-text">The task decompositions are sourced from O*NET, which is US-centric and tends to overweight administrative and documentation tasks relative to the core physical or social functions that define many roles. 138 occupations received individual review and correction; the remaining 250 use uncorrected O*NET task distributions.</p>
-
-  <p class="body-text">Each task is assigned to a single capability vector, but some tasks span multiple vectors. "Negotiate with a subcontractor" involves both cognitive reasoning (C_G) and social-embodied interaction (S_E); the model forces a choice.</p>
-
-  <p class="body-text">The binary threshold mechanism (a task is either fully automatable or not at all) does not capture partial automation. In reality, AI might handle 60% of a task's subtasks, but the model scores it as either 0% or 100%.</p>
-
-  <p class="body-text">Territory aggregates (employment-weighted averages of occupation scores) do not perfectly match territory baselines. The current RMSE is 7.5 points. The largest gaps are in territories where the occupation mix measured by the model differs from what the territory-level benchmark anchored to.</p>
-
-  <h3 class="section-subtitle">9.6 No reinstatement or redistribution</h3>
-
-  <p class="body-text">The displacement model models job loss only, not job creation. This is its most challengeable assumption. Every economist will ask where the reinstatement effect is. The answer is: it is deliberately excluded. See Section 5.5 for the rationale. Readers should understand that actual employment outcomes depend on policy responses and economic restructuring that this model does not attempt to predict.</p>
+  <p class="body-text">A full source registry is inlined in the dataset at <code>sources[]</code>. Every labor record, every occupation, and every task carries <code>source_ids[]</code> pointing to registry entries with <code>id</code>, <code>type</code>, <code>title</code>, <code>reliability</code>, <code>authority</code>, and <code>citation</code>. Total source entries: 6,686.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 10 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="contribute">10. How to contribute</h2>
+  <h2 class="section-title" id="limitations">10. Known limitations</h2>
 
-  <p class="body-text">This is an open-source project. Contributions are welcome. Here is what a good contribution looks like.</p>
+  <p class="body-text">This is a structured estimate, not a forecast. The honest statement of what the model cannot do:</p>
 
-  <h3 class="section-subtitle">10.1 Correcting a score</h3>
-
-  <p class="body-text">Point at a specific record: territory, year, scenario. State the current score. Provide the evidence that the score is wrong — a commercially available product that raises it, or the absence of a commercially available product that should lower it. Propose a replacement score with justification.</p>
-
-  <p class="body-text">The standard is: can you explain this number? If you can explain why the current number is wrong and your replacement is right, referencing specific commercial evidence, that is a valid correction.</p>
-
-  <h3 class="section-subtitle">10.2 Extending the occupation layer</h3>
-
-  <p class="body-text">The occupation layer covers 388 ISCO-08 4-digit occupations. There are approximately 430 total. Adding missing occupations follows the same scoring methodology: assign a territory, assess the 2026 replaceability based on commercially available technology, and project 2030 scores.</p>
-
-  <h3 class="section-subtitle">10.3 Adding a territory</h3>
-
-  <p class="body-text">The current 13-territory grouping is editorial. If you have evidence that a subdivision would be more accurate — for example, splitting Land &amp; Sea into agriculture and mining, which have very different automation trajectories — the contribution would include the proposed ISIC mapping, the historical labor share data for both new territories, and replaceability scores from 2015 forward.</p>
-
-  <h3 class="section-subtitle">10.4 Challenging the displacement model</h3>
-
-  <p class="body-text">The displacement model's parameters (conversion rates, lag schedule) are the most consequential assumptions in the project. If you have evidence that the lag schedule is too fast or too slow — for example, sector-specific data on technology adoption rates that suggests a different absorption curve — that evidence would directly improve the model. The sensitivity analysis in Section 5.6 shows how much the outputs change with different parameter values.</p>
-
-  <h3 class="section-subtitle">10.5 What format</h3>
-
-  <p class="body-text">Corrections and extensions should reference the dataset's native structure: territory_id, year, scenario, replaceability_score, source_ids. The canonical dataset is a JSON file. Territory groupings are a separate editorial layer over native ISIC/ISCO classification keys.</p>
+  <ol class="body-text">
+    <li><strong>Point estimates over heterogeneous distributions.</strong> C_G spans first-draft copywriting to frontier diagnosis. Phi_S spans robotaxis to rural mail to heavy equipment. S_E spans coding agents to multi-stakeholder incident command. A single 2026 value per vector averages over this; the bounds carry some of the uncertainty but a vector split is a likely v6 improvement.</li>
+    <li><strong>Benchmark-vs-deployment gap.</strong> Benchmarks measure frontier capability on clean tasks; deployment measures production reliability on messy real labor. Phase 11's recalibration was an explicit attempt to close this gap via an honest-deployment lens, but production reliability data is still developing and values may shift in v5.1 / v6.</li>
+    <li><strong>Aggressive 2041-mid shape.</strong> Under the moderate scenario, 88% of occupations reach replaceability 100 by 2041 (actually measured at 2040, which is the per-occupation projection year). This is legitimate task-math but pushes interpretive weight onto the displacement column. Use displacement (mean 27%) to understand workforce implications, not replaceability alone.</li>
+    <li><strong>Phase 6 barrier-model form.</strong> Multiplicative barrier multipliers work across most of the distribution but produce counterintuitive results at high r26 × REGULATORY (lawyers at r41 = 100). A floor-adjusted barrier model for regulatory frictions is a likely v6 change.</li>
+    <li><strong>Residual scrape artifacts below the audit bar.</strong> Four Phase 11 audit rounds removed 825 artifacts. The audit bar was 2-model agreement; below-threshold contamination likely remains. A v6 Phase 4 re-run with tightened anti-scrape guardrails is recommended.</li>
+    <li><strong>Task-classification ceiling.</strong> Phase 4's three-way reconciliation achieved 84.2% agreement; the 15.8% split cases were defaulted to the Codex adversarial pass and flagged.</li>
+    <li><strong>Global-weighted P_A is lower than the frontier.</strong> Industrial-robot density in Korea is 7× China's and 5× Western Europe's. P_A at 0.75 averages across the global workforce. A single global value trades off against locale-specific precision.</li>
+    <li><strong>HUMANOID_DEPENDENT capability gap is uncertain.</strong> The 2041 Phi_U mid at 0.66 assumes humanoid hardware matures from 0.15 in 2026. Low-band (0.29) is the conservative read; high-band (0.995) is the aggressive read. The central value encodes substantial forecaster uncertainty.</li>
+    <li><strong>Editorial overrides pending.</strong> Two evidence-backed concerns (ISCO 5245 Service Station Staff; REGULATORY-barrier occupations with r41 ≥ 95) are documented but not applied to v5.0. v5.1 / post-launch.</li>
+    <li><strong>Historical reconstructions are coarse.</strong> 1800–1869 relies on Bairoch/Maddison macro aggregates; 1870–1990 on GGDC 10-sector. Only 1991+ is occupation-level ILOSTAT. Pre-1991 territory totals are honest but not precise.</li>
+    <li><strong>Low/high scenario bands are structural, not editorially reviewed.</strong> See Section 7 caveat.</li>
+    <li><strong>Historical backfill uses current task decompositions and current within-territory employment weights.</strong> Phase 12 produces honest historical capability values, then applies them against today's occupation task lists weighted by today's in-territory employment shares. This gives "what share of today's labor would have been technically replaceable at that year's capability" — not "what share of 1985's actual labor force was replaceable by 1985 technology." Reconstructing historical occupation composition at the 481-occupation granularity is deferred.</li>
+    <li><strong>Pre-1970 has no territory replaceability series.</strong> Capability evidence pre-1970 is too thin to support per-territory numbers with the same discipline as 1970+. Pre-1970 shows labor composition via <code>historical_occupations</code> macro aggregates (land_sea / macro_industry / macro_services) but no territory-level replaceability scores.</li>
+  </ol>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 11 -->
@@ -653,82 +564,53 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
 
   <h3 class="section-subtitle">v5.0 (April 2026)</h3>
 
-  <p class="body-text">v5.0 is a ground-up rebuild. Every occupation is decomposed into tasks (2–14 tasks per occupation, 4,830 total); each task is assigned to one of six capability vectors and a difficulty threshold; the occupation's replaceability is the time-weighted share of tasks whose vector threshold is crossed by the 2026 capability value. Capability values themselves were recalibrated under an honest deployment-gap lens (two independent instances, tight convergence): C_R 0.76, C_G 0.57, P_A 0.75, Phi_S 0.46, Phi_U 0.15, S_E 0.35. The replacement formula was empirically fit against seven historical automation cases and the Anthropic Economic Index cross-section; barrier multipliers work multiplicatively on conversion. The dataset covers 481 occupations (up from 388 in v3.2), 13 modern territories, and 3 historical macro groupings, over the 2026 → 2041 horizon. Only the moderate scenario is editorially reviewed for v5.0; low and high bands ship as structural metadata. Full methodology: <a href="./docs/v5_methodology.md">docs/v5_methodology.md</a>. Full changelog: <a href="./docs/v5_changelog.md">docs/v5_changelog.md</a>. Full editorial process record (including Phase 11 emergency interventions): <a href="./docs/v5_editorial_process.md">docs/v5_editorial_process.md</a>.</p>
-
-  <h3 class="section-subtitle">v3.2 (April 2026)</h3>
+  <p class="body-text">Ground-up rebuild on a 12-phase pipeline. Every scoring column was recomputed; v3.2 served only as post-hoc sanity check and was never staged as input to any v5 phase.</p>
 
   <ul class="body-text">
-    <li>Editorial pass on all user-facing copy: 51 occupation display names standardized to Title Case + plural, abbreviations expanded, typos fixed, three near-duplicate display names disambiguated (Construction Managers / Project Managers, Aircraft Engine Mechanics / Aircraft Technicians, Wood Treaters / Wood Treatment Technicians).</li>
-    <li>50 territory reassignments based on the "nature of work" principle: personal care occupations (Hairdressers, Barbers, Nail Technicians, Pet Groomers) moved from Buying &amp; Selling to Care &amp; Health; Funeral Directors and Undertakers from Maintaining &amp; Fixing to Care &amp; Health; auto mechanics from Making Things to Maintaining &amp; Fixing; cleaning and sanitation roles from Moving Things to Maintaining &amp; Fixing; library staff from Money &amp; Data to Learning &amp; Teaching.</li>
-    <li>Functional manager principle ("Option B") applied: Finance Managers, IT Managers, Marketing Managers, and similar functional roles moved out of Thinking &amp; Leading and into the territory of their function. Thinking &amp; Leading now reserved for organizational generalists, pure knowledge workers, and people functions.</li>
-    <li>Display set rebalanced: each of the 13 modern territories now displays exactly 8 occupations (104 total), selected by a balance of workforce weight and iconic representation. Several territories had previously been weight-blind (e.g., Construction Laborers and Factory Workers were not displayed despite being the largest occupations in their territories).</li>
-    <li>Religious Professionals moved from Care &amp; Health to Making Meaning (clergy and pastoral work fit cultural meaning-making). Pastoral Workers in the historical land_sea aggregate replaced by Hunters and Trappers (more historically distinct from the existing Herders &amp; Drovers entry). Fishermen renamed to Fishers.</li>
-    <li>External review of all 388 per-occupation key barrier notes by a dedicated reviewer instance: 374 marked OK as-is, 14 flagged for project-lead review. 11 primary_barrier enum mismatches corrected (e.g., Insulation Workers REGULATORY → HUMANOID_DEPENDENT, Licensing Officials HUMAN_PREFERENCE → REGULATORY). 4 additional Learning &amp; Teaching enum corrections from a follow-up sweep.</li>
-    <li>3 key_barrier_note rewrites: Catering Managers (was the literal placeholder "Gap-fill record"), Paralegals (row misalignment — note was about events), Athletes (note was about coaches). 1 internal capability-vector reference (Phi_S) leaked into a Kitchen Helpers note and was removed.</li>
-    <li>Timeline events sorted chronologically (Blackboard 1841 was previously misordered between 1879 and 1906). 4 event names switched to past tense for consistency (iPhone Launched, AWS Launched, App Store Ecosystem Launched, Gemini Launched by Google). 3 factual corrections in impact descriptions. 6 pre-1800 events flagged with a pre_display field so they can be filtered from the timeline UI.</li>
-    <li>Code-side cleanups: hardcoded territory descriptions and barrier strings removed from index.html (now loaded from JSON only). Raw enum prefixes (e.g., "HUMANOID_DEPENDENT:") no longer rendered in the panel barrier display. Panel note rendering added for Land &amp; Sea. ISIC sector code shown in the panel sub-label instead of a duplicate "% of workforce" field.</li>
-    <li>Data structure cleanups: <code>panel_note</code> field normalized across all 15 territories. <code>primary_barrier_label</code> (human-readable) added to all 388 occupations and 327 replaceability records. 4 historical source entries normalized from <code>{source_id, name}</code> to the canonical <code>{id, title}</code> schema.</li>
-    <li>Outstanding for v4: ~200 ISCO codes still misaligned with official ISCO-08 standard (tracked separately for the v4 data crawl). Several duplicate occupation clusters (6 software developer codes, 6 sysadmin codes, 4 database codes, 4 HR codes) deferred to v4 consolidation. Suspicious employment weights in Care &amp; Health and Maintaining &amp; Fixing flagged for v4 verification.</li>
+    <li><strong>481 occupations</strong> (up from 388 in v3.2) with canonical ISCO-08 codes and 10 specialized splits.</li>
+    <li><strong>4,830 inline task decompositions</strong> — every occupation decomposed into 2–14 tasks with vector + difficulty + time-weight.</li>
+    <li><strong>Dual-recalibrated 2026 capability vectors</strong>: C_R=0.76, C_G=0.57, P_A=0.75, Phi_S=0.46, Phi_U=0.15, S_E=0.35. Ordering preserved from Phase 5.</li>
+    <li><strong>Empirically-calibrated replacement formula</strong> — conversion_rate 0.30, lag schedule 7/18/30/42/44%, barrier multipliers strengthened under the cross-section fit.</li>
+    <li><strong>Three-scenario framing</strong> — low/mid/high bands for 2026 and every projection anchor.</li>
+    <li><strong>Replaceability / replacement cleanly separated</strong> — the corrected §2.6b framing. Regulatory and preference frictions live in replacement, not replaceability.</li>
+    <li><strong>Historical backfill 1970 → 2014</strong> (Phase 12, added 2026-04-20). 585 new <code>territory_replaceability</code> records produced by two parallel honest-deployment research instances and logistic-crossover task-math. Fixes the released-version regression where the canvas displayed 0% replaceability before 2015.</li>
+    <li><strong>Terminal year 2041</strong> (= 2026 + 15). v3.2 used 2040.</li>
+    <li><strong>635 labor records</strong> (up from 608), with <strong>77 timeline events</strong> (up from 57) and <strong>6,686 source entries</strong>.</li>
+    <li><strong>Coverage counts:</strong> 936 territory × year replaceability entries (585 historical 1970–2014 + 351 modern 2015–2041); 104 displayed occupations (13 territories × 8).</li>
   </ul>
 
-  <h3 class="section-subtitle">v3.1 (April 2026)</h3>
+  <h3 class="section-subtitle">Late-cycle fixes (April 20, 2026)</h3>
+
+  <p class="body-text">After the April 19 release, a dedicated spot-check surfaced a set of issues that were fixed on the dev branch before the production deploy. Documented for full transparency:</p>
 
   <ul class="body-text">
-    <li>Post-production data quality corrections following v3.0 release.</li>
-    <li>R2030 recomputation with floor enforcement: where the task decomposition model produced 2030 scores below 2026 scores (a model artifact, not a real regression), the 2030 score was floored to the 2026 value. 62 occupations affected.</li>
-    <li>3 occupations with unreliable task decompositions (Midwives 2222, Cashiers 5223, Blacksmiths 7121) switched to TERRITORY_SCALED projection basis instead of task decomposition.</li>
+    <li><strong>Phase 12 historical backfill</strong> — see above. The largest late addition.</li>
+    <li><strong>Stale capability trajectories summary</strong> in <code>metadata.capability_trajectories_summary</code> was carrying pre-parallel-shift Phase 7 values. Regenerated from the post-shift trajectory file.</li>
+    <li><strong>Methodology 2041 anchors corrected</strong> — the original methodology cited the stale Phase 7 values; patched to cite post-shift.</li>
+    <li><strong><code>metadata.scenarios_shipped</code> flag added</strong> to disclose that only moderate is editorially reviewed.</li>
+    <li><strong>Common-titles contamination cleanup</strong> — a cross-occupation contamination pattern (the strings "caddymaster", "community life director", "aquatics supervisor", etc.) was present in 7 ISCO 5xxx service-sector occupations. Stripped and augmented with domain-correct replacements.</li>
+    <li><strong>Business-development coverage</strong> — ISCO 3322 Commercial Sales Representatives common titles updated to include modern BD titles (account executive, BDR, BD associate, SDR).</li>
+    <li><strong>UI schema-compat shim</strong> — <code>index.html</code> updated with a one-line alias so the v5 rename of the territory-level replaceability array (<code>replaceability</code> → <code>territory_replaceability</code>) doesn't break the canvas.</li>
   </ul>
 
-  <h3 class="section-subtitle">v3.0 (April 2026)</h3>
+  <h3 class="section-subtitle">Earlier versions</h3>
 
-  <ul class="body-text">
-    <li>Occupation scoring: 388 occupations scored via 6-vector task decomposition model (27,460 tasks, empirically calibrated capability curves). 138 occupations individually reviewed with 1,478 task corrections. 99 occupations now have TASK_DECOMPOSITION scoring basis.</li>
-    <li>Employment weights: global employment weights integrated for all occupations via BLS OES → ISCO-08 crosswalk, adjusted to ILO global proportions.</li>
-    <li>Territory baseline changes: Making Things 86→78 (full employment-weighted scope), Moving Things 52→57 (warehouse automation), Learning &amp; Teaching 28→31 (incremental AI education evidence).</li>
-    <li>Territory reassignments: Photographers (3131) learning_teaching→making_meaning, Personal trainer (3226) maintaining_fixing→care_health, Agricultural Labourers (9411) making_things→land_sea.</li>
-    <li>Military occupation scores (0110, 0210, 0310) manually set at 30–35 (O*NET mapping inadequate for military roles).</li>
-    <li>maintaining_fixing territory recalibrated: 25 occupations retagged for physical repair emphasis. Territory aggregate 36 (baseline 32).</li>
-    <li>Displacement cascade recomputed for 3 changed territories. Net impact: +3M workers at 2040 (0.6%).</li>
-    <li>10 duplicate occupation names resolved. 15 territory field format inconsistencies fixed. 3 gap-fill records corrected. 2 ISCO mapping discrepancies documented.</li>
-    <li>Scenarios: conservative and accelerated scenarios archived. Moderate is the sole displayed projection.</li>
-    <li>Occupation count: 405→388 (consolidation from v2.3 onward, documented in earlier changelogs).</li>
-  </ul>
-
-  <h3 class="section-subtitle">v2.2 (March 2026)</h3>
-
-  <ul class="body-text">
-    <li>Timeline extended from 2040 to 2041 (78 new records: 39 replaceability + 39 labor)</li>
-    <li>Feeding &amp; Hosting moderate 2027–2032: scores lowered by 5–8 points (evidence review)</li>
-    <li>Feeding &amp; Hosting conservative 2027–2029: adjusted to maintain cross-scenario ordering</li>
-    <li>Building Things moderate 2028–2032: scores lowered by 1–3 points (evidence review)</li>
-    <li>Technology event "Tesla Optimus Gen 3 Begins Mass Production" revised to reflect Q1 2026 evidence (pilot production, not mass production)</li>
-    <li>Technology events reduced from 96 to 57 (duplicates, product-catalog entries, and culturally famous but labor-irrelevant milestones removed)</li>
-    <li>Pre-1870 source attribution corrected from Maddison to Bairoch/Mitchell/Cambridge Group</li>
-    <li>Care &amp; Health and Money &amp; Data 2020 replaceability jumps annotated</li>
-    <li>ILO Employment and Social Trends 2026 added as source</li>
-    <li>Lag schedule and conversion rate documentation corrected to match implemented values</li>
-  </ul>
-
-  <h3 class="section-subtitle">v2.1 (February 2026)</h3>
-
-  <ul class="body-text">
-    <li>Initial public dataset</li>
-    <li>496 replaceability records, 387 labor records, 405 occupations, 96 technology events, 410 sources</li>
-    <li>Three scenarios (conservative, moderate, accelerated)</li>
-    <li>Timeline: 1800–2040</li>
-  </ul>
+  <p class="body-text">v3.2 shipped April 2026 as the prior public version — editorial pass on territory assignments, display names, and barrier notes. v3.2 is preserved in <code>archive/ai_reach_v3.2.json</code> for lineage and rollback. Older versions (v3.0, v3.1, v2.x) are in the same archive directory. Detailed historical changelog for v3.x and earlier: see the <a class="inline" href="./docs/v5_changelog.md">full markdown changelog</a>.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 12 -->
   <!-- ═══════════════════════════════════════════ -->
 
-  <h2 class="section-title" id="citation">12. Citation</h2>
+  <h2 class="section-title" id="citation">12. Citation and license</h2>
 
-  <p class="body-text">If referencing this dataset or methodology:</p>
+  <p class="body-text">If referencing the dataset or methodology:</p>
 
-  <p class="body-text">Large Labor Model, v3.2. Dataset and methodology. April 2026. largelabormodel.com.</p>
+  <div class="formula-block">Seel, L. &amp; Trenholm-Jensen, E. (2026).
+Large Labor Model (v5.0) [Dataset].
+largelabormodel.com
+  </div>
 
-  <p class="body-text">The project is open source. The dataset, this methodology, and the visualization code are available for reuse, adaptation, and critique under the terms specified at the project website.</p>
+  <p class="body-text">The project is open source. Code is licensed MIT; the dataset and methodology content are licensed CC BY 4.0. Reuse, adapt, and critique freely with attribution. The full methodology markdown, changelog, and editorial process record are in the repository at <code>docs/</code>.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- BUTTONS -->
@@ -737,6 +619,7 @@ workers(T, Y, S) = consensus_workers(T, Y) &times; (1 &minus; total_reduction)</
   <div class="btn-row">
     <a class="cta-btn" href="index.html">Back to visualisation</a>
     <a class="cta-btn secondary" href="https://github.com/lamentierschweinchen/ai-reach" target="_blank" rel="noopener">Dataset on GitHub</a>
+    <a class="cta-btn secondary" href="./docs/v5_editorial_process.md">Editorial process record</a>
   </div>
 </div>
 

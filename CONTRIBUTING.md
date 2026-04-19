@@ -32,7 +32,7 @@ We are **not** looking for:
 A good score correction includes all of the following:
 
 1. **Territory** (e.g., Care & Health) **and year** (e.g., 2026)
-2. **Current score** as it appears in `ai_reach_v3.2.json`
+2. **Current score** as it appears in `ai_reach_v5.0.json`
 3. **Proposed score** and direction (raise / lower / hold)
 4. **Evidence**: a commercially available AI/robotic system that performs the territory's core tasks (raises) or the absence of one that should lower the current score
 5. **Source link**: paper, product page, earnings call, benchmark result, deployment report
@@ -68,9 +68,9 @@ Open an issue first — these need a design conversation before code changes. Th
 
 ## How the dataset is built
 
-The canonical dataset is `ai_reach_v3.2.json` at the repository root. The full methodology — every assumption, every parameter, the source hierarchy, the changelog — lives in `methodology-full.html`. Read both before proposing structural changes.
+The canonical dataset is `ai_reach_v5.0.json` at the repository root. The full methodology — every assumption, every parameter, the source hierarchy, the changelog — lives in `methodology-full.html`. Read both before proposing structural changes.
 
-### Editorial principles (v3.2)
+### Editorial principles (v5)
 
 Two principles shape how occupations are placed into territories:
 

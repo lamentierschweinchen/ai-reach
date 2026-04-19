@@ -74,27 +74,31 @@ Two principles shape how occupations are placed into territories:
 | Layer | Records | Coverage |
 |---|---|---|
 | Labor shares | 635 | 1800–2041 |
-| Replaceability scores (territory-level) | 351 | 1970–2041 |
-| Occupations (per-occupation scores) | 481 | ISCO-08 4-digit + specialized splits, searchable |
+| Replaceability scores (territory-level) | 936 | 1970–2041 (585 historical 1970–2014 + 351 modern 2015–2041) |
+| Occupations (per-occupation scores) | 481 | ISCO-08 4-digit + 10 specialized splits, searchable |
+| Tasks (per-occupation task decomposition) | 4,830 | 2–14 tasks per occupation, 6-vector classified with difficulty + time weight |
 | Displayed occupations (canvas) | 104 | 8 per modern territory |
-| Tasks (per-occupation task decomposition) | 4,830 | 2–14 tasks per occupation, vector-classified |
 | Technology events | 77 | 1764–2026 |
 | Historical occupations | 24 | 8 per historical aggregate (3 categories) |
 | Sources | 6,686 | Per-record citation |
 
 **Source architecture:**
-- **ILOSTAT** modeled estimates (primary, 1991–2025)
-- **GGDC 10-Sector Database** (1870–1991, splice-adjusted to ILOSTAT classification)
-- **Bairoch (1988), Mitchell (2003), Cambridge Group** (pre-1870 reconstructions)
-- **World Bank WDI** (secondary validation)
-- **Displacement formula** with documented parameters (2026–2041 projections)
+- **ILOSTAT** modeled estimates (1991–2025, primary modern labor)
+- **World Bank / IISS Military Balance** (1988–2025, Governing & Protecting)
+- **GGDC 10-Sector Database** (1870–1991, splice-adjusted to ILOSTAT classification at 1991)
+- **Bairoch, Maddison, Mitchell** (pre-1870 reconstructions)
+- **O\*NET + BLS OES/OOH + live LinkedIn scrapes** (task decompositions + common titles)
+- **IFR World Robotics 2025** (P_A calibration)
+- **METR, Epoch AI, SWE-bench, GPQA, HLE, ARC-AGI-3** (benchmark calibration landscape)
+- **Anthropic Economic Index** (Massenkoff & McCrory, March 2026 — cross-section for Phase 6 / 11 calibration)
+- **Waymo + humanoid pilots** (Figure at BMW, Tesla Optimus, Amazon Vulcan — deployment ground truth)
 
 ### Replaceability scoring
 
-- Scores tied to commercially available capability milestones (e.g., Waymo for Moving Things, SWE-bench for Thinking & Leading, Xiaomi dark factory for Making Things)
-- Per-occupation scores derived from a **6-vector task decomposition model** (27,460 tasks across 388 occupations)
-- Sources: METR time-horizon data, AI benchmark trajectories, SWE-bench, GPQA, IFR robot density, robotics capability research, commercial deployment data
-- Per-occupation barrier tags: REGULATORY / ECONOMIC / HUMANOID_DEPENDENT / HUMAN_PREFERENCE
+- Every occupation decomposed into tasks, each tagged with a **capability vector** (one of six: C_R routine cognitive, C_G generative cognitive, P_A physical automation, Phi_S selective physical, Phi_U unstructured physical, S_E system engineering), a difficulty threshold, and a time weight.
+- 2026 capability values (C_R=0.76, C_G=0.57, P_A=0.75, Phi_S=0.46, Phi_U=0.15, S_E=0.35) set by **two independent recalibration instances** under an honest deployment lens (benchmark-saturation ≠ deployment maturity). Tight convergence between Opus 4.7 and GPT-5.4.
+- 1970 → 2041 trajectory: two parallel forecasters + reconciler at each end — **Phase 7** forward (2026 → 2041), **Phase 12** backward (1970 → 2025). Reconciled under `mid = min(A_mid, B_mid)` to prevent any single instance's aggressiveness from pulling the central case.
+- Per-occupation barrier tags: **REGULATORY / ECONOMIC / HUMANOID_DEPENDENT / HUMAN_PREFERENCE / NONE**. Regulatory and preference barriers live in the replacement formula, not in the replaceability score itself.
 
 ### Projection (2027–2041)
 
@@ -119,19 +123,23 @@ python3 -m http.server 8000
 
 ```
 ai-reach/
-├── index.html              # Main visualization (~2,700 lines, canvas + DOM)
-├── methodology.html        # Short methodology page (linked from the site)
-├── methodology-full.html   # Full methodology + changelog
-├── ai_reach_v5.0.json      # Current dataset (the only file index.html fetches)
-├── DATA_ARCHITECTURE.md    # Schema and rendering pipeline reference
-├── LICENSE                 # MIT (code) + CC BY 4.0 (data)
-├── CONTRIBUTING.md         # How to propose corrections and additions
-├── CITATION.cff            # Citation metadata
+├── index.html                    # Main visualization (~2,700 lines, canvas + DOM)
+├── methodology.html              # Short methodology page (linked from the site)
+├── methodology-full.html         # Full methodology + changelog
+├── ai_reach_v5.0.json            # Current dataset (the only file index.html fetches)
+├── DATA_ARCHITECTURE.md          # Schema and rendering pipeline reference
+├── LICENSE                       # MIT (code) + CC BY 4.0 (data)
+├── CONTRIBUTING.md               # How to propose corrections and additions
+├── CITATION.cff                  # Citation metadata
 ├── docs/
-│   └── hero-2041.png       # Repo hero image (the 2041 view)
-├── archive/                # Historical dataset versions
+│   ├── hero-2041.png             # Repo hero image
+│   ├── v5_changelog.md           # Full v5 changelog (primary reference)
+│   ├── v5_methodology.md         # Full v5 methodology (markdown source for methodology-full.html)
+│   └── v5_editorial_process.md   # Build journey + Phase 11/12 interventions (post-mortem)
+├── archive/                      # Historical dataset versions
 │   ├── ai_reach_v3.0.json
 │   ├── ai_reach_v3.1.json
+│   ├── ai_reach_v3.2.json
 │   └── README.md
 ├── fonts/Inter-Variable.ttf
 └── favicon.svg
