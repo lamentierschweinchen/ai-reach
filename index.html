@@ -1137,20 +1137,23 @@ function getTerritoryShare(t, year) {
 
 function getTerritoryReach(t, year) {
   const tid = typeof t === 'string' ? t : t.id;
-  if (year <= 2026) {
-    if (replLookup[tid]) {
-      // Return 0 before the territory's first replaceability data year
-      const firstYear = Math.min(...Object.keys(replLookup[tid]).map(Number));
-      if (year < firstYear) return 0;
-      return Math.max(0, Math.min(100, interp(replLookup[tid], year)));
-    }
-    return 0;
-  }
-  // 2027+: use scenario-dependent data, bridging from 2026
+  // v5 stores territory_replaceability for the full 1970-2041 range without a
+  // scenario field (moderate is the single shipped scenario), so replLookup
+  // holds every year. We merge replProjected if present (v3.2 scenario data)
+  // so legacy datasets continue to work.
   const base = replLookup[tid] || {};
+  if (Object.keys(base).length === 0 && !replProjected[scenario]) return 0;
+
+  if (year <= 2026) {
+    if (!Object.keys(base).length) return 0;
+    const firstYear = Math.min(...Object.keys(base).map(Number));
+    if (year < firstYear) return 0;
+    return Math.max(0, Math.min(100, interp(base, year)));
+  }
+  // 2027+: prefer scenario-specific projected data if present (v3.2 legacy);
+  // otherwise use the single-scenario v5 data already in replLookup.
   const proj = (replProjected[scenario] && replProjected[scenario][tid]) || {};
-  // Merge 2026 anchor with projected points
-  const merged = {};
+  const merged = { ...base };
   if (base[2026] != null) merged[2026] = base[2026];
   Object.assign(merged, proj);
   if (Object.keys(merged).length === 0) return 0;
