@@ -353,18 +353,19 @@ a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
   <p class="body-text">For each occupation and each year, replaceability is computed by comparing each task's capability vector value (at that year) against the task's difficulty threshold. Tasks that cross the threshold contribute their time weight to the score.</p>
 
   <div class="formula-block">replaceability(occupation, year) =
-    Σ<sub>tasks</sub> time_weight(task) · crossover(capability[task.vector][year], task.difficulty)
+    100 · Σ<sub>tasks</sub> time_weight(task) · crossover(capability[task.vector][year], task.difficulty)
+    ÷ Σ<sub>tasks</sub> time_weight(task)
 
-where crossover(cap, diff) =
-    1                           if cap ≥ diff    (strict threshold, used 2026+)
-    1 / (1 + exp(-8·(cap−diff)))  (logistic, used for historical 1970–2014)
+where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
   </div>
 
-  <p class="body-text">Forward projections use the strict threshold form — capability either exceeds the task threshold or it doesn't. The strict form matches how automation is procured: a buyer decides at some point "the system is reliable enough for this task" and deploys it.</p>
+  <p class="body-text">The logistic crossover (k=8) gives partial credit as capability approaches the task difficulty, rather than a strict all-or-nothing threshold. This is the right shape both below the threshold (early partial automation — ATMs did a fractional share of teller work well) and above it (no single deployed system reaches 100% reliability). The same formula is applied across the full 1970 → 2041 window for consistency.</p>
 
-  <p class="body-text">Historical projections use a logistic crossover with k=8, giving partial credit as capability approaches the task difficulty. The logistic form is necessary because 1970-era capability values (C_R ~0.07, P_A ~0.10) are below nearly every task difficulty threshold in the Phase 4 decomposition — the strict threshold would collapse to zero across the whole dataset, which is clearly false (ATMs and CNC machines really did exist and really did replace real tasks). The logistic form captures the reality that early automation did a fractional share of the job well.</p>
+  <p class="body-text">At capability = difficulty the crossover value is 0.5 (half credit). At a +0.25 gap above the threshold it reaches 0.88; at a −0.25 gap below it drops to 0.12. The k=8 slope was chosen to match honest deployment behaviour — systems rarely snap from "doesn't work" to "fully works" at a single capability increment, but they also don't drift to full capability over arbitrary gradient scales.</p>
 
-  <p class="body-text"><strong>Territory aggregation.</strong> Territory-level replaceability is the employment-weighted mean of in-territory occupation replaceabilities, using current (2026) in-territory employment weights. Weights come from ILOSTAT 2025, BLS OES, and mapped via SOC → ISCO. For historical years, this produces "what share of today's labor composition, within each territory, would have been technically replaceable at that year's capability values" — a deliberate editorial choice documented at <code>metadata.phase12_historical_backfill</code>.</p>
+  <p class="body-text"><strong>Territory aggregation.</strong> Territory-level replaceability is the employment-weighted mean of in-territory occupation replaceabilities, using current (2026) in-territory employment weights. Weights come from ILOSTAT 2025, BLS OES, and mapped via SOC → ISCO. For historical years, this produces "what share of today's labor composition, within each territory, would have been technically replaceable at that year's capability values" — a deliberate editorial choice documented at <code>metadata.replaceability_computation</code>.</p>
+
+  <p class="body-text">Every territory × year replaceability score in the dataset is reproducible from: (a) the Phase 4 task decomposition, (b) the reconciled 1970 → 2041 capability trajectory (Phase 7 forward + Phase 12 backward, post-shift), (c) the logistic crossover formula above, and (d) the employment weights. The <code>metadata.replaceability_computation</code> block records the formula and the inputs so the chain is walkable end-to-end.</p>
 
   <h3 class="section-subtitle">4.1 Global replaceability</h3>
 
@@ -578,6 +579,14 @@ where crossover(cap, diff) =
     <li><strong>635 labor records</strong> (up from 608), with <strong>77 timeline events</strong> (up from 57) and <strong>6,686 source entries</strong>.</li>
     <li><strong>Coverage counts:</strong> 936 territory × year replaceability entries (585 historical 1970–2014 + 351 modern 2015–2041); 104 displayed occupations (13 territories × 8).</li>
   </ul>
+
+  <h3 class="section-subtitle">April 21, 2026 — replaceability formula coherence fix</h3>
+
+  <p class="body-text">A coherence audit on April 21 surfaced that the stored per-occupation <code>replaceability_2026</code> values were outputs of the Phase 5 blind calibrator's holistic per-occupation judgment, not the task-math formula described in this methodology. The stored values agreed with neither a strict threshold (where capability ≥ difficulty) nor any logistic crossover applied mechanically. This was a specification-implementation gap: the methodology text said task-math; the implementation produced calibrator holistic scores; Phase 10 validation didn't check formula equivalence.</p>
+
+  <p class="body-text">The fix applied all 481 occupations under the documented logistic crossover (k=8) formula against the reconciled capability trajectory for every year 1970 → 2041, and recomputed territory replaceability as the employment-weighted mean of in-territory occupations. Phase 6 displacement values were regenerated against the new r values. Phase 4 task decompositions, capability trajectories, employment weights, barrier assignments, and territory editorial principles were all preserved unchanged — the fix is strictly in the aggregation step that was inconsistent with the documented formula. <code>metadata.replaceability_computation</code> in the dataset records the formula, inputs, and rationale explicitly.</p>
+
+  <p class="body-text">Territory-level shifts were mostly modest and in defensible directions: Thinking &amp; Leading 77 → 41 (Phase 5 calibrator had over-credited C_G saturation), Money &amp; Data 79 → 56, Making Things 72 → 58, Buying &amp; Selling 90 → 72. Territory shifts for predominantly physical territories were small: Land &amp; Sea 15 → 17, Building Things 11 → 15. Occupations with REGULATORY or HUMAN_PREFERENCE barriers (lawyers, university lecturers, translators, primary school teachers) now show intermediate r26 values (28–40) that match the "capability has arrived, replacement hasn't" framing — the Phase 5 calibrator had partially embedded those barriers in the replaceability score before §2.6b correction; the recompute surfaces pure-task-math capability and lets the replacement formula handle the barriers cleanly.</p>
 
   <h3 class="section-subtitle">Late-cycle fixes (April 20, 2026)</h3>
 
