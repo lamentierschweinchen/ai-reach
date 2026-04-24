@@ -235,7 +235,7 @@ a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
 
   <p class="body-text"><strong>Version 5.0 — Released April 19, 2026</strong> · Historical backfill and late fixes applied April 20, 2026.</p>
 
-  <p class="body-text">This document describes how the Large Labor Model v5 dataset was produced. It is written so that a reader with no prior knowledge of the project can understand how every number was derived, what assumptions were made, and where the model is weakest. Nothing in the dataset is inherited from prior versions unexamined; v5 is a ground-up rebuild on a reviewed 12-phase pipeline.</p>
+  <p class="body-text">This document describes how the Large Labor Model v5 dataset was produced. It is written so that a reader with no prior knowledge of the project can understand how every number was derived, what assumptions were made, and where the model is weakest. Nothing in the dataset is inherited from prior versions unexamined; v5 is a ground-up rebuild on a reviewed 13-phase pipeline.</p>
 
   <p class="body-text">Companion documents, all shipped in the repository: the <a class="inline" href="./docs/v5_changelog.md">full changelog</a>, the <a class="inline" href="./docs/v5_methodology.md">methodology reference markdown</a>, and the <a class="inline" href="./docs/v5_editorial_process.md">editorial process record</a> documenting the emergency interventions during Phase 11.</p>
 
@@ -474,7 +474,7 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
 
   <h2 class="section-title" id="pipeline">8. The production pipeline</h2>
 
-  <p class="body-text">v5.0 was built on a reviewer-directed 12-phase pipeline. Each phase has a canonical output, a reviewer-signed checkpoint, and archived inputs/outputs. The build uses adversarial multi-instance separation: builders never validate their own output; separate instances do auditing, reconciliation, and documentation.</p>
+  <p class="body-text">v5.0 was built on a reviewer-directed 13-phase pipeline. Each phase has a canonical output, a reviewer-signed checkpoint, and archived inputs/outputs. The build uses adversarial multi-instance separation: builders never validate their own output; separate instances do auditing, reconciliation, and documentation.</p>
 
   <div class="method-table-wrap"><table class="method-table">
     <thead>
@@ -569,7 +569,7 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
 
   <h3 class="section-subtitle">v5.0 (April 2026)</h3>
 
-  <p class="body-text">Ground-up rebuild on a 12-phase pipeline. Every scoring column was recomputed; v3.2 served only as post-hoc sanity check and was never staged as input to any v5 phase.</p>
+  <p class="body-text">Ground-up rebuild on a 13-phase pipeline. Every scoring column was recomputed; v3.2 served only as post-hoc sanity check and was never staged as input to any v5 phase.</p>
 
   <ul class="body-text">
     <li><strong>481 occupations</strong> (up from 388 in v3.2) with canonical ISCO-08 codes and 10 specialized splits.</li>
@@ -584,9 +584,9 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
     <li><strong>Coverage counts:</strong> 936 territory × year replaceability entries (585 historical 1970–2014 + 351 modern 2015–2041); 104 displayed occupations (13 territories × 8).</li>
   </ul>
 
-  <h3 class="section-subtitle">April 21, 2026 — formula coherence fix + Phase 14 verification</h3>
+  <h3 class="section-subtitle">April 21, 2026 — formula coherence fix + Phase 13 verification</h3>
 
-  <p class="body-text">A Codex GPT-5.4 instance (Phase 14) independently verified the April 21 recompute. Reproduced every r / displacement / territory value at <code>max_abs_diff = 0.0</code> across 481 × 7 replaceability fields, 481 × 4 displacement fields, and 936 territory × year rollups. All 10 semantic spot-checks passed. All invariants held (displacement ≤ replaceability; monotonic year ordering; band ordering; value ranges). Verdict: <strong>CONDITIONAL PASS</strong>, conditioned on one trajectory-seam issue (below) and several documentation-hygiene notes that were folded into this methodology.</p>
+  <p class="body-text">A Codex GPT-5.4 instance (Phase 13) independently verified the April 21 recompute. Reproduced every r / displacement / territory value at <code>max_abs_diff = 0.0</code> across 481 × 7 replaceability fields, 481 × 4 displacement fields, and 936 territory × year rollups. All 10 semantic spot-checks passed. All invariants held (displacement ≤ replaceability; monotonic year ordering; band ordering; value ranges). Verdict: <strong>CONDITIONAL PASS</strong>, conditioned on one trajectory-seam issue (below) and several documentation-hygiene notes that were folded into this methodology.</p>
 
   <p class="body-text"><strong>Trajectory seam harmonized.</strong> The Phase 12 backward trajectory originally allowed 2025 values to sit within ±0.02 of the Phase 7 2026 anchors; Codex flagged this as a non-seamless join. The backward trajectory's 2025 values were tightened to equal the 2026 forward anchors exactly. Pre-harmonization values are preserved at <code>phase12/reconciler/historical_trajectory_1970_2025.PRE_HARMONIZATION.json</code> for audit. Monotonicity 1970 → 2025 confirmed post-harmonization.</p>
 

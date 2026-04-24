@@ -268,6 +268,7 @@ v5.0 is built by an 11-phase pipeline. Each phase has a canonical output, a revi
 - **Phase 10:** Adversarial validation (isolated instance).
 - **Phase 11:** Editorial sign-off + release, with emergency interventions documented in [v5_editorial_process.md](v5_editorial_process.md).
 - **Phase 12:** Historical capability-vector backfill 1970 → 2014 (2 parallel honest-deployment research instances — GPT-5.4 + Claude Opus 4.7 — + programmatic reconciliation + era-weighted territory aggregation).
+- **Phase 13:** Independent formula-coherence verification (Codex GPT-5.4). Reproduced every per-occupation and per-territory replaceability, displacement, and dispersion value from scratch against the documented logistic formula. Reached max_abs_diff = 0.0 across all fields after the 2025 → 2026 trajectory seam was harmonized and the r35 / r40 band fields were added. Caught the spec/implementation divergence that the earlier Phase 10 validator didn't check.
 
 Every phase checkpoint signoff is preserved. A rollback path to v3.2 exists as the previous published version. Intermediate v5 artifacts (calibrator JSON, scorer outputs, reconciler outputs, validator reports) are preserved under `v5-build/phase{N}/` in the build repo.
 
