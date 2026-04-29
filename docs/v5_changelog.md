@@ -9,7 +9,7 @@
 
 - **Historical backfill 1970 → 2014 (Phase 12, added 2026-04-20).** v5.0 now ships 585 new `territory_replaceability` records covering 1970–2014, produced by a dedicated Phase 12 pipeline: two parallel honest-deployment research instances (GPT-5.4 + Claude Opus 4.7) reconstructed the 1970–2025 capability-vector trajectory with URL-cited milestone anchors; programmatic reconciliation applied honest-deployment discipline (`mid = min(A_mid, B_mid)`); per-occupation replaceability computed via logistic crossover against current task decompositions; employment-weighted per territory. Fixes a late-caught regression where the canvas displayed 0% replaceability for every territory before 2015.
 - **Ground-up rebuild, not a patch.** Every scoring column in v5 was recomputed from a new Phase 4 task decomposition, a dual-recalibrated 2026 capability vector, and an empirically fit replacement formula. v3.2 served only as post-hoc sanity check; never staged as input to any v5 phase.
-- **Canonical ISCO-08 codes for all 481 occupations.** v3.2 had inherited ~200 wrong ISCO codes and 89 fabricated codes from v3.0 (e.g., "Chief Executives" at 1111 — the real 1111 is Legislators; "Physicists and Astronomers" at 2112 — the real 2112 is Meteorologists). v5 re-anchors every entry to the ILO ISCO-08 hierarchy, with specialised splits (e.g., `2512-ml`, `2261-orthodontist`) using a documented parent + suffix convention.
+- **Canonical ISCO-08 codes for all 480 occupations.** v3.2 had inherited ~200 wrong ISCO codes and 89 fabricated codes from v3.0 (e.g., "Chief Executives" at 1111 — the real 1111 is Legislators; "Physicists and Astronomers" at 2112 — the real 2112 is Meteorologists). v5 re-anchors every entry to the ILO ISCO-08 hierarchy, with specialised splits (e.g., `2512-ml`, `2261-orthodontist`) using a documented parent + suffix convention.
 - **Replaceability and Replacement are now cleanly separated.** Replaceability (the 2026 score) answers "if swapped to an autonomous system today, does it work? — tech × economics × availability." Replacement (the displacement curves) answers "how fast does that capability translate into actual workforce displacement?" Regulatory and human-preference frictions live in the Phase 6 replacement model, not in the replaceability score. The distinction was corrected in Phase 11 after a review-caught conflation (see §2.6b in the editorial process record).
 - **Post-recalibration 2026 capability vectors.** After two independent Phase 11 recalibrators (Claude Opus 4.7 and GPT 5.4) applied a benchmark-to-deployment honest lens, 2026 capability values were lowered: **C_R 0.87 → 0.76, C_G 0.62 → 0.57, P_A 0.78 → 0.75, Phi_S 0.60 → 0.46, Phi_U 0.15 (held), S_E 0.42 → 0.35**. Ordering preserved. The shipping snapshot is stored in `metadata.capability_vectors_2026_snapshot`.
 - **Three-scenario framing.** Every occupation has low/mid/high bands for 2026 and for 2030/2035/2040/2041. Mid is the moderate, displayed default. Low is conservative; high is accelerated.
@@ -20,16 +20,16 @@
 
 | Record type | v3.2 | v5.0 |
 |---|---:|---:|
-| Occupations | 388 | **481** |
+| Occupations | 388 | **480** |
 | Labor records (territory × year) | 608 | **635** |
 | Technology timeline events | 57 | **77** |
 | Territory × year replaceability entries | 327 | **936** (585 historical 1970–2014 + 351 modern 2015–2041) |
 | Historical macro groupings | 3 | **3** |
 | Modern territories | 13 | **13** |
-| Inline task decompositions | — | **4,830 tasks across 481 occupations** |
+| Inline task decompositions | — | **4,818 tasks across 480 occupations** |
 | Displayed occupations (curated) | 104 | **104** (13 territories × 8) |
 
-Task decompositions are a v5-only addition — v3.2 had none. The inlined 4,830 tasks (mean 10.0 per occupation, range 2–14 after Audit 3 removals) each carry a capability vector, difficulty threshold, time weight, and source-id citations. Phase 4 originally produced 5,655 tasks; Phase 11 audits removed 825 scrape artifacts / wrong-occupation imports across four intervention passes. The 423-record `metadata.source_count` is the unique-by-registry-key count; the inline `sources[]` array has 6,686 task-level and labor-level references for per-entry provenance.
+Task decompositions are a v5-only addition — v3.2 had none. The inlined 4,818 tasks (mean 10.0 per occupation, range 2–14 after Audit 3 removals) each carry a capability vector, difficulty threshold, time weight, and source-id citations. Phase 4 originally produced 5,655 tasks; Phase 11 audits removed 825 scrape artifacts / wrong-occupation imports across four intervention passes. The 423-record `metadata.source_count` is the unique-by-registry-key count; the inline `sources[]` array has 6,686 task-level and labor-level references for per-entry provenance.
 
 ### Territory counts
 
@@ -227,7 +227,7 @@ v3.2's hand-curated editorial substrate was the most valuable inheritance. v5 pr
 
   Both are deferred to post-launch editorial work or v5.1.
 
-- **r40-mid aggressiveness.** 88% of occupations reach replaceability 100 by 2041 under the moderate scenario. This is legitimate task-math output but pushes editorial weight onto the displacement column. Readers should interpret 2041 workforce implications via displacement (mean 27%) rather than via r40 alone — replaceability at 100 means "swap works on paper"; displacement at 27% means "27% of the workforce has actually been displaced under lag."
+- **High r40-mid shape.** Under the moderate scenario, mean replaceability at 2040 is 84.6 across 480 occupations and 25% score ≥ 90. The logistic crossover (k=8) ceiling is asymptotic, so no occupation reaches exactly 100 — the maximum is around 98. Most occupations sit in the 80–95 band by 2040; this still pushes editorial weight onto the displacement column where the variance lives. Readers should interpret 2040 workforce implications via displacement (mean 24%, range 9–47%) rather than via r40 alone — replaceability above 90 means "most of the task profile crosses the capability threshold"; displacement at 24% is what tells you what the workforce actually looks like.
 
 - **Residual scrape artifacts below the audit bar.** The Phase 11 audit bar was consistently 2-model agreement (Audits 1 and 3 both used adversarial QC). Below-threshold contamination likely remains. A v6 re-run of Phase 4 with tightened anti-scrape guardrails is recommended.
 
@@ -240,6 +240,23 @@ v3.2's hand-curated editorial substrate was the most valuable inheritance. v5 pr
 - **Task-classification ceiling persists.** Phase 4's three-way reconciliation achieved 84.2% agreement; the 15.8% split cases were defaulted to the Codex adversarial pass and flagged. The Phase 11 audits re-examined a large subset (notably high-r26 physical occupations via Audit 2 and every task in every territory via Audit 3) but exhaustive per-split human adjudication was out of scope.
 
 - **Historical backfill uses current task decompositions + weights.** Phase 12 produces honest historical capability values but applies them against today's occupation task lists and within-territory employment weights. The number reads as "what share of today's labor would have been technically replaceable at that year's capability" — not "what share of 1985's actual labor force." Reconstructing historical occupation composition at the 481-occupation granularity is deferred to a future version.
+
+---
+
+## Post-launch editorial polish (2026-04-21)
+
+Two parallel review instances surfaced quality issues, applied after reviewer sign-off:
+
+- **Phase 14 legibility sweep** — 33 display renames covering truncated labels, ambiguous bare-adjective displays, and three display-vs-ISCO mismatches. Examples: ISCO 2230 "Traditional & Complementary" → "Traditional & Complementary Medicine"; ISCO 4413 "Coding" → "Coding & Proofing Clerks" (it had been reading as software coding); ISCO 7234 "Aircraft Engine Mechanics" → "Bicycle Repairers" (the official ISCO 7234 scope; aircraft mechanics already exist separately at 7232); ISCO 2635 "Religious Professionals" → "Social Workers & Counsellors" (caught during Phase 15 review — 2635 is officially Social work and counselling; 2636 is the actual religious-professionals occupation).
+- **Phase 15 common-titles enrichment** — 11 occupations updated to fill search gaps. Crypto/blockchain titles added to ISCO 3311 (cryptocurrency trader, digital asset trader, crypto market maker), 2512 (blockchain engineer, smart contract developer, solidity developer), and 2413 (on-chain analyst, crypto analyst). Yoga / Pilates / barre / wellness coaching titles added to ISCO 3423. Modern AI roles (prompt engineer, AI researcher, MLOps engineer, LLM engineer, AI safety researcher) replacing generic titles on ISCO 2512-ml. Three previously-broken arrays (2431-social, 3153-uas, 2512-ml) had been carrying contamination from unrelated occupations and are now correct.
+- **MLM/waiter contamination dedup** — the `direct sales coach`, `independent beauty consultant`, `independent distributor`, `independent sales associate/representative`, `door-to-door sales trainer` cluster was contaminating four occupations where it didn't belong (ISCO 5211 Market Salespersons, 5212 Food Truck Operators, 9520 Street Vendors, 5221 Shopkeepers). Stripped from all four; preserved on ISCO 5243 (Door-to-door Salespersons) where the cluster is correct. ISCO 5212 also had five waiter-titles (food server, kitchen runner, etc.) belonging to ISCO 5131 — also stripped. Affected occupations now have thin titles flagged for v5.1 web-verified enrichment at `metadata.deferred_to_v5_1`.
+- **ISCO 1219 territory move + display rename.** "Hospitality Directors" → "Admin Services Directors" + reassigned from feeding_hosting to thinking_leading. Rationale: ISCO 1219 official scope is "Business services and administration managers not elsewhere classified" — corporate admin/services directors, not hospitality industry executives, which already exist separately at ISCO 1411 (Hotel Managers) and 1412 (Restaurant Managers). The v5 functional-manager principle says functional managers go with their function. Within-territory employment weights renormalized in both territories using `global_estimated_employment` as ground truth — both feeding_hosting and thinking_leading still sum to 100.000% post-move. 1219's weight in thinking_leading: 18.19% (substantial chunk of admin-services managers globally; previously diluted at 2.99% inside larger feeding_hosting).
+- **ISCO 3422-personal dropped.** Off-by-one specialized split: personal training officially sits in ISCO 3423, not 3422. The split had zero employment_weight (didn't drive territory aggregates) so removal had no aggregate impact. ISCO 3423 is now the canonical home for personal trainers, yoga, Pilates, group fitness, and wellness coaches. **Occupation count: 481 → 480.**
+- **End-to-end recompute** of replaceability + displacement + territory aggregates against the modified inputs. Phase 10 validator: PASS, 0 critical failures.
+
+Deferred to v5.1 (recorded at `metadata.deferred_to_v5_1`):
+- ISCO 5211 / 5212 / 9520 thin-titles after MLM/waiter dedup (need Phase 15.x web-verified enrichment)
+- Proposed specialized split ISCO 2422-compliance for AML/KYC/financial-crime officers (≥50K US LinkedIn postings, distinct task profile)
 
 ---
 

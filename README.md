@@ -75,12 +75,12 @@ Two principles shape how occupations are placed into territories:
 |---|---|---|
 | Labor shares | 635 | 1800–2041 |
 | Replaceability scores (territory-level) | 936 | 1970–2041 (585 historical 1970–2014 + 351 modern 2015–2041) |
-| Occupations (per-occupation scores) | 481 | ISCO-08 4-digit + 10 specialized splits, searchable |
-| Tasks (per-occupation task decomposition) | 4,830 | 2–14 tasks per occupation, 6-vector classified with difficulty + time weight |
+| Occupations (per-occupation scores) | 480 | ISCO-08 4-digit + 9 specialized splits, searchable |
+| Tasks (per-occupation task decomposition) | 4,818 | 2–14 tasks per occupation, 6-vector classified with difficulty + time weight |
 | Displayed occupations (canvas) | 104 | 8 per modern territory |
 | Technology events | 77 | 1764–2026 |
 | Historical occupations | 24 | 8 per historical aggregate (3 categories) |
-| Sources | 6,686 | Per-record citation |
+| Sources | 6,687 | Per-record citation |
 
 **Source architecture:**
 - **ILOSTAT** modeled estimates (1991–2025, primary modern labor)

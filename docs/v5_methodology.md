@@ -8,7 +8,7 @@
 
 ## Overview
 
-Large Labor Model v5 is a structured estimate of how AI and robotics capability translates into labor replaceability and workforce replacement across 481 occupations, 13 modern territories, and 3 historical macro groupings. It covers the 2026 → 2041 horizon — fifteen years from its reference date — and presents three scenarios (conservative, moderate, accelerated) for every occupation.
+Large Labor Model v5 is a structured estimate of how AI and robotics capability translates into labor replaceability and workforce replacement across 480 occupations, 13 modern territories, and 3 historical macro groupings. It covers the 2026 → 2041 horizon — fifteen years from its reference date — and presents three scenarios (conservative, moderate, accelerated) for every occupation.
 
 The model answers two questions that the build pipeline keeps strictly separate:
 
@@ -227,7 +227,7 @@ This is a structured estimate, not a forecast. The honest statement of what the 
 
 2. **Benchmark-vs-deployment gap.** Benchmarks measure frontier capability on clean tasks; deployment measures production reliability on messy real labor. Phase 11's recalibration was an explicit attempt to close this gap via an honest-deployment lens, but production reliability data for humanoid robotics, agentic systems, and autonomous vehicles is still developing and values may shift in v5.1/v6.
 
-3. **Aggressive 2041-mid shape.** Under the moderate scenario, 88% of occupations reach replaceability 100 by 2041. This is legitimate task-math (once capability trajectories saturate past Phase 4 difficulty thresholds, per-task replaceability saturates too) but it pushes interpretive weight onto the displacement column. The honest reader uses displacement (mean 27% in 2041-mid, range 9–48%) to understand workforce implications, not replaceability alone.
+3. **High 2040-mid shape.** Under the moderate scenario, mean replaceability across 480 occupations reaches 84.6 at 2040 and 25% of occupations score ≥90. The logistic crossover (k=8) ceiling is asymptotic — no occupation hits exactly 100; the maximum is around 98. Most occupations sit in the 80–95 band by 2040, so the model still pushes interpretive weight onto the displacement column where the variance lives. The honest reader uses displacement (mean 24% in 2040-mid, range 9–47%) to understand workforce implications, not replaceability alone.
 
 4. **Phase 6 barrier-model form.** Multiplicative barrier multipliers work across most of the distribution but produce counterintuitive results at high r26 × REGULATORY (lawyers at r41 = 100). A floor-adjusted barrier model for regulatory frictions is a likely v6 change; in v5.0, these cases sit in the editorial-overrides queue.
 
@@ -257,7 +257,7 @@ v5.0 is built by an 11-phase pipeline. Each phase has a canonical output, a revi
 
 - **Phase 0:** Schema lock + spec (`v5_schema.json`, Draft 2020-12).
 - **Phase 1:** ISCO-08 canonical reference (436 unit groups + 10 approved custom codes).
-- **Phase 2:** Occupation inventory + territory mapping (481 occupations locked).
+- **Phase 2:** Occupation inventory + territory mapping (480 occupations locked).
 - **Phase 3:** Labor data rebuild with occupation-up methodology (635 records, 1800–2025).
 - **Phase 4:** Task decomposition (3-way reconciled).
 - **Phase 5:** Replaceability 2026 scoring (blind calibrator + 3 scorers + reconciler).

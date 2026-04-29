@@ -24,7 +24,7 @@ v3.2 was good at editorial curation (display names, territory assignments, emplo
 
 ### Scope of v5
 
-481 occupations × 13 modern territories × 3 historical groupings × 635 labor records × 4,830 inline task decompositions (after Phase 11 audits, down from Phase 4's 5,655) × 77 timeline events × three-scenario 2026–2041 projections.
+480 occupations × 13 modern territories × 3 historical groupings × 635 labor records × 4,818 inline task decompositions (after Phase 11 audits, down from Phase 4's 5,655) × 77 timeline events × three-scenario 2026–2041 projections.
 
 ---
 
@@ -36,7 +36,7 @@ Each phase produced a canonical deliverable, a reviewer-signed checkpoint, and a
 |:---|:---|:---|:---|
 | 0 | Schema lock + spec | JSON Schema Draft 2020-12 validation | PASS 2026-04-15 |
 | 1 | ISCO-08 canonical reference (436 unit groups + 10 approved custom codes) | Byte-match against freshly-downloaded ILO CSV; IHE FHIR cross-check on 27 civilian samples | PASS 2026-04-15 |
-| 2 | Occupation master (481 occupations) | 3 independent scorers + reconciler; 87.3% unanimous agreement; 112/112 PRESERVE_V32 baseline-match | PASS 2026-04-16 |
+| 2 | Occupation master (480 occupations) | 3 independent scorers + reconciler; 87.3% unanimous agreement; 112/112 PRESERVE_V32 baseline-match | PASS 2026-04-16 |
 | 3 | Labor records (635 records, occupation-up methodology after attempt 1 archived) | Territory-assignment audit; structural verification 20/20 spot-checks; armed-forces patch | PASS 2026-04-16 |
 | 4 | Task decompositions (5,655 tasks after 3-way reconciliation) | Vector distribution in target; preservation check; anti-fabrication post-flight | PASS with residual issues 2026-04-17 |
 | 5 | Replaceability 2026 (481 records + low/high bounds + barriers) | Blind calibrator + 3 scorers + reconciler; median-rule for wide disagreements | PASS 2026-04-17 |
@@ -81,7 +81,7 @@ Each phase produced a canonical deliverable, a reviewer-signed checkpoint, and a
 
 ### Checkpoint 4 — Task decomposition (2026-04-17)
 
-**What Phase 4 produced.** 481 occupations × 5,655 tasks (mean 11.76/occupation), 3-way reconciled across: (1) v2 context-bound reclassification (Opus 4.7), (2) v3 Codex GPT 5.4 adversarial reduction from 22+ tasks to 10–15, (3) Opus 4.6 context-free classifier (blind to occupation context). 3-way reconciliation: unanimous 34.4%, majority 49.8%, three-way-split 15.8% (defaulted to Codex v3 pass, flagged).
+**What Phase 4 produced.** 480 occupations × 5,655 tasks (mean 11.76/occupation), 3-way reconciled across: (1) v2 context-bound reclassification (Opus 4.7), (2) v3 Codex GPT 5.4 adversarial reduction from 22+ tasks to 10–15, (3) Opus 4.6 context-free classifier (blind to occupation context). 3-way reconciliation: unanimous 34.4%, majority 49.8%, three-way-split 15.8% (defaulted to Codex v3 pass, flagged).
 
 **Journey.** v1 rule-based classifier catastrophically broke vector distribution (Phi_U at 43.8%, P_A at 0.2%). Targeted Opus 4.7 reclassifier (v2) fixed it. Codex adversarial + context-free then caught context bias. Post-reconciliation G&P S_E demotion applied (124 tasks → C_G; 5 revivals).
 
@@ -117,7 +117,7 @@ Each phase produced a canonical deliverable, a reviewer-signed checkpoint, and a
 
 ### Checkpoint 8 — Barrier notes + common titles (2026-04-18)
 
-**What Phase 8 produced.** 481 occupations × 4–8 canonical titles (3,838 unique; O*NET Sonnet 4.6 / BLS GPT 5.4 / live LinkedIn GPT 5.3). 481 barrier notes (254 with deep-linked evidence URLs across 101 unique domains).
+**What Phase 8 produced.** 480 occupations × 4–8 canonical titles (3,838 unique; O*NET Sonnet 4.6 / BLS GPT 5.4 / live LinkedIn GPT 5.3). 481 barrier notes (254 with deep-linked evidence URLs across 101 unique domains).
 
 **Journey — v1 failure and recovery.** The v1 barrier editor produced **189 of 481 notes (39%) as templated slop** — stock phrases keyed to barrier type when v3.2's framing disagreed with Phase 5's primary_barrier. Caught via opening-phrase clustering (56), near-duplicate detection (26), missing-evidence audit (140, overlapping). Targeted 189-note rerun with banned-openings + mandatory evidence + 0.80 near-dup threshold: 100% evidence coverage, 0 violations across 4,319 scanned fields.
 
@@ -266,7 +266,7 @@ Each intervention caught a systemic issue that could have shipped undetected. **
 
 **What r26 = 100 means.** The 25 occupations at r26 = 100 are mostly clerical + fully-automated industrial: glass & ceramics plant ops (8181), sewing machine operators (8153), packing and bottling machine operators (8183), metal finishing / plating (8122), paper and plastic products operators (8142/8143), statistical and payroll clerks (4312/4313), data entry clerks (4132), filing clerks (4415), general office clerks (4110), secretaries (4120), bank tellers (4211), hotel receptionists (4224), government licensing officials (3354), plant controllers (3133/3134). The interpretation is "under 2026 capability, the task math says these occupations' work profiles can be handled" — not "these jobs vanish tomorrow." Displacement is the workforce-implications column.
 
-**r40 saturation under moderate.** 424/481 occupations reach replaceability 100 by 2041 mid. This is honest task-math under capability saturation, not a projection artifact. Displacement carries the variance: 9.3% to 47.9% across occupations, mean 27.27%. The 47.9% high end is NONE-barrier routine-cognitive work; the 9.3% low end is REGULATORY / HUMANOID_DEPENDENT-barrier occupations where the lag multiplier keeps most work with licensed humans or gates displacement on humanoid readiness.
+**r40 saturation under moderate.** 424/480 occupations reach replaceability 100 by 2041 mid. This is honest task-math under capability saturation, not a projection artifact. Displacement carries the variance: 9.3% to 47.9% across occupations, mean 27.27%. The 47.9% high end is NONE-barrier routine-cognitive work; the 9.3% low end is REGULATORY / HUMANOID_DEPENDENT-barrier occupations where the lag multiplier keeps most work with licensed humans or gates displacement on humanoid readiness.
 
 ---
 
