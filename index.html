@@ -229,8 +229,6 @@ header {
 .milestone-dot:hover { background: #FFFFFF; border-color: #FFFFFF; width: 11px; height: 11px; box-shadow: 0 0 8px rgba(255,255,255,0.4); }
 .milestone-dot:hover::before { background: rgba(255,255,255,0.5); }
 .milestone-dot:hover .milestone-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
-.milestone-slot1 { top: calc(50% + 7px); }
-.milestone-slot1::before { bottom: auto; top: 100%; margin-bottom: 0; margin-top: 2px; }
 .milestone-featured {
   width: 9px; height: 9px;
   background: #FFFFFF; border-color: rgba(255,255,255,0.6);
@@ -917,39 +915,18 @@ function buildLookupTables() {
     (ev.type === 'INVENTION' || ev.type === 'DEPLOYMENT' || ev.type === 'BENCHMARK')
   );
 
-  // Pre-2019: deduplicate by year, keep 1 per year
-  const pre2019 = {};
-  highConfStructural.filter(ev => ev.year < 2019).forEach(ev => {
-    if (!pre2019[ev.year]) pre2019[ev.year] = { ...ev, pos: ev.year, slot: 0 };
+  // Deduplicate by year — keep 1 dot per year (best event wins)
+  const byYear = {};
+  highConfStructural.forEach(ev => {
+    if (!byYear[ev.year]) byYear[ev.year] = ev;
   });
-  let pre2019List = Object.values(pre2019).sort((a,b) => a.year - b.year);
+  MILESTONES = Object.values(byYear).sort((a,b) => a.year - b.year);
   // Thin out pre-1900 if too many
-  if (pre2019List.filter(m => m.year < 1900).length > 12) {
-    const early = pre2019List.filter(m => m.year < 1900).filter((_, i) => i % 2 === 0);
-    const late = pre2019List.filter(m => m.year >= 1900);
-    pre2019List = [...early, ...late];
+  if (MILESTONES.filter(m => m.year < 1900).length > 12) {
+    const early = MILESTONES.filter(m => m.year < 1900).filter((_, i) => i % 2 === 0);
+    const late = MILESTONES.filter(m => m.year >= 1900);
+    MILESTONES = [...early, ...late];
   }
-
-  // 2019+: up to 2 per year, spaced at ~Jan and ~Jul
-  const post2019List = [];
-  for (let yr = 2019; yr <= END_YEAR; yr++) {
-    const yearEvents = ALL_EVENTS.filter(ev => ev.year === yr)
-      .sort((a,b) => {
-        // Prioritize HIGH confidence, then INVENTION/BENCHMARK
-        const aScore = (a.confidence === 'HIGH' ? 10 : 0) + (a.type === 'INVENTION' ? 5 : a.type === 'BENCHMARK' ? 4 : 0);
-        const bScore = (b.confidence === 'HIGH' ? 10 : 0) + (b.type === 'INVENTION' ? 5 : b.type === 'BENCHMARK' ? 4 : 0);
-        return bScore - aScore;
-      });
-    const picked = yearEvents.slice(0, 2);
-    if (picked.length >= 1) {
-      post2019List.push({ ...picked[0], year: yr, pos: yr + 0.15, slot: 0 });
-    }
-    if (picked.length >= 2) {
-      post2019List.push({ ...picked[1], year: yr, pos: yr + 0.85, slot: 1 });
-    }
-  }
-
-  MILESTONES = [...pre2019List, ...post2019List].sort((a,b) => a.pos - b.pos);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2426,8 +2403,8 @@ function buildTimeline() {
   const mc = document.getElementById('milestones-container');
   MILESTONES.forEach(m => {
     const d = document.createElement('div');
-    d.className = 'milestone-dot' + (featuredYears.has(m.year) ? ' milestone-featured' : '') + (m.slot === 1 ? ' milestone-slot1' : '');
-    d.style.left = yearToPercent(m.pos != null ? m.pos : m.year)+'%';
+    d.className = 'milestone-dot' + (featuredYears.has(m.year) ? ' milestone-featured' : '');
+    d.style.left = yearToPercent(m.year)+'%';
     d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}</div>`;
     d.addEventListener('click', e => {
       e.stopPropagation();
