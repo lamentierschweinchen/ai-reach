@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>The Mirror · AI Reach</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  @font-face { font-family:'GT Super'; src:url('GT-Super/GT-Super/GT-Super-Display-Light-Trial.otf') format('opentype'); font-weight:300; font-style:normal; }
+  @font-face { font-family:'GT Super'; src:url('GT-Super/GT-Super/GT-Super-Display-Regular-Trial.otf') format('opentype'); font-weight:400; font-style:normal; }
+  @font-face { font-family:'GT Super'; src:url('GT-Super/GT-Super/GT-Super-Display-Regular-Italic-Trial.otf') format('opentype'); font-weight:400; font-style:italic; }
+  @font-face { font-family:'Inter'; src:url('Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); font-weight:100 900; font-style:normal; }
+
+  :root{ --bone:#efeae0; --paper:#f6f2e8; --ink:#1c1a17; --ink-soft:#5a544a; --rule:#d6cfbe; --mount:#b9bcab; }
+  *,*::before,*::after{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bone);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;overflow-x:hidden;}
+
+  .progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:60;}
+  .topbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:20px 32px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);background:linear-gradient(to bottom,var(--bone) 55%,transparent);}
+  .topbar .b{color:var(--ink);}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 48px;}
+  .mount{background:var(--mount);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+  .kick{font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 20px;}
+  h2.sec{font-family:'GT Super',serif;font-weight:300;font-size:clamp(32px,4.4vw,50px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 18px;}
+  h2.sec em{font-style:italic;}
+  .dek{font-family:'GT Super',serif;font-weight:300;font-size:18px;line-height:1.55;color:var(--ink-soft);max-width:600px;margin:0;}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+  .reveal.d1{transition-delay:.08s;}.reveal.d2{transition-delay:.16s;}
+
+  /* ---- INTRO ---- */
+  .intro{min-height:92vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 48px;}
+  .intro .pre{font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:24px;}
+  .intro h1{font-family:'GT Super',serif;font-weight:300;font-size:clamp(54px,9vw,104px);line-height:0.96;letter-spacing:-0.03em;margin:0 0 18px;}
+  .intro h1 em{font-style:italic;}
+  .intro .lede{font-family:'GT Super',serif;font-weight:300;font-style:italic;font-size:clamp(18px,2.3vw,23px);color:var(--ink-soft);max-width:560px;margin:0 auto;}
+  .intro .cue{margin-top:64px;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--ink-soft);}
+  .intro .cue span{display:block;margin-top:8px;font-size:15px;}
+
+  /* ---- SCROLL HERO STAGE ---- */
+  .stage{position:relative;height:720vh;}
+  .sticky .card{transition:none;}
+  .sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .card{background:var(--paper);border:1px solid var(--rule);padding:42px 54px 34px;width:min(94vw,1120px);position:relative;}
+  .card .corner-l,.card .corner-r{position:absolute;top:14px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
+  .card .corner-l{left:18px;}.card .corner-r{right:18px;}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:50px;align-items:center;min-height:56vh;}
+  .comp{position:relative;width:100%;aspect-ratio:4/3;max-height:56vh;margin:0 auto;}
+  .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:0;}
+  .tile{position:relative;transition:background-color .3s ease;opacity:0;transform-origin:center;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;}
+  .tile .nm{font-family:'GT Super',serif;font-style:italic;font-size:13px;line-height:1.18;}
+  .tile .wt{font-family:'Inter';font-size:8px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:3px;opacity:.6;}
+  .homage{position:absolute;inset:0;pointer-events:none;}
+  .ring{position:absolute;transition:width .2s cubic-bezier(.4,0,.2,1),height .2s cubic-bezier(.4,0,.2,1),left .2s,top .2s,background-color .24s;}
+  .headline{margin-bottom:22px;}
+  .headline .big{font-family:'GT Super',serif;font-weight:300;font-size:74px;line-height:.9;letter-spacing:-0.03em;display:block;font-variant-numeric:tabular-nums;}
+  .headline .big sup{font-size:.3em;vertical-align:top;color:var(--ink-soft);}
+  .headline .bigyear{display:block;font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:44px;line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-top:6px;font-variant-numeric:tabular-nums;}
+  .headline .bigcap{display:block;margin-top:8px;font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
+  .readout{transition:opacity .26s ease;}
+  .rungs .r{display:grid;grid-template-columns:16px 1fr auto;align-items:start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--rule);}
+  .rungs .sw{width:16px;height:16px;margin-top:2px;}
+  .rungs .nm{font-family:'GT Super',serif;font-size:15px;}
+  .rungs .nm small{display:block;font-family:'Inter';font-size:9px;letter-spacing:0.02em;color:#3a372f;margin-top:2px;line-height:1.3;}
+  .rungs .sh{font-family:'GT Super',serif;font-size:15px;font-variant-numeric:tabular-nums;}
+  .plate{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;}
+  .plate .ttl{font-family:'GT Super',serif;font-style:italic;font-size:20px;}
+  .plate .meta{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);transition:opacity .26s ease;}
+  .plate .meta strong{font-weight:600;color:var(--ink);}
+  .scrubber{margin-top:16px;opacity:0;max-height:0;overflow:hidden;transition:opacity .34s,max-height .34s;pointer-events:none;}
+  .scrubber.on{opacity:1;max-height:60px;pointer-events:auto;}
+  .scrubber .lead{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px;}
+  .scrubber input{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--ink-soft);outline:none;}
+  .scrubber input::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;background:var(--ink);border-radius:50%;cursor:ew-resize;}
+  .scrubber .axis{position:relative;display:flex;justify-content:space-between;margin-top:7px;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);}
+  .scrubber .axnow{position:absolute;left:78.9%;transform:translateX(-50%);color:var(--ink);}
+  .scrubber .ax2000{position:absolute;left:42.3%;transform:translateX(-50%);}
+  .helper{position:fixed;top:62px;left:0;right:0;text-align:center;z-index:40;pointer-events:none;font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:15px;color:var(--ink-soft);opacity:0;transition:opacity .3s;}
+
+  section.block{min-height:100vh;display:flex;align-items:center;padding:clamp(70px,9vh,120px) 0;}
+
+  /* right-side quick nav */
+  .sidenav{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:15px;}
+  .sidenav a{display:flex;align-items:center;gap:10px;justify-content:flex-end;text-decoration:none;cursor:pointer;}
+  .sidenav .lbl{font-family:'Inter';font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);opacity:0;transform:translateX(6px);transition:opacity .2s,transform .2s;white-space:nowrap;}
+  .sidenav a:hover .lbl{opacity:1;transform:none;}
+  .sidenav .dot{width:8px;height:8px;border:1px solid var(--ink-soft);border-radius:50%;transition:background .2s,border-color .2s;flex:0 0 8px;}
+  .sidenav a.on .dot{background:var(--ink);border-color:var(--ink);}
+  .sidenav a.on .lbl{opacity:1;transform:none;color:var(--ink);}
+  @media(max-width:860px){.sidenav{display:none;}}
+
+  /* subtle, context-aware share — shares whichever stop you're on */
+  .sharebtn{position:fixed;right:24px;bottom:22px;z-index:56;background:var(--ink);color:var(--bone);border:0;cursor:pointer;font-family:'Inter';font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:11px 16px;opacity:0.82;transition:opacity .2s;}
+  .sharebtn:hover{opacity:1;}
+  .toast{position:fixed;right:24px;bottom:62px;z-index:56;background:var(--ink);color:var(--bone);font-family:'Inter';font-size:11px;letter-spacing:0.02em;padding:9px 14px;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s;pointer-events:none;max-width:260px;}
+  .toast.on{opacity:1;transform:none;}
+  @media(max-width:860px){.sharebtn{right:14px;bottom:14px;}.toast{right:14px;bottom:54px;}}
+
+  /* ---- TERRITORY ---- */
+  .wall{display:grid;grid-template-columns:repeat(6,1fr);gap:24px 20px;}
+  .cell{display:flex;flex-direction:column;}
+  .cell .cb{width:100%;aspect-ratio:1/1;}
+  .cell svg{width:100%;height:100%;display:block;}
+  .cell .cap{margin-top:8px;display:flex;justify-content:space-between;gap:6px;align-items:baseline;}
+  .cell .nm{font-family:'GT Super',serif;font-style:italic;font-size:12px;color:#23211c;line-height:1.1;}
+  .cell .pc{font-size:10px;font-weight:600;color:#3a372f;font-variant-numeric:tabular-nums;}
+  .cell.you .cb{outline:2px solid var(--ink);outline-offset:5px;}
+  .cell.you .nm::after{content:' · you';font-style:normal;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;}
+  .terrtime{margin-top:54px;}
+  .terrtime .lab{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#3a372f;margin-bottom:18px;}
+  .terrstrip{position:relative;display:flex;height:150px;}
+  .terrstrip>i{flex:1;display:block;}
+  .terrstrip .cfnow{position:absolute;top:-6px;bottom:-6px;left:78.9%;width:1px;background:#1c1a17;}
+  .terrstrip.slim{height:42px;}
+  .terrstrip.slim .cfnow{top:-4px;bottom:-4px;}
+  .terrstrip{cursor:ew-resize;}
+  .terrstrip .cfscrub{position:absolute;top:-7px;bottom:-7px;width:2px;background:#1c1a17;left:78.9%;}
+  .terrstrip .cfscrub::after{content:'';position:absolute;left:50%;top:-6px;width:11px;height:11px;border-radius:50%;background:#1c1a17;transform:translateX(-50%);}
+  #cstrip{cursor:crosshair;}
+  .striptip{position:fixed;z-index:58;background:var(--ink);color:var(--bone);font-family:'Inter';font-size:10px;letter-spacing:0.03em;padding:5px 9px;pointer-events:none;opacity:0;transition:opacity .12s;white-space:nowrap;transform:translate(-50%,-150%);}
+  .striptip.on{opacity:1;}
+  .jvjscrub{max-width:520px;margin:34px auto 0;}
+  .jvjscrub input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--ink-soft);outline:none;}
+  .jvjscrub input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;background:var(--ink);border-radius:50%;cursor:ew-resize;}
+  .jvjaxis{position:relative;display:flex;justify-content:space-between;margin-top:7px;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);}
+  .jvjaxis .axnow2{position:absolute;left:78.9%;transform:translateX(-50%);color:var(--ink);}
+  .jvjaxis .ax2000b{position:absolute;left:42.3%;transform:translateX(-50%);}
+  .terraxis{position:relative;margin-top:9px;height:14px;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#3a372f;}
+  .terraxis span:first-child{position:absolute;left:0;}
+  .terraxis span:last-child{position:absolute;right:0;}
+  .terraxis .nowlab{position:absolute;left:78.9%;transform:translateX(-50%);color:#1c1a17;}
+  .terraxis .yr2000{position:absolute;left:42.3%;transform:translateX(-50%);}
+  .terrkv{display:flex;gap:30px;margin-top:24px;}
+  .terrkv .kv{display:flex;align-items:center;gap:9px;}
+  .terrkv .kv .s{width:22px;height:22px;}
+  .terrkv .kv .t{font-family:'GT Super',serif;font-weight:300;font-size:14px;color:#23211c;}
+  .terrkv .kv .t small{display:block;font-family:'Inter';font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#3a372f;margin-bottom:1px;}
+  .cstudy-ttl{font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:22px;color:var(--ink);margin-bottom:24px;}
+
+  /* ---- COMPARE (shared) ---- */
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:54px;}
+  .cpanel{display:flex;flex-direction:column;align-items:center;}
+  .cpanel select,.cpanel input.jobsearch{font-family:'GT Super',serif;font-style:italic;font-size:21px;color:#1c1a17;background:transparent;border:0;border-bottom:1px solid var(--rule);padding:4px 6px 6px;margin-bottom:24px;text-align:center;width:100%;max-width:300px;}
+  .cpanel select{cursor:pointer;text-align-last:center;-webkit-appearance:none;appearance:none;}
+  .cpanel input.jobsearch::placeholder{color:#9a948a;font-style:italic;}
+  .cpanel .cs{width:72%;aspect-ratio:1/1;}
+  .cpanel svg{width:100%;height:100%;display:block;}
+  .cpanel .rh{font-family:'GT Super',serif;font-weight:300;font-size:42px;margin:22px 0 2px;font-variant-numeric:tabular-nums;}
+  .cpanel .rhc{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);}
+  .verdict{margin-top:44px;text-align:center;}
+  .verdict p{font-family:'GT Super',serif;font-weight:300;font-style:italic;font-size:clamp(20px,2.6vw,26px);line-height:1.4;max-width:740px;margin:0 auto;}
+  .verdict p b{font-style:normal;font-weight:400;}
+  .reflegend{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:30px;flex-wrap:wrap;}
+  .reflegend .cap{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);}
+  .reflegend .ri{display:flex;align-items:center;gap:6px;}
+  .reflegend .rs{width:13px;height:13px;}
+  .reflegend .rn{font-family:'GT Super',serif;font-size:13px;color:var(--ink);}
+  .illus{text-align:center;margin-top:14px;font-family:'Inter';font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);opacity:0.8;}
+
+  /* ---- OUTRO ---- */
+  .outro{text-align:center;}
+  .outro h2{font-family:'GT Super',serif;font-weight:300;font-size:clamp(30px,4.4vw,46px);line-height:1.12;letter-spacing:-0.02em;margin:0 auto 18px;max-width:680px;}
+  .outro h2 em{font-style:italic;}
+  .outro .share{margin:36px auto 0;width:min(36vh,240px);aspect-ratio:1/1;}
+  .outro .share svg{width:100%;height:100%;display:block;}
+  .outro .cta{margin-top:30px;display:inline-block;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone);background:var(--ink);padding:14px 26px;text-decoration:none;}
+  .outro .fine{margin-top:42px;font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:16px;color:var(--ink-soft);}
+  .leg{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;justify-content:center;}
+  .leg .i{display:flex;align-items:center;gap:7px;}.leg .s{width:13px;height:13px;}.leg .m{font-size:9px;letter-spacing:1px;color:#4a463c;}.leg .n{font-family:'GT Super',serif;font-size:13px;}
+
+  @media (max-width:860px){.wall{grid-template-columns:repeat(4,1fr);}.layout{grid-template-columns:1fr;gap:30px;}.pair{grid-template-columns:1fr;gap:36px;}}
+</style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+<div class="topbar"><span class="b">AI Reach · The Mirror</span><span id="actlabel">Your job</span></div>
+<div class="helper" id="helper"></div>
+
+<button class="sharebtn" id="sharebtn">↗ Share this</button>
+<div class="toast" id="toast"></div>
+
+<nav class="sidenav" id="sidenav">
+  <a data-to="intro"><span class="lbl">Your job</span><span class="dot"></span></a>
+  <a data-to="trajectory"><span class="lbl">Trajectory</span><span class="dot"></span></a>
+  <a data-to="territory"><span class="lbl">Your territory</span><span class="dot"></span></a>
+  <a data-to="compare"><span class="lbl">Bigger picture</span><span class="dot"></span></a>
+  <a data-to="jobvjob"><span class="lbl">Job vs job</span><span class="dot"></span></a>
+  <a data-to="outro"><span class="lbl">The mirror</span><span class="dot"></span></a>
+</nav>
+
+<!-- INTRO -->
+<section class="intro" id="intro" data-nav="intro">
+  <p class="pre reveal">You told us your job</p>
+  <h1 class="reveal d1" id="focalHero">Software <em>Engineer.</em></h1>
+  <p class="lede reveal d2">Watch AI’s reach close in — through the decades to 2041. Then see what it’s made of.</p>
+  <p class="cue reveal d2">scroll<span>↓</span></p>
+</section>
+
+<!-- SCROLL HERO -->
+<section class="stage" id="stage" data-nav="intro">
+  <div class="sticky">
+    <div class="card">
+      <span class="corner-l" id="cornerL">Your reach · 01</span><span class="corner-r">Mirror</span>
+      <div class="layout">
+        <div class="comp" id="comp">
+          <div class="grid" id="grid"></div>
+          <div class="homage" id="homage">
+            <div class="ring" data-t="4"></div><div class="ring" data-t="3"></div>
+            <div class="ring" data-t="2"></div><div class="ring" data-t="1"></div><div class="ring" data-t="0"></div>
+          </div>
+        </div>
+        <aside class="readout" id="readout">
+          <div class="headline"><span class="big" id="bigNum">—</span><span class="bigyear" id="bigYear">1980</span><span class="bigcap">AI reach</span></div>
+          <div class="rungs" id="rungs"></div>
+        </aside>
+      </div>
+      <div class="plate">
+        <span class="ttl"><em id="focalPlate">Software Engineer</em> &middot; <span id="focalTaskN">12</span> tasks.</span>
+        <span class="meta" id="meta">weighted across every task &middot; <strong id="metaYear">1980</strong></span>
+      </div>
+      <div class="scrubber" id="scrubber"><div class="lead">drag the year — watch each task tip</div>
+        <input type="range" min="1970" max="2041" value="2026" id="yearInput">
+        <div class="axis"><span>1970</span><span>2041</span><span class="ax2000">2000</span><span class="axnow">now</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 TRAJECTORY · the V2 colour study as its own stop -->
+<section class="block mount" id="trajectory" data-nav="trajectory"><div class="wrap">
+  <p class="kick reveal">02 / Your trajectory</p>
+  <h2 class="sec reveal">Seventy-one years, as <em>flat colour planes.</em></h2>
+  <p class="dek reveal">Pale where AI barely reached — dark where it now does.</p>
+  <div class="cstudy reveal d1" style="margin-top:44px">
+    <div class="cstudy-ttl"><em id="focalTraj">Software Engineer</em> &middot; seventy-one years of reach.</div>
+    <div class="terrstrip" id="cstrip"></div>
+    <div class="terraxis"><span>1970</span><span class="yr2000">2000</span><span class="nowlab">you &middot; 2026</span><span>2041</span></div>
+    <p class="dek" style="margin-top:14px;font-size:14px">Hover the band to read any year.</p>
+  </div>
+</div></section>
+
+<!-- 03 TERRITORY -->
+<section class="block mount" id="territory" data-nav="territory"><div class="wrap">
+  <p class="kick reveal">03 / Your territory</p>
+  <h2 class="sec reveal">Your job is one square in a <em>larger composition.</em></h2>
+  <p class="dek reveal">Every job in <span id="terrDek">Money &amp; Data</span> — yours outlined; the field as a whole below.</p>
+  <div class="wall reveal d1" id="wall" style="margin-top:44px"></div>
+  <div class="terrtime reveal d1"><div class="lab" id="terrLab">Money &amp; Data · the field’s reach, 1970 → 2041</div>
+    <div class="terrstrip slim" id="terrstrip"></div>
+    <div class="terraxis"><span>1970</span><span class="yr2000">2000</span><span class="nowlab">now · 2026</span><span>2041</span></div>
+  </div>
+</div></section>
+
+<!-- 04 TERRITORY vs TERRITORY -->
+<section class="block mount" id="compare" data-nav="compare"><div class="wrap">
+  <p class="kick reveal">04 / The bigger picture</p>
+  <h2 class="sec reveal">Your world, beside <em>another.</em></h2>
+  <p class="dek reveal">The same scale, two territories.</p>
+  <div class="pair reveal d1" style="margin-top:44px">
+    <div class="cpanel"><select id="selA"></select><div class="cs" id="studyA"></div><div class="rh" id="reachA">—</div><div class="rhc">AI reach · 2026</div></div>
+    <div class="cpanel"><select id="selB"></select><div class="cs" id="studyB"></div><div class="rh" id="reachB">—</div><div class="rhc">AI reach · 2026</div></div>
+  </div>
+  <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="terrYear"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
+  <div class="verdict reveal d2"><p id="verdictT"></p></div>
+  <div class="reflegend reveal d2" id="reflegT"></div>
+</div></section>
+
+<!-- 05 JOB vs JOB -->
+<section class="block mount" id="jobvjob" data-nav="jobvjob"><div class="wrap">
+  <p class="kick reveal">05 / Back to you</p>
+  <h2 class="sec reveal">Your job, beside <em>another job.</em></h2>
+  <p class="dek reveal">One picked at random — type to choose any job.</p>
+  <div class="pair reveal d1" style="margin-top:44px">
+    <div class="cpanel"><div id="focalJ1" style="font-family:'GT Super',serif;font-style:italic;font-size:21px;margin-bottom:24px;padding-bottom:6px;border-bottom:1px solid transparent">Software Engineer</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc">AI reach · 2026</div></div>
+    <div class="cpanel"><input class="jobsearch" id="jobsearch" list="joblist" placeholder="type a job…"><datalist id="joblist"></datalist><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">AI reach · 2026</div></div>
+  </div>
+  <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="jvjYear"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
+  <div class="verdict reveal d2"><p id="verdictJ"></p></div>
+  <div class="reflegend reveal d2" id="reflegJ"></div>
+</div></section>
+
+<!-- OUTRO -->
+<section class="block" id="outro" data-nav="outro"><div class="wrap outro">
+  <p class="kick reveal" style="text-align:center">The mirror</p>
+  <h2 class="reveal">A mirror, not a prophecy. <em>Reach is not replacement.</em></h2>
+  <div class="share reveal d1" id="shareStudy"></div>
+  <p class="reveal d1" style="margin-top:16px;font-family:'GT Super',serif;font-size:22px"><span id="focalOut">Software Engineer</span> · <b id="shareReach" style="font-style:italic">—</b> reach · 2026</p>
+  <a class="cta reveal d2" href="#">Look up another job →</a>
+  <p class="fine reveal d2">A machine doing a task is not the same as a person losing a job. This shows the first, and refuses to claim the second.</p>
+  <div class="leg reveal d2" id="legOut"></div>
+</div></section>
+
+<script src="mirror_data.js"></script>
+<script>
+/* ===== SCALE ===== */
+const BANDS=[
+  {name:'Human',meter:1,mean:'a machine can’t do any of this — yet'},
+  {name:'Augmented',meter:2,mean:'you do it; a machine makes you faster'},
+  {name:'Collaborative',meter:3,mean:'a machine can do about half on its own'},
+  {name:'Supervised',meter:4,mean:'a machine can do most of it'},
+  {name:'Autonomous',meter:5,mean:'a machine can do this end to end, no human needed'}
+];
+const meterGlyph=n=>'▰'.repeat(n)+'▱'.repeat(5-n);
+const tierOf=s=>s<0.10?0:s<0.35?1:s<0.65?2:s<0.90?3:4;
+const clamp01=x=>Math.max(0,Math.min(1,x));
+const smooth=(a,b,x)=>{const t=clamp01((x-a)/(b-a));return t*t*(3-2*t);};
+const lerp=(a,b,t)=>a+(b-a)*t;
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+
+/* BARE-CANVAS palette · dark = AI reach.
+   index 0 (Human) = unpainted canvas (the part AI hasn't touched).
+   index 1–4 (Augmented→Autonomous) = a vivid multi-hue ramp, value LIGHT→DARK
+   (automation darkens as it closes in). One neutral canvas keeps the core
+   distinct from the next ring — no muddy same-hue-two-values. */
+const CANVAS='hsl(40,33%,87%)';          // warm bare paper, same for every study
+/* Each study gets FOUR CONTRASTING hues from a colour-harmony formula (tetrad,
+   triad, split-complement…) — not a smooth drift. Value still runs light→dark
+   so automation darkens as it closes in (dark = reach); saturation rises into
+   the dark so deep bands keep their hue. */
+// Hue = contrast (different per ring); intensity = progression (saturation + value
+// climb from the human core outward, so each ring reads as MORE than the one inside).
+const HARMONY=[[0,95,185,275],[0,120,210,55],[0,150,205,330],[0,55,195,250],[0,180,100,290],[0,40,165,215],[0,210,110,300]];
+const PROG_L=[82,62,40,18];   // band1 (Augmented, hugs core) pale → band4 (Autonomous, edge) dark
+const PROG_S=[28,50,69,88];   // muted near the core → intense at the edge
+function paintBands(baseH,scheme){
+  const hs=HARMONY[scheme%HARMONY.length],out=[CANVAS];
+  for(let i=0;i<4;i++){const H=((Math.round(baseH+hs[i]))%360+360)%360;out.push(`hsl(${H},${PROG_S[i]}%,${PROG_L[i]}%)`);}
+  return out;
+}
+function freeRamp(seed,hueOverride){
+  const r=mulberry32(seed>>>0);
+  const baseH=(hueOverride==null)?Math.floor(r()*360):(((hueOverride%360)+360)%360);
+  return paintBands(baseH,Math.floor(r()*HARMONY.length));
+}
+function heroRamp(seed){
+  const r=mulberry32(seed>>>0);
+  return paintBands(Math.floor(r()*360),Math.floor(r()*HARMONY.length));
+}
+/* interpolate a 0..1 value across a 5-stop hsl palette (shortest-path hue) */
+function hslParts(s){const m=s.match(/hsl\((-?\d+),\s*(\d+)%,\s*(\d+)%\)/);return m?[+m[1],+m[2],+m[3]]:[0,0,50];}
+function paletteSample(pal,v){v=Math.max(0,Math.min(1,v));const x=v*4,i=Math.min(3,Math.floor(x)),f=x-i;
+  const a=hslParts(pal[i]),b=hslParts(pal[i+1]);let dh=b[0]-a[0];if(dh>180)dh-=360;if(dh<-180)dh+=360;
+  return `hsl(${Math.round(((a[0]+dh*f)%360+360)%360)},${Math.round(a[1]+(b[1]-a[1])*f)}%,${Math.round(a[2]+(b[2]-a[2])*f)}%)`;}
+/* single-hue ramp value (territory colour, mapped to its LLM-map hue) */
+function terrColor(hue,v){v=Math.max(0,Math.min(1,v));return `hsl(${hue},${Math.round(58-14*v)}%,${Math.round(89-72*v)}%)`;}
+
+const STUDY_TPL=[[.5,.6,0],[.5,.64,0],[.47,.6,-2],[.53,.6,2],[.5,.58,0],[.48,.62,-2.5],[.52,.62,2.5],[.5,.66,1.5],[.49,.6,-1.5],[.5,.62,0],[.51,.58,2],[.49,.64,-2]];
+function studySVG(shares,pal,seed,label){
+  const r=mulberry32((seed||7)>>>0);
+  const tp=STUDY_TPL[Math.floor(r()*STUDY_TPL.length)],bx=tp[0],by=tp[1],rot=tp[2];
+  // human (band 0, canvas) at CENTRE; reach-bands nest outward, Autonomous (intense) at the edge.
+  let cum=0;const enc=shares.map(s=>cum+=s);let inner='';
+  for(let t=4;t>=0;t--){const side=Math.sqrt(Math.max(0,enc[t]))*100;if(side<0.6)continue;
+    const jx=(r()-0.5)*2.2,jy=(r()-0.5)*2.2,x=(100-side)*bx+jx,y=(100-side)*by+jy,cr=(r()-0.5)*2,cx=x+side/2,cy=y+side/2;
+    inner+=`<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${side.toFixed(2)}" height="${side.toFixed(2)}" fill="${pal[t]}" transform="rotate(${cr.toFixed(2)} ${cx.toFixed(2)} ${cy.toFixed(2)})"/>`;}
+  return `<svg viewBox="-7 -7 114 114" role="img" aria-label="${(label||'AI reach study').replace(/"/g,'')}"><g transform="rotate(${rot} 50 50)">${inner}</g></svg>`;
+}
+
+/* ===== REAL DATA · capability-gap reach (reproduces published v5 numbers) ===== */
+const DATA=window.MIRROR_DATA, CT=DATA.capability_trajectory, NOW=DATA.meta.now||2026;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sig=x=>1/(1+Math.exp(-8*x));
+function cap(vec,year,band='mid'){const lo=Math.floor(year),t=year-lo;const a=CT[vec][String(lo)][band],b=CT[vec][String(Math.min(2041,lo+1))][band];return a+(b-a)*t;}
+const taskReach=(tk,year,band='mid')=>sig(cap(tk.vector,year,band)-tk.diff);
+function occReach(o,year,band='mid'){let T=0,A=0;for(const tk of o.tasks){T+=tk.weight;A+=tk.weight*taskReach(tk,year,band);}return T?A/T:0;}
+function bandShares(o,year,band='mid'){const s=[0,0,0,0,0];let T=0;for(const tk of o.tasks){T+=tk.weight;s[tierOf(taskReach(tk,year,band))]+=tk.weight;}return s.map(v=>T?v/T:0);}
+
+/* focal job + its one territory (one-line swap) */
+const FOCAL_ISCO='2221';
+const FOCAL=DATA.occupations.find(o=>o.isco===FOCAL_ISCO);
+const TERR=DATA.territories[FOCAL.territory_id];
+const byIsco=Object.fromEntries(DATA.occupations.map(o=>[o.isco,o]));
+const SE_SEED=hashStr(FOCAL.name), SE_PAL=heroRamp(SE_SEED);
+const shortHead=s=>{const w=s.replace(/[,.;:(].*$/,'').trim().split(/\s+/).slice(0,4).join(' ');return w.length>30?w.slice(0,28)+'…':w;};
+/* acceptance check: occReach(FOCAL,2026) must reproduce published r2026 */
+console.assert(Math.round(occReach(FOCAL,2026)*1000)/10===FOCAL.r2026,'occReach 2026 mismatch',Math.round(occReach(FOCAL,2026)*1000)/10,'vs',FOCAL.r2026);
+
+/* set focal/territory copy from data */
+document.getElementById('focalHero').textContent=FOCAL.name;
+document.getElementById('focalPlate').textContent=FOCAL.name;
+document.getElementById('focalTaskN').textContent=FOCAL.tasks.length;
+document.getElementById('focalTraj').textContent=FOCAL.name;
+document.getElementById('focalJ1').textContent=FOCAL.name;
+document.getElementById('focalOut').textContent=FOCAL.name;
+document.getElementById('terrDek').textContent=FOCAL.territory;
+document.getElementById('terrLab').textContent=FOCAL.territory+' · the field’s reach, 1970 → 2041';
+
+/* ===== HERO: composition + grid ===== */
+const comp=document.getElementById('comp');
+let compW=0,compH=0; const measure=()=>{compW=comp.clientWidth;compH=comp.clientHeight;};
+const ringEls={}; document.querySelectorAll('#homage .ring').forEach(el=>ringEls[+el.dataset.t]=el);
+
+// task tiles — ordered by vector then diff so capability clusters read together
+const COLS=4,ROWS=3,cells=[];
+for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){const dx=(c+0.5)-COLS/2,dy=(r+0.5)-ROWS/2;cells.push({r,c,d:Math.hypot(dx,dy)});}
+const sortedTasks=FOCAL.tasks.slice().sort((a,b)=>a.vector<b.vector?-1:a.vector>b.vector?1:a.diff-b.diff);
+const place=cells.map((cell,i)=>({...cell,task:sortedTasks[i]}));
+const gridEl=document.getElementById('grid'),tileEls=[];
+for(const p of place){if(!p.task)continue;const el=document.createElement('div');el.className='tile';el.style.gridColumn=p.c+1;el.style.gridRow=p.r+1;
+  el.title=p.task.name;
+  el.innerHTML=`<div class="wt">${Math.round(p.task.weight)}%</div><div class="nm">${shortHead(p.task.name)}</div>`;tileEls.push({el,task:p.task});gridEl.appendChild(el);}
+const maxD=Math.max(...place.map(p=>p.d)),tileDist=place.map(p=>p.d/maxD);
+
+/* tiny, coherent hand-wobble (px) — keeps the squares CONCENTRIC, just not machine-perfect */
+const HOFF=[];{const r=mulberry32(SE_SEED^0x9e37);for(let t=0;t<5;t++)HOFF.push({jx:(r()-0.5)*5,jy:(r()-0.5)*5});}
+function renderHomage(shares){
+  // human (canvas) at CENTRE; reach-bands nest outward, Autonomous (intense) at the edge.
+  // classic Albers: concentric, bottom-weighted, axis-aligned — only a subtle hand wobble.
+  let cum=0;const enc=shares.map(s=>cum+=s);const H=compH,W=compW;
+  for(let t=0;t<=4;t++){const side=Math.sqrt(Math.max(0,enc[t]))*H,el=ringEls[t],o=HOFF[t];
+    el.style.width=side+'px';el.style.height=side+'px';el.style.transform='none';
+    el.style.left=((W-side)/2+o.jx)+'px';
+    el.style.top=((H-side)*0.62+o.jy)+'px';            // bottom-weighted, the Albers signature
+    el.style.background=SE_PAL[t];el.style.zIndex=5-t;}
+}
+function renderGrid(year){for(const{el,task}of tileEls){const t=tierOf(taskReach(task,year));
+  el.style.background=SE_PAL[t];
+  el.querySelectorAll('.nm,.wt').forEach(x=>x.style.color = t>=3?'#f4e7c5':'#1c1a17');}}
+function renderRungs(shares){document.getElementById('rungs').innerHTML=BANDS.slice().reverse().map((b,i)=>{
+  const idx=4-i,pct=Math.round(shares[idx]*100);
+  return `<div class="r"><span class="sw" style="background:${SE_PAL[idx]}"></span>
+    <span class="nm">${b.name}<small>${b.mean}</small></span><span class="sh">${pct}%</span></div>`;}).join('');}
+let curYear=NOW;
+function paintReadout(year){const sh=bandShares(FOCAL,year);renderRungs(sh);const m=Math.round(occReach(FOCAL,year)*100);
+  document.getElementById('bigNum').innerHTML=`${m}<sup>%</sup>`;document.getElementById('bigYear').textContent=year;document.getElementById('metaYear').textContent=year;
+  comp.setAttribute('role','img');comp.setAttribute('aria-label',`${FOCAL.name}: AI reach ${m}% in ${year}`);}
+function render(year,upd=true){curYear=year;renderHomage(bandShares(FOCAL,year));renderGrid(year);if(upd)paintReadout(year);}
+
+function renderForm(morph){
+  document.getElementById('homage').style.opacity=(1-smooth(0.15,1,morph)).toFixed(3);
+  gridEl.style.gap=(morph*8).toFixed(2)+'px';
+  for(let i=0;i<tileEls.length;i++){const tp=clamp01((morph-tileDist[i]*0.25)/0.62),e=tp*tp*(3-2*tp);
+    tileEls[i].el.style.opacity=e.toFixed(3);tileEls[i].el.style.transform=`scale(${(0.94+0.06*e).toFixed(3)})`;}}
+
+const SWEEP_END=0.42,HOLD_END=0.52,MORPH_END=0.82,Y0=1970;
+const stage=document.getElementById('stage'),readout=document.getElementById('readout'),plateMeta=document.getElementById('meta'),
+      helper=document.getElementById('helper'),cornerL=document.getElementById('cornerL'),actlabel=document.getElementById('actlabel'),
+      scrubber=document.getElementById('scrubber'),card=document.querySelector('.sticky .card');
+let inAct2=false,sliderYear=NOW;
+function tick(){
+  const rect=stage.getBoundingClientRect(),total=stage.offsetHeight-window.innerHeight,p=clamp01(-rect.top/total);
+  // zoom-out gesture on release — hands the composition off toward the territory
+  const rel=smooth(0.92,1.0,p);
+  card.style.transform=`scale(${(1-0.05*rel).toFixed(3)})`;
+  card.style.opacity=(1-0.55*rel).toFixed(3);
+  if(p<HOLD_END){
+    // FORWARD sweep 1970 → 2041 (ease-out: early flat stays visible, recent years get the room), then hold at 2041
+    inAct2=false;let year;
+    if(p<SWEEP_END){const t=clamp01(p/SWEEP_END),e=1-(1-t)*(1-t);year=Math.round(lerp(Y0,2041,e));}
+    else year=2041;
+    if(year!==curYear)render(year,true);
+    renderForm(0);
+    readout.style.opacity='1';plateMeta.style.opacity='1';scrubber.classList.remove('on');
+    if(p>0.03&&p<SWEEP_END-0.02){helper.textContent='Scroll — AI’s reach closing in. The pale core is the work it hasn’t reached.';helper.style.opacity='1';}
+    else if(p>=SWEEP_END){helper.textContent='2041 — the furthest the reach goes.';helper.style.opacity='1';}
+    else helper.style.opacity='0';
+    cornerL.textContent='Your reach · 01';actlabel.textContent='01 · Your job';
+  }else if(p<MORPH_END){
+    // DISSOLVE — forward only. Homage frozen at 2041 fades out; the breakdown opens at NOW.
+    // The year reset (2041 → now) is hidden inside the cross-fade — never an animated backward scroll.
+    inAct2=false;
+    const dm=clamp01((p-HOLD_END)/(MORPH_END-HOLD_END));
+    renderHomage(bandShares(FOCAL,2041));   // frozen at the sweep's end, regardless of scroll direction
+    renderGrid(NOW);                        // breakdown grid opens at now
+    renderForm(dm);
+    if(dm<0.5){paintReadout(2041);readout.style.opacity=(1-2*dm).toFixed(3);plateMeta.style.opacity=(1-2*dm).toFixed(3);}
+    else{paintReadout(NOW);readout.style.opacity=((dm-0.5)*2).toFixed(3);plateMeta.style.opacity=((dm-0.5)*2).toFixed(3);}
+    curYear=NOW;
+    scrubber.classList.remove('on');helper.style.opacity='0';
+    cornerL.textContent='Your reach · 01';actlabel.textContent='01 · Your job';
+  }else{
+    if(!inAct2){inAct2=true;document.getElementById('yearInput').value=sliderYear;render(sliderYear,true);}
+    renderForm(1);readout.style.opacity='1';plateMeta.style.opacity='1';scrubber.classList.add('on');helper.style.opacity='0';
+    cornerL.textContent='Task study · 01';actlabel.textContent='01 · The breakdown';
+  }
+}
+let ticking=false;
+if(!RM) addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(()=>{tick();ticking=false;});ticking=true;}},{passive:true});
+addEventListener('resize',()=>{measure();render(curYear,true);if(!RM)tick();});
+document.getElementById('yearInput').addEventListener('input',e=>{sliderYear=+e.target.value;render(sliderYear,true);});
+measure();render(NOW,true);
+if(RM){ stage.style.height='100vh'; renderForm(1); readout.style.opacity='1'; plateMeta.style.opacity='1'; scrubber.classList.add('on'); card.style.transform='none'; card.style.opacity='1'; }
+else requestAnimationFrame(()=>{measure();render(NOW,true);renderForm(0);tick();});
+
+/* ===== TERRITORY (real peers) ===== */
+const REACH_STOPS=[[216,213,194],[185,184,150],[179,158,98],[184,119,57],[179,98,46],[130,51,28],[77,27,18],[44,17,11]];
+function reachColor(v){v=Math.max(0,Math.min(1,v));const x=v*(REACH_STOPS.length-1),i=Math.min(REACH_STOPS.length-2,Math.floor(x)),f=x-i,a=REACH_STOPS[i],b=REACH_STOPS[i+1];return `rgb(${Math.round(a[0]+(b[0]-a[0])*f)},${Math.round(a[1]+(b[1]-a[1])*f)},${Math.round(a[2]+(b[2]-a[2])*f)})`;}
+const engModels=TERR.occ_iscos.map(i=>byIsco[i]).filter(Boolean)
+  .map(o=>({o,nm:o.name,seed:hashStr(o.name),m0:occReach(o,2026),focal:o.isco===FOCAL_ISCO}))
+  .sort((x,y)=>x.m0-y.m0);
+// even hue spread across the wall (golden angle); focal keeps its own vivid palette
+engModels.forEach((mo,i)=>{mo.pal=mo.focal?SE_PAL:freeRamp(mo.seed,Math.round((i*137.508)%360));});
+const wallEl=document.getElementById('wall');
+function renderWall(year){
+  wallEl.innerHTML=engModels.map(mo=>{const sh=bandShares(mo.o,year),m=Math.round(occReach(mo.o,year)*100);
+    return `<div class="cell${mo.focal?' you':''}"><div class="cb">${studySVG(sh,mo.pal,mo.seed,`${mo.nm}: AI reach ${m}% in ${year}`)}</div><div class="cap"><span class="nm">${mo.nm}</span><span class="pc">${m}%</span></div></div>`;}).join('');
+}
+renderWall(2026);
+
+// territory timeline — ONE colour-field study, in the territory's own LLM-map hue
+const TERRITORY_HUES={building_things:28,buying_selling:8,care_health:172,feeding_hosting:40,governing_protecting:222,land_sea:200,learning_teaching:262,maintaining_fixing:50,making_meaning:330,making_things:14,money_data:150,moving_things:190,thinking_leading:288};
+const THUE=TERRITORY_HUES[FOCAL.territory_id]!=null?TERRITORY_HUES[FOCAL.territory_id]:150;
+const trBy=y=>{const lo=Math.floor(y),a=TERR.reach_by_year[String(lo)],b=TERR.reach_by_year[String(Math.min(2041,lo+1))];return ((a==null?0:a)+((b==null?a:b)-(a==null?0:a))*(y-lo))/100;};
+const TS_YEARS=[];for(let y=1970;y<=2041;y+=2)TS_YEARS.push(y);
+const terrEl=document.getElementById('terrstrip');
+terrEl.innerHTML=TS_YEARS.map(y=>`<i style="background:${terrColor(THUE,trBy(y))}"></i>`).join('')+'<div class="cfnow"></div><div class="cfscrub" id="terrScrub"></div>';
+const terrLabEl=document.getElementById('terrLab');
+const setTerrLab=y=>terrLabEl.textContent=`${FOCAL.territory} · ${y} · ${Math.round(trBy(y)*100)}% field reach — drag to scrub`;
+setTerrLab(2026);
+
+// 02 trajectory — the V2 colour study in the JOB'S OWN palette
+const TRAJ_YEARS=[];for(let y=1970;y<=2041;y+=2)TRAJ_YEARS.push(y);
+document.getElementById('cstrip').innerHTML=TRAJ_YEARS.map(y=>`<i style="background:${paletteSample(SE_PAL,occReach(FOCAL,y))}"></i>`).join('')+'<div class="cfnow"></div>';
+
+/* ----- hover-to-read % on the strips, + territory scrub (re-renders the wall) ----- */
+const tip=document.createElement('div');tip.className='striptip';document.body.appendChild(tip);
+const yearAtX=(el,clientX)=>{const r=el.getBoundingClientRect();const x=Math.max(0,Math.min(1,(clientX-r.left)/r.width));return {x,year:Math.round(1970+x*71),top:r.top};};
+const showTip=(text,clientX,top)=>{tip.textContent=text;tip.style.left=clientX+'px';tip.style.top=top+'px';tip.classList.add('on');};
+const cstripEl=document.getElementById('cstrip');
+cstripEl.addEventListener('pointermove',e=>{const a=yearAtX(cstripEl,e.clientX);showTip(`${a.year} · ${Math.round(occReach(FOCAL,a.year)*100)}% reach`,e.clientX,a.top);});
+cstripEl.addEventListener('pointerleave',()=>tip.classList.remove('on'));
+const terrScrub=document.getElementById('terrScrub');terrScrub.style.left='78.9%';
+let terrDown=false,wallRAF=false,wallPending=2026;
+const scrubWall=y=>{wallPending=y;if(wallRAF)return;wallRAF=true;requestAnimationFrame(()=>{renderWall(wallPending);setTerrLab(wallPending);wallRAF=false;});};
+terrEl.addEventListener('pointermove',e=>{const a=yearAtX(terrEl,e.clientX);showTip(`${a.year} · ${Math.round(trBy(a.year)*100)}% field reach`,e.clientX,a.top);if(terrDown){terrScrub.style.left=(a.x*100)+'%';scrubWall(a.year);}});
+terrEl.addEventListener('pointerleave',()=>tip.classList.remove('on'));
+terrEl.addEventListener('pointerdown',e=>{terrDown=true;try{terrEl.setPointerCapture(e.pointerId);}catch(_){}const a=yearAtX(terrEl,e.clientX);terrScrub.style.left=(a.x*100)+'%';scrubWall(a.year);});
+addEventListener('pointerup',()=>{terrDown=false;});
+
+/* ===== TERRITORY vs TERRITORY · PLACEHOLDER engine, real v5 names ===== */
+// REAL territory aggregate: employment-weighted over the territory's occupations (≡ published reach_by_year)
+const TERR_IDS=Object.keys(DATA.territories);
+function terrAgg(tid,year){
+  const t=DATA.territories[tid];
+  const occs=t.occ_iscos.map(i=>byIsco[i]).filter(o=>o&&(o.employment_weight_pct||0)>0);
+  let W=0,R=0;const s=[0,0,0,0,0];
+  for(const o of occs){const w=o.employment_weight_pct;W+=w;R+=w*occReach(o,year);const sh=bandShares(o,year);for(let k=0;k<5;k++)s[k]+=w*sh[k];}
+  return {shares:s.map(v=>W?v/W:0),reach:W?R/W:0};
+}
+let iA=Math.max(0,TERR_IDS.indexOf(FOCAL.territory_id));   // Care & Health (the focal job's field)
+let iB=Math.max(0,TERR_IDS.indexOf('money_data'));         // a contrasting, high-reach field
+let compYear=NOW;
+function renderC(suf,tid){const a=terrAgg(tid,compYear),t=DATA.territories[tid];
+  document.getElementById('study'+suf).innerHTML=studySVG(a.shares,freeRamp(hashStr(t.name)),hashStr(t.name),`${t.name}: AI reach ${Math.round(a.reach*100)}% in ${compYear}`);
+  document.getElementById('reach'+suf).textContent=Math.round(a.reach*100)+'%';return{reach:a.reach,t};}
+function renderCompareT(){const ra=renderC('A',TERR_IDS[iA]),rb=renderC('B',TERR_IDS[iB]);let v;
+  document.querySelectorAll('#compare .rhc').forEach(el=>el.textContent='AI reach · '+compYear);
+  if(TERR_IDS[iA]===TERR_IDS[iB])v='Pick two different territories.';
+  else{const hi=ra.reach>=rb.reach?ra:rb,lo=ra.reach>=rb.reach?rb:ra,diff=Math.round((hi.reach-lo.reach)*100);
+    const dkey=compYear>=2033?'2040':'2026', disp=hi.t.dispersion&&hi.t.dispersion[dkey], me=disp&&disp.most_exposed&&disp.most_exposed[0]&&disp.most_exposed[0].display_name;
+    v=`In ${compYear}, AI reaches ${diff} points further into <b>${hi.t.name}</b> than <b>${lo.t.name}</b>`+(me?` — furthest of all into ${me}.`:'.');}
+  document.getElementById('verdictT').innerHTML=v;}
+function fillT(sel,idx){sel.innerHTML=TERR_IDS.map((tid,i)=>`<option value="${i}" ${i===idx?'selected':''}>${DATA.territories[tid].name}</option>`).join('');}
+const selA=document.getElementById('selA'),selB=document.getElementById('selB');fillT(selA,iA);fillT(selB,iB);
+selA.onchange=e=>{iA=+e.target.value;renderCompareT();};selB.onchange=e=>{iB=+e.target.value;renderCompareT();};
+document.getElementById('terrYear').addEventListener('input',e=>{compYear=+e.target.value;renderCompareT();});
+renderCompareT();
+
+/* ===== JOB vs JOB · both panels real, scrubbable across time ===== */
+const SE_NOW_SHARES=bandShares(FOCAL,NOW), SE_NOW_REACH=Math.round(occReach(FOCAL,NOW)*100); // used by outro
+const jseen=new Set();
+const JOBS_DB=DATA.occupations.filter(o=>{if(jseen.has(o.name)||o.isco===FOCAL_ISCO)return false;jseen.add(o.name);return true;});
+let chosenJob=JOBS_DB[Math.floor(Math.random()*JOBS_DB.length)], jvjYear=NOW;
+document.getElementById('joblist').innerHTML=JOBS_DB.map(o=>`<option value="${o.name.replace(/"/g,'')}">`).join('');
+function renderJVJ(){
+  const y=jvjYear;
+  const sh1=bandShares(FOCAL,y),r1=Math.round(occReach(FOCAL,y)*100);
+  document.getElementById('studyJ1').innerHTML=studySVG(sh1,SE_PAL,SE_SEED,`${FOCAL.name}: AI reach ${r1}% in ${y}`);
+  document.getElementById('reachJ1').textContent=r1+'%';
+  const o=chosenJob,seed=hashStr(o.name),sh2=bandShares(o,y),r2=Math.round(occReach(o,y)*100);
+  document.getElementById('studyJ2').innerHTML=studySVG(sh2,freeRamp(seed),seed,`${o.name}: AI reach ${r2}% in ${y}`);
+  document.getElementById('reachJ2').textContent=r2+'%';
+  document.getElementById('jobsearch').value=o.name;
+  document.querySelectorAll('#jobvjob .rhc').forEach(el=>el.textContent='AI reach · '+y);
+  const dh=Math.round(sh1[0]*100)-Math.round(sh2[0]*100);let v;
+  if(Math.abs(dh)<4)v=`In ${y}, a <b>${FOCAL.name}</b> and a <b>${o.name}</b> keep about the same human core.`;
+  else if(dh>0)v=`In ${y}, a <b>${FOCAL.name}</b> keeps a larger human core than a <b>${o.name}</b>.`;
+  else v=`In ${y}, a <b>${o.name}</b> keeps a larger human core than a <b>${FOCAL.name}</b>.`;
+  document.getElementById('verdictJ').innerHTML=v;
+}
+renderJVJ();
+document.getElementById('jobsearch').addEventListener('change',e=>{const o=JOBS_DB.find(j=>j.name.toLowerCase()===e.target.value.toLowerCase());if(o){chosenJob=o;renderJVJ();}});
+document.getElementById('jvjYear').addEventListener('input',e=>{jvjYear=+e.target.value;renderJVJ();});
+
+/* ===== reference legend (teaches the reading; palettes vary per study) ===== */
+const REF_RAMP=['#e9e2d2','#cdb98f','#b07e4a','#7e4a2e','#33231a']; // canvas core(Human) → dark edge(Autonomous)
+const refLegendHTML=()=>`<span class="cap">how to read · centre → edge</span>`+
+  BANDS.map((b,i)=>`<span class="ri"><span class="rs" style="background:${REF_RAMP[i]}"></span><span class="rn">${b.name}</span></span>`).join('');
+document.getElementById('reflegT').innerHTML=refLegendHTML();
+document.getElementById('reflegJ').innerHTML=refLegendHTML();
+
+/* ===== OUTRO + chrome ===== */
+document.getElementById('shareStudy').innerHTML=studySVG(SE_NOW_SHARES,SE_PAL,SE_SEED,`${FOCAL.name}: AI reach ${SE_NOW_REACH}% in 2026`);
+document.getElementById('shareReach').textContent=SE_NOW_REACH+'%';
+document.getElementById('legOut').innerHTML=BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
+  return `<div class="i"><span class="s" style="background:${SE_PAL[idx]}"></span><span class="n">${b.name}</span></div>`;}).join('');
+
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* right-side quick nav */
+const navLinks=[...document.querySelectorAll('.sidenav a')];
+navLinks.forEach(a=>a.addEventListener('click',()=>document.getElementById(a.dataset.to).scrollIntoView({behavior:'smooth'})));
+let currentSection='intro';
+const navIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const nav=e.target.dataset.nav;currentSection=nav;navLinks.forEach(a=>a.classList.toggle('on',a.dataset.to===nav));}}),{threshold:0.5});
+document.querySelectorAll('[data-nav]').forEach(s=>navIO.observe(s));
+
+/* context-aware share — copies a deep link to the current stop (job + section);
+   on file:// where clipboard is blocked, falls back to a screenshot hint */
+const toast=document.getElementById('toast');
+let toastT;
+function showToast(m){toast.textContent=m;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('on'),2400);}
+document.getElementById('sharebtn').addEventListener('click',()=>{
+  const url=`${location.origin}${location.pathname}?job=${FOCAL_ISCO}#${currentSection}`;
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(url).then(()=>showToast('Link copied — or screenshot the card')).catch(()=>showToast('Screenshot this card to share'));
+  } else { showToast('Screenshot this card to share'); }
+});
+</script>
+</body>
+</html>

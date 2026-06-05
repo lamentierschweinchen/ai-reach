@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Mirror · AI Reach</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="See how far AI reaches into your job — a companion to the Large Labor Model.">
+<style>html,body{margin:0;background:#efeae0;}</style>
+<script>
+  // Route to the device-appropriate build, preserving any ?job= / #section deep link.
+  (function () {
+    var small = window.matchMedia('(max-width: 820px)').matches
+      || /Mobi|Android|iPhone|iPod|iPad/i.test(navigator.userAgent);
+    var target = (small ? 'mobile.html' : 'desktop.html') + location.search + location.hash;
+    location.replace(target);
+  })();
+</script>
+</head>
+<body>
+<noscript style="font-family:Georgia,serif;padding:40px;max-width:640px;margin:0 auto;color:#1c1a17">
+  The Mirror needs JavaScript. <a href="desktop.html">Continue →</a>
+</noscript>
+</body>
+</html>
