@@ -12,7 +12,9 @@
   (function () {
     var small = window.matchMedia('(max-width: 820px)').matches
       || /Mobi|Android|iPhone|iPod|iPad/i.test(navigator.userAgent);
-    var target = (small ? 'mobile.html' : 'desktop.html') + location.search + location.hash;
+    // absolute base + extensionless (cleanUrls) so resolution never depends on a trailing slash
+    var base = location.pathname.replace(/\/(index)?$/, '') || '/mirror';
+    var target = base + (small ? '/mobile' : '/desktop') + location.search + location.hash;
     location.replace(target);
   })();
 </script>
