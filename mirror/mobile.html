@@ -484,7 +484,7 @@ function buildHeroTiles(){
   const place=cells.map((cell,i)=>({...cell,task:sortedTasks[i]}));
   for(const p of place){if(!p.task)continue;const el=document.createElement('div');el.className='tile';
     el.style.gridColumn=p.c+1;el.style.gridRow=p.r+1;el.title=p.task.name;
-    el.innerHTML=`<div class="wt">${Math.round(p.task.weight)}%</div><div class="nm">${shortHead(p.task.name)}</div>`;
+    el.innerHTML=`<div class="wt">${Math.round(p.task.weight)}%</div><div class="nm">${p.task.short||shortHead(p.task.name)}</div>`;
     el.addEventListener('click',()=>revealTask(p.task));
     tileEls.push({el,task:p.task});gridEl.appendChild(el);}
   const maxD=Math.max(...place.map(p=>p.d));tileDist=place.filter(p=>p.task).map(p=>p.d/maxD);
