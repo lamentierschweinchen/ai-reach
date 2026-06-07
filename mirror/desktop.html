@@ -170,6 +170,18 @@
   .leg .i{display:flex;align-items:center;gap:7px;}.leg .s{width:13px;height:13px;}.leg .m{font-size:9px;letter-spacing:1px;color:#4a463c;}.leg .n{font-family:'GT Super',serif;font-size:13px;}
 
   @media (max-width:860px){.wall{grid-template-columns:repeat(4,1fr);}.layout{grid-template-columns:1fr;gap:30px;}.pair{grid-template-columns:1fr;gap:36px;}}
+  .ta-pop{position:absolute;z-index:60;list-style:none;margin:0;padding:4px 0;background:var(--paper);border:1px solid var(--rule);max-height:340px;overflow:auto;text-align:left;box-shadow:0 10px 30px rgba(28,26,23,0.14);}
+  .ta-pop[hidden]{display:none;}
+  .ta-pop .ta-row{padding:10px 14px;cursor:pointer;font-family:'Inter';font-size:14px;color:var(--ink);display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;}
+  .ta-pop .ta-row.active,.ta-pop .ta-row:hover{background:rgba(28,26,23,0.06);}
+  .ta-pop .ta-nm{font-weight:600;}
+  .ta-pop .ta-terr{font-size:12px;color:var(--ink-soft);}
+  .ta-pop .ta-hit{font-size:11px;font-style:italic;color:var(--ink-soft);}
+  .ta-pop .ta-head{padding:9px 14px 5px;font-family:'Inter';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);}
+  .jobentry{position:relative;width:100%;max-width:360px;margin:22px auto 0;}
+  .jobentry input{font-family:'GT Super',serif;font-style:italic;font-size:18px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:12px 16px;width:100%;text-align:center;outline:none;}
+  .jobentry input:focus{border-color:var(--ink-soft);}
+  .jobentry input::placeholder{color:var(--ink-soft);opacity:0.85;}
 </style>
 </head>
 <body>
@@ -195,6 +207,7 @@
   <p class="pre reveal">You told us your job</p>
   <h1 class="reveal d1" id="focalHero">Software <em>Engineer.</em></h1>
   <p class="lede reveal d2">Watch AI’s reach close in — through the decades to 2041. Then see what it’s made of.</p>
+  <div class="jobentry reveal d2"><input id="jobEntry" placeholder="What do you do?" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job"></div>
   <p class="cue reveal d2">scroll<span>↓</span></p>
 </section>
 
@@ -273,7 +286,7 @@
   <p class="dek reveal">One picked at random — type to choose any job.</p>
   <div class="pair reveal d1" style="margin-top:44px">
     <div class="cpanel"><div id="focalJ1" style="font-family:'GT Super',serif;font-style:italic;font-size:21px;margin-bottom:24px;padding-bottom:6px;border-bottom:1px solid transparent">Software Engineer</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc">AI reach · 2026</div></div>
-    <div class="cpanel"><input class="jobsearch" id="jobsearch" list="joblist" placeholder="type a job…"><datalist id="joblist"></datalist><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">AI reach · 2026</div></div>
+    <div class="cpanel"><input class="jobsearch" id="jobsearch" placeholder="type a job…"><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">AI reach · 2026</div></div>
   </div>
   <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="jvjYear"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
   <div class="verdict reveal d2"><p id="verdictJ"></p></div>
@@ -368,10 +381,71 @@ function occReach(o,year,band='mid'){let T=0,A=0;for(const tk of o.tasks){T+=tk.
 function bandShares(o,year,band='mid'){const s=[0,0,0,0,0];let T=0;for(const tk of o.tasks){T+=tk.weight;s[tierOf(taskReach(tk,year,band))]+=tk.weight;}return s.map(v=>T?v/T:0);}
 
 /* focal job + its one territory (one-line swap) */
-const FOCAL_ISCO='2221';
+const _want=new URLSearchParams(location.search).get('job');
+const FOCAL_ISCO=(_want&&DATA.occupations.some(o=>o.isco===_want))?_want:'2221';  // ?job= deep-link; default Nurses
 const FOCAL=DATA.occupations.find(o=>o.isco===FOCAL_ISCO);
 const TERR=DATA.territories[FOCAL.territory_id];
 const byIsco=Object.fromEntries(DATA.occupations.map(o=>[o.isco,o]));
+/* ===== job search: display name + occupation_name + common_titles, ranked ===== */
+function searchJobs(q){
+  q=(q||'').trim().toLowerCase(); if(!q)return [];
+  const re=new RegExp('\\b'+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  const out=[];
+  for(const o of DATA.occupations){
+    const name=o.name.toLowerCase(), on=(o.occupation_name||'').toLowerCase();
+    const titles=(o.common_titles||[]).map(t=>t.toLowerCase());
+    let tier=-1,hit='';
+    if(name===q)tier=100;
+    else if(titles.includes(q)){tier=92;hit=q;}
+    else if(name.startsWith(q))tier=84;
+    else if(titles.some(t=>t.startsWith(q))){tier=78;hit=titles.find(t=>t.startsWith(q));}
+    else if(re.test(name))tier=70;
+    else if(titles.some(t=>re.test(t))){tier=64;hit=titles.find(t=>re.test(t));}
+    else if(name.includes(q))tier=48;
+    else if(on.includes(q))tier=44;
+    else if(titles.some(t=>t.includes(q))){tier=40;hit=titles.find(t=>t.includes(q));}
+    if(tier>=0)out.push({o,tier,wt:+o.employment_weight_pct||0,hit});
+  }
+  out.sort((a,b)=>(b.tier-a.tier)||(b.wt-a.wt));
+  return out.slice(0,8);
+}
+function searchOrSuggest(q){
+  let r=searchJobs(q); if(r.length)return {rows:r,suggest:false};
+  q=(q||'').trim();
+  for(let k=q.length-1;k>=2;k--){const r2=searchJobs(q.slice(0,k));if(r2.length)return {rows:r2.slice(0,3),suggest:true};}
+  return {rows:[],suggest:true};
+}
+const ttEsc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function attachTypeahead(input,onSelect){
+  const wrap=input.parentElement;
+  if(getComputedStyle(wrap).position==='static')wrap.style.position='relative';
+  const pop=document.createElement('ul');pop.className='ta-pop';pop.setAttribute('role','listbox');pop.id=input.id+'-pop';pop.hidden=true;
+  wrap.appendChild(pop);
+  input.setAttribute('role','combobox');input.setAttribute('aria-expanded','false');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-controls',pop.id);input.removeAttribute('list');
+  let rows=[],active=-1,t;
+  const place=()=>{pop.style.top=(input.offsetTop+input.offsetHeight+4)+'px';pop.style.left=input.offsetLeft+'px';pop.style.width=input.offsetWidth+'px';};
+  const close=()=>{pop.hidden=true;input.setAttribute('aria-expanded','false');active=-1;input.removeAttribute('aria-activedescendant');};
+  function draw(q){
+    const r=searchOrSuggest(q);rows=r.rows;active=-1;
+    if(!(q||'').trim()){close();return;}
+    let h=r.suggest?'<li class="ta-head">No exact match — did you mean:</li>':'';
+    h+=rows.map((x,i)=>`<li class="ta-row" role="option" id="${pop.id}-${i}" data-i="${i}"><span class="ta-nm">${ttEsc(x.o.name)}</span><span class="ta-terr">· ${ttEsc(x.o.territory)}</span>${x.hit&&x.hit!==x.o.name.toLowerCase()?`<span class="ta-hit">“${ttEsc(x.hit)}”</span>`:''}</li>`).join('');
+    pop.innerHTML=h||'<li class="ta-head">No matches</li>';place();pop.hidden=false;input.setAttribute('aria-expanded','true');
+  }
+  function setActive(i){const opt=[...pop.querySelectorAll('.ta-row')];if(!opt.length)return;active=(i+opt.length)%opt.length;opt.forEach((el,j)=>el.classList.toggle('active',j===active));input.setAttribute('aria-activedescendant',opt[active].id);opt[active].scrollIntoView({block:'nearest'});}
+  function choose(i){if(rows[i]){onSelect(rows[i].o);close();}}
+  input.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>draw(input.value),120);});
+  input.addEventListener('focus',()=>{if((input.value||'').trim())draw(input.value);});
+  input.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'){e.preventDefault();if(pop.hidden)draw(input.value);setActive(active+1);}
+    else if(e.key==='ArrowUp'){e.preventDefault();setActive(active-1);}
+    else if(e.key==='Enter'){if(!pop.hidden){e.preventDefault();choose(active>=0?active:0);}}
+    else if(e.key==='Escape')close();
+  });
+  pop.addEventListener('mousedown',e=>{const li=e.target.closest('.ta-row');if(li){e.preventDefault();choose(+li.dataset.i);}});
+  document.addEventListener('click',e=>{if(!wrap.contains(e.target))close();});
+}
+
 const SE_SEED=hashStr(FOCAL.name), SE_PAL=heroRamp(SE_SEED);
 const shortHead=s=>{const w=s.replace(/[,.;:(].*$/,'').trim().split(/\s+/).slice(0,4).join(' ');return w.length>30?w.slice(0,28)+'…':w;};
 /* acceptance check: occReach(FOCAL,2026) must reproduce published r2026 */
@@ -563,7 +637,6 @@ const SE_NOW_SHARES=bandShares(FOCAL,NOW), SE_NOW_REACH=Math.round(occReach(FOCA
 const jseen=new Set();
 const JOBS_DB=DATA.occupations.filter(o=>{if(jseen.has(o.name)||o.isco===FOCAL_ISCO)return false;jseen.add(o.name);return true;});
 let chosenJob=JOBS_DB[Math.floor(Math.random()*JOBS_DB.length)], jvjYear=NOW;
-document.getElementById('joblist').innerHTML=JOBS_DB.map(o=>`<option value="${o.name.replace(/"/g,'')}">`).join('');
 function renderJVJ(){
   const y=jvjYear;
   const sh1=bandShares(FOCAL,y),r1=Math.round(occReach(FOCAL,y)*100);
@@ -581,7 +654,7 @@ function renderJVJ(){
   document.getElementById('verdictJ').innerHTML=v;
 }
 renderJVJ();
-document.getElementById('jobsearch').addEventListener('change',e=>{const o=JOBS_DB.find(j=>j.name.toLowerCase()===e.target.value.toLowerCase());if(o){chosenJob=o;renderJVJ();}});
+attachTypeahead(document.getElementById('jobsearch'),o=>{chosenJob=o;renderJVJ();});
 document.getElementById('jvjYear').addEventListener('input',e=>{jvjYear=+e.target.value;renderJVJ();});
 
 /* ===== reference legend (teaches the reading; palettes vary per study) ===== */
@@ -614,6 +687,7 @@ document.querySelectorAll('[data-nav]').forEach(s=>navIO.observe(s));
 const toast=document.getElementById('toast');
 let toastT;
 function showToast(m){toast.textContent=m;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('on'),2400);}
+attachTypeahead(document.getElementById('jobEntry'),o=>{location.search='?job='+o.isco;});
 document.getElementById('sharebtn').addEventListener('click',()=>{
   const url=`${location.origin}${location.pathname}?job=${FOCAL_ISCO}#${currentSection}`;
   if(navigator.clipboard&&window.isSecureContext){

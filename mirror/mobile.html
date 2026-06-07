@@ -227,6 +227,14 @@
   @media (prefers-reduced-motion: reduce){ .reveal{transition:none;} .intro .cue span{animation:none;} .ring{transition:none;} }
   /* desktop: present the mobile design as a centred phone column on a quiet ground */
   @media (min-width:620px){ body{background:#e7e2d6;} .stage{height:460svh;} }
+  .ta-pop{position:absolute;z-index:60;list-style:none;margin:0;padding:4px 0;background:var(--paper);border:1px solid var(--rule);max-height:340px;overflow:auto;text-align:left;box-shadow:0 10px 30px rgba(28,26,23,0.14);}
+  .ta-pop[hidden]{display:none;}
+  .ta-pop .ta-row{padding:11px 14px;cursor:pointer;font-family:'Inter';font-size:14px;color:var(--ink);display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;}
+  .ta-pop .ta-row.active,.ta-pop .ta-row:active{background:rgba(28,26,23,0.07);}
+  .ta-pop .ta-nm{font-weight:600;}
+  .ta-pop .ta-terr{font-size:12px;color:var(--ink-soft);}
+  .ta-pop .ta-hit{font-size:11px;font-style:italic;color:var(--ink-soft);}
+  .ta-pop .ta-head{padding:9px 14px 5px;font-family:'Inter';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);}
 </style>
 </head>
 <body>
@@ -241,9 +249,8 @@
   <h1 class="reveal d1" id="focalHero">Nurses.</h1>
   <p class="lede reveal d2">Watch AI’s reach close in — through the decades to 2041. Then see what it’s made of.</p>
   <div class="jobentry reveal d2">
-    <input id="jobEntry" list="alljobs" placeholder="Not you? Search a job…" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
+    <input id="jobEntry" placeholder="Not you? Search a job…" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
     <span class="mag">⌕</span>
-    <datalist id="alljobs"></datalist>
     <div class="hint">480 occupations · tap to change</div>
   </div>
   <p class="cue reveal d2">scroll<span>↓</span></p>
@@ -336,7 +343,7 @@
   <div class="pairv reveal d1" style="margin-top:30px">
     <div class="cpanel"><div id="focalJ1" style="font-family:'GT Super',serif;font-style:italic;font-size:18px;margin-bottom:14px;padding-bottom:7px;border-bottom:1px solid transparent;text-align:center">Nurses</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc" id="rhcJ1">AI reach · 2026</div></div>
     <div class="cmid">vs</div>
-    <div class="cpanel"><input class="jobsearch" id="jobsearch" list="joblist" placeholder="type a job…" autocomplete="off" autocapitalize="words"><datalist id="joblist"></datalist><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc" id="rhcJ2">AI reach · 2026</div></div>
+    <div class="cpanel"><input class="jobsearch" id="jobsearch" placeholder="type a job…" autocomplete="off" autocapitalize="words"><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc" id="rhcJ2">AI reach · 2026</div></div>
   </div>
   <div class="scrubber on reveal d1" style="margin-top:26px;max-height:none;opacity:1;pointer-events:auto">
     <div class="yslider"><input type="range" min="1970" max="2041" value="2026" id="jvjYear" aria-label="Year"></div>
@@ -450,12 +457,73 @@ function occReach(o,year,band='mid'){let T=0,A=0;for(const tk of o.tasks){T+=tk.
 function bandShares(o,year,band='mid'){const s=[0,0,0,0,0];let T=0;for(const tk of o.tasks){T+=tk.weight;s[tierOf(taskReach(tk,year,band))]+=tk.weight;}return s.map(v=>T?v/T:0);}
 
 const byIsco=Object.fromEntries(DATA.occupations.map(o=>[o.isco,o]));
+/* ===== job search: display name + occupation_name + common_titles, ranked ===== */
+function searchJobs(q){
+  q=(q||'').trim().toLowerCase(); if(!q)return [];
+  const re=new RegExp('\\b'+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  const out=[];
+  for(const o of DATA.occupations){
+    const name=o.name.toLowerCase(), on=(o.occupation_name||'').toLowerCase();
+    const titles=(o.common_titles||[]).map(t=>t.toLowerCase());
+    let tier=-1,hit='';
+    if(name===q)tier=100;
+    else if(titles.includes(q)){tier=92;hit=q;}
+    else if(name.startsWith(q))tier=84;
+    else if(titles.some(t=>t.startsWith(q))){tier=78;hit=titles.find(t=>t.startsWith(q));}
+    else if(re.test(name))tier=70;
+    else if(titles.some(t=>re.test(t))){tier=64;hit=titles.find(t=>re.test(t));}
+    else if(name.includes(q))tier=48;
+    else if(on.includes(q))tier=44;
+    else if(titles.some(t=>t.includes(q))){tier=40;hit=titles.find(t=>t.includes(q));}
+    if(tier>=0)out.push({o,tier,wt:+o.employment_weight_pct||0,hit});
+  }
+  out.sort((a,b)=>(b.tier-a.tier)||(b.wt-a.wt));
+  return out.slice(0,8);
+}
+function searchOrSuggest(q){
+  let r=searchJobs(q); if(r.length)return {rows:r,suggest:false};
+  q=(q||'').trim();
+  for(let k=q.length-1;k>=2;k--){const r2=searchJobs(q.slice(0,k));if(r2.length)return {rows:r2.slice(0,3),suggest:true};}
+  return {rows:[],suggest:true};
+}
+const ttEsc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function attachTypeahead(input,onSelect){
+  const wrap=input.parentElement;
+  if(getComputedStyle(wrap).position==='static')wrap.style.position='relative';
+  const pop=document.createElement('ul');pop.className='ta-pop';pop.setAttribute('role','listbox');pop.id=input.id+'-pop';pop.hidden=true;
+  wrap.appendChild(pop);
+  input.setAttribute('role','combobox');input.setAttribute('aria-expanded','false');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-controls',pop.id);input.removeAttribute('list');
+  let rows=[],active=-1,t;
+  const place=()=>{pop.style.top=(input.offsetTop+input.offsetHeight+4)+'px';pop.style.left=input.offsetLeft+'px';pop.style.width=input.offsetWidth+'px';};
+  const close=()=>{pop.hidden=true;input.setAttribute('aria-expanded','false');active=-1;input.removeAttribute('aria-activedescendant');};
+  function draw(q){
+    const r=searchOrSuggest(q);rows=r.rows;active=-1;
+    if(!(q||'').trim()){close();return;}
+    let h=r.suggest?'<li class="ta-head">No exact match — did you mean:</li>':'';
+    h+=rows.map((x,i)=>`<li class="ta-row" role="option" id="${pop.id}-${i}" data-i="${i}"><span class="ta-nm">${ttEsc(x.o.name)}</span><span class="ta-terr">· ${ttEsc(x.o.territory)}</span>${x.hit&&x.hit!==x.o.name.toLowerCase()?`<span class="ta-hit">“${ttEsc(x.hit)}”</span>`:''}</li>`).join('');
+    pop.innerHTML=h||'<li class="ta-head">No matches</li>';place();pop.hidden=false;input.setAttribute('aria-expanded','true');
+  }
+  function setActive(i){const opt=[...pop.querySelectorAll('.ta-row')];if(!opt.length)return;active=(i+opt.length)%opt.length;opt.forEach((el,j)=>el.classList.toggle('active',j===active));input.setAttribute('aria-activedescendant',opt[active].id);opt[active].scrollIntoView({block:'nearest'});}
+  function choose(i){if(rows[i]){onSelect(rows[i].o);close();}}
+  input.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>draw(input.value),120);});
+  input.addEventListener('focus',()=>{if((input.value||'').trim())draw(input.value);});
+  input.addEventListener('keydown',e=>{
+    if(e.key==='ArrowDown'){e.preventDefault();if(pop.hidden)draw(input.value);setActive(active+1);}
+    else if(e.key==='ArrowUp'){e.preventDefault();setActive(active-1);}
+    else if(e.key==='Enter'){if(!pop.hidden){e.preventDefault();choose(active>=0?active:0);}}
+    else if(e.key==='Escape')close();
+  });
+  pop.addEventListener('mousedown',e=>{const li=e.target.closest('.ta-row');if(li){e.preventDefault();choose(+li.dataset.i);}});
+  document.addEventListener('click',e=>{if(!wrap.contains(e.target))close();});
+}
+
 const shortHead=s=>{const w=s.replace(/[,.;:(].*$/,'').trim().split(/\s+/).slice(0,4).join(' ');return w.length>30?w.slice(0,28)+'…':w;};
 const TERRITORY_HUES={building_things:28,buying_selling:8,care_health:172,feeding_hosting:40,governing_protecting:222,land_sea:200,learning_teaching:262,maintaining_fixing:50,making_meaning:330,making_things:14,money_data:150,moving_things:190,thinking_leading:288};
 const TERR_IDS=Object.keys(DATA.territories);
 
 /* ===== FOCAL STATE (mutable — the intro search re-points the whole mirror) ===== */
-let FOCAL_ISCO='2221';        // default: Nurses → reads 29% (published r2026 = 29.5) at 2026
+const _want=new URLSearchParams(location.search).get('job');
+let FOCAL_ISCO=(_want&&DATA.occupations.some(o=>o.isco===_want))?_want:'2221';  // ?job= deep-link; default Nurses (29% @ 2026)
 let FOCAL, TERR, SE_SEED, SE_PAL, THUE, curYear=NOW, sliderYear=NOW;
 function deriveFocal(isco){
   FOCAL=DATA.occupations.find(o=>o.isco===isco)||DATA.occupations.find(o=>o.isco==='2221');
@@ -655,10 +723,9 @@ function renderJVJ(){
 }
 function buildJVJ(){
   if(!chosenJob||chosenJob.isco===FOCAL_ISCO)chosenJob=pickRandomOther();
-  $('joblist').innerHTML=JOBS_DB.filter(o=>o.isco!==FOCAL_ISCO).map(o=>`<option value="${esc(o.name)}">`).join('');
   renderJVJ();
 }
-$('jobsearch').addEventListener('change',e=>{const o=JOBS_DB.find(j=>j.name.toLowerCase()===e.target.value.toLowerCase());if(o){chosenJob=o;renderJVJ();}});
+attachTypeahead($('jobsearch'),o=>{chosenJob=o;renderJVJ();});
 $('jvjYear').addEventListener('input',e=>{jvjYear=+e.target.value;renderJVJ();});
 
 /* ===== reference legend (teaches the reading) ===== */
@@ -710,15 +777,8 @@ function setFocal(isco,scrollTop){
   if(!RM)requestAnimationFrame(tick);
 }
 
-/* ===== INTRO job search (datalist of all 480) ===== */
-$('alljobs').innerHTML=DATA.occupations.map(o=>`<option value="${esc(o.name)}">`).join('');
-function commitJobEntry(val){
-  if(!val)return;const q=val.trim().toLowerCase();
-  let o=DATA.occupations.find(j=>j.name.toLowerCase()===q)||DATA.occupations.find(j=>j.name.toLowerCase().includes(q));
-  if(o){setFocal(o.isco,true);$('jobEntry').value='';$('jobEntry').blur();}
-}
-$('jobEntry').addEventListener('change',e=>commitJobEntry(e.target.value));
-$('jobEntry').addEventListener('keydown',e=>{if(e.key==='Enter')commitJobEntry(e.target.value);});
+/* ===== INTRO job search (custom ranked typeahead) ===== */
+attachTypeahead($('jobEntry'),o=>{setFocal(o.isco,true);$('jobEntry').value='';$('jobEntry').blur();});
 
 /* ===== custom drag strips (trajectory read + territory wall scrub) ===== */
 function bindStrip(el,onMove,onEnd){
