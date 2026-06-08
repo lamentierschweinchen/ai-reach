@@ -5,9 +5,6 @@
 <title>The Mirror · AI Reach</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
-  @font-face { font-family:'GT Super'; src:url('GT-Super/GT-Super/GT-Super-Display-Light-Trial.otf') format('opentype'); font-weight:300; font-style:normal; }
-  @font-face { font-family:'GT Super'; src:url('GT-Super/GT-Super/GT-Super-Display-Regular-Trial.otf') format('opentype'); font-weight:400; font-style:normal; }
-  @font-face { font-family:'GT Super'; src:url('GT-Super/GT-Super/GT-Super-Display-Regular-Italic-Trial.otf') format('opentype'); font-weight:400; font-style:italic; }
   @font-face { font-family:'Inter'; src:url('Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); font-weight:100 900; font-style:normal; }
 
   :root{ --bone:#efeae0; --paper:#f6f2e8; --ink:#1c1a17; --ink-soft:#5a544a; --rule:#d6cfbe; --mount:#b9bcab; }
@@ -22,9 +19,9 @@
   .wrap{max-width:1100px;margin:0 auto;padding:0 48px;}
   .mount{background:var(--mount);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
   .kick{font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 20px;}
-  h2.sec{font-family:'GT Super',serif;font-weight:300;font-size:clamp(32px,4.4vw,50px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 18px;}
+  h2.sec{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:clamp(32px,4.4vw,50px);line-height:1.05;letter-spacing:-0.02em;margin:0 0 18px;}
   h2.sec em{font-style:italic;}
-  .dek{font-family:'GT Super',serif;font-weight:300;font-size:18px;line-height:1.55;color:var(--ink-soft);max-width:600px;margin:0;}
+  .dek{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:18px;line-height:1.55;color:var(--ink-soft);max-width:600px;margin:0;}
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .8s cubic-bezier(.2,.6,.2,1),transform .8s cubic-bezier(.2,.6,.2,1);}
   .reveal.in{opacity:1;transform:none;}
   .reveal.d1{transition-delay:.08s;}.reveal.d2{transition-delay:.16s;}
@@ -32,9 +29,9 @@
   /* ---- INTRO ---- */
   .intro{min-height:92vh;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 48px;}
   .intro .pre{font-size:11px;letter-spacing:0.24em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:24px;}
-  .intro h1{font-family:'GT Super',serif;font-weight:300;font-size:clamp(54px,9vw,104px);line-height:0.96;letter-spacing:-0.03em;margin:0 0 18px;}
+  .intro h1{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:clamp(54px,9vw,104px);line-height:0.96;letter-spacing:-0.03em;margin:0 0 18px;}
   .intro h1 em{font-style:italic;}
-  .intro .lede{font-family:'GT Super',serif;font-weight:300;font-style:italic;font-size:clamp(18px,2.3vw,23px);color:var(--ink-soft);max-width:560px;margin:0 auto;}
+  .intro .lede{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-style:italic;font-size:clamp(18px,2.3vw,23px);color:var(--ink-soft);max-width:560px;margin:0 auto;}
   .intro .cue{margin-top:64px;font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--ink-soft);}
   .intro .cue span{display:block;margin-top:8px;font-size:15px;}
 
@@ -49,23 +46,23 @@
   .comp{position:relative;width:100%;aspect-ratio:4/3;max-height:56vh;margin:0 auto;}
   .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:0;}
   .tile{position:relative;transition:background-color .3s ease;opacity:0;transform-origin:center;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;}
-  .tile .nm{font-family:'GT Super',serif;font-style:italic;font-size:13px;line-height:1.18;}
+  .tile .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;line-height:1.18;}
   .tile .wt{font-family:'Inter';font-size:8px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:3px;opacity:.6;}
   .homage{position:absolute;inset:0;pointer-events:none;}
   .ring{position:absolute;transition:width .2s cubic-bezier(.4,0,.2,1),height .2s cubic-bezier(.4,0,.2,1),left .2s,top .2s,background-color .24s;}
   .headline{margin-bottom:22px;}
-  .headline .big{font-family:'GT Super',serif;font-weight:300;font-size:74px;line-height:.9;letter-spacing:-0.03em;display:block;font-variant-numeric:tabular-nums;}
+  .headline .big{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:74px;line-height:.9;letter-spacing:-0.03em;display:block;font-variant-numeric:tabular-nums;}
   .headline .big sup{font-size:.3em;vertical-align:top;color:var(--ink-soft);}
-  .headline .bigyear{display:block;font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:44px;line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-top:6px;font-variant-numeric:tabular-nums;}
+  .headline .bigyear{display:block;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:44px;line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-top:6px;font-variant-numeric:tabular-nums;}
   .headline .bigcap{display:block;margin-top:8px;font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
   .readout{transition:opacity .26s ease;}
   .rungs .r{display:grid;grid-template-columns:16px 1fr auto;align-items:start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--rule);}
   .rungs .sw{width:16px;height:16px;margin-top:2px;}
-  .rungs .nm{font-family:'GT Super',serif;font-size:15px;}
+  .rungs .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;}
   .rungs .nm small{display:block;font-family:'Inter';font-size:9px;letter-spacing:0.02em;color:#3a372f;margin-top:2px;line-height:1.3;}
-  .rungs .sh{font-family:'GT Super',serif;font-size:15px;font-variant-numeric:tabular-nums;}
+  .rungs .sh{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;font-variant-numeric:tabular-nums;}
   .plate{margin-top:26px;padding-top:18px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;}
-  .plate .ttl{font-family:'GT Super',serif;font-style:italic;font-size:20px;}
+  .plate .ttl{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:20px;}
   .plate .meta{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);transition:opacity .26s ease;}
   .plate .meta strong{font-weight:600;color:var(--ink);}
   .scrubber{margin-top:16px;opacity:0;max-height:0;overflow:hidden;transition:opacity .34s,max-height .34s;pointer-events:none;}
@@ -76,7 +73,7 @@
   .scrubber .axis{position:relative;display:flex;justify-content:space-between;margin-top:7px;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);}
   .scrubber .axnow{position:absolute;left:78.9%;transform:translateX(-50%);color:var(--ink);}
   .scrubber .ax2000{position:absolute;left:42.3%;transform:translateX(-50%);}
-  .helper{position:fixed;top:62px;left:0;right:0;text-align:center;z-index:40;pointer-events:none;font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:15px;color:var(--ink-soft);opacity:0;transition:opacity .3s;}
+  .helper{position:fixed;top:62px;left:0;right:0;text-align:center;z-index:40;pointer-events:none;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:15px;color:var(--ink-soft);opacity:0;transition:opacity .3s;}
 
   section.block{min-height:100vh;display:flex;align-items:center;padding:clamp(70px,9vh,120px) 0;}
 
@@ -103,7 +100,7 @@
   .cell .cb{width:100%;aspect-ratio:1/1;}
   .cell svg{width:100%;height:100%;display:block;}
   .cell .cap{margin-top:8px;display:flex;justify-content:space-between;gap:6px;align-items:baseline;}
-  .cell .nm{font-family:'GT Super',serif;font-style:italic;font-size:12px;color:#23211c;line-height:1.1;}
+  .cell .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:12px;color:#23211c;line-height:1.1;}
   .cell .pc{font-size:10px;font-weight:600;color:#3a372f;font-variant-numeric:tabular-nums;}
   .cell.you .cb{outline:2px solid var(--ink);outline-offset:5px;}
   .cell.you .nm::after{content:' · you';font-style:normal;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;}
@@ -134,40 +131,40 @@
   .terrkv{display:flex;gap:30px;margin-top:24px;}
   .terrkv .kv{display:flex;align-items:center;gap:9px;}
   .terrkv .kv .s{width:22px;height:22px;}
-  .terrkv .kv .t{font-family:'GT Super',serif;font-weight:300;font-size:14px;color:#23211c;}
+  .terrkv .kv .t{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:14px;color:#23211c;}
   .terrkv .kv .t small{display:block;font-family:'Inter';font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:#3a372f;margin-bottom:1px;}
-  .cstudy-ttl{font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:22px;color:var(--ink);margin-bottom:24px;}
+  .cstudy-ttl{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:22px;color:var(--ink);margin-bottom:24px;}
 
   /* ---- COMPARE (shared) ---- */
   .pair{display:grid;grid-template-columns:1fr 1fr;gap:54px;}
   .cpanel{display:flex;flex-direction:column;align-items:center;}
-  .cpanel select,.cpanel input.jobsearch{font-family:'GT Super',serif;font-style:italic;font-size:21px;color:#1c1a17;background:transparent;border:0;border-bottom:1px solid var(--rule);padding:4px 6px 6px;margin-bottom:24px;text-align:center;width:100%;max-width:300px;}
+  .cpanel select,.cpanel input.jobsearch{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;color:#1c1a17;background:transparent;border:0;border-bottom:1px solid var(--rule);padding:4px 6px 6px;margin-bottom:24px;text-align:center;width:100%;max-width:300px;}
   .cpanel select{cursor:pointer;text-align-last:center;-webkit-appearance:none;appearance:none;}
   .cpanel input.jobsearch::placeholder{color:#9a948a;font-style:italic;}
   .cpanel .cs{width:72%;aspect-ratio:1/1;}
   .cpanel svg{width:100%;height:100%;display:block;}
-  .cpanel .rh{font-family:'GT Super',serif;font-weight:300;font-size:42px;margin:22px 0 2px;font-variant-numeric:tabular-nums;}
+  .cpanel .rh{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:42px;margin:22px 0 2px;font-variant-numeric:tabular-nums;}
   .cpanel .rhc{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);}
   .verdict{margin-top:44px;text-align:center;}
-  .verdict p{font-family:'GT Super',serif;font-weight:300;font-style:italic;font-size:clamp(20px,2.6vw,26px);line-height:1.4;max-width:740px;margin:0 auto;}
+  .verdict p{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-style:italic;font-size:clamp(20px,2.6vw,26px);line-height:1.4;max-width:740px;margin:0 auto;}
   .verdict p b{font-style:normal;font-weight:400;}
   .reflegend{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:30px;flex-wrap:wrap;}
   .reflegend .cap{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);}
   .reflegend .ri{display:flex;align-items:center;gap:6px;}
   .reflegend .rs{width:13px;height:13px;}
-  .reflegend .rn{font-family:'GT Super',serif;font-size:13px;color:var(--ink);}
+  .reflegend .rn{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:var(--ink);}
   .illus{text-align:center;margin-top:14px;font-family:'Inter';font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);opacity:0.8;}
 
   /* ---- OUTRO ---- */
   .outro{text-align:center;}
-  .outro h2{font-family:'GT Super',serif;font-weight:300;font-size:clamp(30px,4.4vw,46px);line-height:1.12;letter-spacing:-0.02em;margin:0 auto 18px;max-width:680px;}
+  .outro h2{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:clamp(30px,4.4vw,46px);line-height:1.12;letter-spacing:-0.02em;margin:0 auto 18px;max-width:680px;}
   .outro h2 em{font-style:italic;}
   .outro .share{margin:36px auto 0;width:min(36vh,240px);aspect-ratio:1/1;}
   .outro .share svg{width:100%;height:100%;display:block;}
   .outro .cta{margin-top:30px;display:inline-block;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone);background:var(--ink);padding:14px 26px;text-decoration:none;}
-  .outro .fine{margin-top:42px;font-family:'GT Super',serif;font-style:italic;font-weight:300;font-size:16px;color:var(--ink-soft);}
+  .outro .fine{margin-top:42px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:16px;color:var(--ink-soft);}
   .leg{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;justify-content:center;}
-  .leg .i{display:flex;align-items:center;gap:7px;}.leg .s{width:13px;height:13px;}.leg .m{font-size:9px;letter-spacing:1px;color:#4a463c;}.leg .n{font-family:'GT Super',serif;font-size:13px;}
+  .leg .i{display:flex;align-items:center;gap:7px;}.leg .s{width:13px;height:13px;}.leg .m{font-size:9px;letter-spacing:1px;color:#4a463c;}.leg .n{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;}
 
   @media (max-width:860px){.wall{grid-template-columns:repeat(4,1fr);}.layout{grid-template-columns:1fr;gap:30px;}.pair{grid-template-columns:1fr;gap:36px;}}
   .ta-pop{position:absolute;z-index:60;list-style:none;margin:0;padding:4px 0;background:var(--paper);border:1px solid var(--rule);max-height:340px;overflow:auto;text-align:left;box-shadow:0 10px 30px rgba(28,26,23,0.14);}
@@ -179,7 +176,7 @@
   .ta-pop .ta-hit{font-size:11px;font-style:italic;color:var(--ink-soft);}
   .ta-pop .ta-head{padding:9px 14px 5px;font-family:'Inter';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);}
   .jobentry{position:relative;width:100%;max-width:360px;margin:22px auto 0;}
-  .jobentry input{font-family:'GT Super',serif;font-style:italic;font-size:18px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:12px 16px;width:100%;text-align:center;outline:none;}
+  .jobentry input{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:18px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:12px 16px;width:100%;text-align:center;outline:none;}
   .jobentry input:focus{border-color:var(--ink-soft);}
   .jobentry input::placeholder{color:var(--ink-soft);opacity:0.85;}
 </style>
@@ -285,7 +282,7 @@
   <h2 class="sec reveal">Your job, beside <em>another job.</em></h2>
   <p class="dek reveal">One picked at random — type to choose any job.</p>
   <div class="pair reveal d1" style="margin-top:44px">
-    <div class="cpanel"><div id="focalJ1" style="font-family:'GT Super',serif;font-style:italic;font-size:21px;margin-bottom:24px;padding-bottom:6px;border-bottom:1px solid transparent">Software Engineer</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc">AI reach · 2026</div></div>
+    <div class="cpanel"><div id="focalJ1" style="font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;margin-bottom:24px;padding-bottom:6px;border-bottom:1px solid transparent">Software Engineer</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc">AI reach · 2026</div></div>
     <div class="cpanel"><input class="jobsearch" id="jobsearch" placeholder="type a job…"><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">AI reach · 2026</div></div>
   </div>
   <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="jvjYear"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
@@ -298,7 +295,7 @@
   <p class="kick reveal" style="text-align:center">The mirror</p>
   <h2 class="reveal">A mirror, not a prophecy. <em>Reach is not replacement.</em></h2>
   <div class="share reveal d1" id="shareStudy"></div>
-  <p class="reveal d1" style="margin-top:16px;font-family:'GT Super',serif;font-size:22px"><span id="focalOut">Software Engineer</span> · <b id="shareReach" style="font-style:italic">—</b> reach · 2026</p>
+  <p class="reveal d1" style="margin-top:16px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:22px"><span id="focalOut">Software Engineer</span> · <b id="shareReach" style="font-style:italic">—</b> reach · 2026</p>
   <a class="cta reveal d2" href="#">Look up another job →</a>
   <p class="fine reveal d2">A machine doing a task is not the same as a person losing a job. This shows the first, and refuses to claim the second.</p>
   <div class="leg reveal d2" id="legOut"></div>
