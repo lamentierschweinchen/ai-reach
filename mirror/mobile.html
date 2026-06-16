@@ -77,6 +77,7 @@
   .headline .big sup{font-size:.32em;vertical-align:top;color:var(--ink-soft);}
   .headline .bigyear{display:block;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:clamp(26px,8vw,38px);line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-top:5px;font-variant-numeric:tabular-nums;}
   .headline .bigcap{display:block;margin-top:6px;font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
+  .headline .bigdef{display:block;margin:9px auto 0;max-width:282px;font-size:11px;line-height:1.45;color:var(--ink-soft);}
 
   .comp{position:relative;width:min(84vw,42svh,400px);aspect-ratio:1/1;margin:4px auto 2px;}
   .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);gap:0;}
@@ -236,7 +237,7 @@
 <body>
 
 <div class="progress" id="prog"></div>
-<div class="actbar"><span class="b">The Mirror</span><span class="a" id="actlabel">Your job</span></div>
+<div class="actbar"><span class="b">AI Reach · The Mirror</span><span class="a" id="actlabel">Your job</span></div>
 <div class="helper" id="helper"></div>
 
 <!-- INTRO · the personal door in -->
@@ -247,7 +248,7 @@
   <div class="jobentry reveal d2">
     <input id="jobEntry" placeholder="Not you? Search a job…" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
     <span class="mag">⌕</span>
-    <div class="hint">480 occupations · tap to change</div>
+    <div class="hint">480 occupations · type to search</div>
   </div>
   <p class="cue reveal d2">scroll<span>↓</span></p>
 </section>
@@ -260,7 +261,7 @@
       <div class="headline">
         <span class="big" id="bigNum">—</span>
         <span class="bigyear" id="bigYear">1970</span>
-        <span class="bigcap">AI reach</span>
+        <span class="bigcap">AI reach</span><span class="bigdef">what AI can technically do — not who gets replaced</span>
       </div>
       <div class="comp" id="comp">
         <div class="grid" id="grid"></div>
@@ -396,7 +397,7 @@ const BANDS=[
   {name:'Human',meter:1,mean:'a machine can’t do any of this — yet'},
   {name:'Augmented',meter:2,mean:'you do it; a machine makes you faster'},
   {name:'Collaborative',meter:3,mean:'a machine can do about half on its own'},
-  {name:'Supervised',meter:4,mean:'a machine can do most of it'},
+  {name:'Supervised',meter:4,mean:'a machine does most of it; you check the work'},
   {name:'Autonomous',meter:5,mean:'a machine can do this end to end, no human needed'}
 ];
 const tierOf=s=>s<0.10?0:s<0.35?1:s<0.65?2:s<0.90?3:4;
@@ -571,7 +572,7 @@ function renderRungs(shares){$('rungs').innerHTML=BANDS.slice().reverse().map((b
   if(pct===0)return '';                                   // a tier at 0% is not shown
   return `<div class="r"><span class="sw" style="background:${SE_PAL[idx]}"></span>
     <span class="nm">${b.name}</span><span class="sh">${pct}%</span></div>`;}).join('');}
-function renderRungMean(){$('rungMean').innerHTML=BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
+function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;line-height:1.5">Each colour is how far AI reaches into a task — pale where it can’t, dark where it can do the whole thing. <b>Reach is what AI can technically do</b>; whether anyone is actually replaced is a slower, separate question this doesn’t measure.</div>'+BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
   return `<div style="display:flex;gap:7px;margin:3px 0"><span style="flex:0 0 11px;width:11px;height:11px;margin-top:2px;background:${SE_PAL[idx]}"></span><span><b>${b.name}</b> — ${b.mean}</span></div>`;}).join('');}
 function paintReadout(year){const sh=bandShares(FOCAL,year);renderRungs(sh);const m=Math.round(occReach(FOCAL,year)*100);
   $('bigNum').innerHTML=`${m}<sup>%</sup>`;$('bigYear').textContent=year;$('metaYear').textContent=year;
@@ -714,9 +715,9 @@ function renderJVJ(){
   $('reachJ2').textContent=r2+'%';$('jobsearch').value=o.name;
   $('rhcJ1').textContent='AI reach · '+y;$('rhcJ2').textContent='AI reach · '+y;
   const dh=Math.round(sh1[0]*100)-Math.round(sh2[0]*100);let v;
-  if(Math.abs(dh)<4)v=`In ${y}, a <b>${esc(FOCAL.name)}</b> and a <b>${esc(o.name)}</b> keep about the same human core.`;
-  else if(dh>0)v=`In ${y}, a <b>${esc(FOCAL.name)}</b> keeps a larger human core than a <b>${esc(o.name)}</b>.`;
-  else v=`In ${y}, a <b>${esc(o.name)}</b> keeps a larger human core than a <b>${esc(FOCAL.name)}</b>.`;
+  if(Math.abs(dh)<4)v=`In ${y}, the human core is about the same for <b>${esc(FOCAL.name)}</b> and <b>${esc(o.name)}</b>.`;
+  else if(dh>0)v=`In ${y}, the human core is larger for <b>${esc(FOCAL.name)}</b> than for <b>${esc(o.name)}</b>.`;
+  else v=`In ${y}, the human core is larger for <b>${esc(o.name)}</b> than for <b>${esc(FOCAL.name)}</b>.`;
   $('verdictJ').innerHTML=v;
 }
 function buildJVJ(){
@@ -844,7 +845,7 @@ async function buildShareCanvas(){
   ctx.fillStyle='#5a544a';ctx.font=`italic 300 42px ${serif}`;
   ctx.fillText(`${reach}%  AI reach · 2026`,W/2,sy+SS+210);
   ctx.fillStyle='#5a544a';ctx.font='500 22px Inter, sans-serif';
-  ctx.fillText('SEE YOUR JOB AT LARGELABORMODEL.COM',W/2,H-86);
+  ctx.fillText('FIND YOUR JOB AT LARGELABORMODEL.COM',W/2,H-86);
   return cv;
 }
 function wrapText(ctx,text,x,y,maxW,lh){const words=String(text).split(/\s+/);let line='',yy=y;
@@ -868,7 +869,7 @@ function prepareShareFile(){
   return _sharePrep;
 }
 const SITE='https://largelabormodel.com';   // live site; once /mirror ships to prod, consider SITE+'/mirror?job='+FOCAL_ISCO
-function shareText(){const reach=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI reaches ${reach}% of the job by 2026. See your job at largelabormodel.com`;}
+function shareText(){const reach=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${reach}% of this job by 2026 — but reach isn’t replacement. Find your job at largelabormodel.com`;}
 function doShare(){
   const text=shareText(),title='The Mirror · AI Reach';
   const onErr=err=>{if(err&&err.name==='AbortError')return;shareFallback();};   // ignore user-cancel

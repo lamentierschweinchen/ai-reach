@@ -55,6 +55,7 @@
   .headline .big sup{font-size:.3em;vertical-align:top;color:var(--ink-soft);}
   .headline .bigyear{display:block;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:44px;line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-top:6px;font-variant-numeric:tabular-nums;}
   .headline .bigcap{display:block;margin-top:8px;font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
+  .headline .bigdef{display:block;margin:10px auto 0;max-width:300px;font-size:12px;line-height:1.45;color:var(--ink-soft);}
   .readout{transition:opacity .26s ease;}
   .rungs .r{display:grid;grid-template-columns:16px 1fr auto;align-items:start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--rule);}
   .rungs .sw{width:16px;height:16px;margin-top:2px;}
@@ -201,10 +202,10 @@
 
 <!-- INTRO -->
 <section class="intro" id="intro" data-nav="intro">
-  <p class="pre reveal">You told us your job</p>
+  <p class="pre reveal">AI Reach · a mirror for your work</p>
   <h1 class="reveal d1" id="focalHero">Software <em>Engineer.</em></h1>
   <p class="lede reveal d2">Watch AI’s reach close in — through the decades to 2041. Then see what it’s made of.</p>
-  <div class="jobentry reveal d2"><input id="jobEntry" placeholder="What do you do?" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job"></div>
+  <div class="jobentry reveal d2"><input id="jobEntry" placeholder="Not you? Search a job…" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job"></div>
   <p class="cue reveal d2">scroll<span>↓</span></p>
 </section>
 
@@ -222,13 +223,13 @@
           </div>
         </div>
         <aside class="readout" id="readout">
-          <div class="headline"><span class="big" id="bigNum">—</span><span class="bigyear" id="bigYear">1980</span><span class="bigcap">AI reach</span></div>
+          <div class="headline"><span class="big" id="bigNum">—</span><span class="bigyear" id="bigYear">1980</span><span class="bigcap">AI reach</span><span class="bigdef">what AI can technically do — not who gets replaced</span></div>
           <div class="rungs" id="rungs"></div>
         </aside>
       </div>
       <div class="plate">
         <span class="ttl"><em id="focalPlate">Software Engineer</em> &middot; <span id="focalTaskN">12</span> tasks.</span>
-        <span class="meta" id="meta">weighted across every task &middot; <strong id="metaYear">1980</strong></span>
+        <span class="meta" id="meta">every task, weighted &middot; <strong id="metaYear">1980</strong></span>
       </div>
       <div class="scrubber" id="scrubber"><div class="lead">drag the year — watch each task tip</div>
         <input type="range" min="1970" max="2041" value="2026" id="yearInput">
@@ -254,7 +255,7 @@
 <section class="block mount" id="territory" data-nav="territory"><div class="wrap">
   <p class="kick reveal">03 / Your territory</p>
   <h2 class="sec reveal">Your job is one square in a <em>larger composition.</em></h2>
-  <p class="dek reveal">Every job in <span id="terrDek">Money &amp; Data</span> — yours outlined; the field as a whole below.</p>
+  <p class="dek reveal">Every job in <span id="terrDek">Money &amp; Data</span> — yours outlined; the field sorted blank → painted.</p>
   <div class="wall reveal d1" id="wall" style="margin-top:44px"></div>
   <div class="terrtime reveal d1"><div class="lab" id="terrLab">Money &amp; Data · the field’s reach, 1970 → 2041</div>
     <div class="terrstrip slim" id="terrstrip"></div>
@@ -266,7 +267,7 @@
 <section class="block mount" id="compare" data-nav="compare"><div class="wrap">
   <p class="kick reveal">04 / The bigger picture</p>
   <h2 class="sec reveal">Your world, beside <em>another.</em></h2>
-  <p class="dek reveal">The same scale, two territories.</p>
+  <p class="dek reveal">The same scale, two territories — drag the year for both.</p>
   <div class="pair reveal d1" style="margin-top:44px">
     <div class="cpanel"><select id="selA"></select><div class="cs" id="studyA"></div><div class="rh" id="reachA">—</div><div class="rhc">AI reach · 2026</div></div>
     <div class="cpanel"><select id="selB"></select><div class="cs" id="studyB"></div><div class="rh" id="reachB">—</div><div class="rhc">AI reach · 2026</div></div>
@@ -308,7 +309,7 @@ const BANDS=[
   {name:'Human',meter:1,mean:'a machine can’t do any of this — yet'},
   {name:'Augmented',meter:2,mean:'you do it; a machine makes you faster'},
   {name:'Collaborative',meter:3,mean:'a machine can do about half on its own'},
-  {name:'Supervised',meter:4,mean:'a machine can do most of it'},
+  {name:'Supervised',meter:4,mean:'a machine does most of it; you check the work'},
   {name:'Autonomous',meter:5,mean:'a machine can do this end to end, no human needed'}
 ];
 const meterGlyph=n=>'▰'.repeat(n)+'▱'.repeat(5-n);
@@ -647,9 +648,9 @@ function renderJVJ(){
   document.getElementById('jobsearch').value=o.name;
   document.querySelectorAll('#jobvjob .rhc').forEach(el=>el.textContent='AI reach · '+y);
   const dh=Math.round(sh1[0]*100)-Math.round(sh2[0]*100);let v;
-  if(Math.abs(dh)<4)v=`In ${y}, a <b>${FOCAL.name}</b> and a <b>${o.name}</b> keep about the same human core.`;
-  else if(dh>0)v=`In ${y}, a <b>${FOCAL.name}</b> keeps a larger human core than a <b>${o.name}</b>.`;
-  else v=`In ${y}, a <b>${o.name}</b> keeps a larger human core than a <b>${FOCAL.name}</b>.`;
+  if(Math.abs(dh)<4)v=`In ${y}, the human core is about the same for <b>${FOCAL.name}</b> and <b>${o.name}</b>.`;
+  else if(dh>0)v=`In ${y}, the human core is larger for <b>${FOCAL.name}</b> than for <b>${o.name}</b>.`;
+  else v=`In ${y}, the human core is larger for <b>${o.name}</b> than for <b>${FOCAL.name}</b>.`;
   document.getElementById('verdictJ').innerHTML=v;
 }
 renderJVJ();
