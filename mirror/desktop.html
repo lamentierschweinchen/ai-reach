@@ -362,7 +362,7 @@ function studySVG(shares,pal,seed,label){
   const tp=STUDY_TPL[Math.floor(r()*STUDY_TPL.length)],bx=tp[0],by=tp[1],rot=tp[2];
   // human (band 0, canvas) at CENTRE; reach-bands nest outward, Autonomous (intense) at the edge.
   let cum=0;const enc=shares.map(s=>cum+=s);let inner='';
-  for(let t=4;t>=0;t--){const side=Math.sqrt(Math.max(0,enc[t]))*100;if(side<0.6)continue;
+  for(let t=4;t>=0;t--){const side=Math.sqrt(Math.max(0,enc[t]))*100;if(side<0.6||Math.round(shares[t]*100)===0)continue;
     const jx=(r()-0.5)*2.2,jy=(r()-0.5)*2.2,x=(100-side)*bx+jx,y=(100-side)*by+jy,cr=(r()-0.5)*2,cx=x+side/2,cy=y+side/2;
     inner+=`<rect x="${x.toFixed(2)}" y="${y.toFixed(2)}" width="${side.toFixed(2)}" height="${side.toFixed(2)}" fill="${pal[t]}" transform="rotate(${cr.toFixed(2)} ${cx.toFixed(2)} ${cy.toFixed(2)})"/>`;}
   return `<svg viewBox="-7 -7 114 114" role="img" aria-label="${(label||'AI reach study').replace(/"/g,'')}"><g transform="rotate(${rot} 50 50)">${inner}</g></svg>`;
@@ -481,6 +481,7 @@ function renderHomage(shares){
   // classic Albers: concentric, bottom-weighted, axis-aligned — only a subtle hand wobble.
   let cum=0;const enc=shares.map(s=>cum+=s);const H=compH,W=compW;
   for(let t=0;t<=4;t++){const side=Math.sqrt(Math.max(0,enc[t]))*H,el=ringEls[t],o=HOFF[t];
+    el.style.display=Math.round(shares[t]*100)===0?'none':'';   // hide tiers that round to 0% (no sliver from jitter)
     el.style.width=side+'px';el.style.height=side+'px';el.style.transform='none';
     el.style.left=((W-side)/2+o.jx)+'px';
     el.style.top=((H-side)*0.62+o.jy)+'px';            // bottom-weighted, the Albers signature
@@ -491,6 +492,7 @@ function renderGrid(year){for(const{el,task}of tileEls){const t=tierOf(taskReach
   el.querySelectorAll('.nm,.wt').forEach(x=>x.style.color = t>=3?'#f4e7c5':'#1c1a17');}}
 function renderRungs(shares){document.getElementById('rungs').innerHTML=BANDS.slice().reverse().map((b,i)=>{
   const idx=4-i,pct=Math.round(shares[idx]*100);
+  if(pct===0)return '';                                   // a tier at 0% is not shown
   return `<div class="r"><span class="sw" style="background:${SE_PAL[idx]}"></span>
     <span class="nm">${b.name}<small>${b.mean}</small></span><span class="sh">${pct}%</span></div>`;}).join('');}
 let curYear=NOW;
@@ -685,8 +687,9 @@ const toast=document.getElementById('toast');
 let toastT;
 function showToast(m){toast.textContent=m;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('on'),2400);}
 attachTypeahead(document.getElementById('jobEntry'),o=>{location.search='?job='+o.isco;});
+const SITE='https://largelabormodel.com';   // live site; once /mirror ships to prod, use `${SITE}/mirror?job=${FOCAL_ISCO}#${currentSection}` for a job-specific deep link
 document.getElementById('sharebtn').addEventListener('click',()=>{
-  const url=`${location.origin}${location.pathname}?job=${FOCAL_ISCO}#${currentSection}`;
+  const url=SITE;
   if(navigator.clipboard&&window.isSecureContext){
     navigator.clipboard.writeText(url).then(()=>showToast('Link copied — or screenshot the card')).catch(()=>showToast('Screenshot this card to share'));
   } else { showToast('Screenshot this card to share'); }
