@@ -3,6 +3,22 @@
 <head>
 <meta charset="utf-8" />
 <title>The Mirror · AI Reach</title>
+<meta name="description" content="How much of your job can AI technically do? Look up any of 480 occupations and watch AI's reach from 1970 to 2041 — what AI can do, not who it replaces.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Large Labor Model">
+<meta property="og:title" content="The Mirror · AI Reach">
+<meta property="og:description" content="How much of your job can AI technically do? Look up any of 480 occupations — reach, not replacement.">
+<meta property="og:url" content="https://largelabormodel.com/mirror">
+<meta property="og:image" content="https://largelabormodel.com/mirror/og-mirror.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Mirror — how much of your job AI can technically do, across 480 jobs from 1970 to 2041.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Mirror · AI Reach">
+<meta name="twitter:description" content="How much of your job can AI technically do? 480 jobs · reach, not replacement.">
+<meta name="twitter:image" content="https://largelabormodel.com/mirror/og-mirror.png">
+<meta name="twitter:image:alt" content="The Mirror — AI's reach into 480 jobs.">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   @font-face { font-family:'Inter'; src:url('Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); font-weight:100 900; font-style:normal; }
@@ -193,7 +209,7 @@
 <div class="topbar"><span class="b">AI Reach · The Mirror</span><span id="actlabel">Your job</span></div>
 <div class="helper" id="helper"></div>
 
-<button class="sharebtn" id="sharebtn">↗ Share this</button>
+<button class="sharebtn" id="sharebtn">↗ Share your mirror</button>
 <div class="toast" id="toast"></div>
 
 <nav class="sidenav" id="sidenav">
@@ -356,6 +372,8 @@ function heroRamp(seed){
 }
 /* interpolate a 0..1 value across a 5-stop hsl palette (shortest-path hue) */
 function hslParts(s){const m=s.match(/hsl\((-?\d+),\s*(\d+)%,\s*(\d+)%\)/);return m?[+m[1],+m[2],+m[3]]:[0,0,50];}
+// a11y: pick tile-label ink by the fill's actual luminance (not tier index) — fixes cream-on-mid-tone
+function inkFor(col){const p=hslParts(col),h=p[0],S=p[1]/100,L=p[2]/100,k=n=>(n+h/30)%12,a=S*Math.min(L,1-L),ch=n=>L-a*Math.max(-1,Math.min(k(n)-3,9-k(n),1)),lin=c=>(c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)),Y=0.2126*lin(ch(0))+0.7152*lin(ch(8))+0.0722*lin(ch(4)),cD=(Math.max(Y,0.0123)+0.05)/(Math.min(Y,0.0123)+0.05),cC=(Math.max(Y,0.795)+0.05)/(Math.min(Y,0.795)+0.05);return cD>=cC?'#1c1a17':'#f4e7c5';}
 function paletteSample(pal,v){v=Math.max(0,Math.min(1,v));const x=v*4,i=Math.min(3,Math.floor(x)),f=x-i;
   const a=hslParts(pal[i]),b=hslParts(pal[i+1]);let dh=b[0]-a[0];if(dh>180)dh-=360;if(dh<-180)dh+=360;
   return `hsl(${Math.round(((a[0]+dh*f)%360+360)%360)},${Math.round(a[1]+(b[1]-a[1])*f)}%,${Math.round(a[2]+(b[2]-a[2])*f)}%)`;}
@@ -495,7 +513,7 @@ function renderHomage(shares){
 }
 function renderGrid(year){for(const{el,task}of tileEls){const t=tierOf(taskReach(task,year));
   el.style.background=SE_PAL[t];
-  el.querySelectorAll('.nm,.wt').forEach(x=>x.style.color = t>=3?'#f4e7c5':'#1c1a17');}}
+  el.querySelectorAll('.nm,.wt').forEach(x=>x.style.color = inkFor(SE_PAL[t]));}}
 function renderRungs(shares){document.getElementById('rungs').innerHTML=BANDS.slice().reverse().map((b,i)=>{
   const idx=4-i,pct=Math.round(shares[idx]*100);
   if(pct===0)return '';                                   // a tier at 0% is not shown
@@ -693,13 +711,50 @@ const toast=document.getElementById('toast');
 let toastT;
 function showToast(m){toast.textContent=m;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('on'),2400);}
 attachTypeahead(document.getElementById('jobEntry'),o=>{location.search='?job='+o.isco;});
-const SITE='https://largelabormodel.com';   // live site; once /mirror ships to prod, use `${SITE}/mirror?job=${FOCAL_ISCO}#${currentSection}` for a job-specific deep link
-document.getElementById('sharebtn').addEventListener('click',()=>{
-  const url=SITE;
-  if(navigator.clipboard&&window.isSecureContext){
-    navigator.clipboard.writeText(url).then(()=>showToast('Link copied — or screenshot the card')).catch(()=>showToast('Screenshot this card to share'));
-  } else { showToast('Screenshot this card to share'); }
-});
+/* ===== SHARE · generated PNG card (parity with mobile) ===== */
+const SITE='https://largelabormodel.com';   // live site; once /mirror ships to prod, consider SITE+'/mirror?job='+FOCAL_ISCO
+function shareSVGString(svg,px){return svg.replace('<svg ',`<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}" `);}
+function rasterize(svgStr,px){return new Promise((res,rej)=>{const img=new Image();img.onload=()=>res(img);img.onerror=rej;img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(shareSVGString(svgStr,px));});}
+function wrapText(ctx,text,x,y,maxW,lh){const words=String(text).split(/\s+/);let line='',yy=y;for(const w of words){const t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){ctx.fillText(line,x,yy);line=w;yy+=lh;}else line=t;}ctx.fillText(line,x,yy);}
+async function buildShareCanvas(){
+  const W=1080,H=1350,reach=Math.round(occReach(FOCAL,NOW)*100);
+  const cv=document.createElement('canvas');cv.width=W;cv.height=H;const ctx=cv.getContext('2d');
+  ctx.fillStyle='#f6f2e8';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#d6cfbe';ctx.lineWidth=2;ctx.strokeRect(40,40,W-80,H-80);
+  const SS=760, sx=(W-SS)/2, sy=150;
+  try{const img=await rasterize(studySVG(bandShares(FOCAL,NOW),SE_PAL,SE_SEED,`${FOCAL.name}: AI reach ${reach}% in 2026`),SS);ctx.drawImage(img,sx,sy,SS,SS);}catch(_){}
+  try{await document.fonts.load("300 64px 'Inter'");await document.fonts.load("italic 300 40px 'Inter'");}catch(_){}
+  const ff=(document.fonts&&document.fonts.check&&document.fonts.check("64px 'Inter'"))?"'Inter'":"'Helvetica Neue',Arial,sans-serif";
+  ctx.textAlign='center';ctx.fillStyle='#1c1a17';
+  ctx.font=`300 70px ${ff}`;wrapText(ctx,FOCAL.name,W/2,sy+SS+118,W-160,76);
+  ctx.fillStyle='#5a544a';ctx.font=`italic 300 42px ${ff}`;ctx.fillText(`${reach}%  AI reach · 2026`,W/2,sy+SS+210);
+  ctx.fillStyle='#5a544a';ctx.font='500 22px Inter, sans-serif';ctx.fillText('FIND YOUR JOB AT LARGELABORMODEL.COM',W/2,H-86);
+  return cv;
+}
+let _shareFile=null,_sharePrep=null;
+function prepareShareFile(){
+  if(_shareFile)return Promise.resolve(_shareFile);
+  if(_sharePrep)return _sharePrep;
+  _sharePrep=(async()=>{try{const cv=await buildShareCanvas();const blob=await new Promise(r=>cv.toBlob(r,'image/png'));if(blob)_shareFile=new File([blob],'my-ai-reach.png',{type:'image/png'});return _shareFile;}catch(_){return null;}finally{_sharePrep=null;}})();
+  return _sharePrep;
+}
+function shareText(){const reach=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${reach}% of this job by 2026 — but reach isn’t replacement. Find your job at largelabormodel.com`;}
+async function shareFallback(){
+  const f=await prepareShareFile();
+  try{if(navigator.clipboard&&window.isSecureContext)await navigator.clipboard.writeText(SITE);}catch(_){}
+  if(f){const u=URL.createObjectURL(f);const a=document.createElement('a');a.href=u;a.download='my-ai-reach.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);showToast('Saved your mirror — link copied too');}
+  else showToast('Screenshot the card to share');
+}
+function doShare(){
+  const text=shareText(),title='The Mirror · AI Reach';
+  const onErr=err=>{if(err&&err.name==='AbortError')return;shareFallback();};
+  if(_shareFile&&navigator.canShare&&navigator.canShare({files:[_shareFile]})){          // Safari desktop: native share w/ image
+    try{navigator.share({files:[_shareFile],title,text,url:SITE}).catch(onErr);}catch(e){onErr(e);}return;
+  }
+  shareFallback();                                                                        // other desktops: download the card + copy link
+}
+document.getElementById('sharebtn').addEventListener('click',doShare);
+document.getElementById('sharebtn').addEventListener('mouseenter',prepareShareFile,{once:true});   // pre-build on hover → instant click
 </script>
 </body>
 </html>

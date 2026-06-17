@@ -3,6 +3,22 @@
 <head>
 <meta charset="utf-8" />
 <title>The Mirror · AI Reach</title>
+<meta name="description" content="How much of your job can AI technically do? Look up any of 480 occupations and watch AI's reach from 1970 to 2041 — what AI can do, not who it replaces.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Large Labor Model">
+<meta property="og:title" content="The Mirror · AI Reach">
+<meta property="og:description" content="How much of your job can AI technically do? Look up any of 480 occupations — reach, not replacement.">
+<meta property="og:url" content="https://largelabormodel.com/mirror">
+<meta property="og:image" content="https://largelabormodel.com/mirror/og-mirror.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Mirror — how much of your job AI can technically do, across 480 jobs from 1970 to 2041.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Mirror · AI Reach">
+<meta name="twitter:description" content="How much of your job can AI technically do? 480 jobs · reach, not replacement.">
+<meta name="twitter:image" content="https://largelabormodel.com/mirror/og-mirror.png">
+<meta name="twitter:image:alt" content="The Mirror — AI's reach into 480 jobs.">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#efeae0" />
 <meta name="color-scheme" content="light" />
@@ -431,6 +447,8 @@ function heroRamp(seed){
   return paintBands(Math.floor(r()*360),Math.floor(r()*HARMONY.length));
 }
 function hslParts(s){const m=s.match(/hsl\((-?\d+),\s*(\d+)%,\s*(\d+)%\)/);return m?[+m[1],+m[2],+m[3]]:[0,0,50];}
+// a11y: pick tile-label ink by the fill's actual luminance (not tier index) — fixes cream-on-mid-tone
+function inkFor(col){const p=hslParts(col),h=p[0],S=p[1]/100,L=p[2]/100,k=n=>(n+h/30)%12,a=S*Math.min(L,1-L),ch=n=>L-a*Math.max(-1,Math.min(k(n)-3,9-k(n),1)),lin=c=>(c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4)),Y=0.2126*lin(ch(0))+0.7152*lin(ch(8))+0.0722*lin(ch(4)),cD=(Math.max(Y,0.0123)+0.05)/(Math.min(Y,0.0123)+0.05),cC=(Math.max(Y,0.795)+0.05)/(Math.min(Y,0.795)+0.05);return cD>=cC?'#1c1a17':'#f4e7c5';}
 function paletteSample(pal,v){v=Math.max(0,Math.min(1,v));const x=v*4,i=Math.min(3,Math.floor(x)),f=x-i;
   const a=hslParts(pal[i]),b=hslParts(pal[i+1]);let dh=b[0]-a[0];if(dh>180)dh-=360;if(dh<-180)dh+=360;
   return `hsl(${Math.round(((a[0]+dh*f)%360+360)%360)},${Math.round(a[1]+(b[1]-a[1])*f)}%,${Math.round(a[2]+(b[2]-a[2])*f)}%)`;}
@@ -570,7 +588,7 @@ function renderHomage(shares){
 }
 function renderGrid(year){for(const{el,task}of tileEls){const t=tierOf(taskReach(task,year));
   el.style.background=SE_PAL[t];
-  el.querySelectorAll('.nm,.wt').forEach(x=>x.style.color = t>=3?'#f4e7c5':'#1c1a17');}}
+  el.querySelectorAll('.nm,.wt').forEach(x=>x.style.color = inkFor(SE_PAL[t]));}}
 function renderRungs(shares){$('rungs').innerHTML=BANDS.slice().reverse().map((b,i)=>{
   const idx=4-i,pct=Math.round(shares[idx]*100);
   if(pct===0)return '';                                   // a tier at 0% is not shown
