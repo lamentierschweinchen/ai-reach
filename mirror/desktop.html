@@ -258,7 +258,7 @@
   <p class="pre reveal">A personal history of Labor</p>
   <h1 class="reveal d1" id="focalHero">Software <em>Engineer.</em></h1>
   <p class="lede reveal d2">Tracing autonomous systems’ impact on labor from 1970 to 2041.</p>
-  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question. <a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
+  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
   <div class="jobentry reveal d2"><input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job"></div>
   <p class="cue reveal d2">scroll<span>↓</span></p>
 </section>
@@ -310,7 +310,7 @@
   <div class="terrlead"><div class="wrap">
     <p class="kick reveal">03 / Your territory</p>
     <h2 class="sec reveal">Your job is one square in a <em>larger composition.</em></h2>
-    <p class="dek reveal">Every job in <span id="terrDek">Money &amp; Data</span> — yours outlined, the field sorted blank → painted. <em id="terrFrame">Now scroll: the whole field, swept from 1970 to 2041.</em></p>
+    <p class="dek reveal">Every job in <span id="terrDek">Money &amp; Data</span> — yours pinned first. <em id="terrFrame">Now scroll: the whole field, swept 1970 → 2041.</em></p>
   </div></div>
   <div class="terrsticky">
     <div class="terrpanel" id="terrPanel">
@@ -352,7 +352,7 @@
 <section class="block" id="outro" data-nav="outro"><div class="wrap outro">
   <p class="kick reveal" style="text-align:center">The mirror</p>
   <h2 class="reveal">A mirror, not a prophecy. <em>Replaceability is not replacement.</em></h2>
-  <p class="reveal d1" style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">how replaceability is measured →</a></p>
+  <p class="reveal d1" style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">how replaceability is measured →</a></p>
   <div class="share reveal d1" id="shareStudy"></div>
   <p class="reveal d1" style="margin-top:16px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:22px"><span id="focalOut">Software Engineer</span> · <b id="shareReach" style="font-style:italic">—</b> replaceable · 2026</p>
   <a class="cta reveal d2" href="#">Look up another job →</a>
@@ -691,7 +691,7 @@ function terrTick(){
 }
 /* click / keyboard a cell → re-root the whole mirror to that job, in place (no reload) */
 function wallActivate(el){const isco=el&&el.dataset?el.dataset.isco:null; if(!isco) return;
-  if(isco===FOCAL_ISCO){showToast('That’s already your focal job');return;}
+  if(isco===FOCAL_ISCO){showToast('That’s already the job you’re looking at.');return;}
   const peer=engModels.find(m=>m.o.isco===isco);
   setFocal(isco);
   showToast('Now showing '+((peer&&peer.nm)||'that job'));}
@@ -707,7 +707,7 @@ const tip=document.createElement('div');tip.className='striptip';document.body.a
 const yearAtX=(el,clientX)=>{const r=el.getBoundingClientRect();const x=Math.max(0,Math.min(1,(clientX-r.left)/r.width));return {x,year:Math.round(1970+x*71),top:r.top};};
 const showTip=(text,clientX,top)=>{tip.textContent=text;tip.style.left=clientX+'px';tip.style.top=top+'px';tip.classList.add('on');};
 const cstripEl=document.getElementById('cstrip');
-cstripEl.addEventListener('pointermove',e=>{const a=yearAtX(cstripEl,e.clientX);showTip(`${a.year} · ${Math.round(occReach(FOCAL,a.year)*100)}% reach`,e.clientX,a.top);});
+cstripEl.addEventListener('pointermove',e=>{const a=yearAtX(cstripEl,e.clientX);showTip(`${a.year} · ${Math.round(occReach(FOCAL,a.year)*100)}% replaceable`,e.clientX,a.top);});
 cstripEl.addEventListener('pointerleave',()=>tip.classList.remove('on'));
 
 /* ===== TERRITORY vs TERRITORY · PLACEHOLDER engine, real v5 names ===== */

@@ -283,7 +283,7 @@
   <p class="pre reveal">A personal history of Labor</p>
   <h1 class="reveal d1" id="focalHero">Nurses.</h1>
   <p class="lede reveal d2">Tracing autonomous systems’ impact on labor from 1970 to 2041.</p>
-  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question. <a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
+  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
   <div class="jobentry reveal d2">
     <input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
     <span class="mag">⌕</span>
@@ -394,7 +394,7 @@
 <section class="block" id="outro" data-nav="outro"><div class="col outro">
   <p class="kick reveal" style="text-align:center">The mirror</p>
   <h2 class="reveal">A mirror, not a prophecy. <em>Replaceability is not replacement.</em></h2>
-  <p class="reveal d1" style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">how replaceability is measured →</a></p>
+  <p class="reveal d1" style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">how replaceability is measured →</a></p>
   <div class="sharecard reveal d1" id="shareCard">
     <div class="ss" id="shareStudy"></div>
     <div class="sjob" id="shareJob">Nurses</div>
@@ -684,7 +684,7 @@ function buildTrajectory(){
   $('cstrip').innerHTML=TRAJ_YEARS.map(y=>`<i style="background:${paletteSample(SE_PAL,occReach(FOCAL,y))}"></i>`).join('')+'<div class="now"></div><div class="thumb" id="cthumb"></div>';
   setTrajRead(NOW,0.789);
 }
-function setTrajRead(year,frac){$('trajYr').textContent=year;$('trajPc').textContent=Math.round(occReach(FOCAL,year)*100)+'% reach';
+function setTrajRead(year,frac){$('trajYr').textContent=year;$('trajPc').textContent=Math.round(occReach(FOCAL,year)*100)+'% replaceable';
   const th=$('cthumb');if(th)th.style.left=(frac*100)+'%';}
 
 /* ===== 03 · TERRITORY — the field, swept through time (sticky scroll) ===== */
@@ -746,10 +746,10 @@ function terrTick(){
 }
 /* tap / keyboard a cell → re-root the whole mirror to that job, in place (no reload) */
 function wallActivate(el){const isco=el&&el.dataset?el.dataset.isco:null; if(!isco) return;
-  if(isco===FOCAL_ISCO){showToast('<b>That’s already your focal job</b>',2200);return;}
+  if(isco===FOCAL_ISCO){showToast('<b>That’s already the job you’re looking at.</b>',2200);return;}
   const peer=engModels.find(m=>m.o.isco===isco);
   setFocal(isco,false);
-  showToast(`<b>Now showing ${esc((peer&&peer.nm)||'that job')}</b><em>tap any square to switch focal</em>`,2800);}
+  showToast(`<b>Now showing ${esc((peer&&peer.nm)||'that job')}</b><em>tap any square to switch</em>`,2800);}
 wallEl.addEventListener('click',e=>{const c=e.target.closest('.cell');if(c)wallActivate(c);});
 wallEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('.cell');if(c){e.preventDefault();wallActivate(c);}}});
 
