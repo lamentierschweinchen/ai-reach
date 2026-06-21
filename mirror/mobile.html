@@ -716,21 +716,17 @@ function fitWall(){
   const N=engModels.length; if(!N) return;
   if(RM||terrSec.classList.contains('terrstatic')){wallEl.style.gridTemplateColumns='repeat(auto-fill,minmax(84px,1fr))';return;}
   const availW=wallEl.clientWidth, availH=wallEl.clientHeight; if(availW<2||availH<2) return;
-  const GAP=9, CAP=16;
-  const sizeFor=C=>{const R=Math.ceil(N/C);return {C,R,cell:Math.min((availW-(C-1)*GAP)/C,(availH-(R-1)*GAP)/R-CAP)};};
+  const GAP=9, CAP=16, target=availW/availH;
   let pick=null;
-  if(TERRFILL==='reflow'){
-    const target=availW/availH;
-    for(let C=1;C<=N;C++){const s=sizeFor(C);if(s.cell<=0)continue;
-      const bw=s.C*s.cell+(s.C-1)*GAP, bh=s.R*(s.cell+CAP)+(s.R-1)*GAP, score=Math.abs(Math.log((bw/bh)/target));
-      if(!pick||score<pick.score-1e-3||(Math.abs(score-pick.score)<1e-3&&s.cell>pick.cell))pick={...s,score};}
-  }else{
-    for(let C=1;C<=N;C++){const s=sizeFor(C);if(s.cell<=0)continue;if(!pick||s.cell>pick.cell)pick=s;}
-  }
-  if(!pick)pick=sizeFor(Math.min(N,5));
-  let C=pick.C, cell=pick.cell;
-  if(TERRFILL==='fixed') cell=Math.min(cell,74);
-  wallEl.style.gridTemplateColumns=`repeat(${C}, ${Math.max(6,Math.floor(cell))}px)`;
+  for(let C=1;C<=N;C++){const R=Math.ceil(N/C);
+    const cell=Math.min((availW-(C-1)*GAP)/C,(availH-(R-1)*GAP)/R-CAP); if(cell<=0)continue;
+    const bw=C*cell+(C-1)*GAP, bh=R*(cell+CAP)+(R-1)*GAP, score=Math.abs(Math.log((bw/bh)/target));
+    if(!pick||score<pick.score-1e-3||(Math.abs(score-pick.score)<1e-3&&cell>pick.cell))pick={C,cell,score};}
+  if(!pick)pick={C:Math.min(N,5),cell:24};
+  // fill mode: enlarge fills · reflow comfortable · fixed locks to the big-field scale, centred
+  const cap = TERRFILL==='enlarge' ? Infinity : TERRFILL==='fixed' ? 66 : 88;
+  const cell=Math.min(pick.cell, cap);
+  wallEl.style.gridTemplateColumns=`repeat(${pick.C}, ${Math.max(6,Math.floor(cell))}px)`;
 }
 /* the scroll-sweep — mirrors the hero's tick(): p → year via the hero's ease-out, dwelling on recent years */
 let terrRAF=false, terrPending=null;

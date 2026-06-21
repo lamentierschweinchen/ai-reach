@@ -660,21 +660,18 @@ function renderWall(year){
 function fitWall(){
   const N=engModels.length, availW=wallEl.clientWidth, availH=wallEl.clientHeight;
   if(!N||availW<2||availH<2) return;
-  const GAP=14, CAP=20;
-  const sizeFor=C=>{const R=Math.ceil(N/C);return {C,R,cell:Math.min((availW-(C-1)*GAP)/C,(availH-(R-1)*GAP)/R-CAP)};};
+  const GAP=14, CAP=20, target=availW/availH;
+  // choose the column count whose grid block best matches the panel's aspect (cells centred by CSS)
   let pick=null;
-  if(TERRFILL==='reflow'){                                   // balance the grid block to the panel's aspect
-    const target=availW/availH;
-    for(let C=1;C<=N;C++){const s=sizeFor(C);if(s.cell<=0)continue;
-      const bw=s.C*s.cell+(s.C-1)*GAP, bh=s.R*(s.cell+CAP)+(s.R-1)*GAP, score=Math.abs(Math.log((bw/bh)/target));
-      if(!pick||score<pick.score-1e-3||(Math.abs(score-pick.score)<1e-3&&s.cell>pick.cell))pick={...s,score};}
-  }else{                                                     // enlarge & fixed both start from the largest fitting cell
-    for(let C=1;C<=N;C++){const s=sizeFor(C);if(s.cell<=0)continue;if(!pick||s.cell>pick.cell)pick=s;}
-  }
-  if(!pick)pick=sizeFor(Math.min(N,8));
-  let C=pick.C, cell=pick.cell;
-  if(TERRFILL==='fixed') cell=Math.min(cell,118);            // constant scale; small fields centre with margin
-  wallEl.style.gridTemplateColumns=`repeat(${C}, ${Math.max(8,Math.floor(cell))}px)`;
+  for(let C=1;C<=N;C++){const R=Math.ceil(N/C);
+    const cell=Math.min((availW-(C-1)*GAP)/C,(availH-(R-1)*GAP)/R-CAP); if(cell<=0)continue;
+    const bw=C*cell+(C-1)*GAP, bh=R*(cell+CAP)+(R-1)*GAP, score=Math.abs(Math.log((bw/bh)/target));
+    if(!pick||score<pick.score-1e-3||(Math.abs(score-pick.score)<1e-3&&cell>pick.cell))pick={C,cell,score};}
+  if(!pick)pick={C:Math.min(N,8),cell:40};
+  // fill mode = how large small territories grow: enlarge fills · reflow comfortable · fixed locks to the big-field scale, centred
+  const cap = TERRFILL==='enlarge' ? Infinity : TERRFILL==='fixed' ? 116 : 150;
+  const cell=Math.min(pick.cell, cap);
+  wallEl.style.gridTemplateColumns=`repeat(${pick.C}, ${Math.max(8,Math.floor(cell))}px)`;
 }
 /* the scroll-sweep — mirrors the hero's tick(): p → year via the hero's ease-out, dwelling on recent years */
 let terrRAF=false, terrPending=null;
