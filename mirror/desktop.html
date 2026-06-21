@@ -292,10 +292,10 @@
   </div>
 </section>
 
-<!-- 02 TRAJECTORY · the V2 colour study as its own stop -->
+<!-- 02 TRAJECTORY · the V2 color study as its own stop -->
 <section class="block mount" id="trajectory" data-nav="trajectory"><div class="wrap">
   <p class="kick reveal">02 / Your trajectory</p>
-  <h2 class="sec reveal">Seventy-one years, as <em>flat colour.</em></h2>
+  <h2 class="sec reveal">Seventy-one years, as <em>flat color.</em></h2>
   <p class="dek reveal">Pale where AI barely touched the work — dark where it now can.</p>
   <div class="cstudy reveal d1" style="margin-top:44px">
     <div class="cstudy-ttl"><em id="focalTraj">Software Engineer</em> &middot; 1970–2041.</div>
@@ -384,7 +384,7 @@ function hashStr(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt
    (automation darkens as it closes in). One neutral canvas keeps the core
    distinct from the next ring — no muddy same-hue-two-values. */
 const CANVAS='hsl(40,33%,87%)';          // warm bare paper, same for every study
-/* Each study gets FOUR CONTRASTING hues from a colour-harmony formula (tetrad,
+/* Each study gets FOUR CONTRASTING hues from a color-harmony formula (tetrad,
    triad, split-complement…) — not a smooth drift. Value still runs light→dark
    so automation darkens as it closes in (dark = reach); saturation rises into
    the dark so deep bands keep their hue. */
@@ -414,7 +414,7 @@ function inkFor(col){const p=hslParts(col),h=p[0],S=p[1]/100,L=p[2]/100,k=n=>(n+
 function paletteSample(pal,v){v=Math.max(0,Math.min(1,v));const x=v*4,i=Math.min(3,Math.floor(x)),f=x-i;
   const a=hslParts(pal[i]),b=hslParts(pal[i+1]);let dh=b[0]-a[0];if(dh>180)dh-=360;if(dh<-180)dh+=360;
   return `hsl(${Math.round(((a[0]+dh*f)%360+360)%360)},${Math.round(a[1]+(b[1]-a[1])*f)}%,${Math.round(a[2]+(b[2]-a[2])*f)}%)`;}
-/* single-hue ramp value (territory colour, mapped to its LLM-map hue) */
+/* single-hue ramp value (territory color, mapped to its LLM-map hue) */
 function terrColor(hue,v){v=Math.max(0,Math.min(1,v));return `hsl(${hue},${Math.round(58-14*v)}%,${Math.round(89-72*v)}%)`;}
 
 const STUDY_TPL=[[.5,.6,0],[.5,.64,0],[.47,.6,-2],[.53,.6,2],[.5,.58,0],[.48,.62,-2.5],[.52,.62,2.5],[.5,.66,1.5],[.49,.6,-1.5],[.5,.62,0],[.51,.58,2],[.49,.64,-2]];
@@ -579,7 +579,7 @@ function renderForm(morph){
   for(let i=0;i<tileEls.length;i++){const tp=clamp01((morph-tileDist[i]*0.25)/0.62),e=tp*tp*(3-2*tp);
     tileEls[i].el.style.opacity=e.toFixed(3);tileEls[i].el.style.transform=`scale(${(0.94+0.06*e).toFixed(3)})`;}}
 
-const SWEEP_END=0.42,HOLD_END=0.52,MORPH_END=0.82,Y0=1970;
+const SWEEP_END=0.42,HOLD_END=0.46,MORPH_END=0.82,Y0=1970;
 const stage=document.getElementById('stage'),readout=document.getElementById('readout'),plateMeta=document.getElementById('meta'),
       helper=document.getElementById('helper'),cornerL=document.getElementById('cornerL'),actlabel=document.getElementById('actlabel'),
       scrubber=document.getElementById('scrubber'),card=document.querySelector('.sticky .card');
@@ -641,7 +641,7 @@ let engModels=[], cellRefs=[], wallYear=null, lastTerrYear=null;
 function trBy(y){const lo=Math.floor(y),a=TERR.reach_by_year[String(lo)],b=TERR.reach_by_year[String(Math.min(2041,lo+1))];return ((a==null?0:a)+((b==null?a:b)-(a==null?0:a))*(y-lo))/100;}
 function setTerrLab(y){terrLabEl.innerHTML=`<span class="tr-terr">${esc(FOCAL.territory)}</span><span class="tr-sep">·</span><span class="tr-year">${y}</span><span class="tr-sep">·</span><span class="tr-field">${Math.round(trBy(y)*100)}% field replaceability</span>`;}
 
-/* build the cell shells ONCE per focal; the sweep recolours each study in place (no innerHTML churn on ≤32 cells) */
+/* build the cell shells ONCE per focal; the sweep recolors each study in place (no innerHTML churn on ≤32 cells) */
 function buildTerritory(){
   const peers=TERR.occ_iscos.map(i=>byIsco[i]).filter(Boolean)
     .map(o=>({o,nm:o.name,seed:hashStr(o.name),m0:occReach(o,2026),focal:o.isco===FOCAL_ISCO}))

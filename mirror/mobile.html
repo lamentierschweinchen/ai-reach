@@ -42,7 +42,7 @@
 
   /* ---- top chrome: thin progress + minimal act label ---- */
   .progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:60;will-change:width;}
-  .actbar{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  .actbar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bone);display:flex;justify-content:space-between;align-items:center;
     padding:9px 16px calc(9px);font-size:9.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);
     pointer-events:none;}
   .actbar .b{color:var(--ink);font-weight:500;}
@@ -82,7 +82,7 @@
 
   /* ---- HERO SCROLL STAGE ---- */
   .stage{position:relative;height:460svh;}
-  .sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:24px;box-sizing:border-box;}
   .card{background:var(--paper);border:1px solid var(--rule);width:min(94vw,460px);
     padding:30px 18px 18px;position:relative;will-change:transform,opacity;}
   .card .corner-l,.card .corner-r{position:absolute;top:11px;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);}
@@ -318,7 +318,7 @@
         </div>
       </div>
       <div class="rungs" id="rungs"></div>
-      <button class="meanbtn" id="meanBtn" aria-expanded="false" aria-controls="rungMean">what do the colours mean? +</button>
+      <button class="meanbtn" id="meanBtn" aria-expanded="false" aria-controls="rungMean">what do the colors mean? +</button>
       <div class="rungmean" id="rungMean"></div>
       <div class="plate">
         <span class="ttl"><em id="focalPlate">Nurses</em> · <span id="focalTaskN">11</span> tasks</span>
@@ -336,7 +336,7 @@
 <!-- 02 · TRAJECTORY -->
 <section class="block mount" id="trajectory" data-nav="trajectory"><div class="col">
   <p class="kick reveal">02 / Your trajectory</p>
-  <h2 class="sec reveal">Seventy-one years, as <em>flat colour.</em></h2>
+  <h2 class="sec reveal">Seventy-one years, as <em>flat color.</em></h2>
   <p class="dek reveal">Pale where AI barely touched the work — dark where it now can.</p>
   <div class="reveal d1" style="margin-top:30px">
     <div class="cstudy-ttl"><em id="focalTraj">Nurses</em> · 1970–2041.</div>
@@ -622,7 +622,7 @@ function renderRungs(shares){$('rungs').innerHTML=BANDS.slice().reverse().map((b
   const idx=4-i,pct=Math.round(shares[idx]*100);
   return `<div class="r"><span class="sw" style="background:${SE_PAL[idx]}"></span>
     <span class="nm">${b.name}</span><span class="sh">${pct}%</span></div>`;}).join('');}
-function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;line-height:1.5">Each colour is how technically replaceable a task is — pale where AI can’t do it, dark where it can do the whole thing. <b>Replaceability is what AI can technically do</b>; whether anyone is actually replaced is a slower, separate question.</div>'+BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
+function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;line-height:1.5">Each color is how technically replaceable a task is — pale where AI can’t do it, dark where it can do the whole thing. <b>Replaceability is what AI can technically do</b>; whether anyone is actually replaced is a slower, separate question.</div>'+BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
   return `<div style="display:flex;gap:7px;margin:3px 0"><span style="flex:0 0 11px;width:11px;height:11px;margin-top:2px;background:${SE_PAL[idx]}"></span><span><b>${b.name}</b> — ${b.mean}</span></div>`;}).join('');}
 function paintReadout(year){const sh=bandShares(FOCAL,year);renderRungs(sh);const m=Math.round(occReach(FOCAL,year)*100);
   $('bigNum').innerHTML=`${m}<sup>%</sup>`;$('bigYear').textContent=year;$('metaYear').textContent=year;
@@ -639,7 +639,7 @@ function revealTask(task){const t=tierOf(taskReach(task,curYear));const b=BANDS[
   showToast(`<b>${esc(task.name)}</b><em>${b.name} · ${b.mean} · weight ${Math.round(task.weight)}%</em>`,3400);}
 
 /* ===== HERO SCROLL CHOREOGRAPHY (forward-only, ported) ===== */
-const SWEEP_END=0.42,HOLD_END=0.52,MORPH_END=0.82,Y0=1970;
+const SWEEP_END=0.42,HOLD_END=0.46,MORPH_END=0.82,Y0=1970;
 const stage=$('stage'),readout=$('headline')?null:null;
 const heroCard=$('heroCard'),scrubber=$('scrubber'),helper=$('helper'),cornerL=$('cornerL'),actlabel=$('actlabel');
 const headlineEl=document.querySelector('.headline'),rungsEl=$('rungs'),plateMeta=$('meta');
@@ -684,7 +684,7 @@ let ticking=false;
 function onScroll(){if(!ticking){requestAnimationFrame(()=>{tick();terrTick();ticking=false;});ticking=true;}}
 $('yearInput').addEventListener('input',e=>{sliderYear=+e.target.value;render(sliderYear,true);});
 $('meanBtn').addEventListener('click',()=>{const m=$('rungMean'),on=m.classList.toggle('on');
-  $('meanBtn').setAttribute('aria-expanded',on);$('meanBtn').textContent=on?'hide the colour key −':'what do the colours mean? +';});
+  $('meanBtn').setAttribute('aria-expanded',on);$('meanBtn').textContent=on?'hide the color key −':'what do the colors mean? +';});
 
 /* ===== 02 · TRAJECTORY (job's own palette) + drag-to-read ===== */
 const TRAJ_YEARS=[];for(let y=1970;y<=2041;y+=2)TRAJ_YEARS.push(y);
@@ -704,7 +704,7 @@ const TERRFRAME=(TQ.get('terrframe')||'b').toLowerCase();        // b(default ·
 if(TERRFRAME==='b') terrPanel.classList.add('terrframe-b');
 function trBy(y){const lo=Math.floor(y),a=TERR.reach_by_year[String(lo)],b=TERR.reach_by_year[String(Math.min(2041,lo+1))];return ((a==null?0:a)+((b==null?a:b)-(a==null?0:a))*(y-lo))/100;}
 function setTerrLab(y){$('terrLab').innerHTML=`<span class="tr-terr">${esc(FOCAL.territory)}</span><span class="tr-sep">·</span><span class="tr-year">${y}</span><span class="tr-sep">·</span><span class="tr-field">${Math.round(trBy(y)*100)}% field replaceability</span>`;}
-/* build the cell shells ONCE per focal; the sweep recolours each study in place (no innerHTML churn on ≤32 cells) */
+/* build the cell shells ONCE per focal; the sweep recolors each study in place (no innerHTML churn on ≤32 cells) */
 function buildTerritory(){
   const peers=TERR.occ_iscos.map(i=>byIsco[i]).filter(Boolean)
     .map(o=>({o,nm:o.name,seed:hashStr(o.name),m0:occReach(o,2026),focal:o.isco===FOCAL_ISCO}))
