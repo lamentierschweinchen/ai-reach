@@ -154,19 +154,34 @@
   .straxis .nowl{position:absolute;left:78.9%;transform:translateX(-50%);color:var(--ink);}
   .straxis .y2k{position:absolute;left:42.3%;transform:translateX(-50%);}
 
-  /* ---- 03 TERRITORY WALL ---- */
-  .wall{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 11px;}
-  .cell{display:flex;flex-direction:column;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  /* ---- 03 TERRITORY · sticky, scroll-driven time-sweep ---- */
+  .terrstage{position:relative;height:360svh;}
+  .terrlead{padding:clamp(48px,9svh,80px) 0 0;}
+  .terrsticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .terrpanel{width:100%;max-width:var(--col);height:100svh;display:flex;flex-direction:column;justify-content:center;gap:9px;
+    padding:40px 20px calc(60px + var(--safe-b));}
+  .terrread{flex:0 0 auto;font-size:9.5px;letter-spacing:0.13em;text-transform:uppercase;color:#2c2a24;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .terrread .tr-year,.terrread .tr-field{color:var(--ink);font-weight:600;}
+  .terrread .tr-sep{opacity:.45;margin:0 .4em;}
+  .wall{flex:1 1 auto;min-height:0;display:grid;justify-content:center;align-content:center;gap:9px;overflow:hidden;}
+  .cell{display:flex;flex-direction:column;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent;}
   .cell .cb{width:100%;aspect-ratio:1/1;}
   .cell svg{width:100%;height:100%;display:block;}
-  .cell .cap{margin-top:6px;display:flex;justify-content:space-between;gap:4px;align-items:baseline;}
-  .cell .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:10.5px;color:#23211c;line-height:1.05;}
-  .cell .pc{font-size:9.5px;font-weight:600;color:#3a372f;font-variant-numeric:tabular-nums;}
-  .cell.you .cb{outline:2px solid var(--ink);outline-offset:4px;}
-  .cell.you .nm::after{content:' · you';font-style:normal;font-size:7.5px;letter-spacing:0.14em;text-transform:uppercase;}
-  .terrtime{margin-top:30px;}
-  .terrtime .lab{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#2c2a24;margin-bottom:12px;line-height:1.4;}
-  .terrtime .lab strong{color:var(--ink);font-weight:600;}
+  .cell .cap{margin-top:4px;display:flex;justify-content:space-between;gap:4px;align-items:baseline;min-width:0;}
+  .cell .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:9px;color:#23211c;line-height:1.02;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+  .cell .pc{font-size:8.5px;font-weight:600;color:#3a372f;font-variant-numeric:tabular-nums;flex:0 0 auto;}
+  .cell.you .cb{outline:2px solid var(--ink);outline-offset:3px;}
+  .cell.you .nm::after{content:' · you';font-style:normal;font-size:7px;letter-spacing:0.12em;text-transform:uppercase;}
+  .cell:focus-visible .cb{outline:2px solid var(--ink);outline-offset:3px;}
+  /* framing B — readout-forward: the live year leads */
+  .terrframe-b .terrread{display:flex;flex-direction:column;align-items:flex-start;gap:1px;letter-spacing:0.03em;text-transform:none;font-size:10px;}
+  .terrframe-b .terrread .tr-sep{display:none;}
+  .terrframe-b .terrread .tr-year{order:-1;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:clamp(30px,9vw,44px);line-height:1;letter-spacing:-0.02em;}
+  /* reduced-motion / fallback: §03 collapses to a normal block at NOW */
+  .terrstage.terrstatic{height:auto;}
+  .terrstage.terrstatic .terrsticky{position:static;height:auto;display:block;overflow:visible;padding:clamp(48px,9svh,80px) 0 0;}
+  .terrstage.terrstatic .terrpanel{height:auto;justify-content:flex-start;padding:18px 20px 0;}
+  .terrstage.terrstatic .wall{overflow:visible;align-content:start;}
 
   /* ---- 04/05 COMPARE (stacked) ---- */
   .pairv{display:flex;flex-direction:column;gap:26px;}
@@ -320,19 +335,20 @@
   </div>
 </div></section>
 
-<!-- 03 · TERRITORY -->
-<section class="block mount" id="territory" data-nav="territory"><div class="col">
-  <p class="kick reveal">03 / Your territory</p>
-  <h2 class="sec reveal">Your job is one square in a <em>larger composition.</em></h2>
-  <p class="dek reveal">Every job in <span id="terrDek">Care &amp; Health</span> — yours pinned first; the field sorted blank → painted.</p>
-  <div class="wall reveal d1" id="wall" style="margin-top:28px"></div>
-  <div class="terrtime reveal d1">
-    <div class="lab" id="terrLab">Care &amp; Health · the field’s reach, 1970 → 2041</div>
-    <div class="strip" id="terrstrip" style="height:48px"><div class="now"></div><div class="thumb" id="terrthumb"></div></div>
-    <div class="straxis"><span>1970</span><span class="y2k">2000</span><span class="nowl">now · 2026</span><span>2041</span></div>
-    <p class="dek" style="margin-top:12px;font-size:13px">Drag to scrub the whole field across time.</p>
+<!-- 03 · TERRITORY · sticky, scroll-driven time-sweep -->
+<section class="terrstage mount" id="territory" data-nav="territory">
+  <div class="terrlead"><div class="col">
+    <p class="kick reveal">03 / Your territory</p>
+    <h2 class="sec reveal">Your job is one square in a <em>larger composition.</em></h2>
+    <p class="dek reveal">Every job in <span id="terrDek">Care &amp; Health</span> — yours pinned first. <em id="terrFrame">Now scroll: the whole field, swept 1970 → 2041.</em></p>
+  </div></div>
+  <div class="terrsticky">
+    <div class="terrpanel" id="terrPanel">
+      <div class="terrread" id="terrLab" aria-live="off">Care &amp; Health · 2026 · 31% field reach</div>
+      <div class="wall" id="wall"></div>
+    </div>
   </div>
-</div></section>
+</section>
 
 <!-- 04 · TERRITORY vs TERRITORY -->
 <section class="block mount" id="compare" data-nav="compare"><div class="col">
@@ -652,7 +668,7 @@ function tick(){
   }
 }
 let ticking=false;
-function onScroll(){if(!ticking){requestAnimationFrame(()=>{tick();ticking=false;});ticking=true;}}
+function onScroll(){if(!ticking){requestAnimationFrame(()=>{tick();terrTick();ticking=false;});ticking=true;}}
 $('yearInput').addEventListener('input',e=>{sliderYear=+e.target.value;render(sliderYear,true);});
 $('meanBtn').addEventListener('click',()=>{const m=$('rungMean'),on=m.classList.toggle('on');
   $('meanBtn').setAttribute('aria-expanded',on);$('meanBtn').textContent=on?'hide the colour key −':'what do the colours mean? +';});
@@ -666,33 +682,75 @@ function buildTrajectory(){
 function setTrajRead(year,frac){$('trajYr').textContent=year;$('trajPc').textContent=Math.round(occReach(FOCAL,year)*100)+'% reach';
   const th=$('cthumb');if(th)th.style.left=(frac*100)+'%';}
 
-/* ===== 03 · TERRITORY wall (you pinned + outlined) + scrubbable strip ===== */
-let engModels=[];
-const TS_YEARS=[];for(let y=1970;y<=2041;y+=2)TS_YEARS.push(y);
+/* ===== 03 · TERRITORY — the field, swept through time (sticky scroll) ===== */
+let engModels=[], cellRefs=[], wallYear=null, lastTerrYear=null;
+const terrSec=$('territory'), terrPanel=$('terrPanel'), wallEl=$('wall');
+const TQ=new URLSearchParams(location.search);
+const TERRFILL=(TQ.get('terrfill')||'reflow').toLowerCase();   // reflow(default) | enlarge | fixed
+const TERRFRAME=(TQ.get('terrframe')||'a').toLowerCase();        // a(default · lead-in title) | b(readout-forward)
+if(TERRFRAME==='b') terrPanel.classList.add('terrframe-b');
 function trBy(y){const lo=Math.floor(y),a=TERR.reach_by_year[String(lo)],b=TERR.reach_by_year[String(Math.min(2041,lo+1))];return ((a==null?0:a)+((b==null?a:b)-(a==null?0:a))*(y-lo))/100;}
+function setTerrLab(y){$('terrLab').innerHTML=`<span class="tr-terr">${esc(FOCAL.territory)}</span><span class="tr-sep">·</span><span class="tr-year">${y}</span><span class="tr-sep">·</span><span class="tr-field">${Math.round(trBy(y)*100)}% field reach</span>`;}
+/* build the cell shells ONCE per focal; the sweep recolours each study in place (no innerHTML churn on ≤32 cells) */
 function buildTerritory(){
   const peers=TERR.occ_iscos.map(i=>byIsco[i]).filter(Boolean)
     .map(o=>({o,nm:o.name,seed:hashStr(o.name),m0:occReach(o,2026),focal:o.isco===FOCAL_ISCO}))
     .sort((x,y)=>x.m0-y.m0);
-  // pin "you" first, then the rest sorted blank→painted; even hue spread (golden angle)
-  const you=peers.find(p=>p.focal), rest=peers.filter(p=>!p.focal);
+  const you=peers.find(p=>p.focal), rest=peers.filter(p=>!p.focal);   // pin "you" first, then blank→painted
   engModels=(you?[you]:[]).concat(rest);
-  engModels.forEach((mo,i)=>{mo.pal=mo.focal?SE_PAL:freeRamp(mo.seed,Math.round((i*137.508)%360));});
-  renderWall(curYearForWall());
-  $('terrstrip').innerHTML=TS_YEARS.map(y=>`<i style="background:${terrColor(THUE,trBy(y))}"></i>`).join('')+'<div class="now"></div><div class="thumb" id="terrthumb"></div>';
-  setTerrLab(2026,0.789);
+  engModels.forEach((mo,i)=>{mo.pal=mo.focal?SE_PAL:freeRamp(mo.seed,Math.round((i*137.508)%360));}); // even hue spread (golden angle)
+  wallEl.innerHTML=engModels.map(mo=>
+    `<div class="cell${mo.focal?' you':''}" data-isco="${mo.o.isco}" role="button" tabindex="0" aria-label="${esc(mo.nm)} — switch the mirror to this job"><div class="cb"></div><div class="cap"><span class="nm">${esc(mo.nm)}</span><span class="pc"></span></div></div>`).join('');
+  cellRefs=[...wallEl.children].map((el,i)=>({cb:el.querySelector('.cb'),pc:el.querySelector('.pc'),mo:engModels[i]}));
+  wallYear=null; lastTerrYear=null;
+  renderWall(NOW); fitWall(); setTerrLab(NOW);
 }
-let wallYear=2026;
-const curYearForWall=()=>wallYear;
 function renderWall(year){
-  wallYear=year;
-  $('wall').innerHTML=engModels.map(mo=>{const sh=bandShares(mo.o,year),m=Math.round(occReach(mo.o,year)*100);
-    return `<div class="cell${mo.focal?' you':''}" data-nm="${esc(mo.nm)}" data-pc="${m}"><div class="cb">${studySVG(sh,mo.pal,mo.seed,`${mo.nm}: AI reach ${m}% in ${year}`)}</div><div class="cap"><span class="nm">${esc(mo.nm)}</span><span class="pc">${m}%</span></div></div>`;}).join('');
+  if(year===wallYear) return; wallYear=year;
+  for(const c of cellRefs){const sh=bandShares(c.mo.o,year),m=Math.round(occReach(c.mo.o,year)*100);
+    c.cb.innerHTML=studySVG(sh,c.mo.pal,c.mo.seed,`${c.mo.nm}: AI reach ${m}% in ${year}`);
+    c.pc.textContent=m+'%';}
 }
-$('wall').addEventListener('click',e=>{const c=e.target.closest('.cell');if(!c)return;
-  showToast(`<b>${c.dataset.nm}</b><em>AI reach ${c.dataset.pc}% in ${wallYear}${c.classList.contains('you')?' · this is you':''}</em>`,2600);});
-function setTerrLab(y,frac){$('terrLab').innerHTML=`<strong>${esc(FOCAL.territory)}</strong> · ${y} · ${Math.round(trBy(y)*100)}% field reach`;
-  const th=$('terrthumb');if(th)th.style.left=(frac*100)+'%';}
+/* fit the WHOLE field in the pinned panel — pick columns + cell size so all N cells show, no inner scroll */
+function fitWall(){
+  const N=engModels.length; if(!N) return;
+  if(RM||terrSec.classList.contains('terrstatic')){wallEl.style.gridTemplateColumns='repeat(auto-fill,minmax(84px,1fr))';return;}
+  const availW=wallEl.clientWidth, availH=wallEl.clientHeight; if(availW<2||availH<2) return;
+  const GAP=9, CAP=16;
+  const sizeFor=C=>{const R=Math.ceil(N/C);return {C,R,cell:Math.min((availW-(C-1)*GAP)/C,(availH-(R-1)*GAP)/R-CAP)};};
+  let pick=null;
+  if(TERRFILL==='reflow'){
+    const target=availW/availH;
+    for(let C=1;C<=N;C++){const s=sizeFor(C);if(s.cell<=0)continue;
+      const bw=s.C*s.cell+(s.C-1)*GAP, bh=s.R*(s.cell+CAP)+(s.R-1)*GAP, score=Math.abs(Math.log((bw/bh)/target));
+      if(!pick||score<pick.score-1e-3||(Math.abs(score-pick.score)<1e-3&&s.cell>pick.cell))pick={...s,score};}
+  }else{
+    for(let C=1;C<=N;C++){const s=sizeFor(C);if(s.cell<=0)continue;if(!pick||s.cell>pick.cell)pick=s;}
+  }
+  if(!pick)pick=sizeFor(Math.min(N,5));
+  let C=pick.C, cell=pick.cell;
+  if(TERRFILL==='fixed') cell=Math.min(cell,74);
+  wallEl.style.gridTemplateColumns=`repeat(${C}, ${Math.max(6,Math.floor(cell))}px)`;
+}
+/* the scroll-sweep — mirrors the hero's tick(): p → year via the hero's ease-out, dwelling on recent years */
+let terrRAF=false, terrPending=null;
+function terrTick(){
+  if(RM) return;
+  const rect=terrSec.getBoundingClientRect(), total=terrSec.offsetHeight-window.innerHeight;
+  if(total<=0||rect.bottom<=0||rect.top>=window.innerHeight) return;
+  const p=clamp01(-rect.top/total), year=Math.round(lerp(1970,2041,1-(1-p)*(1-p)));
+  if(year===lastTerrYear) return; lastTerrYear=year;
+  setTerrLab(year);
+  terrPending=year; if(!terrRAF){terrRAF=true;requestAnimationFrame(()=>{renderWall(terrPending);terrRAF=false;});}
+}
+/* tap / keyboard a cell → re-root the whole mirror to that job, in place (no reload) */
+function wallActivate(el){const isco=el&&el.dataset?el.dataset.isco:null; if(!isco) return;
+  if(isco===FOCAL_ISCO){showToast('<b>That’s already your focal job</b>',2200);return;}
+  const peer=engModels.find(m=>m.o.isco===isco);
+  setFocal(isco,false);
+  showToast(`<b>Now showing ${esc((peer&&peer.nm)||'that job')}</b><em>tap any square to switch focal</em>`,2800);}
+wallEl.addEventListener('click',e=>{const c=e.target.closest('.cell');if(c)wallActivate(c);});
+wallEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('.cell');if(c){e.preventDefault();wallActivate(c);}}});
 
 /* ===== 04 · TERRITORY vs TERRITORY (real employment-weighted aggregates) ===== */
 function terrAgg(tid,year){
@@ -790,11 +848,12 @@ function setFocal(isco,scrollTop){
   deriveFocal(isco);
   invalidateShare();                  // drop the previous job's pre-built share card
   // reset scrub years to NOW so a fresh job opens cleanly
-  curYear=NOW;sliderYear=NOW;compYear=NOW;jvjYear=NOW;wallYear=NOW;
+  curYear=NOW;sliderYear=NOW;compYear=NOW;jvjYear=NOW;lastTerrYear=null;
   $('yearInput').value=NOW;$('terrYear').value=NOW;$('jvjYear').value=NOW;
   applyFocalHero();applyFocalSections();
+  try{history.replaceState(null,'',location.pathname+'?job='+isco);}catch(_){}   // keep the deep link in sync, no reload
   if(scrollTop)window.scrollTo({top:0,behavior:RM?'auto':'smooth'});
-  if(!RM)requestAnimationFrame(tick);
+  if(!RM)requestAnimationFrame(()=>{tick();terrTick();});
 }
 
 /* ===== INTRO job search (custom ranked typeahead) ===== */
@@ -811,17 +870,7 @@ function bindStrip(el,onMove,onEnd){
 }
 // trajectory: drag reads the year/% in the job's own palette
 bindStrip($('cstrip'),frac=>{const year=Math.round(1970+frac*71);setTrajRead(year,frac);});
-// territory wall: live cheap label + throttled, snapped wall re-render
-let wallRAF=false,wallPending=2026,lastWallSnap=null;
-function scrubWall(year,frac){
-  setTerrLab(year,frac);                                 // live, cheap
-  const snap=Math.round(year/2)*2;                       // snap to 2-yr steps to bound re-renders
-  if(snap===lastWallSnap)return;wallPending=snap;
-  if(wallRAF)return;wallRAF=true;requestAnimationFrame(()=>{lastWallSnap=wallPending;renderWall(wallPending);wallRAF=false;});
-}
-bindStrip($('terrstrip'),
-  frac=>{const year=Math.round(1970+frac*71);scrubWall(year,frac);},
-  frac=>{const year=Math.round(1970+frac*71);lastWallSnap=null;renderWall(year);setTerrLab(year,frac);});
+// (§03's drag-strip is replaced by the sticky scroll-sweep — see terrTick)
 
 /* ===== chrome: progress bar, reveals, nav sheet ===== */
 const prog=$('prog');
@@ -920,17 +969,18 @@ applyFocalHero();
 measure();render(NOW,true);
 addEventListener('scroll',onProg,{passive:true});onProg();   // progress bar tracks scroll in every mode
 if(RM){
-  // reduced motion: no scroll choreography — show the breakdown directly
+  // reduced motion: no scroll choreography — show the breakdown + the field directly at NOW
   stage.style.height='100svh';renderForm(1);headlineEl.style.opacity='1';rungsEl.style.opacity='1';plateMeta.style.opacity='1';
   scrubber.classList.add('on');heroCard.style.transform='none';heroCard.style.opacity='1';
+  terrSec.classList.add('terrstatic');
   applyFocalSections();
 }else{
   addEventListener('scroll',onScroll,{passive:true});
   requestAnimationFrame(()=>{measure();render(NOW,true);renderForm(0);tick();
     // defer the heavier, below-the-fold sections so first paint stays light
-    requestAnimationFrame(applyFocalSections);});
+    requestAnimationFrame(()=>{applyFocalSections();fitWall();terrTick();});});
 }
-addEventListener('resize',()=>{measure();render(curYear,true);if(!RM)tick();},{passive:true});
+addEventListener('resize',()=>{measure();render(curYear,true);fitWall();if(!RM){tick();terrTick();}},{passive:true});
 </script>
 </body>
 </html>
