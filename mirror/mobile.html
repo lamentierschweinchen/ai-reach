@@ -163,7 +163,7 @@
   .terrread{flex:0 0 auto;font-size:9.5px;letter-spacing:0.13em;text-transform:uppercase;color:#2c2a24;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .terrread .tr-year,.terrread .tr-field{color:var(--ink);font-weight:600;}
   .terrread .tr-sep{opacity:.45;margin:0 .4em;}
-  .wall{flex:1 1 auto;min-height:0;display:grid;justify-content:center;align-content:center;gap:9px;overflow:hidden;}
+  .wall{flex:1 1 auto;min-height:0;display:grid;justify-content:center;align-content:center;gap:9px;overflow:visible;}
   .cell{display:flex;flex-direction:column;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent;}
   .cell .cb{width:100%;aspect-ratio:1/1;}
   .cell svg{width:100%;height:100%;display:block;}
@@ -686,8 +686,8 @@ function setTrajRead(year,frac){$('trajYr').textContent=year;$('trajPc').textCon
 let engModels=[], cellRefs=[], wallYear=null, lastTerrYear=null;
 const terrSec=$('territory'), terrPanel=$('terrPanel'), wallEl=$('wall');
 const TQ=new URLSearchParams(location.search);
-const TERRFILL=(TQ.get('terrfill')||'reflow').toLowerCase();   // reflow(default) | enlarge | fixed
-const TERRFRAME=(TQ.get('terrframe')||'a').toLowerCase();        // a(default · lead-in title) | b(readout-forward)
+const TERRFILL=(TQ.get('terrfill')||'enlarge').toLowerCase();   // enlarge(default · owner pick) | reflow | fixed
+const TERRFRAME=(TQ.get('terrframe')||'b').toLowerCase();        // b(default · owner pick · readout-forward) | a(lead-in title)
 if(TERRFRAME==='b') terrPanel.classList.add('terrframe-b');
 function trBy(y){const lo=Math.floor(y),a=TERR.reach_by_year[String(lo)],b=TERR.reach_by_year[String(Math.min(2041,lo+1))];return ((a==null?0:a)+((b==null?a:b)-(a==null?0:a))*(y-lo))/100;}
 function setTerrLab(y){$('terrLab').innerHTML=`<span class="tr-terr">${esc(FOCAL.territory)}</span><span class="tr-sep">·</span><span class="tr-year">${y}</span><span class="tr-sep">·</span><span class="tr-field">${Math.round(trBy(y)*100)}% field reach</span>`;}
@@ -968,7 +968,7 @@ if(RM){
   // reduced motion: no scroll choreography — show the breakdown + the field directly at NOW
   stage.style.height='100svh';renderForm(1);headlineEl.style.opacity='1';rungsEl.style.opacity='1';plateMeta.style.opacity='1';
   scrubber.classList.add('on');heroCard.style.transform='none';heroCard.style.opacity='1';
-  terrSec.classList.add('terrstatic');
+  terrSec.classList.add('terrstatic');const tf=$('terrFrame');if(tf)tf.style.display='none';
   applyFocalSections();
 }else{
   addEventListener('scroll',onScroll,{passive:true});

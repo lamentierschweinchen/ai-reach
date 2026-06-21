@@ -125,7 +125,7 @@
   .terrread{flex:0 0 auto;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#2c2a24;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .terrread .tr-year,.terrread .tr-field{color:var(--ink);font-weight:600;}
   .terrread .tr-sep{opacity:.45;margin:0 .55em;}
-  .wall{flex:1 1 auto;min-height:0;display:grid;justify-content:center;align-content:center;gap:var(--wg,14px);overflow:hidden;}
+  .wall{flex:1 1 auto;min-height:0;display:grid;justify-content:center;align-content:center;gap:14px;overflow:visible;}
   .cell{display:flex;flex-direction:column;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent;}
   .cell .cb{width:100%;aspect-ratio:1/1;transition:transform .18s cubic-bezier(.2,.6,.2,1);}
   .cell svg{width:100%;height:100%;display:block;}
@@ -628,8 +628,8 @@ function applyFocalHero(){applyFocalCopy();buildHeroTiles();measure();render(cur
 const wallEl=document.getElementById('wall'), terrLabEl=document.getElementById('terrLab'),
       terrSec=document.getElementById('territory'), terrPanel=document.getElementById('terrPanel');
 const TQ=new URLSearchParams(location.search);
-const TERRFILL=(TQ.get('terrfill')||'reflow').toLowerCase();   // reflow(default) | enlarge | fixed
-const TERRFRAME=(TQ.get('terrframe')||'a').toLowerCase();        // a(default · lead-in title) | b(readout-forward)
+const TERRFILL=(TQ.get('terrfill')||'enlarge').toLowerCase();   // enlarge(default · owner pick) | reflow | fixed
+const TERRFRAME=(TQ.get('terrframe')||'b').toLowerCase();        // b(default · owner pick · readout-forward) | a(lead-in title)
 if(TERRFRAME==='b') terrPanel.classList.add('terrframe-b');
 
 let engModels=[], cellRefs=[], wallYear=null, lastTerrYear=null;
@@ -866,7 +866,7 @@ applyFocalHero();
 applyFocalSections();
 if(RM){
   stage.style.height='100vh';renderForm(1);readout.style.opacity='1';plateMeta.style.opacity='1';scrubber.classList.add('on');card.style.transform='none';card.style.opacity='1';
-  terrSec.classList.add('terrstatic');fitWall();setTerrLab(NOW);
+  terrSec.classList.add('terrstatic');const tf=document.getElementById('terrFrame');if(tf)tf.style.display='none';fitWall();setTerrLab(NOW);
 }else{
   requestAnimationFrame(()=>{measure();render(NOW,true);renderForm(0);fitWall();tick();terrTick();});
 }
