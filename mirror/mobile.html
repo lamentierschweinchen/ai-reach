@@ -275,14 +275,14 @@
 <body>
 
 <div class="progress" id="prog"></div>
-<div class="actbar"><span class="b">Large Labor Model · The Mirror</span><span class="a" id="actlabel">Your job</span></div>
+<div class="actbar"><span class="b">Large Labor Model · The Mirror</span><span class="a" id="actlabel">01 · The breakdown</span></div>
 <div class="helper" id="helper"></div>
 
 <!-- INTRO · the personal door in -->
 <section class="intro" id="intro" data-nav="intro">
-  <p class="pre reveal">A personal history of Labor</p>
+  <p class="pre reveal">A personal history of labor</p>
   <h1 class="reveal d1" id="focalHero">Nurses.</h1>
-  <p class="lede reveal d2">Tracing autonomous systems’ impact on labor from 1970 to 2041.</p>
+  <p class="lede reveal d2">Autonomous systems and the future of work</p>
   <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
   <div class="jobentry reveal d2">
     <input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
@@ -328,10 +328,10 @@
 <!-- 02 · TRAJECTORY -->
 <section class="block mount" id="trajectory" data-nav="trajectory"><div class="col">
   <p class="kick reveal">02 / Your trajectory</p>
-  <h2 class="sec reveal">Seventy-one years, as <em>flat colour planes.</em></h2>
+  <h2 class="sec reveal">Seventy-one years, as <em>flat colour.</em></h2>
   <p class="dek reveal">Pale where AI barely touched the work — dark where it now can.</p>
   <div class="reveal d1" style="margin-top:30px">
-    <div class="cstudy-ttl"><em id="focalTraj">Nurses</em> · seventy-one years.</div>
+    <div class="cstudy-ttl"><em id="focalTraj">Nurses</em> · 1970–2041.</div>
     <div class="trajread"><span class="yr" id="trajYr">2026</span><span class="pc" id="trajPc">—</span></div>
     <div class="strip" id="cstrip"><div class="now"></div><div class="thumb" id="cthumb"></div></div>
     <div class="straxis"><span>1970</span><span class="y2k">2000</span><span class="nowl">you · 2026</span><span>2041</span></div>
@@ -344,7 +344,7 @@
   <div class="terrlead"><div class="col">
     <p class="kick reveal">03 / Your territory</p>
     <h2 class="sec reveal">Your job is one square in a <em>larger composition.</em></h2>
-    <p class="dek reveal">Every job in <span id="terrDek">Care &amp; Health</span> — yours pinned first. <em id="terrFrame">Now scroll: the whole field, swept 1970 → 2041.</em></p>
+    <p class="dek reveal">Every job in <span id="terrDek">Care &amp; Health</span>, yours pinned first. <em id="terrFrame">Scroll: the whole field, swept 1970 → 2041.</em></p>
   </div></div>
   <div class="terrsticky">
     <div class="terrpanel" id="terrPanel">
@@ -356,7 +356,7 @@
 
 <!-- 04 · TERRITORY vs TERRITORY -->
 <section class="block mount" id="compare" data-nav="compare"><div class="col">
-  <p class="kick reveal">04 / The bigger picture</p>
+  <p class="kick reveal">04 / Side by side</p>
   <h2 class="sec reveal">Your world, beside <em>another.</em></h2>
   <p class="dek reveal">The same scale, two territories — drag the year for both.</p>
   <div class="pairv reveal d1" style="margin-top:30px">
@@ -375,7 +375,7 @@
 <!-- 05 · JOB vs JOB -->
 <section class="block mount" id="jobvjob" data-nav="jobvjob"><div class="col">
   <p class="kick reveal">05 / Back to you</p>
-  <h2 class="sec reveal">Your job, beside <em>another job.</em></h2>
+  <h2 class="sec reveal">Your job, beside <em>another.</em></h2>
   <p class="dek reveal">One picked at random — type to choose any job.</p>
   <div class="pairv reveal d1" style="margin-top:30px">
     <div class="cpanel"><div id="focalJ1" style="font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:18px;margin-bottom:14px;padding-bottom:7px;border-bottom:1px solid transparent;text-align:center">Nurses</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc" id="rhcJ1">Replaceability · 2026</div></div>
@@ -417,7 +417,7 @@
     <a data-to="intro"><span>Your job</span><span class="ix">00</span></a>
     <a data-to="trajectory"><span>Your trajectory</span><span class="ix">02</span></a>
     <a data-to="territory"><span>Your territory</span><span class="ix">03</span></a>
-    <a data-to="compare"><span>The bigger picture</span><span class="ix">04</span></a>
+    <a data-to="compare"><span>Side by side</span><span class="ix">04</span></a>
     <a data-to="jobvjob"><span>Job vs job</span><span class="ix">05</span></a>
     <a data-to="outro"><span>The mirror</span><span class="ix">06</span></a>
   </div>
@@ -614,7 +614,7 @@ function renderRungs(shares){$('rungs').innerHTML=BANDS.slice().reverse().map((b
   const idx=4-i,pct=Math.round(shares[idx]*100);
   return `<div class="r"><span class="sw" style="background:${SE_PAL[idx]}"></span>
     <span class="nm">${b.name}</span><span class="sh">${pct}%</span></div>`;}).join('');}
-function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;line-height:1.5">Each colour is how technically replaceable a task is — pale where AI can’t do it, dark where it can do the whole thing. <b>Replaceability is what AI can technically do</b>; whether anyone is actually replaced is a slower, separate question — and one that never moves in a straight line.</div>'+BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
+function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;line-height:1.5">Each colour is how technically replaceable a task is — pale where AI can’t do it, dark where it can do the whole thing. <b>Replaceability is what AI can technically do</b>; whether anyone is actually replaced is a slower, separate question.</div>'+BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
   return `<div style="display:flex;gap:7px;margin:3px 0"><span style="flex:0 0 11px;width:11px;height:11px;margin-top:2px;background:${SE_PAL[idx]}"></span><span><b>${b.name}</b> — ${b.mean}</span></div>`;}).join('');}
 function paintReadout(year){const sh=bandShares(FOCAL,year);renderRungs(sh);const m=Math.round(occReach(FOCAL,year)*100);
   $('bigNum').innerHTML=`${m}<sup>%</sup>`;$('bigYear').textContent=year;$('metaYear').textContent=year;
@@ -650,10 +650,10 @@ function tick(){
     if(year!==curYear)render(year,true);
     renderForm(0);
     headlineEl.style.opacity='1';rungsEl.style.opacity='1';plateMeta.style.opacity='1';scrubber.classList.remove('on');
-    if(p>0.03&&p<SWEEP_END-0.02){helper.textContent='Scroll to see AI & Robotics capabilities develop over time';helper.style.opacity='1';}
-    else if(p>=SWEEP_END){helper.textContent='projected capability 15 years from today';helper.style.opacity='1';}
+    if(p>0.03&&p<SWEEP_END-0.02){helper.textContent='Scroll: watch the capability grow, 1970 to 2041.';helper.style.opacity='1';}
+    else if(p>=SWEEP_END){helper.textContent='Projected capability, fifteen years out.';helper.style.opacity='1';}
     else helper.style.opacity='0';
-    cornerL.textContent='Your job · 01';if(inView)actlabel.textContent='01 · Your job';
+    cornerL.textContent='Your job · 01';
   }else if(p<MORPH_END){
     // DISSOLVE — forward only. Homage frozen at 2041 fades out; the breakdown opens at NOW.
     inAct2=false;
@@ -665,11 +665,11 @@ function tick(){
     else{paintReadout(NOW);const o=((dm-0.5)*2).toFixed(3);headlineEl.style.opacity=o;rungsEl.style.opacity=o;plateMeta.style.opacity=o;}
     curYear=NOW;
     scrubber.classList.remove('on');helper.style.opacity='0';
-    cornerL.textContent='Your job · 01';if(inView)actlabel.textContent='01 · Your job';
+    cornerL.textContent='Your job · 01';
   }else{
     if(!inAct2){inAct2=true;$('yearInput').value=sliderYear;render(sliderYear,true);}
     renderForm(1);headlineEl.style.opacity='1';rungsEl.style.opacity='1';plateMeta.style.opacity='1';scrubber.classList.add('on');helper.style.opacity='0';
-    cornerL.textContent='Task study · 01';if(inView)actlabel.textContent='01 · The breakdown';
+    cornerL.textContent='Task study · 01';
   }
 }
 let ticking=false;
@@ -772,7 +772,7 @@ function renderCompareT(){const ra=renderC('A',TERR_IDS[iA]),rb=renderC('B',TERR
   if(TERR_IDS[iA]===TERR_IDS[iB])v='Pick two different territories.';
   else{const hi=ra.reach>=rb.reach?ra:rb,lo=ra.reach>=rb.reach?rb:ra,diff=Math.round((hi.reach-lo.reach)*100);
     const dkey=compYear>=2033?'2040':'2026', disp=hi.t.dispersion&&hi.t.dispersion[dkey], me=disp&&disp.most_exposed&&disp.most_exposed[0]&&disp.most_exposed[0].display_name;
-    v=`In ${compYear}, <b>${esc(hi.t.name)}</b> is ${diff} points more technically replaceable than <b>${esc(lo.t.name)}</b>`+(me?` — ${esc(me)} most of all.`:'.');}
+    v=`In ${compYear}, <b>${esc(hi.t.name)}</b> is ${diff} points more technically replaceable than <b>${esc(lo.t.name)}</b>`+(me?`, with ${esc(me)} most exposed.`:'.');}
   $('verdictT').innerHTML=v;}
 function fillT(sel,idx){sel.innerHTML=TERR_IDS.map((tid,i)=>`<option value="${i}" ${i===idx?'selected':''}>${esc(DATA.territories[tid].name)}</option>`).join('');}
 function buildCompare(){fillT($('selA'),iA);fillT($('selB'),iB);renderCompareT();}
@@ -879,7 +879,7 @@ function onProg(){const h=document.documentElement;prog.style.width=(h.scrollTop
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 let currentSection='intro';
-const ACTLAB={trajectory:'02 · Your trajectory',territory:'03 · Your territory',compare:'04 · The bigger picture',jobvjob:'05 · Job vs job',outro:'06 · The mirror'};
+const ACTLAB={intro:'01 · The breakdown',trajectory:'02 · Your trajectory',territory:'03 · Your territory',compare:'04 · Side by side',jobvjob:'05 · Job vs job',outro:'06 · The mirror'};
 // active section = the one crossing the viewport centre (works for sections taller than the screen, e.g. the wall)
 const navIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){currentSection=e.target.dataset.nav;if(ACTLAB[currentSection])actlabel.textContent=ACTLAB[currentSection];}}),{rootMargin:'-45% 0px -45% 0px',threshold:0});
 document.querySelectorAll('[data-nav]').forEach(s=>navIO.observe(s));
@@ -940,7 +940,7 @@ function prepareShareFile(){
   return _sharePrep;
 }
 const SITE='https://largelabormodel.com';   // live site; once /mirror ships to prod, consider SITE+'/mirror?job='+FOCAL_ISCO
-function shareText(){const reach=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${reach}% of this job by 2026 — but that’s not the same as being replaced. Find your job at largelabormodel.com`;}
+function shareText(){const reach=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${reach}% of this job by 2026 — which is not the same as being replaced. Find your job at largelabormodel.com`;}
 function doShare(){
   const text=shareText(),title='The Mirror · Large Labor Model';
   const onErr=err=>{if(err&&err.name==='AbortError')return;shareFallback();};   // ignore user-cancel
