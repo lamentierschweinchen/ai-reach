@@ -267,6 +267,9 @@
   .ta-pop .ta-terr{font-size:12px;color:var(--ink-soft);}
   .ta-pop .ta-hit{font-size:11px;font-style:italic;color:var(--ink-soft);}
   .ta-pop .ta-head{padding:9px 14px 5px;font-family:'Inter';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);}
+  /* typographic orphans — no lone word on the last line */
+  h1,h2,h3,h4,p,li,blockquote,.lede,.dek,.sec,.pre,.bigdef,.fine{text-wrap:pretty;}
+  h1,h2,h3,.sec{text-wrap:balance;}
 </style>
 </head>
 <body>
@@ -280,7 +283,7 @@
   <p class="pre reveal">A personal history of Labor</p>
   <h1 class="reveal d1" id="focalHero">Nurses.</h1>
   <p class="lede reveal d2">Tracing autonomous systems’ impact on labor from 1970 to 2041.</p>
-  <p class="reveal d2" style="font-size:13px;line-height:1.55;color:var(--ink-soft);max-width:500px;margin:16px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Actual replacement is a different beast — it lags by years, and never moves in a straight line. <a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">how it’s measured →</a></p>
+  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question. <a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
   <div class="jobentry reveal d2">
     <input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
     <span class="mag">⌕</span>

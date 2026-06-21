@@ -223,6 +223,9 @@
   input[type=range]:focus-visible{outline-offset:3px;}
   .sharebtn:focus-visible,.cta:focus-visible{outline-color:var(--bone);}
   @media (prefers-reduced-motion: reduce){*,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important;} .reveal{transition:none;}}
+  /* typographic orphans — no lone word on the last line */
+  h1,h2,h3,h4,p,li,blockquote,.lede,.dek,.sec,.pre,.bigdef,.fine{text-wrap:pretty;}
+  h1,h2,h3,.sec{text-wrap:balance;}
 </style>
 </head>
 <body>
@@ -255,7 +258,7 @@
   <p class="pre reveal">A personal history of Labor</p>
   <h1 class="reveal d1" id="focalHero">Software <em>Engineer.</em></h1>
   <p class="lede reveal d2">Tracing autonomous systems’ impact on labor from 1970 to 2041.</p>
-  <p class="reveal d2" style="font-size:13px;line-height:1.55;color:var(--ink-soft);max-width:500px;margin:16px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Actual replacement is a different beast — it lags by years, and never moves in a straight line. <a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">how it’s measured →</a></p>
+  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question. <a href="https://largelabormodel.com/methodology" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
   <div class="jobentry reveal d2"><input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job"></div>
   <p class="cue reveal d2">scroll<span>↓</span></p>
 </section>
