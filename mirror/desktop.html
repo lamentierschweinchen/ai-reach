@@ -516,7 +516,6 @@ function renderGrid(year){for(const{el,task}of tileEls){const t=tierOf(taskReach
   el.querySelectorAll('.nm,.wt').forEach(x=>x.style.color = inkFor(SE_PAL[t]));}}
 function renderRungs(shares){document.getElementById('rungs').innerHTML=BANDS.slice().reverse().map((b,i)=>{
   const idx=4-i,pct=Math.round(shares[idx]*100);
-  if(pct===0)return '';                                   // a tier at 0% is not shown
   return `<div class="r"><span class="sw" style="background:${SE_PAL[idx]}"></span>
     <span class="nm">${b.name}<small>${b.mean}</small></span><span class="sh">${pct}%</span></div>`;}).join('');}
 let curYear=NOW;
