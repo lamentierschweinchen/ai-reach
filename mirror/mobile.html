@@ -212,14 +212,22 @@
   .outro{text-align:center;}
   .outro h2{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:clamp(27px,7.4vw,38px);line-height:1.13;letter-spacing:-0.02em;margin:0 auto 6px;}
   .outro h2 em{font-style:italic;}
-  .sharecard{margin:26px auto 0;width:min(70vw,260px);background:var(--paper);border:1px solid var(--rule);padding:22px 22px 18px;}
+  .sharecard{margin:22px auto 0;width:min(88vw,340px);background:var(--paper);border:1px solid var(--rule);padding:26px 26px 20px;}
+  .sharecard .sre #shareReach,.sharecard #shareReach{display:block;font-size:34px;font-weight:300;font-style:normal;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1;margin-bottom:4px;}
+  .ostats{margin:20px auto 0;max-width:300px;}
+  .ostats .i{display:grid;grid-template-columns:14px 1fr auto;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed var(--rule);}
+  .ostats .i:last-child{border-bottom:0;}
+  .ostats .s{width:13px;height:13px;}
+  .ostats .n{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13.5px;}
+  .ostats .v{font-family:'Inter';font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-soft);}
+  .outro-actions{margin-top:18px;display:flex;flex-direction:column;gap:6px;align-items:center;}
   .sharecard .ss{width:100%;aspect-ratio:1/1;}
   .sharecard .ss svg{width:100%;height:100%;display:block;}
   .sharecard .sjob{margin-top:14px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:17px;line-height:1.2;}
   .sharecard .sre{margin-top:2px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;color:var(--ink-soft);}
   .sharecard .swm{margin-top:10px;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);}
-  .shareBtn{margin:22px auto 0;display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
-    color:var(--bone);background:var(--ink);padding:15px 28px;border:0;cursor:pointer;font-family:'Inter';-webkit-tap-highlight-color:transparent;}
+  .shareBtn{margin:24px auto 0;display:inline-flex;align-items:center;gap:10px;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--bone);background:var(--ink);padding:19px 44px;border:0;cursor:pointer;font-family:'Inter';-webkit-tap-highlight-color:transparent;}
   .outro .cta{margin-top:16px;display:inline-block;font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink);
     background:none;border:0;padding:10px;cursor:pointer;font-family:'Inter';text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule);}
   .outro .fine{margin-top:34px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:15px;line-height:1.5;color:var(--ink-soft);}
@@ -393,18 +401,18 @@
 <!-- OUTRO -->
 <section class="block" id="outro" data-nav="outro"><div class="col outro">
   <p class="kick reveal" style="text-align:center">The mirror</p>
-  <h2 class="reveal">A mirror, not a prophecy. <em>Replaceability is not replacement.</em></h2>
-  <p class="reveal d1" style="margin-top:14px;font-size:13px;color:var(--ink-soft)"><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">how replaceability is measured →</a></p>
   <div class="sharecard reveal d1" id="shareCard">
     <div class="ss" id="shareStudy"></div>
     <div class="sjob" id="shareJob">Nurses</div>
-    <div class="sre"><b id="shareReach">—</b> Replaceability · 2026</div>
+    <div class="sre"><b id="shareReach">—</b> technically replaceable · 2026</div>
     <div class="swm">The Mirror · Large Labor Model</div>
   </div>
-  <button class="shareBtn reveal d1" id="shareBtn">↗ Share your mirror</button>
-  <div><button class="cta reveal d2" id="againBtn">Look up another job →</button></div>
-  <p class="fine reveal d2">A machine doing a task is not the same as a person losing a job. This shows the first, and refuses to claim the second.</p>
-  <div class="leg reveal d2" id="legOut"></div>
+  <div class="ostats reveal d1" id="legOut"></div>
+  <button class="shareBtn reveal d2" id="shareBtn">↗ Share your mirror</button>
+  <div class="outro-actions reveal d2">
+    <button class="cta" id="againBtn">Look up another job →</button>
+    <a class="cta" href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener">Learn more about our methodology →</a>
+  </div>
 </div></section>
 
 <!-- floating chrome -->
@@ -817,8 +825,8 @@ function buildOutro(){
   const shares=bandShares(FOCAL,NOW),reach=Math.round(occReach(FOCAL,NOW)*100);
   $('shareStudy').innerHTML=studySVG(shares,SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technically replaceable in 2026`);
   $('shareJob').textContent=FOCAL.name;$('shareReach').textContent=reach+'%';
-  $('legOut').innerHTML=BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
-    return `<div class="i"><span class="s" style="background:${SE_PAL[idx]}"></span><span class="n">${b.name}</span></div>`;}).join('');
+  $('legOut').innerHTML=BANDS.slice().reverse().map((b,i)=>{const idx=4-i;const pct=Math.round(shares[idx]*100);
+    return `<div class="i"><span class="s" style="background:${SE_PAL[idx]}"></span><span class="n">${b.name}</span><span class="v">${pct}%</span></div>`;}).join('');
 }
 
 /* ===== helpers ===== */
