@@ -107,6 +107,12 @@
   /* subtle, context-aware share — shares whichever stop you're on */
   .sharebtn{position:fixed;right:24px;bottom:22px;z-index:56;background:var(--ink);color:var(--bone);border:0;cursor:pointer;font-family:'Inter';font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:11px 16px;opacity:0.82;transition:opacity .2s;}
   .sharebtn:hover{opacity:1;}
+  .sharemenu{position:fixed;right:24px;bottom:62px;z-index:57;background:var(--paper);border:1px solid var(--rule);box-shadow:0 10px 34px rgba(28,26,23,.16);display:flex;flex-direction:column;min-width:190px;}
+  .sharemenu[hidden]{display:none;}
+  .sharemenu button{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.03em;text-align:left;padding:12px 16px;background:none;border:0;border-bottom:1px solid var(--rule);color:var(--ink);cursor:pointer;}
+  .sharemenu button:last-child{border-bottom:0;}
+  .sharemenu button:hover{background:var(--bone);}
+  @media(max-width:860px){.sharemenu{right:14px;bottom:54px;}}
   .toast{position:fixed;right:24px;bottom:62px;z-index:56;background:var(--ink);color:var(--bone);font-family:'Inter';font-size:11px;letter-spacing:0.02em;padding:9px 14px;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s;pointer-events:none;max-width:260px;}
   .toast.on{opacity:1;transform:none;}
   @media(max-width:860px){.sharebtn{right:14px;bottom:14px;}.toast{right:14px;bottom:54px;}}
@@ -209,7 +215,14 @@
 <div class="topbar"><span class="b">AI Reach · The Mirror</span><span id="actlabel">Your job</span></div>
 <div class="helper" id="helper"></div>
 
-<button class="sharebtn" id="sharebtn">↗ Share your mirror</button>
+<button class="sharebtn" id="sharebtn" aria-haspopup="true">↗ Share your mirror</button>
+<div class="sharemenu" id="shareMenu" role="menu" hidden>
+  <button data-share="copy" role="menuitem">Copy link</button>
+  <button data-share="email" role="menuitem">Email</button>
+  <button data-share="x" role="menuitem">Share on X</button>
+  <button data-share="linkedin" role="menuitem">Share on LinkedIn</button>
+  <button data-share="download" role="menuitem">Download card</button>
+</div>
 <div class="toast" id="toast"></div>
 
 <nav class="sidenav" id="sidenav">
@@ -744,16 +757,24 @@ async function shareFallback(){
   if(f){const u=URL.createObjectURL(f);const a=document.createElement('a');a.href=u;a.download='my-ai-reach.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),4000);showToast('Saved your mirror — link copied too');}
   else showToast('Screenshot the card to share');
 }
-function doShare(){
-  const text=shareText(),title='The Mirror · AI Reach';
-  const onErr=err=>{if(err&&err.name==='AbortError')return;shareFallback();};
-  if(_shareFile&&navigator.canShare&&navigator.canShare({files:[_shareFile]})){          // Safari desktop: native share w/ image
-    try{navigator.share({files:[_shareFile],title,text,url:SITE}).catch(onErr);}catch(e){onErr(e);}return;
-  }
-  shareFallback();                                                                        // other desktops: download the card + copy link
+/* desktop share menu — explicit targets (mobile uses the native OS share sheet) */
+const $sm=document.getElementById('shareMenu');
+function closeShareMenu(){$sm.hidden=true;}
+function socialText(){const r=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${r}% of this job by 2026 — but reach isn’t replacement.`;}
+function shareTo(kind){
+  const u=encodeURIComponent(SITE), t=encodeURIComponent(socialText());
+  if(kind==='copy'){(navigator.clipboard&&window.isSecureContext)?navigator.clipboard.writeText(SITE).then(()=>showToast('Link copied')).catch(()=>showToast(SITE)):showToast(SITE);}
+  else if(kind==='email'){location.href='mailto:?subject='+encodeURIComponent('The Mirror · AI Reach')+'&body='+t+'%0A%0A'+u;}
+  else if(kind==='x'){window.open('https://twitter.com/intent/tweet?text='+t+'&url='+u,'_blank','noopener');}
+  else if(kind==='linkedin'){window.open('https://www.linkedin.com/sharing/share-offsite/?url='+u,'_blank','noopener');}
+  else if(kind==='download'){shareFallback();}
+  closeShareMenu();
 }
-document.getElementById('sharebtn').addEventListener('click',doShare);
-document.getElementById('sharebtn').addEventListener('mouseenter',prepareShareFile,{once:true});   // pre-build on hover → instant click
+$sm.addEventListener('click',e=>{const b=e.target.closest('[data-share]');if(b)shareTo(b.dataset.share);});
+document.getElementById('sharebtn').addEventListener('click',e=>{e.stopPropagation();$sm.hidden=!$sm.hidden;if(!$sm.hidden)prepareShareFile();});
+document.getElementById('sharebtn').addEventListener('mouseenter',prepareShareFile,{once:true});   // pre-build → instant download
+document.addEventListener('click',e=>{if(!$sm.hidden&&!e.target.closest('#shareMenu')&&!e.target.closest('#sharebtn'))closeShareMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeShareMenu();});
 </script>
 </body>
 </html>
