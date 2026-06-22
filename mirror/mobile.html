@@ -183,22 +183,22 @@
   .terrstage.terrstatic .terrpanel{height:auto;justify-content:flex-start;padding:18px 20px 0;}
   .terrstage.terrstatic .wall{overflow:visible;align-content:start;}
 
-  /* ---- 04/05 COMPARE (stacked) ---- */
-  .pairv{display:flex;flex-direction:column;gap:26px;}
-  .cpanel{display:flex;flex-direction:column;align-items:center;}
-  .cpanel select,.cpanel input.jobsearch{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:18px;color:var(--ink);
-    background:transparent;border:0;border-bottom:1px solid var(--rule);padding:6px 6px 7px;margin-bottom:14px;text-align:center;
-    width:100%;max-width:280px;-webkit-appearance:none;appearance:none;border-radius:0;}
+  /* ---- 04/05 COMPARE (side-by-side: both canvases + the slider stay in one view) ---- */
+  #compare,#jobvjob{padding-top:clamp(44px,8svh,72px);padding-bottom:clamp(44px,8svh,72px);}
+  .pairv{display:flex;flex-direction:row;align-items:flex-start;justify-content:center;gap:6px;}
+  .cpanel{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;}
+  .cpanel select,.cpanel input.jobsearch{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;color:var(--ink);
+    background:transparent;border:0;border-bottom:1px solid var(--rule);padding:5px 14px 6px 6px;margin-bottom:10px;text-align:center;
+    width:100%;max-width:100%;-webkit-appearance:none;appearance:none;border-radius:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .cpanel select{cursor:pointer;text-align-last:center;background-image:none;}
   .cpanel input.jobsearch::placeholder{color:#5a544a;}
   .cpanel .selwrap{position:relative;display:flex;justify-content:center;width:100%;}
-  .cpanel .selwrap::after{content:'▾';position:absolute;right:calc(50% - 130px);top:6px;color:var(--ink-soft);font-size:12px;pointer-events:none;}
-  .cpanel .cs{width:66%;max-width:240px;aspect-ratio:1/1;}
+  .cpanel .selwrap::after{content:'▾';position:absolute;right:4px;top:6px;color:var(--ink-soft);font-size:11px;pointer-events:none;}
+  .cpanel .cs{width:100%;max-width:158px;aspect-ratio:1/1;}
   .cpanel svg{width:100%;height:100%;display:block;}
-  .cpanel .rh{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:34px;margin:14px 0 1px;font-variant-numeric:tabular-nums;}
-  .cpanel .rhc{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);}
-  .cmid{display:flex;align-items:center;justify-content:center;gap:12px;margin:2px 0;color:var(--ink-soft);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:14px;}
-  .cmid::before,.cmid::after{content:'';height:1px;width:40px;background:var(--rule);}
+  .cpanel .rh{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:25px;margin:9px 0 1px;font-variant-numeric:tabular-nums;}
+  .cpanel .rhc{font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);text-align:center;}
+  .cmid{flex:0 0 auto;align-self:center;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;}
   .verdict{margin-top:28px;text-align:center;}
   .verdict p{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-style:italic;font-size:clamp(18px,5.2vw,22px);line-height:1.4;margin:0;}
   .verdict p b{font-style:normal;font-weight:400;}
@@ -386,7 +386,7 @@
   <h2 class="sec reveal">Your job, beside <em>another.</em></h2>
   <p class="dek reveal">One picked at random — type to choose any job.</p>
   <div class="pairv reveal d1" style="margin-top:30px">
-    <div class="cpanel"><div id="focalJ1" style="font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:18px;margin-bottom:14px;padding-bottom:7px;border-bottom:1px solid transparent;text-align:center">Nurses</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc" id="rhcJ1">Replaceability · 2026</div></div>
+    <div class="cpanel"><div id="focalJ1" style="font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid transparent;text-align:center;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Nurse</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc" id="rhcJ1">Replaceability · 2026</div></div>
     <div class="cmid">vs</div>
     <div class="cpanel"><input class="jobsearch" id="jobsearch" placeholder="type a job…" autocomplete="off" autocapitalize="words"><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc" id="rhcJ2">Replaceability · 2026</div></div>
   </div>
