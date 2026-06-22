@@ -283,7 +283,7 @@
 <body>
 
 <div class="progress" id="prog"></div>
-<div class="actbar"><span class="b">Large Labor Model · The Mirror</span><span class="a" id="actlabel">01 · The breakdown</span></div>
+<div class="actbar"><span class="b"><a href="/" style="color:inherit;text-decoration:none" title="The Large Labor Model">Large Labor Model</a> · The Mirror</span><span class="a" id="actlabel">01 · The breakdown</span></div>
 <div class="helper" id="helper"></div>
 
 <!-- INTRO · the personal door in -->
@@ -411,6 +411,7 @@
   <button class="shareBtn reveal d2" id="shareBtn">↗ Share your mirror</button>
   <div class="outro-actions reveal d2">
     <button class="cta" id="againBtn">Look up another job →</button>
+    <a class="cta" href="/">Explore the full model →</a>
     <a class="cta" href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener">Learn more about our methodology →</a>
   </div>
 </div></section>
@@ -947,17 +948,18 @@ function prepareShareFile(){
   }catch(_){return null;}finally{_sharePrep=null;}})();
   return _sharePrep;
 }
-const SITE='https://largelabormodel.com';   // live site; once /mirror ships to prod, consider SITE+'/mirror?job='+FOCAL_ISCO
-function shareText(){const reach=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${reach}% of this job by 2026 — which is not the same as being replaced. Find your job at largelabormodel.com`;}
+const SITE='https://largelabormodel.com';
+function shareURL(){return SITE+'/mirror?job='+FOCAL_ISCO;}   // deep-link back into The Mirror, this job
+function shareText(){const reach=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${reach}% of this job by 2026 — which is not the same as being replaced.`;}
 function doShare(){
   const text=shareText(),title='The Mirror · Large Labor Model';
   const onErr=err=>{if(err&&err.name==='AbortError')return;shareFallback();};   // ignore user-cancel
   // best path: a ready File + synchronous share() (keeps the tap's activation alive)
   if(_shareFile&&_shareForIsco===FOCAL_ISCO&&navigator.canShare&&navigator.canShare({files:[_shareFile]})){
-    try{navigator.share({files:[_shareFile],title,text,url:SITE}).catch(onErr);}catch(e){onErr(e);}return;
+    try{navigator.share({files:[_shareFile],title,text,url:shareURL()}).catch(onErr);}catch(e){onErr(e);}return;
   }
   if(navigator.share){
-    try{navigator.share({title,text,url:SITE}).catch(onErr);}catch(e){onErr(e);}
+    try{navigator.share({title,text,url:shareURL()}).catch(onErr);}catch(e){onErr(e);}
     prepareShareFile();                                  // ready a file for next time
     return;
   }
