@@ -622,7 +622,7 @@ function renderRungs(shares){$('rungs').innerHTML=BANDS.slice().reverse().map((b
   const idx=4-i,pct=Math.round(shares[idx]*100);
   return `<div class="r"><span class="sw" style="background:${SE_PAL[idx]}"></span>
     <span class="nm">${b.name}</span><span class="sh">${pct}%</span></div>`;}).join('');}
-function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;line-height:1.5">Each color is how technically replaceable a task is — pale where AI can’t do it, dark where it can do the whole thing. <b>Replaceability is what AI can technically do</b>; whether anyone is actually replaced is a slower, separate question.</div>'+BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
+function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;line-height:1.5">Each color is how technically replaceable a task is — pale where AI can’t do it, dark where it can do the whole thing.</div>'+BANDS.slice().reverse().map((b,i)=>{const idx=4-i;
   return `<div style="display:flex;gap:7px;margin:3px 0"><span style="flex:0 0 11px;width:11px;height:11px;margin-top:2px;background:${SE_PAL[idx]}"></span><span><b>${b.name}</b> — ${b.mean}</span></div>`;}).join('');}
 function paintReadout(year){const sh=bandShares(FOCAL,year);renderRungs(sh);const m=Math.round(occReach(FOCAL,year)*100);
   $('bigNum').innerHTML=`${m}<sup>%</sup>`;$('bigYear').textContent=year;$('metaYear').textContent=year;
@@ -889,7 +889,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 let currentSection='intro';
 const ACTLAB={intro:'01 · The breakdown',trajectory:'02 · Your trajectory',territory:'03 · Your territory',compare:'04 · Side by side',jobvjob:'05 · Job vs job',outro:'06 · The mirror'};
 // active section = the one crossing the viewport centre (works for sections taller than the screen, e.g. the wall)
-const navIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){currentSection=e.target.dataset.nav;if(ACTLAB[currentSection])actlabel.textContent=ACTLAB[currentSection];}}),{rootMargin:'-45% 0px -45% 0px',threshold:0});
+const navIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){currentSection=e.target.dataset.nav;$('shareFab').style.display=currentSection==='outro'?'none':'';if(ACTLAB[currentSection])actlabel.textContent=ACTLAB[currentSection];}}),{rootMargin:'-45% 0px -45% 0px',threshold:0});
 document.querySelectorAll('[data-nav]').forEach(s=>navIO.observe(s));
 // nav sheet
 const sheet=$('navSheet');
