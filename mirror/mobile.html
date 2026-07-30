@@ -23,7 +23,8 @@
 <meta name="theme-color" content="#efeae0" />
 <meta name="color-scheme" content="light" />
 <style>
-  @font-face { font-family:'Inter'; src:url('Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); font-weight:100 900; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Inter'; src:url('Inter/Inter-Variable.woff2') format('woff2-variations'), url('Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); font-weight:100 900; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Inter'; src:url('Inter/Inter-Italic-Variable.woff2') format('woff2-variations'); font-weight:100 900; font-style:italic; font-display:swap; }
 
   :root{
     --bone:#efeae0; --paper:#f6f2e8; --ink:#1c1a17; --ink-soft:#5a544a; --rule:#d6cfbe; --mount:#b9bcab;
@@ -230,6 +231,12 @@
     color:var(--bone);background:var(--ink);padding:19px 44px;border:0;cursor:pointer;font-family:'Inter';-webkit-tap-highlight-color:transparent;}
   .outro .cta{margin-top:16px;display:inline-block;font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink);
     background:none;border:0;padding:10px;cursor:pointer;font-family:'Inter';text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule);}
+  /* invisible touch-target expansion (WCAG 2.5.8) — no visual change.
+     Outro CTAs stack 6px apart, so expand them only to the gap midline (no overlap). */
+  .outro .cta,.meanbtn,.actbar .b a,.formula-link{position:relative;}
+  .actbar .b a::after,.formula-link::after{content:'';position:absolute;left:-8px;right:-8px;top:-12px;bottom:-12px;}
+  .meanbtn::after{content:'';position:absolute;left:-8px;right:-8px;top:-6px;bottom:-12px;}  /* smaller above: rung rows there are tappable */
+  .outro .cta::after{content:'';position:absolute;left:-10px;right:-10px;top:-3px;bottom:-3px;}
   .outro .fine{margin-top:34px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:15px;line-height:1.5;color:var(--ink-soft);}
   .leg{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:24px;justify-content:center;}
   .leg .i{display:flex;align-items:center;gap:6px;}.leg .s{width:12px;height:12px;}.leg .n{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;}
@@ -291,7 +298,7 @@
   <p class="pre reveal">A personal history of labor</p>
   <h1 class="reveal d1" id="focalHero">Nurses.</h1>
   <p class="lede reveal d2">Autonomous systems and the future of work</p>
-  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
+  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a class="formula-link" href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit;display:inline-block;padding:6px 0 2px">How it’s measured →</a></p>
   <div class="jobentry reveal d2">
     <input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
     <span class="mag">⌕</span>
@@ -403,7 +410,7 @@
   <p class="kick reveal" style="text-align:center">The mirror</p>
   <div class="sharecard reveal d1" id="shareCard">
     <div class="ss" id="shareStudy"></div>
-    <div class="sjob" id="shareJob">Nurses</div>
+    <div class="sjob" id="shareJob">Nurse</div>
     <div class="sre"><b id="shareReach">—</b> technically replaceable · 2026</div>
     <div class="swm">The Mirror · Large Labor Model</div>
   </div>
@@ -987,9 +994,14 @@ if(RM){
   applyFocalSections();
 }else{
   addEventListener('scroll',onScroll,{passive:true});
+  let sectionsBuilt=false;
+  const buildSections=()=>{if(sectionsBuilt)return;sectionsBuilt=true;applyFocalSections();fitWall();terrTick();};
   requestAnimationFrame(()=>{measure();render(NOW,true);renderForm(0);tick();
     // defer the heavier, below-the-fold sections so first paint stays light
-    requestAnimationFrame(()=>{applyFocalSections();fitWall();terrTick();});});
+    requestAnimationFrame(buildSections);});
+  // rAF is throttled in background tabs (e.g. a shared link opened in a new tab) —
+  // make sure the sections still build even if the frames never fire
+  setTimeout(()=>{if(!sectionsBuilt){measure();render(NOW,true);renderForm(0);buildSections();}},600);
 }
 addEventListener('resize',()=>{measure();render(curYear,true);fitWall();if(!RM){tick();terrTick();}},{passive:true});
 </script>

@@ -21,7 +21,8 @@
 <meta name="twitter:image:alt" content="The Mirror — technical replaceability across 480 jobs.">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
-  @font-face { font-family:'Inter'; src:url('Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); font-weight:100 900; font-style:normal; }
+  @font-face { font-family:'Inter'; src:url('Inter/Inter-Variable.woff2') format('woff2-variations'), url('Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations'); font-weight:100 900; font-style:normal; font-display:swap; }
+  @font-face { font-family:'Inter'; src:url('Inter/Inter-Italic-Variable.woff2') format('woff2-variations'); font-weight:100 900; font-style:italic; font-display:swap; }
 
   :root{ --bone:#efeae0; --paper:#f6f2e8; --ink:#1c1a17; --ink-soft:#5a544a; --rule:#d6cfbe; --mount:#b9bcab; }
   *,*::before,*::after{box-sizing:border-box;}
@@ -885,7 +886,11 @@ if(RM){
   stage.style.height='100vh';renderForm(1);readout.style.opacity='1';plateMeta.style.opacity='1';scrubber.classList.add('on');card.style.transform='none';card.style.opacity='1';
   terrSec.classList.add('terrstatic');const tf=document.getElementById('terrFrame');if(tf)tf.style.display='none';fitWall();setTerrLab(NOW);
 }else{
-  requestAnimationFrame(()=>{measure();render(NOW,true);renderForm(0);fitWall();tick();terrTick();});
+  let heroInited=false;
+  const initHero=()=>{if(heroInited)return;heroInited=true;measure();render(NOW,true);renderForm(0);fitWall();tick();terrTick();};
+  requestAnimationFrame(initHero);
+  // rAF is throttled in background tabs (e.g. a shared link opened in a new tab) — init anyway
+  setTimeout(initHero,600);
 }
 </script>
 </body>
