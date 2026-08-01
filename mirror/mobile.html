@@ -85,18 +85,19 @@
   .stage{position:relative;height:460svh;}
   .sticky{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:24px;box-sizing:border-box;}
   .card{background:var(--paper);border:1px solid var(--rule);width:min(94vw,460px);
-    padding:30px 18px 18px;position:relative;will-change:transform,opacity;}
+    padding:26px 18px 15px;position:relative;will-change:transform,opacity;}
   .card .corner-l,.card .corner-r{position:absolute;top:11px;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);}
   .card .corner-l{left:14px;}.card .corner-r{right:14px;}
 
-  .headline{text-align:center;margin-bottom:10px;}
+  .headline{text-align:center;margin-bottom:8px;}
   .headline .big{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:clamp(50px,16vw,74px);line-height:.86;letter-spacing:-0.03em;display:block;font-variant-numeric:tabular-nums;}
   .headline .big sup{font-size:.32em;vertical-align:top;color:var(--ink-soft);}
-  .headline .bigyear{display:block;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:clamp(26px,8vw,38px);line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-top:5px;font-variant-numeric:tabular-nums;}
-  .headline .bigcap{display:block;margin-top:6px;font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
-  .headline .bigdef{display:block;margin:9px auto 0;max-width:282px;font-size:11px;line-height:1.45;color:var(--ink-soft);}
+  .headline .bigyear{display:block;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:clamp(16px,4.6vw,19px);line-height:1;letter-spacing:0;color:var(--ink-soft);margin-top:4px;font-variant-numeric:tabular-nums;}
+  .headline .bigcap{display:block;margin-top:5px;font-size:9px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
 
-  .comp{position:relative;width:min(84vw,42svh,400px);aspect-ratio:1/1;margin:4px auto 2px;}
+  /* the art square yields to the fixed stack (readout+rungs+plate+timeline) so the
+     timeline is ALWAYS on screen — on short viewports the square shrinks, never the controls */
+  .comp{position:relative;width:min(84vw,max(calc(100svh - 444px),200px),400px);aspect-ratio:1/1;margin:4px auto 2px;}
   .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);gap:0;}
   .tile{position:relative;transition:background-color .3s ease;opacity:0;transform-origin:center;overflow:hidden;
     display:flex;flex-direction:column;justify-content:flex-end;padding:7px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
@@ -106,16 +107,16 @@
   .ring{position:absolute;will-change:width,height,left,top;
     transition:width .2s cubic-bezier(.4,0,.2,1),height .2s cubic-bezier(.4,0,.2,1),left .2s,top .2s,background-color .24s;}
 
-  .rungs{margin-top:8px;}
-  .rungs .r{display:grid;grid-template-columns:14px 1fr auto;align-items:center;gap:9px;padding:5px 0;border-bottom:1px dashed var(--rule);}
-  .rungs .sw{width:14px;height:14px;}
-  .rungs .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13.5px;line-height:1.05;}
-  .rungs .sh{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13.5px;font-variant-numeric:tabular-nums;}
+  .rungs{margin-top:7px;}
+  .rungs .r{display:grid;grid-template-columns:13px 1fr auto;align-items:center;gap:9px;padding:3.5px 0;border-bottom:1px dashed var(--rule);}
+  .rungs .sw{width:13px;height:13px;}
+  .rungs .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12.5px;line-height:1.05;}
+  .rungs .sh{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12.5px;font-variant-numeric:tabular-nums;}
   .rungmean{margin-top:8px;font-size:11px;line-height:1.4;color:var(--ink-soft);max-height:0;overflow:hidden;opacity:0;transition:max-height .3s,opacity .3s,margin .3s;margin-top:0;}
   .rungmean.on{max-height:120px;opacity:1;margin-top:8px;}
-  .meanbtn{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-soft);background:none;border:0;padding:4px 0;cursor:pointer;}
+  .meanbtn{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-soft);background:none;border:0;padding:4px 0;cursor:pointer;}
 
-  .plate{margin-top:12px;padding-top:11px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
+  .plate{margin-top:9px;padding-top:8px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:baseline;gap:10px;}
   .plate .ttl{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:15px;line-height:1.1;}
   .plate .meta{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap;transition:opacity .26s ease;}
   .plate .meta strong{font-weight:600;color:var(--ink);}
@@ -168,11 +169,11 @@
   .cell{display:flex;flex-direction:column;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent;}
   .cell .cb{width:100%;aspect-ratio:1/1;}
   .cell svg{width:100%;height:100%;display:block;}
-  .cell .cap{margin-top:4px;display:flex;justify-content:space-between;gap:4px;align-items:baseline;min-width:0;}
+  .cell .cap{margin-top:4px;display:flex;justify-content:center;gap:5px;align-items:baseline;min-width:0;}
+  .cell.you .cap{justify-content:space-between;}
   .cell .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:9px;color:#23211c;line-height:1.02;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
   .cell .pc{font-size:8.5px;font-weight:600;color:#3a372f;font-variant-numeric:tabular-nums;flex:0 0 auto;}
   .cell.you .cb{outline:2px solid var(--ink);outline-offset:3px;}
-  .cell.you .nm::after{content:' · you';font-style:normal;font-size:7px;letter-spacing:0.12em;text-transform:uppercase;}
   .cell:focus-visible .cb{outline:2px solid var(--ink);outline-offset:3px;}
   /* framing B — readout-forward: the live year leads */
   .terrframe-b .terrread{display:flex;flex-direction:column;align-items:flex-start;gap:1px;letter-spacing:0.03em;text-transform:none;font-size:10px;}
@@ -192,6 +193,7 @@
     background:transparent;border:0;border-bottom:1px solid var(--rule);padding:5px 14px 6px 6px;margin-bottom:10px;text-align:center;
     width:100%;max-width:100%;-webkit-appearance:none;appearance:none;border-radius:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .cpanel select{cursor:pointer;text-align-last:center;background-image:none;}
+  .cpanel input.jobsearch{font-size:16px;}  /* ≥16px: keeps iOS Safari from auto-zooming the page on focus */
   .cpanel input.jobsearch::placeholder{color:#5a544a;}
   .cpanel .selwrap{position:relative;display:flex;justify-content:center;width:100%;}
   .cpanel .selwrap::after{content:'▾';position:absolute;right:4px;top:6px;color:var(--ink-soft);font-size:11px;pointer-events:none;}
@@ -296,7 +298,7 @@
 <!-- INTRO · the personal door in -->
 <section class="intro" id="intro" data-nav="intro">
   <p class="pre reveal">A personal history of labor</p>
-  <h1 class="reveal d1" id="focalHero">Nurses.</h1>
+  <h1 class="reveal d1" id="focalHero">Nurse.</h1>
   <p class="lede reveal d2">Autonomous systems and the future of work</p>
   <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a class="formula-link" href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit;display:inline-block;padding:6px 0 2px">How it’s measured →</a></p>
   <div class="jobentry reveal d2">
@@ -315,7 +317,7 @@
       <div class="headline">
         <span class="big" id="bigNum">—</span>
         <span class="bigyear" id="bigYear">1970</span>
-        <span class="bigcap">Technical replaceability</span><span class="bigdef">% of technical replaceability of labor</span>
+        <span class="bigcap">Technical replaceability</span>
       </div>
       <div class="comp" id="comp">
         <div class="grid" id="grid"></div>
@@ -328,7 +330,7 @@
       <button class="meanbtn" id="meanBtn" aria-expanded="false" aria-controls="rungMean">what do the colors mean? +</button>
       <div class="rungmean" id="rungMean"></div>
       <div class="plate">
-        <span class="ttl"><em id="focalPlate">Nurses</em> · <span id="focalTaskN">11</span> tasks</span>
+        <span class="ttl"><em id="focalPlate">Nurse</em> · <span id="focalTaskN">11</span> tasks</span>
         <span class="meta" id="meta">every task, weighted · <strong id="metaYear">1970</strong></span>
       </div>
       <div class="scrubber" id="scrubber">
@@ -346,7 +348,7 @@
   <h2 class="sec reveal">Seventy-one years, as <em>flat color.</em></h2>
   <p class="dek reveal">Pale where AI barely touched the work — dark where it now can.</p>
   <div class="reveal d1" style="margin-top:30px">
-    <div class="cstudy-ttl"><em id="focalTraj">Nurses</em> · 1970–2041.</div>
+    <div class="cstudy-ttl"><em id="focalTraj">Nurse</em> · 1970–2041.</div>
     <div class="trajread"><span class="yr" id="trajYr">2026</span><span class="pc" id="trajPc">—</span></div>
     <div class="strip" id="cstrip"><div class="now"></div><div class="thumb" id="cthumb"></div></div>
     <div class="straxis"><span>1970</span><span class="y2k">2000</span><span class="nowl">you · 2026</span><span>2041</span></div>
@@ -411,7 +413,7 @@
   <div class="sharecard reveal d1" id="shareCard">
     <div class="ss" id="shareStudy"></div>
     <div class="sjob" id="shareJob">Nurse</div>
-    <div class="sre"><b id="shareReach">—</b> technically replaceable · 2026</div>
+    <div class="sre"><b id="shareReach">—</b> technical replaceability · 2026</div>
     <div class="swm">The Mirror · Large Labor Model</div>
   </div>
   <div class="ostats reveal d1" id="legOut"></div>
@@ -634,7 +636,7 @@ function renderRungMean(){$('rungMean').innerHTML='<div style="margin:0 0 11px;l
   return `<div style="display:flex;gap:7px;margin:3px 0"><span style="flex:0 0 11px;width:11px;height:11px;margin-top:2px;background:${SE_PAL[idx]}"></span><span><b>${b.name}</b> — ${b.mean}</span></div>`;}).join('');}
 function paintReadout(year){const sh=bandShares(FOCAL,year);renderRungs(sh);const m=Math.round(occReach(FOCAL,year)*100);
   $('bigNum').innerHTML=`${m}<sup>%</sup>`;$('bigYear').textContent=year;$('metaYear').textContent=year;
-  comp.setAttribute('role','img');comp.setAttribute('aria-label',`${FOCAL.name}: ${m}% technically replaceable in ${year}`);}
+  comp.setAttribute('role','img');comp.setAttribute('aria-label',`${FOCAL.name}: ${m}% technical replaceability in ${year}`);}
 function render(year,upd=true){curYear=year;renderHomage(bandShares(FOCAL,year));renderGrid(year);if(upd)paintReadout(year);}
 function renderForm(morph){
   $('homage').style.opacity=(1-smooth(0.15,1,morph)).toFixed(3);
@@ -721,7 +723,7 @@ function buildTerritory(){
   engModels=(you?[you]:[]).concat(rest);
   engModels.forEach((mo,i)=>{mo.pal=mo.focal?SE_PAL:freeRamp(mo.seed,Math.round((i*137.508)%360));}); // even hue spread (golden angle)
   wallEl.innerHTML=engModels.map(mo=>
-    `<div class="cell${mo.focal?' you':''}" data-isco="${mo.o.isco}" role="button" tabindex="0" aria-label="${esc(mo.nm)} — switch the mirror to this job"><div class="cb"></div><div class="cap"><span class="nm">${esc(mo.nm)}</span><span class="pc"></span></div></div>`).join('');
+    `<div class="cell${mo.focal?' you':''}" data-isco="${mo.o.isco}" role="button" tabindex="0" aria-label="${esc(mo.nm)} — switch the mirror to this job"><div class="cb"></div><div class="cap">${mo.focal?'<span class="nm">you</span>':''}<span class="pc"></span></div></div>`).join('');
   cellRefs=[...wallEl.children].map((el,i)=>({cb:el.querySelector('.cb'),pc:el.querySelector('.pc'),mo:engModels[i]}));
   wallYear=null; lastTerrYear=null;
   renderWall(NOW); fitWall(); setTerrLab(NOW);
@@ -729,7 +731,7 @@ function buildTerritory(){
 function renderWall(year){
   if(year===wallYear) return; wallYear=year;
   for(const c of cellRefs){const sh=bandShares(c.mo.o,year),m=Math.round(occReach(c.mo.o,year)*100);
-    c.cb.innerHTML=studySVG(sh,c.mo.pal,c.mo.seed,`${c.mo.nm}: ${m}% technically replaceable in ${year}`);
+    c.cb.innerHTML=studySVG(sh,c.mo.pal,c.mo.seed,`${c.mo.nm}: ${m}% technical replaceability in ${year}`);
     c.pc.textContent=m+'%';}
 }
 /* fit the WHOLE field in the pinned panel — pick columns + cell size so all N cells show, no inner scroll */
@@ -761,13 +763,25 @@ function terrTick(){
   terrPending=year; if(!terrRAF){terrRAF=true;requestAnimationFrame(()=>{renderWall(terrPending);terrRAF=false;});}
 }
 /* tap / keyboard a cell → re-root the whole mirror to that job, in place (no reload) */
-function wallActivate(el){const isco=el&&el.dataset?el.dataset.isco:null; if(!isco) return;
+/* names live on demand: first tap identifies a square, second tap (same square) switches.
+   Keyboard and hover devices switch on first activate — the name is already exposed there. */
+const WALL_TOUCH=matchMedia('(hover:none)').matches;
+let wallArm={isco:null,t:0};
+function wallActivate(el,force){const isco=el&&el.dataset?el.dataset.isco:null; if(!isco) return;
   if(isco===FOCAL_ISCO){showToast('<b>That’s already the job you’re looking at.</b>',2200);return;}
-  const peer=engModels.find(m=>m.o.isco===isco);
+  const peer=engModels.find(m=>m.o.isco===isco); if(!peer) return;
+  const now=performance.now();
+  if(WALL_TOUCH && !force && (wallArm.isco!==isco || now-wallArm.t>2600)){
+    wallArm={isco,t:now};
+    const m=Math.round(occReach(peer.o,wallYear||NOW)*100);
+    showToast(`<b>${esc(peer.nm)}</b><em>${m}% in ${wallYear||NOW} · tap again to switch</em>`,2600);
+    return;
+  }
+  wallArm={isco:null,t:0};
   setFocal(isco,false);
-  showToast(`<b>Now showing ${esc((peer&&peer.nm)||'that job')}</b><em>tap any square to switch</em>`,2800);}
+  showToast(`<b>Now showing ${esc(peer.nm)}</b>`,2400);}
 wallEl.addEventListener('click',e=>{const c=e.target.closest('.cell');if(c)wallActivate(c);});
-wallEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('.cell');if(c){e.preventDefault();wallActivate(c);}}});
+wallEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e.target.closest('.cell');if(c){e.preventDefault();wallActivate(c,true);}}});
 
 /* ===== 04 · TERRITORY vs TERRITORY (real employment-weighted aggregates) ===== */
 function terrAgg(tid,year){
@@ -781,7 +795,7 @@ let iA=Math.max(0,TERR_IDS.indexOf(FOCAL.territory_id));
 let iB=Math.max(0,TERR_IDS.indexOf('money_data'));
 let compYear=NOW;
 function renderC(suf,tid){const a=terrAgg(tid,compYear),t=DATA.territories[tid];
-  $('study'+suf).innerHTML=studySVG(a.shares,freeRamp(hashStr(t.name)),hashStr(t.name),`${t.name}: ${Math.round(a.reach*100)}% technically replaceable in ${compYear}`);
+  $('study'+suf).innerHTML=studySVG(a.shares,freeRamp(hashStr(t.name)),hashStr(t.name),`${t.name}: ${Math.round(a.reach*100)}% technical replaceability in ${compYear}`);
   $('reach'+suf).textContent=Math.round(a.reach*100)+'%';return{reach:a.reach,t};}
 function renderCompareT(){const ra=renderC('A',TERR_IDS[iA]),rb=renderC('B',TERR_IDS[iB]);let v;
   $('rhcA').textContent='Replaceability · '+compYear;$('rhcB').textContent='Replaceability · '+compYear;
@@ -804,10 +818,10 @@ function pickRandomOther(){const pool=JOBS_DB.filter(o=>o.isco!==FOCAL_ISCO);ret
 function renderJVJ(){
   const y=jvjYear;
   const sh1=bandShares(FOCAL,y),r1=Math.round(occReach(FOCAL,y)*100);
-  $('studyJ1').innerHTML=studySVG(sh1,SE_PAL,SE_SEED,`${FOCAL.name}: ${r1}% technically replaceable in ${y}`);
+  $('studyJ1').innerHTML=studySVG(sh1,SE_PAL,SE_SEED,`${FOCAL.name}: ${r1}% technical replaceability in ${y}`);
   $('reachJ1').textContent=r1+'%';$('focalJ1').textContent=FOCAL.name;
   const o=chosenJob,seed=hashStr(o.name),sh2=bandShares(o,y),r2=Math.round(occReach(o,y)*100);
-  $('studyJ2').innerHTML=studySVG(sh2,freeRamp(seed),seed,`${o.name}: ${r2}% technically replaceable in ${y}`);
+  $('studyJ2').innerHTML=studySVG(sh2,freeRamp(seed),seed,`${o.name}: ${r2}% technical replaceability in ${y}`);
   $('reachJ2').textContent=r2+'%';$('jobsearch').value=o.name;
   $('rhcJ1').textContent='Replaceability · '+y;$('rhcJ2').textContent='Replaceability · '+y;
   const dh=Math.round(sh1[0]*100)-Math.round(sh2[0]*100);let v;
@@ -821,6 +835,11 @@ function buildJVJ(){
   renderJVJ();
 }
 attachTypeahead($('jobsearch'),o=>{chosenJob=o;renderJVJ();});
+// tapping the box means "type a different job": clear it, and restore if nothing gets picked
+(function(){const js=$('jobsearch');
+  js.addEventListener('focus',()=>{if(js.value){js.dataset.stash=js.value;js.value='';js.dispatchEvent(new Event('input',{bubbles:false}));}});
+  js.addEventListener('blur',()=>{setTimeout(()=>{if(!js.value)js.value=(chosenJob&&chosenJob.name)||js.dataset.stash||'';},250);});
+})();
 $('jvjYear').addEventListener('input',e=>{jvjYear=+e.target.value;renderJVJ();});
 
 /* ===== reference legend (teaches the reading) ===== */
@@ -831,7 +850,7 @@ const refLegendHTML=()=>`<span class="cap">how to read · centre → edge</span>
 /* ===== OUTRO ===== */
 function buildOutro(){
   const shares=bandShares(FOCAL,NOW),reach=Math.round(occReach(FOCAL,NOW)*100);
-  $('shareStudy').innerHTML=studySVG(shares,SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technically replaceable in 2026`);
+  $('shareStudy').innerHTML=studySVG(shares,SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technical replaceability in 2026`);
   $('shareJob').textContent=FOCAL.name;$('shareReach').textContent=reach+'%';
   $('legOut').innerHTML=BANDS.slice().reverse().map((b,i)=>{const idx=4-i;const pct=Math.round(shares[idx]*100);
     return `<div class="i"><span class="s" style="background:${SE_PAL[idx]}"></span><span class="n">${b.name}</span><span class="v">${pct}%</span></div>`;}).join('');
@@ -922,7 +941,7 @@ async function buildShareCanvas(){
   ctx.strokeStyle='#d6cfbe';ctx.lineWidth=2;ctx.strokeRect(40,40,W-80,H-80);
   // study
   const SS=760, sx=(W-SS)/2, sy=150;
-  try{const img=await rasterize(studySVG(bandShares(FOCAL,NOW),SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technically replaceable in 2026`),SS);
+  try{const img=await rasterize(studySVG(bandShares(FOCAL,NOW),SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technical replaceability in 2026`),SS);
     ctx.drawImage(img,sx,sy,SS,SS);}catch(_){}
   // text (fall back to system sans if Inter isn't ready on the canvas)
   try{await document.fonts.load("300 64px 'Inter'");await document.fonts.load("italic 300 40px 'Inter'");}catch(_){}

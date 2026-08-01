@@ -70,9 +70,8 @@
   .headline{margin-bottom:22px;}
   .headline .big{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:74px;line-height:.9;letter-spacing:-0.03em;display:block;font-variant-numeric:tabular-nums;}
   .headline .big sup{font-size:.3em;vertical-align:top;color:var(--ink-soft);}
-  .headline .bigyear{display:block;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:44px;line-height:1;letter-spacing:-0.01em;color:var(--ink);margin-top:6px;font-variant-numeric:tabular-nums;}
-  .headline .bigcap{display:block;margin-top:8px;font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
-  .headline .bigdef{display:block;margin:10px auto 0;max-width:300px;font-size:12px;line-height:1.45;color:var(--ink-soft);}
+  .headline .bigyear{display:block;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:21px;line-height:1;letter-spacing:0;color:var(--ink-soft);margin-top:6px;font-variant-numeric:tabular-nums;}
+  .headline .bigcap{display:block;margin-top:7px;font-size:10px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);}
   .readout{transition:opacity .26s ease;}
   .rungs .r{display:grid;grid-template-columns:16px 1fr auto;align-items:start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--rule);}
   .rungs .sw{width:16px;height:16px;margin-top:2px;}
@@ -130,11 +129,11 @@
   .cell{display:flex;flex-direction:column;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent;}
   .cell .cb{width:100%;aspect-ratio:1/1;transition:transform .18s cubic-bezier(.2,.6,.2,1);}
   .cell svg{width:100%;height:100%;display:block;}
-  .cell .cap{margin-top:6px;display:flex;justify-content:space-between;gap:6px;align-items:baseline;min-width:0;}
+  .cell .cap{margin-top:6px;display:flex;justify-content:center;gap:6px;align-items:baseline;min-width:0;}
+  .cell.you .cap{justify-content:space-between;}
   .cell .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:11px;color:#23211c;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
   .cell .pc{font-size:10px;font-weight:600;color:#3a372f;font-variant-numeric:tabular-nums;flex:0 0 auto;}
   .cell.you .cb{outline:2px solid var(--ink);outline-offset:3px;}
-  .cell.you .nm::after{content:' · you';font-style:normal;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;}
   .cell:hover .cb{transform:scale(1.05);}
   .cell:focus-visible .cb{outline:2px solid var(--ink);outline-offset:3px;transform:scale(1.05);}
   /* framing B — readout-forward: the live year leads */
@@ -287,7 +286,7 @@
           </div>
         </div>
         <aside class="readout" id="readout">
-          <div class="headline"><span class="big" id="bigNum">—</span><span class="bigyear" id="bigYear">1980</span><span class="bigcap">Technical replaceability</span><span class="bigdef">% of technical replaceability of labor</span></div>
+          <div class="headline"><span class="big" id="bigNum">—</span><span class="bigyear" id="bigYear">1980</span><span class="bigcap">Technical replaceability</span></div>
           <div class="rungs" id="rungs"></div>
         </aside>
       </div>
@@ -362,7 +361,7 @@
 <section class="block" id="outro" data-nav="outro"><div class="wrap outro">
   <p class="kick reveal" style="text-align:center">The mirror</p>
   <div class="share reveal d1" id="shareStudy"></div>
-  <p class="reveal d1" style="margin-top:18px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:24px"><span id="focalOut">Software Engineer</span> · <b id="shareReach" style="font-style:normal;font-weight:300">—</b> technically replaceable · 2026</p>
+  <p class="reveal d1" style="margin-top:18px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:24px"><span id="focalOut">Software Engineer</span> · <b id="shareReach" style="font-style:normal;font-weight:300">—</b> technical replaceability · 2026</p>
   <div class="ostats reveal d1" id="legOut"></div>
   <div class="outro-actions reveal d2">
     <a class="cta" href="#">Look up another job →</a>
@@ -581,7 +580,7 @@ function renderRungs(shares){document.getElementById('rungs').innerHTML=BANDS.sl
 let curYear=NOW;
 function paintReadout(year){const sh=bandShares(FOCAL,year);renderRungs(sh);const m=Math.round(occReach(FOCAL,year)*100);
   document.getElementById('bigNum').innerHTML=`${m}<sup>%</sup>`;document.getElementById('bigYear').textContent=year;document.getElementById('metaYear').textContent=year;
-  comp.setAttribute('role','img');comp.setAttribute('aria-label',`${FOCAL.name}: ${m}% technically replaceable in ${year}`);}
+  comp.setAttribute('role','img');comp.setAttribute('aria-label',`${FOCAL.name}: ${m}% technical replaceability in ${year}`);}
 function render(year,upd=true){curYear=year;renderHomage(bandShares(FOCAL,year));renderGrid(year);if(upd)paintReadout(year);}
 
 function renderForm(morph){
@@ -661,7 +660,7 @@ function buildTerritory(){
   engModels=(you?[you]:[]).concat(rest);
   engModels.forEach((mo,i)=>{mo.pal=mo.focal?SE_PAL:freeRamp(mo.seed,Math.round((i*137.508)%360));}); // even hue spread (golden angle)
   wallEl.innerHTML=engModels.map(mo=>
-    `<div class="cell${mo.focal?' you':''}" data-isco="${mo.o.isco}" role="button" tabindex="0" aria-label="${esc(mo.nm)} — switch the mirror to this job"><div class="cb"></div><div class="cap"><span class="nm">${esc(mo.nm)}</span><span class="pc"></span></div></div>`).join('');
+    `<div class="cell${mo.focal?' you':''}" data-isco="${mo.o.isco}" role="button" tabindex="0" title="${esc(mo.nm)}" aria-label="${esc(mo.nm)} — switch the mirror to this job"><div class="cb"></div><div class="cap">${mo.focal?'<span class="nm">you</span>':''}<span class="pc"></span></div></div>`).join('');
   cellRefs=[...wallEl.children].map((el,i)=>({cb:el.querySelector('.cb'),pc:el.querySelector('.pc'),mo:engModels[i]}));
   wallYear=null; lastTerrYear=null;
   renderWall(NOW); fitWall(); setTerrLab(NOW);
@@ -669,7 +668,7 @@ function buildTerritory(){
 function renderWall(year){
   if(year===wallYear) return; wallYear=year;
   for(const c of cellRefs){const sh=bandShares(c.mo.o,year),m=Math.round(occReach(c.mo.o,year)*100);
-    c.cb.innerHTML=studySVG(sh,c.mo.pal,c.mo.seed,`${c.mo.nm}: ${m}% technically replaceable in ${year}`);
+    c.cb.innerHTML=studySVG(sh,c.mo.pal,c.mo.seed,`${c.mo.nm}: ${m}% technical replaceability in ${year}`);
     c.pc.textContent=m+'%';}
 }
 /* fit the WHOLE field in the pinned panel — pick columns + cell size so all N cells show, no inner scroll */
@@ -733,7 +732,7 @@ function terrAgg(tid,year){
 }
 let iA=0, iB=0, compYear=NOW;
 function renderC(suf,tid){const a=terrAgg(tid,compYear),t=DATA.territories[tid];
-  document.getElementById('study'+suf).innerHTML=studySVG(a.shares,freeRamp(hashStr(t.name)),hashStr(t.name),`${t.name}: ${Math.round(a.reach*100)}% technically replaceable in ${compYear}`);
+  document.getElementById('study'+suf).innerHTML=studySVG(a.shares,freeRamp(hashStr(t.name)),hashStr(t.name),`${t.name}: ${Math.round(a.reach*100)}% technical replaceability in ${compYear}`);
   document.getElementById('reach'+suf).textContent=Math.round(a.reach*100)+'%';return{reach:a.reach,t};}
 function renderCompareT(){const ra=renderC('A',TERR_IDS[iA]),rb=renderC('B',TERR_IDS[iB]);let v;
   document.querySelectorAll('#compare .rhc').forEach(el=>el.textContent='Replaceability · '+compYear);
@@ -761,10 +760,10 @@ function buildJVJ(){if(!chosenJob||chosenJob.isco===FOCAL_ISCO)chosenJob=pickRan
 function renderJVJ(){
   const y=jvjYear;
   const sh1=bandShares(FOCAL,y),r1=Math.round(occReach(FOCAL,y)*100);
-  document.getElementById('studyJ1').innerHTML=studySVG(sh1,SE_PAL,SE_SEED,`${FOCAL.name}: ${r1}% technically replaceable in ${y}`);
+  document.getElementById('studyJ1').innerHTML=studySVG(sh1,SE_PAL,SE_SEED,`${FOCAL.name}: ${r1}% technical replaceability in ${y}`);
   document.getElementById('reachJ1').textContent=r1+'%';
   const o=chosenJob,seed=hashStr(o.name),sh2=bandShares(o,y),r2=Math.round(occReach(o,y)*100);
-  document.getElementById('studyJ2').innerHTML=studySVG(sh2,freeRamp(seed),seed,`${o.name}: ${r2}% technically replaceable in ${y}`);
+  document.getElementById('studyJ2').innerHTML=studySVG(sh2,freeRamp(seed),seed,`${o.name}: ${r2}% technical replaceability in ${y}`);
   document.getElementById('reachJ2').textContent=r2+'%';
   document.getElementById('jobsearch').value=o.name;
   document.querySelectorAll('#jobvjob .rhc').forEach(el=>el.textContent='Replaceability · '+y);
@@ -775,6 +774,11 @@ function renderJVJ(){
   document.getElementById('verdictJ').innerHTML=v;
 }
 attachTypeahead(document.getElementById('jobsearch'),o=>{chosenJob=o;renderJVJ();});
+// clicking the box means "type a different job": clear it, restore if nothing gets picked
+(function(){const js=document.getElementById('jobsearch');
+  js.addEventListener('focus',()=>{if(js.value){js.dataset.stash=js.value;js.value='';js.dispatchEvent(new Event('input',{bubbles:false}));}});
+  js.addEventListener('blur',()=>{setTimeout(()=>{if(!js.value)js.value=(chosenJob&&chosenJob.name)||js.dataset.stash||'';},250);});
+})();
 document.getElementById('jvjYear').addEventListener('input',e=>{jvjYear=+e.target.value;renderJVJ();});
 
 /* ===== reference legend (teaches the reading; palettes vary per study) ===== */
@@ -785,7 +789,7 @@ const refLegendHTML=()=>`<span class="cap">how to read · centre → edge</span>
 /* ===== OUTRO (rebuilds per focal) ===== */
 function buildOutro(){
   const shares=bandShares(FOCAL,NOW), reach=Math.round(occReach(FOCAL,NOW)*100);
-  document.getElementById('shareStudy').innerHTML=studySVG(shares,SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technically replaceable in 2026`);
+  document.getElementById('shareStudy').innerHTML=studySVG(shares,SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technical replaceability in 2026`);
   document.getElementById('shareReach').textContent=reach+'%';
   document.getElementById('legOut').innerHTML=BANDS.slice().reverse().map((b,i)=>{const idx=4-i;const pct=Math.round(shares[idx]*100);
     return `<div class="i"><span class="s" style="background:${SE_PAL[idx]}"></span><span class="n">${b.name}</span><span class="v">${pct}%</span></div>`;}).join('');
@@ -823,7 +827,7 @@ async function buildShareCanvas(){
   ctx.fillStyle='#f6f2e8';ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='#d6cfbe';ctx.lineWidth=2;ctx.strokeRect(40,40,W-80,H-80);
   const SS=760, sx=(W-SS)/2, sy=150;
-  try{const img=await rasterize(studySVG(bandShares(FOCAL,NOW),SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technically replaceable in 2026`),SS);ctx.drawImage(img,sx,sy,SS,SS);}catch(_){}
+  try{const img=await rasterize(studySVG(bandShares(FOCAL,NOW),SE_PAL,SE_SEED,`${FOCAL.name}: ${reach}% technical replaceability in 2026`),SS);ctx.drawImage(img,sx,sy,SS,SS);}catch(_){}
   try{await document.fonts.load("300 64px 'Inter'");await document.fonts.load("italic 300 40px 'Inter'");}catch(_){}
   const ff=(document.fonts&&document.fonts.check&&document.fonts.check("64px 'Inter'"))?"'Inter'":"'Helvetica Neue',Arial,sans-serif";
   ctx.textAlign='center';ctx.fillStyle='#1c1a17';
