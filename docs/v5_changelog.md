@@ -274,3 +274,17 @@ After the initial 2026-04-19 release, a spot-check surfaced a set of small-but-r
 ---
 
 *Large Labor Model v5.0 is the work of a reviewer-directed build pipeline that treated every prior version as sanity-check only. The editorial principles, phase-by-phase process, and Phase 11 emergency interventions are documented in the companion files [v5_methodology.md](v5_methodology.md) (public methodology page) and [v5_editorial_process.md](v5_editorial_process.md) (full post-mortem of the build journey).*
+
+---
+
+## Post-release revisions
+
+### June 8, 2026 — display-data polish (Phases 16–17)
+- `task_short` display labels added for all 4,811 tasks (Phase 16).
+- Phase 17 Mirror-surfaced polish: four occupation score corrections (5321, 8142, 9623, 9629-municipal), duplicate-task cleanup on ten occupations, 22 territory-year points adjusted by ±0.1. No change to the model's method.
+
+### August 15, 2026 — seam correction, currency patch, count fixes
+- **Data/projection seam corrected** (methodology §6.3): each capability band's history previously reached the 2026 honest-deployment anchor early and sat flat (mid/low bands: 2025 duplicated the anchor; high band: C_R flat from 2024, P_A from 2023). Flat runs re-laid as strictly increasing approaches — single-year: `v2025 = max(midpoint(v2024, v2026), v2026 − (v2027 − v2026))`, clamped strictly inside `(v2024, v2026)`; multi-year: linear fill. The 13 territory-level 2025 replaceability records were recomputed (all lower, −1.0 to −7.2 points). Invariants verified by assertion: run-base years, all 2026+ values, and every published 2026 figure unchanged; all 18 vector×band series strictly increasing 2014 → 2028. Scripts: `v5-build/phase12/reconciler/seam_fix_aug2026.py`, `seam_fix_downstream.py`.
+- **Timeline currency patch:** `technology_events` 77 → 94 (May–August 2026 frontier wave; embodiment and regulatory milestones; two 2026 mathematics results), one source entry each. No scores or capability values changed. Display remains one dot per year with one intentional second 2026 slot (year key 2026.5, floored for display).
+- **Count fixes:** `metadata.source_count` 423 → actual entries (6,704); `metadata.occupation_count` 481 → 480.
+- **Methodology page:** §4.1 conflated the workforce-weighted mean (33.7 for 2026) with the unweighted occupation mean (41.2); corrected.
