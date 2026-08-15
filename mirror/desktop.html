@@ -27,6 +27,10 @@
   :root{ --bone:#efeae0; --paper:#f6f2e8; --ink:#1c1a17; --ink-soft:#5a544a; --rule:#d6cfbe; --mount:#b9bcab; }
   *,*::before,*::after{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
+  /* §04, §05 and the outro briefly lock as you reach them — proximity only, a fast flick sails past */
+  html{scroll-snap-type:y proximity;scroll-padding-top:56px;}
+  #compare,#jobvjob{scroll-snap-align:center;}
+  #outro{scroll-snap-align:start;}
   body{background:var(--bone);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision;overflow-x:hidden;}
 
   .progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:60;}
@@ -180,6 +184,15 @@
   .cpanel select,.cpanel input.jobsearch{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;color:#1c1a17;background:transparent;border:0;border-bottom:1px solid var(--rule);padding:4px 6px 6px;margin-bottom:24px;text-align:center;width:100%;max-width:300px;}
   .cpanel select{cursor:pointer;text-align-last:center;-webkit-appearance:none;appearance:none;}
   .cpanel input.jobsearch::placeholder{color:#5a544a;font-style:italic;}
+  /* fixed-height name zone on both panels: long names wrap to 2 lines, canvases stay aligned */
+  .cpanel .jname{min-height:62px;display:flex;align-items:flex-end;justify-content:center;width:100%;max-width:300px;margin-bottom:24px;}
+  .cpanel .jname input.jobsearch{margin-bottom:0;}
+  #focalJ1{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;line-height:1.25;text-align:center;
+    padding-bottom:6px;border-bottom:1px solid transparent;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .jlabel{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;line-height:1.25;color:var(--ink);text-align:center;
+    width:100%;padding:0 4px 6px;border-bottom:1px solid var(--rule);cursor:text;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .jlabel[hidden]{display:none;}
   .cpanel .cs{width:72%;aspect-ratio:1/1;}
   .cpanel svg{width:100%;height:100%;display:block;}
   .cpanel .rh{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:42px;margin:22px 0 2px;font-variant-numeric:tabular-nums;}
@@ -349,8 +362,8 @@
   <h2 class="sec reveal">Your job, beside <em>another.</em></h2>
   <p class="dek reveal">One picked at random — type to choose any job.</p>
   <div class="pair reveal d1" style="margin-top:44px">
-    <div class="cpanel"><div id="focalJ1" style="font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;margin-bottom:24px;padding-bottom:6px;border-bottom:1px solid transparent">Software Engineer</div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc">Replaceability · 2026</div></div>
-    <div class="cpanel"><input class="jobsearch" id="jobsearch" placeholder="type a job…"><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">Replaceability · 2026</div></div>
+    <div class="cpanel"><div class="jname"><div id="focalJ1">Software Engineer</div></div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc">Replaceability · 2026</div></div>
+    <div class="cpanel"><div class="jname"><input class="jobsearch" id="jobsearch" placeholder="type a job…"><div class="jlabel" id="jobLabel" tabindex="0" role="button" aria-label="Change the comparison job" hidden></div></div><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">Replaceability · 2026</div></div>
   </div>
   <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="jvjYear"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
   <div class="verdict reveal d2"><p id="verdictJ"></p></div>
@@ -765,7 +778,8 @@ function renderJVJ(){
   const o=chosenJob,seed=hashStr(o.name),sh2=bandShares(o,y),r2=Math.round(occReach(o,y)*100);
   document.getElementById('studyJ2').innerHTML=studySVG(sh2,freeRamp(seed),seed,`${o.name}: ${r2}% technical replaceability in ${y}`);
   document.getElementById('reachJ2').textContent=r2+'%';
-  document.getElementById('jobsearch').value=o.name;
+  const _js=document.getElementById('jobsearch');
+  if(document.activeElement!==_js){_js.value=o.name; if(typeof showJobLabel==='function')showJobLabel();}
   document.querySelectorAll('#jobvjob .rhc').forEach(el=>el.textContent='Replaceability · '+y);
   const dh=Math.round(sh1[0]*100)-Math.round(sh2[0]*100);let v;
   if(Math.abs(dh)<4)v=`In ${y}, the human core is about the same for <b>${FOCAL.name}</b> and <b>${o.name}</b>.`;
@@ -773,11 +787,18 @@ function renderJVJ(){
   else v=`In ${y}, the human core is larger for <b>${o.name}</b> than for <b>${FOCAL.name}</b>.`;
   document.getElementById('verdictJ').innerHTML=v;
 }
-attachTypeahead(document.getElementById('jobsearch'),o=>{chosenJob=o;renderJVJ();});
-// clicking the box means "type a different job": clear it, restore if nothing gets picked
-(function(){const js=document.getElementById('jobsearch');
+attachTypeahead(document.getElementById('jobsearch'),o=>{chosenJob=o;renderJVJ();showJobLabel();});
+// the chosen job shows as a wrappable 2-line label (inputs can't wrap);
+// clicking it swaps back to the cleared search box, and blur restores the label
+function showJobLabel(){const js=document.getElementById('jobsearch'),jl=document.getElementById('jobLabel');
+  if(js.value){jl.textContent=js.value;jl.hidden=false;js.style.display='none';}}
+function showJobInput(){const js=document.getElementById('jobsearch'),jl=document.getElementById('jobLabel');
+  jl.hidden=true;js.style.display='';js.focus();}
+(function(){const js=document.getElementById('jobsearch'),jl=document.getElementById('jobLabel');
+  jl.addEventListener('click',showJobInput);
+  jl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();showJobInput();}});
   js.addEventListener('focus',()=>{if(js.value){js.dataset.stash=js.value;js.value='';js.dispatchEvent(new Event('input',{bubbles:false}));}});
-  js.addEventListener('blur',()=>{setTimeout(()=>{if(!js.value)js.value=(chosenJob&&chosenJob.name)||js.dataset.stash||'';},250);});
+  js.addEventListener('blur',()=>{setTimeout(()=>{if(!js.value)js.value=(chosenJob&&chosenJob.name)||js.dataset.stash||'';showJobLabel();},250);});
 })();
 document.getElementById('jvjYear').addEventListener('input',e=>{jvjYear=+e.target.value;renderJVJ();});
 
