@@ -1,7 +1,8 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/about", "destination": "/methodology" }
+    { "source": "/about", "destination": "/methodology" },
+    { "source": "/mirror", "destination": "/api/mirror-og" }
   ],
   "redirects": [
     { "source": "/methodology", "destination": "/about", "statusCode": 301 },
