@@ -46,8 +46,10 @@
   .actbar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bone);display:flex;justify-content:space-between;align-items:center;
     padding:9px 16px calc(9px);font-size:9.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);
     pointer-events:none;}
-  .actbar .b{color:var(--ink);font-weight:500;}
-  .actbar .a{transition:opacity .3s;}
+  .actbar .b{color:var(--ink);font-weight:500;white-space:nowrap;}
+  .actbar .a{transition:opacity .3s;white-space:nowrap;}
+  /* one line, always: below 430px the bar keeps the brand (the way home) and the act label */
+  @media (max-width:430px){ .actbar .bm{display:none;} .actbar{letter-spacing:0.16em;} }
 
   /* ---- shared type ---- */
   .kick{font-size:10.5px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px;}
@@ -292,7 +294,7 @@
 <body>
 
 <div class="progress" id="prog"></div>
-<div class="actbar"><span class="b"><a href="/" style="color:inherit;text-decoration:none" title="The Large Labor Model">Large Labor Model</a> · The Mirror</span><span class="a" id="actlabel">01 · The breakdown</span></div>
+<div class="actbar"><span class="b"><a href="/" style="color:inherit;text-decoration:none" title="The Large Labor Model">Large Labor Model</a><span class="bm"> · The Mirror</span></span><span class="a" id="actlabel">01 · The breakdown</span></div>
 <div class="helper" id="helper"></div>
 
 <!-- INTRO · the personal door in -->
