@@ -288,3 +288,9 @@ After the initial 2026-04-19 release, a spot-check surfaced a set of small-but-r
 - **Timeline currency patch:** `technology_events` 77 → 94 (May–August 2026 frontier wave; embodiment and regulatory milestones; two 2026 mathematics results), one source entry each. No scores or capability values changed. Display remains one dot per year with one intentional second 2026 slot (year key 2026.5, floored for display).
 - **Count fixes:** `metadata.source_count` 423 → actual entries (6,704); `metadata.occupation_count` 481 → 480.
 - **Methodology page:** §4.1 conflated the workforce-weighted mean (33.7 for 2026) with the unweighted occupation mean (41.2); corrected.
+
+### August 15, 2026 — 2025 anchored (Phase 12b)
+- The interpolated 2025 capability values were replaced by a **three-instance research anchoring**: Instance A (Claude family, live retrieval, 44 URL-cited milestones), Instance B (GPT family, internal-knowledge sourcing, disclosed), Instance C (GPT-5.6 Sol, owner-run, de-biased ordinal-first protocol without the tempered-tiebreak instruction, 32 URL-cited milestones). Reconciliation: per-band minimum. The de-biased instance was lowest on the cognitive vectors (tempering is evidence-driven) and highest on the physical vectors (bracket narrowness bounds the disagreement to ≤0.014). No bracket stress reported by any instance.
+- Territory 2025 records recomputed: −0.4 (Land & Sea) to −4.3 (Learning & Teaching) versus the interpolation. 2026 anchors, forward values, and all published 2026 figures unchanged (assert-verified; Nurse r2026 = 29.49).
+- Standing evidence ledger for future recalibrations added: `docs/evidence_ledger_2026H2.md` (12 families, 52 live-verified readings, per-family tripwires).
+- Protocol record: `v5-build/phase12b_2025_anchor/` (briefs, instance files, evidence, reconciliation and integration scripts).
