@@ -6,6 +6,12 @@
   "redirects": [
     { "source": "/methodology", "destination": "/about", "statusCode": 301 },
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "mirror.largelabormodel.com" }],
+      "destination": "https://largelabormodel.com/mirror",
+      "statusCode": 301
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "mirror.largelabormodel.com" }],
       "destination": "https://largelabormodel.com/mirror",
