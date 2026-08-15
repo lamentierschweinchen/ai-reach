@@ -2379,7 +2379,7 @@ let activeMilestone = null;
 
 function showMilestonePanel(m) {
   const toast = document.getElementById('milestone-toast');
-  document.getElementById('toast-year').textContent = m.year;
+  document.getElementById('toast-year').textContent = Math.floor(m.year);
   document.getElementById('toast-label').textContent = m.label;
   document.getElementById('toast-desc').textContent = '';
   toast.classList.add('visible');
@@ -2428,7 +2428,7 @@ function buildTimeline() {
     const d = document.createElement('div');
     d.className = 'milestone-dot' + (featuredYears.has(m.year) ? ' milestone-featured' : '');
     d.style.left = yearToPercent(m.year)+'%';
-    d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${m.year}</span>${m.label}</div>`;
+    d.innerHTML = `<div class="milestone-tooltip"><span class="milestone-year">${Math.floor(m.year)}</span>${m.label}</div>`;
     d.addEventListener('click', e => {
       e.stopPropagation();
       if (activeMilestone === m) return;
@@ -2514,7 +2514,7 @@ function checkMilestoneToast(prevYear, newYear) {
   const hit = ALL_EVENTS.find(m => m.year > prevYear && m.year <= newYear && m.year !== lastMilestoneYear);
   if (!hit) return;
   lastMilestoneYear = hit.year;
-  document.getElementById('toast-year').textContent = hit.year;
+  document.getElementById('toast-year').textContent = Math.floor(hit.year);
   document.getElementById('toast-label').textContent = hit.label;
   document.getElementById('toast-desc').textContent = '';
   toast.classList.add('visible');
