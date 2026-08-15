@@ -236,7 +236,7 @@ a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
 
   <h1 class="section-title" style="margin-top: 0;">Methodology</h1>
 
-  <p class="body-text"><strong>Version 5.0 — Released April 19, 2026</strong> · Historical backfill and late fixes applied April 20, 2026 · Last revised August 15, 2026 (<a class="inline" href="#changelog">changelog</a>).</p>
+  <p class="body-text"><strong>Version 5.0 — Released April 19, 2026</strong> · Historical backfill and late fixes applied April 20, 2026 · Last revised August 15, 2026 (<a class="inline" href="#changelog">changelog</a>) · capability snapshot: April 18, 2026 · timeline current through August 2026.</p>
 
   <p class="body-text">This document describes how the Large Labor Model v5 dataset was produced. It is written so that a reader with no prior knowledge of the project can understand how every number was derived, what assumptions were made, and where the model is weakest. Nothing in the dataset is inherited from prior versions unexamined; v5 is a ground-up rebuild on a reviewed 13-phase pipeline.</p>
 
@@ -307,7 +307,7 @@ a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
 
   <h3 class="section-subtitle">2.2 Task decomposition</h3>
 
-  <p class="body-text">Every occupation is decomposed into 2–14 tasks (median ~10), each carrying:</p>
+  <p class="body-text">Every occupation is decomposed into 3–14 tasks (median ~10), each carrying:</p>
 
   <ul class="body-text">
     <li><strong>Capability vector</strong> — one of six (see Section 3)</li>
@@ -317,7 +317,7 @@ a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
 
   <p class="body-text">Phase 4 produced the task set by merging three independent retrieval sources — O*NET task statements via SOC → ISCO crosswalk (15,575 raw tasks), BLS Generalized Work Activities + OOH (11,234 raw tasks), and a context-free reconciler that applied canonical vector definitions without occupation priors. Three-way reconciliation achieved 84.2% agreement; split cases were defaulted to the adversarial pass and flagged. Phase 11 ran three adversarial audit rounds that removed 825 scrape artifacts in aggregate and reclassified hundreds of tasks whose vector assignments were wrong in specific patterns (physical work tagged cognitive; field service tagged industrial; performance work tagged generative).</p>
 
-  <p class="body-text">Total inline task decompositions: <strong>4,818 tasks</strong>. Each carries a source attribution (O*NET, BLS, or dual-sourced) and participates in the replaceability computation described in Section 4.</p>
+  <p class="body-text">Total inline task decompositions: <strong>4,811 tasks (4,818 before the June 8 duplicate-cleanup)</strong>. Each carries a source attribution (O*NET, BLS, or dual-sourced) and participates in the replaceability computation described in Section 4.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 3 -->
@@ -343,7 +343,7 @@ a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
 
   <p class="body-text">The 2026 values are the Phase 11 post-recalibration set. Phase 5's original blind calibration produced higher benchmark-anchored values (C_R 0.87, C_G 0.62, P_A 0.78, Phi_S 0.60, Phi_U 0.15, S_E 0.42). Phase 11 ran two independent recalibrators (Claude Opus 4.7 and GPT-5.4) under the same brief: re-interpret each benchmark citation as a production-reliability number, discounting for remote-operator backstops, confident-failure rates, narrow operational-design domains, and agentic brittleness. Both instances converged within ±0.03 on every vector. The shipping set is the blended midpoint.</p>
 
-  <p class="body-text">The largest correction is Phi_S (−0.14). This is the vector where benchmark and demonstration evidence most overstates production capability under honest-deployment accounting. Waymo's ~150K weekly rides is real deployment, but it runs a narrow operational-design domain and depends on remote-operator backstops for edge cases. Phi_U is defended unchanged at 0.15 because it was already at the conservative floor in Phase 5 — no 2026 deployment evidence moves it.</p>
+  <p class="body-text">The largest correction is Phi_S (−0.14). This is the vector where benchmark and demonstration evidence most overstates production capability under honest-deployment accounting. Waymo's weekly paid rides — roughly 250K at the April snapshot, ~500K by August 2026 — are real deployment, but they run narrow operational-design domains and depend on remote-operator backstops for edge cases. Phi_U is defended unchanged at 0.15 because it was already at the conservative floor in Phase 5 — no 2026 deployment evidence moves it.</p>
 
   <p class="body-text">Vector ordering (C_R &gt; P_A &gt; C_G &gt; Phi_S &gt; S_E &gt; Phi_U) is preserved across the recalibration. Ordering is load-bearing: if it inverted, something would be wrong with the deployment evidence or the vector definitions.</p>
 
@@ -500,7 +500,7 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
       <tr><td>1</td><td>ISCO-08 canonical reference (436 unit groups + 10 approved custom codes)</td></tr>
       <tr><td>2</td><td>Occupation inventory + territory mapping (480 occupations locked)</td></tr>
       <tr><td>3</td><td>Labor data rebuild with occupation-up methodology (635 records, 1800–2025)</td></tr>
-      <tr><td>4</td><td>Task decomposition (3-way reconciled; 4,818 tasks)</td></tr>
+      <tr><td>4</td><td>Task decomposition (3-way reconciled; 4,818 tasks; 4,811 after the June 8 duplicate-cleanup)</td></tr>
       <tr><td>5</td><td>Replaceability 2026 scoring (blind calibrator + 3 scorers + reconciler)</td></tr>
       <tr><td>6</td><td>Replacement formula calibration (7 historical cases + 28-occupation cross-section)</td></tr>
       <tr><td>7</td><td>Capability trajectories 2026 → 2041 (2 forecasters + reconciler, three-scenario)</td></tr>
@@ -550,7 +550,7 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
     <li><strong>Epoch AI, GPQA, HLE, SWE-bench Verified / Pro, ARC-AGI-3</strong> — benchmark landscape for the six vectors.</li>
   </ul>
 
-  <p class="body-text">A full source registry is inlined in the dataset at <code>sources[]</code>. Every labor record, every occupation, and every task carries <code>source_ids[]</code> pointing to registry entries with <code>id</code>, <code>type</code>, <code>title</code>, <code>reliability</code>, <code>authority</code>, and <code>citation</code>. Total source entries: 6,687.</p>
+  <p class="body-text">A full source registry is inlined in the dataset at <code>sources[]</code>. Every labor record, every occupation, and every task carries <code>source_ids[]</code> pointing to registry entries with <code>id</code>, <code>type</code>, <code>title</code>, <code>reliability</code>, <code>authority</code>, and <code>citation</code>. Total source entries: 6,704.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 10 -->
@@ -563,7 +563,7 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
   <ol class="body-text">
     <li><strong>Point estimates over heterogeneous distributions.</strong> C_G spans first-draft copywriting to frontier diagnosis. Phi_S spans robotaxis to rural mail to heavy equipment. S_E spans coding agents to multi-stakeholder incident command. A single 2026 value per vector averages over this; the bounds carry some of the uncertainty but a vector split is a likely v6 improvement.</li>
     <li><strong>Benchmark-vs-deployment gap.</strong> Benchmarks measure frontier capability on clean tasks; deployment measures production reliability on messy real labor. Phase 11's recalibration was an explicit attempt to close this gap via an honest-deployment lens, but production reliability data is still developing and values may shift in v5.1 / v6.</li>
-    <li><strong>High 2040-mid shape.</strong> Under the moderate scenario the mean replaceability at 2040 is 84.6 and 25% of occupations score ≥90. The logistic crossover ceiling means no occupation reaches exactly 100 — the most-replaceable score is around 98. Most occupations sit in the 80–95 band by 2040, so the model still pushes interpretive weight onto the displacement column where the variance lives. Use displacement (mean 24%) to understand workforce implications, not replaceability alone.</li>
+    <li><strong>High 2040-mid shape.</strong> Under the moderate scenario the unweighted occupation mean of technical replaceability at 2040 is 84.6 (employment-weighted, recomputed live from the trajectories: 84.1) and 25% of occupations score ≥90. The logistic crossover ceiling means no occupation reaches exactly 100 — the most-replaceable score is around 98. Most occupations sit in the 80–95 band by 2040, so the model still pushes interpretive weight onto the displacement column where the variance lives. Use displacement (mean 24%) to understand workforce implications, not replaceability alone.</li>
     <li><strong>Phase 6 barrier-model form.</strong> Multiplicative barrier multipliers work across most of the distribution but produce counterintuitive results at high r26 × REGULATORY (lawyers at r41 = 100). A floor-adjusted barrier model for regulatory frictions is a likely v6 change.</li>
     <li><strong>Residual scrape artifacts below the audit bar.</strong> Four Phase 11 audit rounds removed 825 artifacts. The audit bar was 2-model agreement; below-threshold contamination likely remains. A v6 Phase 4 re-run with tightened anti-scrape guardrails is recommended.</li>
     <li><strong>Task-classification ceiling.</strong> Phase 4's three-way reconciliation achieved 84.2% agreement; the 15.8% split cases were defaulted to the Codex adversarial pass and flagged.</li>
@@ -596,7 +596,7 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
 
   <ul class="body-text">
     <li><strong>480 occupations</strong> (up from 388 in v3.2) with canonical ISCO-08 codes and 10 specialized splits.</li>
-    <li><strong>4,818 inline task decompositions</strong> — every occupation decomposed into 2–14 tasks with vector + difficulty + time-weight.</li>
+    <li><strong>4,811 inline task decompositions</strong> — every occupation decomposed into 3–14 tasks with vector + difficulty + time-weight.</li>
     <li><strong>Dual-recalibrated 2026 capability vectors</strong>: C_R=0.76, C_G=0.57, P_A=0.75, Phi_S=0.46, Phi_U=0.15, S_E=0.35. Ordering preserved from Phase 5.</li>
     <li><strong>Empirically-calibrated replacement formula</strong> — conversion_rate 0.30, lag schedule 7/18/30/42/44%, barrier multipliers strengthened under the cross-section fit.</li>
     <li><strong>Three-scenario framing</strong> — low/mid/high bands for 2026 and every projection anchor.</li>
