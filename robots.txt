@@ -1,4 +1,27 @@
+# Fully open, deliberately — including AI crawlers and agents.
+# The dataset is CC BY 4.0; machine-readable entry points: /llms.txt
 User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://largelabormodel.com/sitemap.xml

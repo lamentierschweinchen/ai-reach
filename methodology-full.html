@@ -236,7 +236,7 @@ a.inline:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
 
   <h1 class="section-title" style="margin-top: 0;">Methodology</h1>
 
-  <p class="body-text"><strong>Version 5.0 — Released April 19, 2026</strong> · Historical backfill and late fixes applied April 20, 2026 · Last revised August 15, 2026 (<a class="inline" href="#changelog">changelog</a>) · capability snapshot: April 18, 2026 · timeline current through August 2026.</p>
+  <p class="body-text"><strong>Version 5.0 — Released April 19, 2026</strong> · Historical backfill and late fixes applied April 20, 2026 · Last revised August 17, 2026 (<a class="inline" href="#changelog">changelog</a>) · capability snapshot: April 18, 2026 · timeline current through August 2026.</p>
 
   <p class="body-text">This document describes how the Large Labor Model v5 dataset was produced. It is written so that a reader with no prior knowledge of the project can understand how every number was derived, what assumptions were made, and where the model is weakest. Nothing in the dataset is inherited from prior versions unexamined; v5 is a ground-up rebuild on a reviewed 13-phase pipeline.</p>
 
@@ -405,13 +405,14 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
 
   <p class="body-text">Parameters were fit against the 7 historical automation cases and the 28-occupation cross-section from the Anthropic Economic Index (Massenkoff &amp; McCrory, March 2026). Historical-case R² under the fitted formula is 0.85+; plain (no-barrier, uniform-absorbed) R² is 0.61.</p>
 
-  <p class="body-text">Mean 2041-moderate displacement across 480 occupations is <strong>24%</strong>, range 9–47%. This is the honest interpretive anchor for 2041: replaceability rises across most occupations but displacement carries the variance.</p>
+  <p class="body-text">Mean 2041-moderate displacement across 480 occupations is <strong>24%</strong> (24.2), range 10–49 — carried per-occupation as <code>displacement_2041_moderate</code>. This is the honest interpretive anchor for 2041: replaceability rises across most occupations but displacement carries the variance.</p>
 
   <!-- ═══════════════════════════════════════════ -->
   <!-- SECTION 6 -->
   <!-- ═══════════════════════════════════════════ -->
 
   <h2 class="section-title" id="trajectory">6. Capability trajectories 1970 → 2041</h2>
+  <p class="body-text"><strong>Why 2041.</strong> The horizon is now + 15 (2026 + 15 = 2041). Fifteen years is where, for technology moving at this cadence, model projection shades into speculation; the model refuses to score past it. The horizon advances with the annual recalibration.</p>
 
   <p class="body-text">v5 carries a full 1970 → 2041 trajectory for every capability vector. The forward portion (2026 → 2041) came from Phase 7 — two parallel forecasters (Claude + GPT) researching published capability curves, humanoid shipment forecasts, benchmark trajectories, and deployment pilots; reconciled under <code>mid = min(A_mid, B_mid)</code> so no single forecaster's aggressiveness pulled the central case. The backward portion (1970 → 2014) came from Phase 12 — same reconciliation discipline, same two-instance structure, parallel honest-deployment research over assembly-line through ChatGPT milestones.</p>
 
@@ -582,6 +583,8 @@ where crossover(cap, diff) = 1 / (1 + exp(-8 · (cap − diff)))
 
   <h2 class="section-title" id="changelog">11. Changelog</h2>
 
+  <h3 class="section-subtitle">August 17, 2026 — 2041 checkpoint completion</h3>
+  <p class="body-text">The replacement formula has always specified a 2041 lag entry (<code>lag_schedule["2041"] = 0.44</code>, §5) and this page anchors displacement interpretation at 2041 — but the per-occupation emission loop stopped at 2040: the dataset carried <code>displacement_2040_moderate</code> as its last displacement field while territory aggregates already ran to 2041. Completed: <code>replaceability_2041_moderate/low/high</code> and <code>displacement_2041_moderate</code> added for all 480 occupations via the documented pipeline (logistic k=8 task-math over the post-shift forward trajectory; Phase 6 formula). The extension script first reproduced every stored 2040 field exactly (480/480 within rounding) before emitting 2041. Results: mean 2041 displacement 24.2 (range 9.6–48.7), employment-weighted mean 2041 replaceability 84.2, zero 2040→2041 monotonicity violations; §5's stated range updates 9–47 → 10–49. Script: <code>v5-build/assembler/add_2041_checkpoint.py</code>.</p>
   <h3 class="section-subtitle">August 15, 2026 — seam correction, currency patch, count fixes</h3>
 
   <p class="body-text"><strong>Data/projection seam corrected</strong> (<a class="inline" href="#seam">§6.3</a>): flat runs where each band's history reached the 2026 anchor early were re-laid as strictly increasing approaches; the 13 territory-level 2025 records were recomputed (−1.0 to −7.2 points). No 2026 anchor, forward value, or published 2026 figure changed. <strong>Timeline currency patch:</strong> technology_events grew 77 → 94 (the May–August 2026 frontier wave, embodiment and regulatory milestones the timeline lacked, and two 2026 mathematics results — the Jacobian-conjecture counterexample and an amateur's GPT-5.4-assisted proof of a 60-year-old problem), each with a source entry; no occupation scores or capability values changed. The timeline display remains one dot per year, with one intentional second slot for 2026. <strong>Count fixes:</strong> <code>metadata.source_count</code> and <code>occupation_count</code> corrected to actual array lengths (423 → 6,704 entries; 481 → 480). <strong>This page:</strong> §4.1 previously conflated the workforce-weighted mean (33.7 for 2026) with the unweighted occupation mean (41.2); corrected. <strong>2025 anchored (Phase 12b):</strong> later the same day, the interpolated 2025 values were replaced by a three-instance research anchoring (<a class="inline" href="#seam">§6.3</a>) — two model families, one instance under a de-biased protocol, per-band minimum — and the territory 2025 records were recomputed (−0.4 to −4.3). A standing, dated evidence ledger for future recalibrations was added at <code>docs/evidence_ledger_2026H2.md</code>.</p>

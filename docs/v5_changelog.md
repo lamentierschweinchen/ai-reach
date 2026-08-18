@@ -294,3 +294,9 @@ After the initial 2026-04-19 release, a spot-check surfaced a set of small-but-r
 - Territory 2025 records recomputed: −0.4 (Land & Sea) to −4.3 (Learning & Teaching) versus the interpolation. 2026 anchors, forward values, and all published 2026 figures unchanged (assert-verified; Nurse r2026 = 29.49).
 - Standing evidence ledger for future recalibrations added: `docs/evidence_ledger_2026H2.md` (12 families, 52 live-verified readings, per-family tripwires).
 - Protocol record: `v5-build/phase12b_2025_anchor/` (briefs, instance files, evidence, reconciliation and integration scripts).
+
+### August 17, 2026 — 2041 checkpoint completion
+- The replacement formula always specified a 2041 lag entry (`lag_schedule["2041"] = 0.44`) and the methodology anchors displacement interpretation at 2041, but per-occupation emission stopped at 2040. Added `replaceability_2041_moderate/low/high` and `displacement_2041_moderate` for all 480 occupations via the documented pipeline (logistic k=8 task-math, post-shift forward trajectory, Phase 6 formula).
+- **Reproduction gate:** before emitting 2041, the extension script reproduced every stored 2040 field (480/480 within rounding). Zero 2040→2041 monotonicity violations.
+- Results: mean 2041 displacement 24.2 (range 9.6–48.7); employment-weighted mean 2041 replaceability 84.2; replaceability-vs-displacement gap at the horizon: 60.0 points. Methodology §5 range corrected 9–47 → 10–49; horizon rationale (2041 = now + 15) documented in §6.
+- Script: `v5-build/assembler/add_2041_checkpoint.py`.
