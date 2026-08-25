@@ -155,6 +155,7 @@ footer a { text-decoration:none; }
 #tk-panel b { font-weight:500; }
 
 figure img { cursor:zoom-in; }
+[id] { scroll-margin-top: 72px; }
 #lb[hidden] { display:none; }
 #lb { position:fixed; inset:0; z-index:60; background:rgba(28,26,23,0.93); display:flex;
   align-items:center; justify-content:center; padding:3vmin; cursor:zoom-out; }
@@ -614,6 +615,19 @@ figure img { cursor:zoom-in; }
   });
   lb.addEventListener('click', close);
   addEventListener('keydown', function(e) { if (e.key === 'Escape' && !lb.hidden) close(); });
+})();
+// Deep links (#imap-wrap, #dials, ...) must survive the layout shift the figures cause
+// as they load: re-apply the hash target once images have settled.
+(function() {
+  function jump() {
+    if (!location.hash) return;
+    var el = document.getElementById(location.hash.slice(1));
+    if (el) el.scrollIntoView({ block: 'start' });
+  }
+  if (location.hash) {
+    addEventListener('load', function() { jump(); setTimeout(jump, 350); setTimeout(jump, 1200); });
+  }
+  addEventListener('hashchange', jump);
 })();
 </script>
 </main>
