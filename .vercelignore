@@ -1,3 +1,35 @@
-# working files that must not ship to the public site
+# Working files and local tooling that must not ship to the public site.
 CLEANUP_BRIEF.md
 ai-reach-prototype.html
+CLAUDE.md
+.claude/
+graphify-out/
+copy-review/
+words/
+_research/
+
+# Local/editor artifacts.
+.DS_Store
+**/.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Secrets, caches, and unfinished data workstreams.
+.env
+.env.local
+.env.*.local
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.bak
+ai_reach_v4.0.json
+v4_*.md
+v4_*.bib
+v4_*.json
+LLM_Copy_Audit*.xlsx
+DESIGN_POLISH_BRIEF.md
+MOBILE_POLISH_BRIEF.md

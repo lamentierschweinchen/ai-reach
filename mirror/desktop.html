@@ -100,21 +100,21 @@
   section.block{min-height:100vh;display:flex;align-items:center;padding:clamp(70px,9vh,120px) 0;}
 
   /* right-side quick nav */
-  .sidenav{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:15px;}
-  .sidenav a{display:flex;align-items:center;gap:10px;justify-content:flex-end;text-decoration:none;cursor:pointer;}
+  .sidenav{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:0;}
+  .sidenav button{display:flex;align-items:center;gap:10px;justify-content:flex-end;min-width:40px;min-height:40px;padding:0 8px;background:none;border:0;color:inherit;cursor:pointer;font:inherit;}
   .sidenav .lbl{font-family:'Inter';font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);opacity:0;transform:translateX(6px);transition:opacity .2s,transform .2s;white-space:nowrap;}
-  .sidenav a:hover .lbl{opacity:1;transform:none;}
+  .sidenav button:hover .lbl,.sidenav button:focus-visible .lbl{opacity:1;transform:none;}
   .sidenav .dot{width:8px;height:8px;border:1px solid var(--ink-soft);border-radius:50%;transition:background .2s,border-color .2s;flex:0 0 8px;}
-  .sidenav a.on .dot{background:var(--ink);border-color:var(--ink);}
-  .sidenav a.on .lbl{opacity:1;transform:none;color:var(--ink);}
+  .sidenav button.on .dot{background:var(--ink);border-color:var(--ink);}
+  .sidenav button.on .lbl{opacity:1;transform:none;color:var(--ink);}
   @media(max-width:860px){.sidenav{display:none;}}
 
   /* subtle, context-aware share — shares whichever stop you're on */
-  .sharebtn{position:fixed;right:24px;bottom:22px;z-index:56;background:var(--ink);color:var(--bone);border:0;cursor:pointer;font-family:'Inter';font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:11px 16px;opacity:0.82;transition:opacity .2s;}
+  .sharebtn{position:fixed;right:24px;bottom:22px;z-index:56;background:var(--ink);color:var(--bone);border:0;cursor:pointer;font-family:'Inter';font-size:10px;letter-spacing:0.18em;text-transform:uppercase;padding:14px 18px;opacity:0.82;transition:opacity .2s;}
   .sharebtn:hover{opacity:1;}
   .sharemenu{position:fixed;right:24px;bottom:62px;z-index:57;background:var(--paper);border:1px solid var(--rule);box-shadow:0 10px 34px rgba(28,26,23,.16);display:flex;flex-direction:column;min-width:190px;}
   .sharemenu[hidden]{display:none;}
-  .sharemenu button{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.03em;text-align:left;padding:12px 16px;background:none;border:0;border-bottom:1px solid var(--rule);color:var(--ink);cursor:pointer;}
+  .sharemenu button{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.03em;text-align:left;padding:14px 16px;background:none;border:0;border-bottom:1px solid var(--rule);color:var(--ink);cursor:pointer;}
   .sharemenu button:last-child{border-bottom:0;}
   .sharemenu button:hover{background:var(--bone);}
   @media(max-width:860px){.sharemenu{right:14px;bottom:54px;}}
@@ -191,7 +191,7 @@
   #focalJ1{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;line-height:1.25;text-align:center;
     padding-bottom:6px;border-bottom:1px solid transparent;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .jlabel{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:21px;line-height:1.25;color:var(--ink);text-align:center;
-    width:100%;padding:0 4px 6px;border-bottom:1px solid var(--rule);cursor:text;
+    width:100%;padding:0 4px 6px;background:none;border:0;border-bottom:1px solid var(--rule);cursor:text;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .jlabel[hidden]{display:none;}
   .cpanel .cs{width:72%;aspect-ratio:1/1;}
@@ -214,7 +214,7 @@
   .outro h2 em{font-style:italic;}
   .outro .share{margin:36px auto 0;width:min(36vh,240px);aspect-ratio:1/1;}
   .outro .share svg{width:100%;height:100%;display:block;}
-  .outro .cta{margin-top:30px;display:inline-block;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone);background:var(--ink);padding:14px 26px;text-decoration:none;}
+  .outro .cta{margin-top:30px;display:inline-block;font-family:'Inter';font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bone);background:var(--ink);border:0;padding:14px 26px;text-decoration:none;cursor:pointer;}
   .outro .fine{margin-top:42px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:16px;color:var(--ink-soft);}
   .leg{display:flex;flex-wrap:wrap;gap:16px;margin-top:28px;justify-content:center;}
   .leg .i{display:flex;align-items:center;gap:7px;}.leg .s{width:13px;height:13px;}.leg .m{font-size:9px;letter-spacing:1px;color:#4a463c;}.leg .n{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;}
@@ -235,7 +235,6 @@
   /* a11y (overnight audit): keyboard focus + reduced motion */
   :focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
   input[type=range]:focus-visible{outline-offset:3px;}
-  .sharebtn:focus-visible,.cta:focus-visible{outline-color:var(--bone);}
   @media (prefers-reduced-motion: reduce){*,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important;} .reveal{transition:none;}}
   /* typographic orphans — no lone word on the last line */
   h1,h2,h3,h4,p,li,blockquote,.lede,.dek,.sec,.pre,.bigdef,.fine{text-wrap:pretty;}
@@ -257,7 +256,7 @@
 <div class="topbar"><span class="b"><a href="/" style="color:inherit;text-decoration:none" title="The Large Labor Model">Large Labor Model</a> · The Mirror</span><span id="actlabel">01 · The breakdown</span></div>
 <div class="helper" id="helper"></div>
 
-<button class="sharebtn" id="sharebtn" aria-haspopup="true">↗ Share your mirror</button>
+<button class="sharebtn" id="sharebtn" aria-haspopup="menu" aria-expanded="false" aria-controls="shareMenu">↗ Share your mirror</button>
 <div class="sharemenu" id="shareMenu" role="menu" hidden>
   <button data-share="copy" role="menuitem">Copy link</button>
   <button data-share="email" role="menuitem">Email</button>
@@ -268,12 +267,12 @@
 <div class="toast" id="toast"></div>
 
 <nav class="sidenav" id="sidenav">
-  <a data-to="intro"><span class="lbl">Your job</span><span class="dot"></span></a>
-  <a data-to="trajectory"><span class="lbl">Trajectory</span><span class="dot"></span></a>
-  <a data-to="territory"><span class="lbl">Your territory</span><span class="dot"></span></a>
-  <a data-to="compare"><span class="lbl">Side by side</span><span class="dot"></span></a>
-  <a data-to="jobvjob"><span class="lbl">Job vs job</span><span class="dot"></span></a>
-  <a data-to="outro"><span class="lbl">The mirror</span><span class="dot"></span></a>
+  <button type="button" data-to="intro" aria-label="Go to Your job"><span class="lbl">Your job</span><span class="dot" aria-hidden="true"></span></button>
+  <button type="button" data-to="trajectory" aria-label="Go to Trajectory"><span class="lbl">Trajectory</span><span class="dot" aria-hidden="true"></span></button>
+  <button type="button" data-to="territory" aria-label="Go to Your territory"><span class="lbl">Your territory</span><span class="dot" aria-hidden="true"></span></button>
+  <button type="button" data-to="compare" aria-label="Go to Side by side"><span class="lbl">Side by side</span><span class="dot" aria-hidden="true"></span></button>
+  <button type="button" data-to="jobvjob" aria-label="Go to Job vs job"><span class="lbl">Job vs job</span><span class="dot" aria-hidden="true"></span></button>
+  <button type="button" data-to="outro" aria-label="Go to The mirror"><span class="lbl">The mirror</span><span class="dot" aria-hidden="true"></span></button>
 </nav>
 
 <!-- INTRO -->
@@ -309,7 +308,7 @@
         <span class="meta" id="meta">every task, weighted &middot; <strong id="metaYear">1980</strong></span>
       </div>
       <div class="scrubber" id="scrubber"><div class="lead">drag the year — watch each task tip</div>
-        <input type="range" min="1970" max="2041" value="2026" id="yearInput">
+        <input type="range" min="1970" max="2041" value="2026" id="yearInput" aria-label="Year for job breakdown">
         <div class="axis"><span>1970</span><span>2041</span><span class="ax2000">2000</span><span class="axnow">now</span></div></div>
     </div>
   </div>
@@ -322,9 +321,9 @@
   <p class="dek reveal">Pale where AI barely touched the work — dark where it now can.</p>
   <div class="cstudy reveal d1" style="margin-top:44px">
     <div class="cstudy-ttl"><em id="focalTraj">Software Engineer</em> &middot; 1970–2041.</div>
-    <div class="terrstrip" id="cstrip"></div>
+    <div class="terrstrip" id="cstrip" role="slider" tabindex="0" aria-label="Trajectory year" aria-valuemin="1970" aria-valuemax="2041" aria-valuenow="2026" aria-valuetext="2026"></div>
     <div class="terraxis"><span>1970</span><span class="yr2000">2000</span><span class="nowlab">you &middot; 2026</span><span>2041</span></div>
-    <p class="dek" style="margin-top:14px;font-size:14px">Hover the band to read any year.</p>
+    <p class="dek" style="margin-top:14px;font-size:14px">Hover the band or use arrow keys to read any year.</p>
   </div>
 </div></section>
 
@@ -349,10 +348,10 @@
   <h2 class="sec reveal">Your world, beside <em>another.</em></h2>
   <p class="dek reveal">The same scale, two territories — drag the year for both.</p>
   <div class="pair reveal d1" style="margin-top:44px">
-    <div class="cpanel"><select id="selA"></select><div class="cs" id="studyA"></div><div class="rh" id="reachA">—</div><div class="rhc">Replaceability · 2026</div></div>
-    <div class="cpanel"><select id="selB"></select><div class="cs" id="studyB"></div><div class="rh" id="reachB">—</div><div class="rhc">Replaceability · 2026</div></div>
+    <div class="cpanel"><select id="selA" aria-label="First territory"></select><div class="cs" id="studyA"></div><div class="rh" id="reachA">—</div><div class="rhc">Replaceability · 2026</div></div>
+    <div class="cpanel"><select id="selB" aria-label="Second territory"></select><div class="cs" id="studyB"></div><div class="rh" id="reachB">—</div><div class="rhc">Replaceability · 2026</div></div>
   </div>
-  <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="terrYear"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
+  <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="terrYear" aria-label="Year for territory comparison"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
   <div class="verdict reveal d2"><p id="verdictT"></p></div>
   <div class="reflegend reveal d2" id="reflegT"></div>
 </div></section>
@@ -364,9 +363,9 @@
   <p class="dek reveal">One picked at random — type to choose any job.</p>
   <div class="pair reveal d1" style="margin-top:44px">
     <div class="cpanel"><div class="jname"><div id="focalJ1">Software Engineer</div></div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc">Replaceability · 2026</div></div>
-    <div class="cpanel"><div class="jname"><input class="jobsearch" id="jobsearch" placeholder="type a job…"><div class="jlabel" id="jobLabel" tabindex="0" role="button" aria-label="Change the comparison job" hidden></div></div><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">Replaceability · 2026</div></div>
+    <div class="cpanel"><div class="jname"><input class="jobsearch" id="jobsearch" placeholder="type a job…" autocomplete="off" aria-label="Search for a comparison job"><button type="button" class="jlabel" id="jobLabel" aria-label="Change the comparison job" hidden></button></div><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc">Replaceability · 2026</div></div>
   </div>
-  <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="jvjYear"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
+  <div class="jvjscrub reveal d1"><input type="range" min="1970" max="2041" value="2026" id="jvjYear" aria-label="Year for job comparison"><div class="jvjaxis"><span>1970</span><span class="ax2000b">2000</span><span class="axnow2">now</span><span>2041</span></div></div>
   <div class="verdict reveal d2"><p id="verdictJ"></p></div>
   <div class="reflegend reveal d2" id="reflegJ"></div>
 </div></section>
@@ -378,7 +377,7 @@
   <p class="reveal d1" style="margin-top:18px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:24px"><span id="focalOut">Software Engineer</span> · <b id="shareReach" style="font-style:normal;font-weight:300">—</b> technical replaceability · 2026</p>
   <div class="ostats reveal d1" id="legOut"></div>
   <div class="outro-actions reveal d2">
-    <a class="cta" href="#">Look up another job →</a>
+    <button type="button" class="cta" id="againBtn">Look up another job →</button>
     <a class="cta" href="/">Explore the full model →</a>
     <a class="cta" href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener">Learn more about our methodology →</a>
   </div>
@@ -725,14 +724,17 @@ wallEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const c=e
 /* ===== 02 · TRAJECTORY (job's own palette) — hover to read ===== */
 const TRAJ_YEARS=[];for(let y=1970;y<=2041;y+=2)TRAJ_YEARS.push(y);
 function buildTrajectory(){
-  document.getElementById('cstrip').innerHTML=TRAJ_YEARS.map(y=>`<i style="background:${paletteSample(SE_PAL,occReach(FOCAL,y))}"></i>`).join('')+'<div class="cfnow"></div>';
+  const strip=document.getElementById('cstrip');strip.innerHTML=TRAJ_YEARS.map(y=>`<i style="background:${paletteSample(SE_PAL,occReach(FOCAL,y))}"></i>`).join('')+'<div class="cfnow"></div>';strip.setAttribute('aria-valuenow',NOW);strip.setAttribute('aria-valuetext',`${NOW}, ${Math.round(occReach(FOCAL,NOW)*100)}% replaceable`);
 }
 const tip=document.createElement('div');tip.className='striptip';document.body.appendChild(tip);
 const yearAtX=(el,clientX)=>{const r=el.getBoundingClientRect();const x=Math.max(0,Math.min(1,(clientX-r.left)/r.width));return {x,year:Math.round(1970+x*71),top:r.top};};
 const showTip=(text,clientX,top)=>{tip.textContent=text;tip.style.left=clientX+'px';tip.style.top=top+'px';tip.classList.add('on');};
 const cstripEl=document.getElementById('cstrip');
-cstripEl.addEventListener('pointermove',e=>{const a=yearAtX(cstripEl,e.clientX);showTip(`${a.year} · ${Math.round(occReach(FOCAL,a.year)*100)}% replaceable`,e.clientX,a.top);});
+const showTrajectoryYear=(year,clientX,top)=>{const value=`${year}, ${Math.round(occReach(FOCAL,year)*100)}% replaceable`;cstripEl.setAttribute('aria-valuenow',year);cstripEl.setAttribute('aria-valuetext',value);showTip(value,clientX,top);};
+cstripEl.addEventListener('pointermove',e=>{const a=yearAtX(cstripEl,e.clientX);showTrajectoryYear(a.year,e.clientX,a.top);});
 cstripEl.addEventListener('pointerleave',()=>tip.classList.remove('on'));
+cstripEl.addEventListener('blur',()=>tip.classList.remove('on'));
+cstripEl.addEventListener('keydown',e=>{let year=+cstripEl.getAttribute('aria-valuenow')||NOW;if(e.key==='ArrowLeft'||e.key==='ArrowDown')year--;else if(e.key==='ArrowRight'||e.key==='ArrowUp')year++;else if(e.key==='Home')year=1970;else if(e.key==='End')year=2041;else return;e.preventDefault();year=Math.max(1970,Math.min(2041,year));const r=cstripEl.getBoundingClientRect(),x=r.left+((year-1970)/71)*r.width;showTrajectoryYear(year,x,r.top);});
 
 /* ===== TERRITORY vs TERRITORY · PLACEHOLDER engine, real v5 names ===== */
 // REAL territory aggregate: employment-weighted over the territory's occupations (≡ published reach_by_year)
@@ -823,7 +825,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 /* right-side quick nav */
-const navLinks=[...document.querySelectorAll('.sidenav a')];
+const navLinks=[...document.querySelectorAll('.sidenav button')];
 navLinks.forEach(a=>a.addEventListener('click',()=>document.getElementById(a.dataset.to).scrollIntoView({behavior:RM?'auto':'smooth'})));
 let currentSection='intro';
 // centre-line test so tall sticky sections (hero, §03) reliably claim the active dot
@@ -875,8 +877,9 @@ async function shareFallback(){
   else showToast('Screenshot the card to share');
 }
 /* desktop share menu — explicit targets (mobile uses the native OS share sheet) */
-const $sm=document.getElementById('shareMenu');
-function closeShareMenu(){$sm.hidden=true;}
+const $sm=document.getElementById('shareMenu'),$shareBtn=document.getElementById('sharebtn');
+function closeShareMenu(returnFocus=false){$sm.hidden=true;$shareBtn.setAttribute('aria-expanded','false');if(returnFocus)$shareBtn.focus();}
+function openShareMenu(){$sm.hidden=false;$shareBtn.setAttribute('aria-expanded','true');prepareShareFile();const first=$sm.querySelector('button');if(first)first.focus();}
 function socialText(){const r=Math.round(occReach(FOCAL,NOW)*100);return `${FOCAL.name}: AI can technically do ${r}% of this job by 2026 — which is not the same as being replaced.`;}
 function shareTo(kind){
   const u=encodeURIComponent(shareURL()), t=encodeURIComponent(socialText());
@@ -885,13 +888,15 @@ function shareTo(kind){
   else if(kind==='x'){window.open('https://twitter.com/intent/tweet?text='+t+'&url='+u,'_blank','noopener');}
   else if(kind==='linkedin'){window.open('https://www.linkedin.com/sharing/share-offsite/?url='+u,'_blank','noopener');}
   else if(kind==='download'){shareFallback();}
-  closeShareMenu();
+  closeShareMenu(true);
 }
 $sm.addEventListener('click',e=>{const b=e.target.closest('[data-share]');if(b)shareTo(b.dataset.share);});
-document.getElementById('sharebtn').addEventListener('click',e=>{e.stopPropagation();$sm.hidden=!$sm.hidden;if(!$sm.hidden)prepareShareFile();});
+document.getElementById('sharebtn').addEventListener('click',e=>{e.stopPropagation();$sm.hidden?openShareMenu():closeShareMenu(true);});
 document.getElementById('sharebtn').addEventListener('mouseenter',prepareShareFile,{once:true});   // pre-build → instant download
 document.addEventListener('click',e=>{if(!$sm.hidden&&!e.target.closest('#shareMenu')&&!e.target.closest('#sharebtn'))closeShareMenu();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeShareMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$sm.hidden)closeShareMenu(true);});
+$sm.addEventListener('keydown',e=>{const items=[...$sm.querySelectorAll('button')],i=items.indexOf(document.activeElement);if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();items[(i+(e.key==='ArrowDown'?1:-1)+items.length)%items.length].focus();}else if(e.key==='Home'){e.preventDefault();items[0].focus();}else if(e.key==='End'){e.preventDefault();items[items.length-1].focus();}});
+document.getElementById('againBtn').addEventListener('click',()=>{document.getElementById('intro').scrollIntoView({behavior:RM?'auto':'smooth'});setTimeout(()=>document.getElementById('jobEntry').focus(),RM?0:600);});
 
 /* ===== reactive focal switch + INIT ===== */
 function applyFocalSections(){buildTrajectory();buildTerritory();buildCompare();buildJVJ();buildOutro();}

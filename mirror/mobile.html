@@ -36,7 +36,7 @@
   html,body{margin:0;padding:0;}
   html{ -webkit-text-size-adjust:100%; }
   /* §04, §05 and the outro briefly lock as you reach them — proximity only, a fast flick sails past */
-  html{scroll-snap-type:y proximity;scroll-padding-top:34px;}
+  html{scroll-snap-type:y proximity;scroll-padding-top:44px;}
   #compare,#jobvjob{scroll-snap-align:center;}
   #outro{scroll-snap-align:start;}
   body{
@@ -49,9 +49,10 @@
   /* ---- top chrome: thin progress + minimal act label ---- */
   .progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;z-index:60;will-change:width;}
   .actbar{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bone);display:flex;justify-content:space-between;align-items:center;
-    padding:9px 16px calc(9px);font-size:9.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);
+    padding:2px 16px;font-size:9.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);
     pointer-events:none;}
   .actbar .b{color:var(--ink);font-weight:500;white-space:nowrap;}
+  .actbar .b a{display:inline-flex;align-items:center;min-height:40px;pointer-events:auto;}
   .actbar .a{transition:opacity .3s;white-space:nowrap;}
   /* one line, always: below 430px the bar keeps the brand (the way home) and the act label */
   @media (max-width:430px){ .actbar .bm{display:none;} .actbar{letter-spacing:0.16em;} }
@@ -107,7 +108,7 @@
   .comp{position:relative;width:min(84vw,max(calc(100svh - 444px),200px),400px);aspect-ratio:1/1;margin:4px auto 2px;}
   .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);gap:0;}
   .tile{position:relative;transition:background-color .3s ease;opacity:0;transform-origin:center;overflow:hidden;
-    display:flex;flex-direction:column;justify-content:flex-end;padding:7px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+    display:flex;flex-direction:column;justify-content:flex-end;padding:7px;background:none;border:0;text-align:left;color:inherit;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;}
   .tile .nm{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:11px;line-height:1.12;}
   .tile .wt{font-family:'Inter';font-size:7.5px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px;opacity:.62;}
   .homage{position:absolute;inset:0;pointer-events:none;}
@@ -198,7 +199,7 @@
   .cpanel{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;}
   .cpanel select,.cpanel input.jobsearch{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;color:var(--ink);
     background:transparent;border:0;border-bottom:1px solid var(--rule);padding:5px 14px 6px 6px;margin-bottom:10px;text-align:center;
-    width:100%;max-width:100%;-webkit-appearance:none;appearance:none;border-radius:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    width:100%;max-width:100%;min-height:40px;-webkit-appearance:none;appearance:none;border-radius:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .cpanel select{cursor:pointer;text-align-last:center;background-image:none;}
   .cpanel input.jobsearch{font-size:16px;}  /* ≥16px: keeps iOS Safari from auto-zooming the page on focus */
   .cpanel input.jobsearch::placeholder{color:#5a544a;}
@@ -207,7 +208,7 @@
   #focalJ1{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;line-height:1.25;text-align:center;
     padding-bottom:6px;border-bottom:1px solid transparent;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .jlabel{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:13px;line-height:1.25;color:var(--ink);text-align:center;
-    width:100%;padding:0 4px 6px;border-bottom:1px solid var(--rule);cursor:text;
+    width:100%;min-height:40px;padding:0 4px 6px;background:none;border:0;border-bottom:1px solid var(--rule);cursor:text;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
   .jlabel[hidden]{display:none;}
   .cpanel .selwrap{position:relative;display:flex;justify-content:center;width:100%;}
@@ -251,9 +252,9 @@
   /* invisible touch-target expansion (WCAG 2.5.8) — no visual change.
      Outro CTAs stack 6px apart, so expand them only to the gap midline (no overlap). */
   .outro .cta,.meanbtn,.actbar .b a,.formula-link{position:relative;}
-  .actbar .b a::after,.formula-link::after{content:'';position:absolute;left:-8px;right:-8px;top:-12px;bottom:-12px;}
-  .meanbtn::after{content:'';position:absolute;left:-8px;right:-8px;top:-6px;bottom:-12px;}  /* smaller above: rung rows there are tappable */
-  .outro .cta::after{content:'';position:absolute;left:-10px;right:-10px;top:-3px;bottom:-3px;}
+  .formula-link::after{content:'';position:absolute;left:-8px;right:-8px;top:-12px;bottom:-12px;}
+  .meanbtn::after{content:'';position:absolute;left:-8px;right:-8px;top:-9px;bottom:-12px;}  /* smaller above: rung rows there are tappable */
+  .outro .cta::after{content:'';position:absolute;left:-10px;right:-10px;top:-4px;bottom:-4px;}
   .outro .fine{margin-top:34px;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-weight:300;font-size:15px;line-height:1.5;color:var(--ink-soft);}
   .leg{display:flex;flex-wrap:wrap;gap:10px 14px;margin-top:24px;justify-content:center;}
   .leg .i{display:flex;align-items:center;gap:6px;}.leg .s{width:12px;height:12px;}.leg .n{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;}
@@ -271,10 +272,10 @@
     padding:10px 0 calc(16px + var(--safe-b));transform:translateY(100%);transition:transform .28s cubic-bezier(.2,.7,.2,1);max-width:var(--col);margin-inline:auto;}
   .sheet.on .panel{transform:none;}
   .sheet .grip{width:38px;height:4px;border-radius:2px;background:var(--rule);margin:6px auto 8px;}
-  .sheet a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 22px;text-decoration:none;color:var(--ink);
-    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:17px;border-bottom:1px solid var(--rule);cursor:pointer;}
-  .sheet a .ix{font-family:'Inter';font-size:10px;letter-spacing:0.14em;color:var(--ink-soft);}
-  .sheet a:last-child{border-bottom:0;}
+  .sheet .panel button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:15px 22px;background:none;border:0;border-bottom:1px solid var(--rule);color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:17px;text-align:left;cursor:pointer;}
+  .sheet .panel button .ix{font-family:'Inter';font-size:10px;letter-spacing:0.14em;color:var(--ink-soft);}
+  .sheet .panel button:last-child{border-bottom:0;}
 
   /* ---- toast (tap-reveals + fallbacks) ---- */
   .toast{position:fixed;left:14px;right:14px;bottom:calc(70px + var(--safe-b));z-index:80;background:var(--ink);color:var(--bone);
@@ -288,7 +289,6 @@
   /* a11y (overnight audit): visible keyboard focus */
   :focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
   input[type=range]:focus-visible{outline-offset:3px;}
-  .shareBtn:focus-visible,.fab:focus-visible,#againBtn:focus-visible,.outro .cta:focus-visible{outline-color:var(--bone);}
   /* desktop: present the mobile design as a centred phone column on a quiet ground */
   @media (min-width:620px){ body{background:#e7e2d6;} .stage{height:460svh;} }
   .ta-pop{position:absolute;z-index:60;list-style:none;margin:0;padding:4px 0;background:var(--paper);border:1px solid var(--rule);max-height:340px;overflow:auto;text-align:left;box-shadow:0 10px 30px rgba(28,26,23,0.14);}
@@ -365,7 +365,7 @@
   <div class="reveal d1" style="margin-top:30px">
     <div class="cstudy-ttl"><em id="focalTraj">Nurse</em> · 1970–2041.</div>
     <div class="trajread"><span class="yr" id="trajYr">2026</span><span class="pc" id="trajPc">—</span></div>
-    <div class="strip" id="cstrip"><div class="now"></div><div class="thumb" id="cthumb"></div></div>
+    <div class="strip" id="cstrip" role="slider" tabindex="0" aria-label="Trajectory year" aria-valuemin="1970" aria-valuemax="2041" aria-valuenow="2026" aria-valuetext="2026"><div class="now"></div><div class="thumb" id="cthumb"></div></div>
     <div class="straxis"><span>1970</span><span class="y2k">2000</span><span class="nowl">you · 2026</span><span>2041</span></div>
     <p class="dek" style="margin-top:12px;font-size:13px">Drag the band to read any year.</p>
   </div>
@@ -412,7 +412,7 @@
   <div class="pairv reveal d1" style="margin-top:30px">
     <div class="cpanel"><div class="jname"><div id="focalJ1">Nurse</div></div><div class="cs" id="studyJ1"></div><div class="rh" id="reachJ1">—</div><div class="rhc" id="rhcJ1">Replaceability · 2026</div></div>
     <div class="cmid">vs</div>
-    <div class="cpanel"><div class="jname"><input class="jobsearch" id="jobsearch" placeholder="type a job…" autocomplete="off" autocapitalize="words"><div class="jlabel" id="jobLabel" tabindex="0" role="button" aria-label="Change the comparison job" hidden></div></div><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc" id="rhcJ2">Replaceability · 2026</div></div>
+    <div class="cpanel"><div class="jname"><input class="jobsearch" id="jobsearch" placeholder="type a job…" autocomplete="off" autocapitalize="words" aria-label="Search for a comparison job"><button type="button" class="jlabel" id="jobLabel" aria-label="Change the comparison job" hidden></button></div><div class="cs" id="studyJ2"></div><div class="rh" id="reachJ2">—</div><div class="rhc" id="rhcJ2">Replaceability · 2026</div></div>
   </div>
   <div class="scrubber on reveal d1" style="margin-top:26px;max-height:none;opacity:1;pointer-events:auto">
     <div class="yslider"><input type="range" min="1970" max="2041" value="2026" id="jvjYear" aria-label="Year"></div>
@@ -441,18 +441,18 @@
 </div></section>
 
 <!-- floating chrome -->
-<button class="fab nav" id="navFab" aria-label="Sections">≡</button>
-<button class="fab share" id="shareFab">↗ Share</button>
-<div class="sheet" id="navSheet" aria-hidden="true">
+<button type="button" class="fab nav" id="navFab" aria-label="Sections" aria-expanded="false" aria-controls="navSheet">≡</button>
+<button type="button" class="fab share" id="shareFab">↗ Share</button>
+<div class="sheet" id="navSheet" role="dialog" aria-modal="true" aria-label="Sections" aria-hidden="true">
   <div class="scrim" id="navScrim"></div>
   <div class="panel">
     <div class="grip"></div>
-    <a data-to="intro"><span>Your job</span><span class="ix">00</span></a>
-    <a data-to="trajectory"><span>Your trajectory</span><span class="ix">02</span></a>
-    <a data-to="territory"><span>Your territory</span><span class="ix">03</span></a>
-    <a data-to="compare"><span>Side by side</span><span class="ix">04</span></a>
-    <a data-to="jobvjob"><span>Job vs job</span><span class="ix">05</span></a>
-    <a data-to="outro"><span>The mirror</span><span class="ix">06</span></a>
+    <button type="button" data-to="intro"><span>Your job</span><span class="ix">00</span></button>
+    <button type="button" data-to="trajectory"><span>Your trajectory</span><span class="ix">02</span></button>
+    <button type="button" data-to="territory"><span>Your territory</span><span class="ix">03</span></button>
+    <button type="button" data-to="compare"><span>Side by side</span><span class="ix">04</span></button>
+    <button type="button" data-to="jobvjob"><span>Job vs job</span><span class="ix">05</span></button>
+    <button type="button" data-to="outro"><span>The mirror</span><span class="ix">06</span></button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -623,8 +623,9 @@ function buildHeroTiles(){
   gridEl.innerHTML=''; tileEls=[];
   const sortedTasks=FOCAL.tasks.slice().sort((a,b)=>a.vector<b.vector?-1:a.vector>b.vector?1:a.diff-b.diff);
   const place=cells.map((cell,i)=>({...cell,task:sortedTasks[i]}));
-  for(const p of place){if(!p.task)continue;const el=document.createElement('div');el.className='tile';
+  for(const p of place){if(!p.task)continue;const el=document.createElement('button');el.type='button';el.className='tile';
     el.style.gridColumn=p.c+1;el.style.gridRow=p.r+1;el.title=p.task.name;
+    el.setAttribute('aria-label',`${p.task.short||shortHead(p.task.name)}. Show full task description.`);
     el.innerHTML=`<div class="wt">${Math.round(p.task.weight)}%</div><div class="nm">${p.task.short||shortHead(p.task.name)}</div>`;
     el.addEventListener('click',()=>revealTask(p.task));
     tileEls.push({el,task:p.task});gridEl.appendChild(el);}
@@ -718,7 +719,7 @@ function buildTrajectory(){
   setTrajRead(NOW,0.789);
 }
 function setTrajRead(year,frac){$('trajYr').textContent=year;$('trajPc').textContent=Math.round(occReach(FOCAL,year)*100)+'% replaceable';
-  const th=$('cthumb');if(th)th.style.left=(frac*100)+'%';}
+  const th=$('cthumb'),strip=$('cstrip');if(th)th.style.left=(frac*100)+'%';strip.setAttribute('aria-valuenow',year);strip.setAttribute('aria-valuetext',`${year}, ${Math.round(occReach(FOCAL,year)*100)}% replaceable`);}
 
 /* ===== 03 · TERRITORY — the field, swept through time (sticky scroll) ===== */
 let engModels=[], cellRefs=[], wallYear=null, lastTerrYear=null;
@@ -929,6 +930,7 @@ function bindStrip(el,onMove,onEnd){
 }
 // trajectory: drag reads the year/% in the job's own palette
 bindStrip($('cstrip'),frac=>{const year=Math.round(1970+frac*71);setTrajRead(year,frac);});
+$('cstrip').addEventListener('keydown',e=>{let year=+$('cstrip').getAttribute('aria-valuenow')||NOW;if(e.key==='ArrowLeft'||e.key==='ArrowDown')year--;else if(e.key==='ArrowRight'||e.key==='ArrowUp')year++;else if(e.key==='Home')year=1970;else if(e.key==='End')year=2041;else return;e.preventDefault();year=Math.max(1970,Math.min(2041,year));setTrajRead(year,(year-1970)/71);});
 // (§03's drag-strip is replaced by the sticky scroll-sweep — see terrTick)
 
 /* ===== chrome: progress bar, reveals, nav sheet ===== */
@@ -943,11 +945,13 @@ const navIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){cur
 document.querySelectorAll('[data-nav]').forEach(s=>navIO.observe(s));
 // nav sheet
 const sheet=$('navSheet');
-function openSheet(){sheet.classList.add('on');sheet.setAttribute('aria-hidden','false');}
-function closeSheet(){sheet.classList.remove('on');sheet.setAttribute('aria-hidden','true');}
+let sheetReturnFocus=null;
+function openSheet(){sheetReturnFocus=document.activeElement;sheet.classList.add('on');sheet.setAttribute('aria-hidden','false');$('navFab').setAttribute('aria-expanded','true');const first=sheet.querySelector('.panel button');if(first)first.focus();}
+function closeSheet(returnFocus=true){sheet.classList.remove('on');sheet.setAttribute('aria-hidden','true');$('navFab').setAttribute('aria-expanded','false');if(returnFocus&&sheetReturnFocus&&sheetReturnFocus.focus)sheetReturnFocus.focus();}
 $('navFab').addEventListener('click',openSheet);
 $('navScrim').addEventListener('click',closeSheet);
-sheet.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{closeSheet();const t=$(a.dataset.to);if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'});}));
+sheet.querySelectorAll('[data-to]').forEach(a=>a.addEventListener('click',()=>{closeSheet();const t=$(a.dataset.to);if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'});}));
+sheet.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeSheet();return;}if(e.key!=='Tab')return;const items=[...sheet.querySelectorAll('.panel button')],first=items[0],last=items[items.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
 $('againBtn').addEventListener('click',()=>{$('intro').scrollIntoView({behavior:RM?'auto':'smooth'});setTimeout(()=>$('jobEntry').focus(),RM?0:600);});
 
 /* ===== NATIVE SHARE · generated PNG card (SVG study → canvas → file) ===== */

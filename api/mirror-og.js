@@ -97,7 +97,7 @@ ${buildMeta(job)}
 </head>
 <body>
 <noscript style="font-family:Georgia,serif;padding:40px;max-width:640px;margin:0 auto;color:#1c1a17">
-  The Mirror needs JavaScript. <a href="desktop.html">Continue →</a>
+  The Mirror needs JavaScript. <a href="/mirror/desktop">Continue →</a>
 </noscript>
 </body>
 </html>
