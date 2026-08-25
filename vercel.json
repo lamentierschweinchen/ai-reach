@@ -2,22 +2,88 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/about", "destination": "/methodology" },
-    { "source": "/mirror", "destination": "/api/mirror-og" }
+    {
+      "source": "/about",
+      "destination": "/methodology"
+    },
+    {
+      "source": "/mirror",
+      "destination": "/api/mirror-og"
+    }
   ],
   "redirects": [
-    { "source": "/methodology", "destination": "/about", "statusCode": 301 },
+    {
+      "source": "/methodology",
+      "destination": "/about",
+      "statusCode": 301
+    },
     {
       "source": "/",
-      "has": [{ "type": "host", "value": "mirror.largelabormodel.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "mirror.largelabormodel.com"
+        }
+      ],
       "destination": "https://largelabormodel.com/mirror",
       "statusCode": 301
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "mirror.largelabormodel.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "mirror.largelabormodel.com"
+        }
+      ],
       "destination": "https://largelabormodel.com/mirror",
       "statusCode": 301
+    }
+  ],
+  "headers": [
+    {
+      "source": "/ai_reach_v5.0.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/essay/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,28 @@
+# Large Labor Model
+
+> An open model of machine capability set against human work: 480 occupations, decomposed into 4,811 tasks, each scored against six machine-capability vectors for every year from 1970 to 2041 (the horizon is now + 15), on a registry of 6,704 sources. The metric is technical replaceability — what machines could do — kept strictly apart from replacement, which is modeled separately. Dataset CC BY 4.0, code MIT. Corrections are invited, especially from people (and their AI systems) who have done the jobs.
+
+The formula: r(occupation, year) = 100 · Σ time_weight · σ(8 · (capability[vector][year] − difficulty)) ÷ Σ time_weight. Five tiers give scores words: Human (<0.10), Augmented, Collaborative, Supervised, Autonomous (≥0.90).
+
+## Data (machine-readable, CORS-open)
+
+- [Full dataset](https://largelabormodel.com/ai_reach_v5.0.json): everything — occupations, task decompositions, capability trajectories, events, sources. ~7.8 MB.
+- [Task tables, flat](https://largelabormodel.com/data/task_tables.csv): one row per task (occupation, task, vector, difficulty, time weight, 2026 machine credit). The unit of contribution — check a job you have done.
+- [Occupation index](https://largelabormodel.com/data/occupations_index.json): one record per occupation — name, territory, employment weight, 2026 and 2041 replaceability with bands, modeled displacement, primary barrier. Small enough for context windows.
+
+## Method and provenance
+
+- [Methodology](https://largelabormodel.com/methodology-full): the full method — scoring, the replacement model, capability trajectories, calibration against seven historical automation cases, known limitations (§10), and a gapless changelog (§11).
+- [Evidence ledger](https://largelabormodel.com/docs/evidence_ledger_2026H2.md): dated, source-cited readings behind the current anchors, with named tripwires that re-open them.
+- [Changelog](https://largelabormodel.com/docs/v5_changelog.md): every dataset correction, dated, including our own caught errors.
+- [Citation](https://largelabormodel.com/CITATION.cff): how to cite (CC BY 4.0 requires attribution).
+
+## Interfaces (human-readable)
+
+- [The Model](https://largelabormodel.com/): the world's work — thirteen territories, 1800 to 2041.
+- [The Mirror](https://largelabormodel.com/mirror): any single job, task by task. Deep link pattern: /mirror?job=nurse
+- [Every Job Is Two Jobs](https://largelabormodel.com/two-jobs): the data essay — where the line between machine-absorbed and machine-untouchable hours runs, and how fast it moves.
+
+## Contributing (humans and their AI systems)
+
+The most valuable contribution is a specific, evidence-backed correction to a task table: a wrong time weight, a wrong difficulty, a missing task — from someone who has actually done the job. Recipe for an AI assistant helping a contributor: (1) fetch the occupation's rows from /data/task_tables.csv, (2) compare against the contributor's lived description of the work, (3) draft the discrepancy with evidence, (4) file it at [GitHub issues](https://github.com/lamentierschweinchen/ai-reach/issues) per [CONTRIBUTING](https://largelabormodel.com/CONTRIBUTING.md). Accepted corrections enter the public changelog; the next version knows what you knew.
