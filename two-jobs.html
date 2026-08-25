@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every Job Is Two Jobs</title>
+<meta name="description" content="Machines swallowed one half of human work at a speed nobody has quite metabolized. The other half they cannot touch — yet. What the data on 480 occupations shows: where the line runs, and how fast it is moving.">
+<link rel="canonical" href="https://largelabormodel.com/two-jobs">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Every Job Is Two Jobs">
+<meta property="og:description" content="Machines swallowed one half of human work at a speed nobody has quite metabolized. The other half they cannot touch — yet. What the data on 480 occupations shows: where the line runs, and how fast it is moving.">
+<meta property="og:url" content="https://largelabormodel.com/two-jobs">
+<meta property="og:image" content="https://largelabormodel.com/essay/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://largelabormodel.com/essay/og.png">
+</head>
+<body>
+<nav class="sitebar"><span>Large Labor Model · the data</span><span><a href="/">The Model</a><a href="/mirror">The Mirror</a><a href="/methodology-full">Methodology</a></span></nav><style>
+@font-face { font-family:'Inter'; src:url('/mirror/Inter/Inter-Variable.woff2') format('woff2-variations'); font-weight:100 900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Inter'; src:url('/mirror/Inter/Inter-Italic-Variable.woff2') format('woff2-variations'); font-weight:100 900; font-style:italic; font-display:swap; }
+:root { --bone:#efeae0; --paper:#f6f2e8; --ink:#1c1a17; --soft:#5a544a; --rule:#d6cfbe; }
+html { background:var(--bone); }
+body { background:var(--bone); color:var(--ink); margin:0; font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:300; font-size:17px; line-height:1.7; -webkit-font-smoothing:antialiased; }
+main { max-width:800px; margin:0 auto; padding:clamp(28px,6vw,72px) clamp(18px,4vw,44px) 90px; }
+header { margin-bottom:54px; }
+.kick, .seckick { font-size:10.5px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; color:var(--soft); margin:0 0 16px; }
+h1 { font-weight:300; font-size:clamp(34px,5.4vw,54px); line-height:1.06; letter-spacing:-0.02em; margin:0 0 18px; max-width:19ch; text-wrap:balance; }
+.dek { font-style:italic; font-size:19px; color:var(--soft); max-width:none; margin:0; }
+section { border-top:1px solid var(--rule); padding-top:34px; margin-top:46px; }
+.seckick { margin-bottom:8px; }
+h2 { font-weight:300; font-size:clamp(24px,3.4vw,33px); line-height:1.12; letter-spacing:-0.015em; margin:0 0 20px; text-wrap:balance; }
+h3 { font-weight:400; font-style:italic; font-size:20px; margin:34px 0 12px; }
+p, ul { max-width:none; }
+li { margin:6px 0; }
+strong { font-weight:500; }
+a { color:inherit; text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--rule); }
+a:hover { text-decoration-color:var(--ink); }
+blockquote { background:var(--paper); border:1px solid var(--rule); margin:26px 0; padding:18px 22px; max-width:none;
+  font-size:15.5px; font-variant-numeric:tabular-nums; }
+figure { margin:36px 0; }
+#imap-wrap { background:var(--paper); border:1px solid var(--rule); padding:8px 8px 0; position:relative; }
+#imap-years { position:absolute; top:14px; right:14px; display:flex; gap:6px; z-index:2; }
+#imap-years button { font-family:'Inter'; font-size:12px; letter-spacing:0.08em; padding:5px 12px; background:var(--bone);
+  border:1px solid var(--rule); color:var(--soft); cursor:pointer; }
+#imap-years button.on { background:var(--ink); color:var(--bone); border-color:var(--ink); }
+#imap { width:100%; height:auto; display:block; font-family:'Inter'; }
+#imap text { text-anchor:middle; pointer-events:none; }
+#imap g { cursor:pointer; outline:none; }
+#imap g rect { transition:opacity .15s; }
+#imap g:hover rect, #imap g:focus-visible rect { opacity:.85; }
+#imap g.sel rect { stroke:var(--ink); stroke-width:2.5; }
+#imap-panel { border-top:1px solid var(--rule); padding:14px 12px 16px; min-height:120px; }
+#imap-panel .ttl { display:flex; flex-wrap:wrap; gap:4px 14px; align-items:baseline; }
+#imap-panel .ttl b { font-size:18px; font-weight:500; }
+#imap-panel .ttl span { font-size:12px; color:var(--soft); }
+#imap-panel .ds { font-style:italic; color:var(--soft); font-size:14px; margin:6px 0 10px; }
+#imap-panel .bar { display:flex; height:20px; overflow:hidden; }
+#imap-panel .seg { display:flex; align-items:center; justify-content:center; font-size:10px; color:#f6f2e8; }
+#imap-panel .legs { display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:8px; }
+#imap-panel .lg { font-size:10.5px; color:var(--soft); display:inline-flex; align-items:center; gap:5px; }
+#imap-panel .lg i { width:9px; height:9px; display:inline-block; }
+figure img { width:100%; max-width:100%; height:auto; display:block; border:1px solid var(--rule); background:var(--paper); }
+figcaption { font-style:italic; font-size:13.5px; color:var(--soft); margin-top:10px; max-width:none; line-height:1.5; }
+footer { margin-top:70px; border-top:1px solid var(--rule); padding-top:18px; font-size:11px; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--soft); display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+footer a { text-decoration:none; }
+@media (prefers-reduced-motion:no-preference) { html { scroll-behavior:smooth; } }
+
+/* --- interactive figures: shared plate frames (#dials #race #wall #tasks) --- */
+#dials, #race, #wall, #tasks { background:var(--paper); border:1px solid var(--rule); padding:18px 18px 16px; position:relative; }
+.dl-kick, .rc-kick { font-size:10.5px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase; color:var(--soft); margin:0 0 6px; }
+.dl-title, .rc-title, .tk-title { font-weight:300; font-size:clamp(19px,3vw,24px); line-height:1.15; letter-spacing:-0.01em; margin:0 0 16px; }
+/* --- #dials (fig-5) --- */
+#dl-ctl { display:flex; align-items:center; gap:16px; margin:0 0 14px; }
+#dl-year { flex:1; appearance:none; -webkit-appearance:none; height:28px; margin:0; background:transparent; cursor:pointer; }
+#dl-year::-webkit-slider-runnable-track { height:2px; background:var(--rule); }
+#dl-year::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:28px; height:28px; margin-top:-13px; background:var(--ink); border:none; border-radius:0; }
+#dl-year::-moz-range-track { height:2px; background:var(--rule); }
+#dl-year::-moz-range-thumb { width:28px; height:28px; background:var(--ink); border:none; border-radius:0; }
+#dl-year:focus-visible { outline:2px solid var(--soft); outline-offset:4px; }
+#dl-read { font-size:29px; font-weight:300; font-variant-numeric:tabular-nums; min-width:2.5em; text-align:right; }
+#dl-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px 20px; }
+.dl-lab { font-size:13px; font-weight:500; }
+.dl-gloss { font-style:italic; font-size:11.5px; color:var(--soft); margin:1px 0 4px; }
+.dl-cell svg { width:100%; height:auto; display:block; font-family:'Inter'; }
+.dl-grid-l { stroke:var(--rule); stroke-width:1; }
+.dl-now { stroke:var(--soft); stroke-width:1; stroke-dasharray:2 3; }
+.dl-band { fill:#cdb98f; fill-opacity:.38; }
+.dl-mid { fill:none; stroke:var(--ink); stroke-width:1.8; }
+.dl-dot { fill:var(--ink); }
+.dl-tick { font-size:10.5px; fill:var(--soft); }
+.dl-val { font-size:12.5px; font-weight:500; fill:var(--ink); font-variant-numeric:tabular-nums; }
+.dl-span { font-size:10.5px; fill:var(--soft); font-variant-numeric:tabular-nums; }
+/* --- #race (fig-8) --- */
+#rc-svg { width:100%; height:auto; display:block; font-family:'Inter'; }
+.rc-grid { stroke:var(--rule); stroke-width:1; }
+.rc-tick, .rc-now { fill:var(--soft); font-size:12px; }
+.rc-ylab { fill:var(--soft); font-size:12px; }
+.rc-note { fill:var(--soft); font-size:12.5px; font-style:italic; }
+.rc-t { transition:opacity .15s; }
+.rc-line { fill:none; stroke:var(--soft); stroke-width:1.25; }
+.rc-dim .rc-line { stroke-opacity:.35; }
+.rc-named .rc-line { stroke-opacity:.75; }
+.rc-ink .rc-line { stroke:var(--ink); stroke-width:2.5; }
+.rc-ochre .rc-line { stroke:#b07e4a; stroke-width:2.5; }
+.rc-hit { fill:none; stroke:#000; stroke-opacity:0; stroke-width:12; pointer-events:stroke; cursor:pointer; outline:none; }
+#rc-svg.rc-focus .rc-t { opacity:.35; }
+#rc-svg.rc-focus .rc-t.rc-on { opacity:1; }
+#rc-svg.rc-focus .rc-t.rc-on .rc-line { stroke:var(--ink); stroke-width:2.5; stroke-opacity:1; }
+.rc-lab { font-size:12.5px; pointer-events:none; transition:opacity .15s; }
+.rc-lab-soft { fill:var(--soft); }
+.rc-lab-ink { fill:var(--ink); font-weight:500; }
+.rc-lab-ochre { fill:#8a5a32; }
+#rc-svg.rc-focus .rc-lab { opacity:.35; }
+#rc-svg.rc-focus .rc-lab.rc-on { opacity:1; }
+.rc-nowl { stroke:var(--soft); stroke-width:1; stroke-dasharray:2 3; }
+.rc-arr { stroke:var(--ink); stroke-width:1.3; }
+.rc-arrh { fill:var(--ink); }
+.rc-lead { stroke:var(--soft); stroke-width:1; }
+.rc-ann { font-size:12.5px; font-style:italic; fill:var(--ink); }
+#rc-status { font-size:13px; color:var(--ink); margin:-6px 0 10px; min-height:20px; font-variant-numeric:tabular-nums; }
+#rc-status b { font-weight:500; }
+#rc-status em { color:var(--soft); }
+/* --- #wall (fig-wall) --- */
+#wl-year { font-style:italic; font-weight:300; font-size:clamp(34px,6vw,46px); line-height:1; margin:2px 0 8px; }
+#wl-sub { font-size:12.5px; color:var(--soft); margin:0 0 22px; }
+#wl-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(64px,1fr)); gap:18px 14px; }
+@media (min-width:700px) { #wl-grid { grid-template-columns:repeat(8,1fr); } }
+.wl-cell { display:flex; flex-direction:column; gap:7px; cursor:pointer; outline:none; }
+.wl-cell:focus-visible { outline:2px solid var(--soft); outline-offset:3px; }
+.wl-sqw { position:relative; aspect-ratio:1; }
+.wl-sq { position:absolute; inset:0; }
+.wl-in { position:absolute; left:19%; top:19%; width:62%; height:62%; }
+.wl-you .wl-sqw { outline:1px solid var(--ink); outline-offset:3px; }
+.wl-sel .wl-sqw { outline:2.5px solid var(--ink); outline-offset:3px; }
+.wl-lab { font-size:10.5px; color:var(--soft); text-align:center; font-variant-numeric:tabular-nums; }
+.wl-you .wl-lab { color:var(--ink); font-style:italic; }
+#wl-panel { border-top:1px solid var(--rule); margin-top:18px; padding-top:12px; font-size:14px; min-height:22px; }
+#wl-panel b { font-weight:500; }
+/* --- #tasks (fig-2) --- */
+#tk-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width:480px) { #tk-grid { grid-template-columns:1fr; } }
+.tk-tile { position:relative; min-height:96px; padding:10px 12px 12px; display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start; gap:14px; cursor:pointer; outline:none; }
+.tk-hours { font-size:11px; opacity:.75; font-variant-numeric:tabular-nums; }
+.tk-name { font-style:italic; font-size:14px; line-height:1.35; text-align:left; }
+.tk-dot { position:absolute; top:9px; right:9px; width:6px; height:6px; border-radius:50%; background:currentColor; opacity:.55; }
+.tk-tile:focus-visible { outline:2px solid var(--soft); outline-offset:2px; }
+.tk-tile.tk-sel { outline:2px solid var(--ink); outline-offset:2px; }
+#tk-panel { border-top:1px solid var(--rule); margin-top:16px; padding-top:12px; font-size:14px; min-height:22px; }
+#tk-panel b { font-weight:500; }
+
+figure img { cursor:zoom-in; }
+#lb[hidden] { display:none; }
+#lb { position:fixed; inset:0; z-index:60; background:rgba(28,26,23,0.93); display:flex;
+  align-items:center; justify-content:center; padding:3vmin; cursor:zoom-out; }
+#lb img { max-width:96vw; max-height:94vh; width:auto; height:auto;
+  border:1px solid var(--rule); background:var(--paper); box-shadow:0 12px 60px rgba(0,0,0,0.45); }
+
+.sitebar { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;
+  padding:14px clamp(16px,4vw,40px); border-bottom:1px solid var(--rule);
+  font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--soft); }
+.sitebar a { color:var(--soft); text-decoration:none; margin-left:18px; }
+.sitebar a:hover { color:var(--ink); }
+</style>
+<main>
+<header><p class='kick'>Large Labor Model · a data deep-dive</p><h1>Every Job Is Two Jobs</h1>
+<p class='dek'>Machines swallowed one half of human work at a speed nobody has quite metabolized. The other half they cannot touch — yet. What the data on 480 occupations shows: where the line runs, and how fast it is moving.</p>
+</header>
+<p>At some point this morning, a nurse cleaned and dressed a wound. It is delicate work. The judgment lives in her fingertips, in the look of skin, in a patient who flinches or doesn't. Nothing about it repeats. An hour earlier, at a station down the hall, the same nurse wrote up a patient's health-education plan: structured, documented, screen-shaped work. The kind software has learned to do startlingly well.</p>
+<p><em>Will AI take her job?</em> Three years of headlines have trained everyone to ask some version of that question. Answers vary wildly, depending largely on your proclivity for new technology: <a href="https://www.oxfordmartin.ox.ac.uk/publications/the-future-of-employment" target="_blank" rel="noopener">forty-seven percent of jobs at risk</a> (Oxford, 2013). <a href="https://www.goldmansachs.com/insights/articles/generative-ai-could-raise-global-gdp-by-7-percent" target="_blank" rel="noopener">Three hundred million exposed</a> (Goldman Sachs, 2023). <a href="https://www.nber.org/papers/w32487" target="_blank" rel="noopener">Barely any effect at all</a> (Acemoglu, 2024). At most one of those can be right, and the quarrel is not really about the technology — it is about the unit. A job title is a bundle of unlike hours, and a question aimed at the bundle averages the nurse's wound care into her paperwork. Aim at the hours instead, one at a time, and answers start coming back.</p>
+<p>That is what the <a href="https://largelabormodel.com" target="_blank" rel="noopener">Large Labor Model</a> attempts. A public dataset and atlas that takes 480 occupations apart into 4,811 tasks — the things working people actually spend hours on — and asks of each one a question small enough to answer: how much of <em>this</em> can today's machines do? Each task gets a score between 0 and 1, from <em>no machine on Earth meaningfully helps</em> to <em>a machine could carry it alone</em>, scored for each year from 1970 to 2026 against the record of what has actually shipped — benchmarks, deployed products, robots installed and working — and projected fifteen years beyond.</p>
+<p>On that scale, this year, the nurse's health-education plan scores 0.67: a machine can already do most of that work, with a human checking it. The wound scores 0.008. Same person, same shift, same job title. One of her hours has effectively been learned by machines. The other is, to a machine, still almost perfectly opaque.</p>
+<figure><img src='/essay/fig-twohours.png' alt='Her two hours on the model&#x27;s zero-to-one scale: clean and dress the wound at 0.008, at the very start of the Human band; write the health-education plan at 0.67, inside the Supervised band; a line spans the distance between them, and all five tier bands are labeled along the scale.' loading='lazy'><figcaption>Our nurse's morning on the model's scale. The distance between her two hours is the subject of this essay; the five tiers name the regions of the scale, and the marks wear the Nurse's own palette — every job in the atlas carries one.</figcaption></figure>
+<p>Run that split across all 480 occupations, every task weighted by the hours it takes, and her morning turns out to be the general condition. Every job divides into the hours machines have absorbed or could absorb, and the hours they cannot remotely do. The line does not run between occupations, between blue collar and white. It runs <em>through</em> them, through nearly every working day on Earth. Every job is two jobs.</p>
+<p>One side of that line will not hold still. In the summer of 2024, the most advanced AI systems in the world could not reliably count the r's in <em>strawberry</em>; the failure was a running joke. By 2025 they were doing cited research and supervised coding for paying customers. This spring, a 23-year-old amateur iterating with one <a href="https://science.slashdot.org/story/26/05/02/0433231/an-amateur-just-solved-a-60-year-old-math-problem---by-asking-ai" target="_blank" rel="noopener">solved a problem that had stood open for sixty years</a>. In July, the number theorist Levent Alpöge, working with a model, <a href="https://fortune.com/2026/07/21/ai-solves-jacobian-conjecture-levant-alpoge-claude-fable-5/" target="_blank" rel="noopener">produced a counterexample to the Jacobian conjecture</a>, open since 1939. Two summers, joke to theorem.</p>
+<figure><img src='/essay/fig-arc.png' alt='The generative-cognition capability value from 2022 to 2026, rising, with four events marked: the strawberry counting joke, paid deep-research reports, an amateur solving a sixty-year-old problem, the Jacobian conjecture falling.' loading='lazy'><figcaption>The dial behind the anecdotes: generative-cognition capability, 2022–2026, with the events the timeline records. The joke and the theorem are twenty-five months apart.</figcaption></figure>
+<p>But capability is general and work is specific. A rising curve lands on a job one task at a time, which is why the nurse's plan fell and her wound care did not. And a curve says nothing about employment. <em>Technical replaceability is not replacement.</em> Replaceability asks whether the technology exists, works on the task, and can be bought. Replacement is what happens to jobs, and it arrives years later, through adoption, regulation, and human preference. Most of the contradiction among the forecasts comes from blurring those two questions; <a href="https://lukasseel.substack.com/p/the-work-ahead" target="_blank" rel="noopener">keeping them apart</a> is why the model exists.</p>
+<section><p class='seckick'>I</p><h2>A map you can argue with</h2>
+<p>My first decision was taxonomic. Official statistics group work by industry — ISIC sections lettered A through S — which is how economies see work. People do not experience work as a sector. So I regrouped the sections into thirteen <strong>territories of human work</strong>, each named for what the people in it do: feeding and fueling, keeping people alive and well, deciding what to do, making the culture. The statistics stay anchored underneath. What changes is that labor becomes activity and observable movement.</p>
+<figure class="imap-fig">
+<div id="imap-wrap">
+  <div id="imap-years"><button data-y="1800">1800</button><button data-y="2026" class="on">2026</button></div>
+  <svg id="imap" viewBox="0 0 1200 640" role="group" aria-label="The territories of human work — select one for details"></svg>
+  <div id="imap-panel"></div>
+</div>
+<noscript><img src="/essay/fig-territories.png" alt="The thirteen territories of human work"></noscript>
+<figcaption>The thirteen territories, sized by world employment, each with its 2026 technical replaceability. <em>Tap or click a territory.</em></figcaption>
+<script>
+(function() {
+  const D = {"territories": {"land_sea": {"name": "Land & Sea", "color": "#256333", "desc": "Agriculture, fishing, forestry, and mining \u2014 the work that feeds and fuels.", "workers": 964, "share": 26.6, "r26": 17, "geo": [0.12, 0.14, -8], "mix": {"C_R": 4, "C_G": 1, "P_A": 1, "Phi_S": 9, "Phi_U": 73, "S_E": 12}}, "making_things": {"name": "Making Things", "color": "#e85e15", "desc": "Manufacturing \u2014 from textiles to semiconductors, everything that gets made in a factory.", "workers": 283, "share": 7.8, "r26": 58, "geo": [0.4, 0.1, 12], "mix": {"C_R": 12, "C_G": 15, "P_A": 47, "Phi_S": 3, "Phi_U": 20, "S_E": 3}}, "building_things": {"name": "Building Things", "color": "#631b1a", "desc": "Construction, architecture, and civil engineering \u2014 the people who build and design the built environment.", "workers": 246, "share": 6.8, "r26": 15, "geo": [0.08, 0.58, -5], "mix": {"C_R": 3, "C_G": 7, "P_A": 0, "Phi_S": 6, "Phi_U": 81, "S_E": 3}}, "moving_things": {"name": "Moving Things", "color": "#6157d5", "desc": "Transport, logistics, and warehousing \u2014 moving goods and people from one place to another.", "workers": 257, "share": 7.1, "r26": 43, "geo": [0.3, 0.5, 7], "mix": {"C_R": 9, "C_G": 2, "P_A": 5, "Phi_S": 74, "Phi_U": 5, "S_E": 5}}, "buying_selling": {"name": "Buying & Selling", "color": "#d5ab0b", "desc": "Retail, wholesale, and personal services \u2014 the work of selling things and serving customers face to face.", "workers": 306, "share": 8.4, "r26": 72, "geo": [0.58, 0.35, -4], "mix": {"C_R": 69, "C_G": 11, "P_A": 0, "Phi_S": 0, "Phi_U": 16, "S_E": 3}}, "money_data": {"name": "Money & Data", "color": "#2543c9", "desc": "Finance, insurance, information technology, and data \u2014 where money moves and information is processed.", "workers": 195, "share": 5.4, "r26": 56, "geo": [0.75, 0.08, 10], "mix": {"C_R": 32, "C_G": 59, "P_A": 0, "Phi_S": 0, "Phi_U": 0, "S_E": 9}}, "thinking_leading": {"name": "Thinking & Leading", "color": "#6248a1", "desc": "Management, consulting, science, and professional strategy \u2014 the work of deciding what to do.", "workers": 86, "share": 2.4, "r26": 36, "geo": [0.92, 0.22, -7], "mix": {"C_R": 4, "C_G": 74, "P_A": 0, "Phi_S": 0, "Phi_U": 0, "S_E": 23}}, "care_health": {"name": "Care & Health", "color": "#d50c70", "desc": "Healthcare, social work, and caregiving \u2014 the work of keeping people alive and well.", "workers": 209, "share": 5.8, "r26": 31, "geo": [0.88, 0.5, 5], "mix": {"C_R": 11, "C_G": 48, "P_A": 0, "Phi_S": 0, "Phi_U": 37, "S_E": 5}}, "learning_teaching": {"name": "Learning & Teaching", "color": "#0cbac9", "desc": "Education at every level \u2014 from preschool to university, and everything taught in between.", "workers": 140, "share": 3.8, "r26": 41, "geo": [0.72, 0.6, -10], "mix": {"C_R": 5, "C_G": 74, "P_A": 0, "Phi_S": 0, "Phi_U": 14, "S_E": 7}}, "making_meaning": {"name": "Making Meaning", "color": "#e882ab", "desc": "Arts, media, entertainment, and sport \u2014 the work that creates culture and tells stories.", "workers": 189, "share": 5.2, "r26": 34, "geo": [0.52, 0.62, 8], "mix": {"C_R": 4, "C_G": 56, "P_A": 0, "Phi_S": 0, "Phi_U": 17, "S_E": 23}}, "governing_protecting": {"name": "Governing & Protecting", "color": "#186352", "desc": "Government, law, defense, and public safety \u2014 the work of running and protecting societies.", "workers": 144, "share": 4.0, "r26": 23, "geo": [0.7, 0.85, -3], "mix": {"C_R": 11, "C_G": 17, "P_A": 0, "Phi_S": 5, "Phi_U": 58, "S_E": 9}}, "feeding_hosting": {"name": "Feeding & Hosting", "color": "#a46e0b", "desc": "Restaurants, hotels, food service, and tourism \u2014 the work of feeding and hosting people.", "workers": 256, "share": 7.1, "r26": 32, "geo": [0.42, 0.8, 6], "mix": {"C_R": 18, "C_G": 8, "P_A": 0, "Phi_S": 0, "Phi_U": 65, "S_E": 9}}, "maintaining_fixing": {"name": "Maintaining & Fixing", "color": "#52c624", "desc": "Utilities, repair, and essential services \u2014 the work that keeps everything else running.", "workers": 351, "share": 9.7, "r26": 23, "geo": [0.25, 0.74, -9], "mix": {"C_R": 13, "C_G": 4, "P_A": 4, "Phi_S": 1, "Phi_U": 78, "S_E": 0}}}, "vlab": {"C_R": "routine cognitive", "C_G": "generative cognitive", "P_A": "physical automation", "Phi_S": "selective physical", "Phi_U": "unstructured physical", "S_E": "system engineering"}, "vcol": {"C_R": "#96876c", "C_G": "#6d54a6", "P_A": "#bb6735", "Phi_S": "#467a6e", "Phi_U": "#885046", "S_E": "#344fcb"}, "masses1800": [{"name": "Land & Sea", "workers": 341, "color": "#256333", "geo": [0.16, 0.42, -6], "share": 79.1}, {"name": "Industry", "workers": 45, "color": "#b75c28", "geo": [0.52, 0.52, 9], "share": 10.4}, {"name": "Services", "workers": 45, "color": "#3448a1", "geo": [0.78, 0.36, -5], "share": 10.4}]};
+  const svg = document.getElementById('imap'), panel = document.getElementById('imap-panel');
+  const NS = 'http://www.w3.org/2000/svg';
+  const shares = Object.values(D.territories).map(t => t.share);
+  const tot = shares.reduce((a, b) => a + b, 0);
+  const order = Object.keys(D.territories).sort((a, b) => D.territories[b].share - D.territories[a].share);
+  function lum(h) { const r=parseInt(h.slice(1,3),16)/255, g=parseInt(h.slice(3,5),16)/255, b=parseInt(h.slice(5,7),16)/255; return .2126*r+.7152*g+.0722*b; }
+  function showT(id) {
+    const t = D.territories[id];
+    [...svg.querySelectorAll('g')].forEach(g => g.classList.toggle('sel', g.dataset.id === id));
+    let bar = '';
+    for (const v of Object.keys(D.vlab)) {
+      const w = t.mix[v];
+      if (w > 0) bar += `<span class="seg" style="width:${w}%;background:${D.vcol[v]}" title="${D.vlab[v]} ${w}%">${w >= 12 ? w : ''}</span>`;
+    }
+    let leg = '';
+    for (const v of Object.keys(D.vlab)) leg += `<span class="lg"><i style="background:${D.vcol[v]}"></i>${D.vlab[v]} ${t.mix[v]}%</span>`;
+    panel.innerHTML = `<div class="ttl"><b>${t.name}</b><span>${t.workers.toLocaleString()}M workers · ${t.share}% of world employment · technical replaceability ${t.r26}% (2026)</span></div>
+      <p class="ds">${t.desc}</p>
+      <div class="bar">${bar}</div><div class="legs">${leg}</div>`;
+  }
+  function render(year) {
+    [...svg.querySelectorAll('g')].forEach(g => g.remove());
+    const items = year === 1800
+      ? D.masses1800.map((m, k) => ({ id: 'mass' + k, t: m }))
+      : order.map(id => ({ id, t: D.territories[id] }));
+    const totShare = items.reduce((a, x) => a + x.t.share, 0);
+    for (const { id, t } of items) {
+      const [bx, by, rot] = t.geo;
+    const s = 460 * Math.sqrt(t.share / totShare) + 40;
+    const cx = 80 + bx * 1020, cy = 90 + by * 470;
+    const g = document.createElementNS(NS, 'g');
+    g.dataset.id = id; g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', t.name);
+    g.setAttribute('transform', `rotate(${rot} ${cx} ${cy})`);
+    const r = document.createElementNS(NS, 'rect');
+    r.setAttribute('x', cx - s * .67); r.setAttribute('y', cy - s / 2);
+    r.setAttribute('width', s * 1.34); r.setAttribute('height', s);
+    r.setAttribute('fill', t.color);
+    g.appendChild(r);
+    const ink = lum(t.color) < .45 ? '#f6f2e8' : '#1c1a17';
+    const one = s > 150 && t.name.length <= 17;
+    const fs = one ? 17 : (s > 150 ? 15 : 12.5);
+    const lines = one ? [t.name]
+      : t.name.includes(' & ') ? [t.name.split(' & ')[0], '& ' + t.name.split(' & ')[1]]
+      : t.name.split(' ').length > 1 ? [t.name.split(' ')[0], t.name.split(' ').slice(1).join(' ')]
+      : [t.name];
+    const tx = document.createElementNS(NS, 'text');
+    tx.setAttribute('x', cx); tx.setAttribute('y', lines.length > 1 ? cy - fs * .38 : cy);
+    tx.setAttribute('fill', ink); tx.setAttribute('font-size', fs);
+    tx.textContent = lines[0];
+    g.appendChild(tx);
+    if (lines.length > 1) {
+      const txb = document.createElementNS(NS, 'text');
+      txb.setAttribute('x', cx); txb.setAttribute('y', cy + fs * .72);
+      txb.setAttribute('fill', ink); txb.setAttribute('font-size', fs);
+      txb.textContent = lines[1];
+      g.appendChild(txb);
+    }
+    const t2 = document.createElementNS(NS, 'text');
+    t2.setAttribute('x', cx); t2.setAttribute('y', cy + (lines.length > 1 ? fs * .72 + 17 : (one ? 24 : 17)));
+    t2.setAttribute('fill', ink);
+    t2.setAttribute('font-size', one ? 12.5 : 10.5); t2.setAttribute('opacity', '.85');
+    t2.textContent = t.r26 != null ? t.r26 + '%' : t.workers.toLocaleString() + 'M';
+    g.appendChild(t2);
+    g.addEventListener('click', () => show(id));
+    g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(id); } });
+    svg.appendChild(g);
+    }
+  }
+  function show(id) {
+    if (id.startsWith('mass')) {
+      const m = D.masses1800[+id.slice(4)];
+      [...svg.querySelectorAll('g')].forEach(g => g.classList.toggle('sel', g.dataset.id === id));
+      panel.innerHTML = `<div class="ttl"><b>${m.name}</b><span>${m.workers}M workers recorded · 1800</span></div>
+        <p class="ds">${m.name === 'Land & Sea' ? 'Agriculture, fishing, forestry — four in five recorded workers.' : m.name === 'Industry' ? 'The workshop mass: textiles, mining, metalwork, early manufacturing — before it splits into Making, Building and Moving Things.' : 'Everything else: servants and soldiers, merchants, teachers, clerks — the undifferentiated ancestor of ten modern territories.'}</p>`;
+      return;
+    }
+    showT(id);
+  }
+  const yearsEl = document.getElementById('imap-years');
+  yearsEl.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    [...yearsEl.querySelectorAll('button')].forEach(x => x.classList.toggle('on', x === b));
+    render(+b.dataset.y);
+    show(b.dataset.y === '1800' ? 'mass0' : 'land_sea');
+  });
+  render(2026);
+  show('land_sea');
+})();
+</script>
+</figure>
+<p>The territories where the most people work run overwhelmingly on unstructured physical time: Land &amp; Sea, Maintaining &amp; Fixing, and Building Things all spend roughly three-quarters of their hours there. The territories that run on cognition are, by world standards, small. A taxonomy is a lens. This one is ground so that the vague question — <em>what can machines do to work?</em> — resolves into a precise one: which kind of time does each territory run on? And that question has answers.</p>
+<p>Every task carries three properties: which of six machine capabilities the work leans on, from routine cognition to unstructured physical work; how difficult it is; and how many working hours it claims. Behind the tasks sits a registry of several thousand sources — task statements, employment series, robot-density counts, deployment reports. The model calculates technical replaceability like this:</p>
+<blockquote><strong>r(occupation, year) = 100 · Σ time_weight · σ(8 · (capability[vector][year] − difficulty)) ÷ Σ time_weight</strong></blockquote>
+<p>Compare the year's machine capability with each task's difficulty; the logistic σ turns the gap into partial credit; weight by working time and sum — for every year from 1970 to 2041. The odd endpoint is deliberate: 2041 is now plus fifteen, past which projection would shade into speculation. Five tiers give the numbers words: Human (a machine makes no meaningful contribution yet), Augmented (a machine makes you faster), Collaborative (a machine can do about half), Supervised (a machine does most of it; you check the work), Autonomous (end to end, no human needed).</p>
+<p>The atlas reaches further back than the scores do. Open the <a href="https://largelabormodel.com" target="_blank" rel="noopener">map</a> in 1800 and the thirteen territories collapse into three masses — the land, industry, services — which split apart as the modern division of labor emerges; run time forward and exposure migrates across them. Labor, at work.</p>
+</section><section><p class='seckick'>II</p><h2>Where the line runs</h2>
+<p>Score the 480 occupations at 2026 and you'll find they spread across nearly the whole scale.</p>
+<figure><img src='/essay/fig-3.png' alt='Histogram of technical replaceability across all 480 occupations in 2026, with tier bands marked and the extremes annotated.' loading='lazy'><figcaption>The 2026 distribution, colored by tier band. Unweighted mean 41.2, unweighted median 39.4. The tails are single-vector stories: Filing and copying clerks at 95.6 and Personnel clerk at 95.3 — pure routine cognition — against Handicraft workers in textile at 3.1, Municipal Worker at 3.3 and Roofer at 3.6, whose work rests almost wholly on unstructured physical capability. Seven occupations score 90 or above; twenty-two sit below 10.</figcaption></figure>
+<p>At the top, jobs made almost entirely of routine screen work. At the bottom, jobs made almost entirely of hands. Neither tail is a prophecy — a bottom-tier score describes machines, not the future of those jobs — but between the tails the whole labor market arranges itself by one question: <em>how many of your hours are the learnable kind?</em></p>
+<p>When we weight each occupation by how many people actually do it, the picture changes. The median worker's job scores a third lower than the average occupation, because the world's employment is concentrated in physical work. Job <em>titles</em> cluster around offices; working <em>time</em> clusters around hands.</p>
+<figure><img src='/essay/fig-4.png' alt='Mekko chart: thirteen territory columns, width proportional to share of world employment in 2025, height equal to territory technical replaceability in 2026.' loading='lazy'><figcaption>Every territory in one frame: width = share of world employment, height = technical replaceability at 2026. Buying &amp; Selling tops the scale at 72; Building Things sits at 15; Land &amp; Sea, at 17, alone holds one worker in four. Weighted by employment the world's mean is 33.7 and the median job 28.0 — against an unweighted occupation mean of 41.2. In global working time: routine cognition 14%, generative cognition 18%, physical automation 5%, selective physical 9%, system engineering 8%, unstructured physical 46%.</figcaption></figure>
+<p>The tall columns are narrow, and the widest column is short. Add the two cognitive stripes together and you have the desk — our AI drama's stage — about a third of the world's working hours. Nearly half is unstructured physical work, the vector where machines remain weakest — less than half the next-lowest dial. And still: a quarter of the world's working time already sits on tasks the frontier has crossed. Both things are true at once, yet the public debate treats them as a choice.</p>
+<figure><img src='/essay/fig-worktime.png' alt='Single horizontal stacked bar of global working time across the six capability vectors: routine cognition 14%, generative cognition 18%, physical automation 5%, selective physical 9%, system engineering 8%, unstructured physical 46%; a bracket labels the two cognitive segments as the desk.' loading='lazy'><figcaption>The world's working day as one stripe: global working time across the six capability vectors, the same shares that fill the territory map's columns. The bracket is the desk; the brown block, nearly half the day, is unstructured physical work.</figcaption></figure>
+<h3>One Nurse, eleven tasks</h3>
+<p>Let's take another look at our nurse.</p>
+<figure><img src='/essay/fig-1.png' alt='The study square for Nurse in 2026 in the Mirror&#x27;s own palette, next to the five tier rungs with their shares of her working time.' loading='lazy'><figcaption>Nurse, 2026 — technical replaceability: 29%, with the low and high trajectories putting the band at 13.6 to 44.1. Each ring's area is that tier's share of her working time, reading from Human at the center outward to Autonomous at the edge. By hours: Human 22%, Augmented 47%, Collaborative 23%, Supervised 7%.</figcaption></figure>
+<p>Eleven tasks: seven cognitive, three embodied, one coordinating. The machine earns its credit task by task — most on planning health education, the 0.67 from her morning; almost none on wound care, the 0.008; partial credit on everything between, from treatment plans to answering a frightened patient's questions. Weight by hours and sum: 29%. But the number is a compression. What the table shows is her morning again, formalized: the paperwork partially ceded, the judgment contested, the hands untouched. A Nurse in 2026 is, in the model's terms, a knowledge worker at the desk and an artisan at the bedside.</p>
+<figure class="tk-fig">
+<div id="tasks">
+  <p class="tk-title">Nurse · eleven tasks · 2026</p>
+  <div id="tk-grid" role="group" aria-label="The Nurse's eleven tasks — select a task for its 2026 score"></div>
+  <div id="tk-panel"></div>
+</div>
+<noscript><img src="/essay/fig-2.png" alt="Task grid for Nurse: eleven tiles in her own palette, each labeled with its share of working hours and colored by its 2026 tier."></noscript>
+<figcaption>The same job as a grid: eleven tasks, tile color = 2026 tier, the small number = share of working hours. <em>Tap a task for its score.</em></figcaption>
+<script>
+(function() {
+  var D = {"occupation": "Nurse", "r26": 29, "tasks": [{"name": "Discuss illness with patients", "hours": 12, "tier": "Augmented", "score26": 0.261}, {"name": "Educate patients on health", "hours": 12, "tier": "Augmented", "score26": 0.261}, {"name": "Develop treatment plans", "hours": 12, "tier": "Collaborative", "score26": 0.599}, {"name": "Monitor medication use", "hours": 12, "tier": "Collaborative", "score26": 0.44}, {"name": "Provide nursing care", "hours": 7, "tier": "Human", "score26": 0.049}, {"name": "Coordinate patient care", "hours": 9, "tier": "Augmented", "score26": 0.168}, {"name": "Provide personal care", "hours": 7, "tier": "Human", "score26": 0.067}, {"name": "Clean and dress wounds", "hours": 7, "tier": "Human", "score26": 0.008}, {"name": "Provide health education", "hours": 7, "tier": "Supervised", "score26": 0.673}, {"name": "Answer patient questions", "hours": 7, "tier": "Augmented", "score26": 0.261}, {"name": "Conduct nursing research", "hours": 7, "tier": "Augmented", "score26": 0.261}]};
+  var grid = document.getElementById('tk-grid'), panel = document.getElementById('tk-panel');
+  var TIER = { Human: '#e9e1d3', Augmented: '#c4dec5', Collaborative: '#cf6e9c', Supervised: '#2035ac', Autonomous: '#555606' };
+  var ANCHOR = { 'Provide health education': 1, 'Clean and dress wounds': 1 };
+  function lum(h) {
+    var r = parseInt(h.slice(1, 3), 16) / 255, g = parseInt(h.slice(3, 5), 16) / 255, b = parseInt(h.slice(5, 7), 16) / 255;
+    return .2126 * r + .7152 * g + .0722 * b;
+  }
+  function line(t) {
+    panel.innerHTML = '<b>' + t.name + '</b> · score <b>' + t.score26.toFixed(3) + ' out of 1</b> · '
+      + t.tier + ' · ' + t.hours + '% of her hours';
+  }
+  var sel = null;
+  D.tasks.forEach(function(t) {
+    var tile = document.createElement('div');
+    tile.className = 'tk-tile';
+    tile.tabIndex = 0; tile.setAttribute('role', 'button');
+    tile.setAttribute('aria-label', t.name + ', ' + t.tier + ' tier, score ' + t.score26.toFixed(3) + ' out of 1');
+    var bg = TIER[t.tier] || '#e9e1d3';
+    tile.style.background = bg;
+    tile.style.color = lum(bg) < 0.45 ? '#f6f2e8' : '#1c1a17';
+    var hrs = document.createElement('span'); hrs.className = 'tk-hours'; hrs.textContent = t.hours + '%';
+    var nm = document.createElement('span'); nm.className = 'tk-name'; nm.textContent = t.name;
+    tile.appendChild(hrs); tile.appendChild(nm);
+    if (ANCHOR[t.name]) { var dt = document.createElement('span'); dt.className = 'tk-dot'; tile.appendChild(dt); }
+    function pick() {
+      if (sel) sel.classList.remove('tk-sel');
+      sel = tile; tile.classList.add('tk-sel');
+      line(t);
+    }
+    tile.addEventListener('click', pick);
+    tile.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+    grid.appendChild(tile);
+    if (t.name === 'Provide health education') pick();
+  });
+})();
+</script>
+</figure>
+</section><section><p class='seckick'>III</p><h2>How fast the line moves</h2>
+<p>Everything forward-looking in the dataset reduces to six capability curves and their uncertainty bands. Under the central case, the next fifteen years belong to the vectors that are weakest today.</p>
+<figure class="dl-fig">
+<div id="dials">
+  <p class="dl-kick">The six dials · 1970–2041, low–high band, mid line</p>
+  <p class="dl-title">What machines can do, by kind of work</p>
+  <div id="dl-ctl"><input type="range" id="dl-year" min="1970" max="2041" step="1" value="2026" aria-label="Year"><span id="dl-read">2026</span></div>
+  <div id="dl-grid"></div>
+</div>
+<noscript><img src="/essay/fig-5.png" alt="Small multiples: six capability vectors, 1970–2041, mid line with low–high band shading."></noscript>
+<figcaption>The six dials, 1970–2041. Dot = 2026 value; shaded band = low to high trajectory; the mid line is the reconciled central case. From 2026 to 2041 under the mid band: unstructured physical +0.51 (0.15 → 0.66), system engineering +0.43, selective physical +0.30, generative cognition +0.29; the already-high vectors barely move. The unstructured-physical band at 2041 spans 0.29 to 0.995. <em>Drag the year.</em></figcaption>
+<script>
+(function() {
+  var D = {"years": [1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041], "now": 2026, "vectors": {"C_R": {"label": "routine cognitive", "gloss": "data entry, filing, routine coding", "low": [0.04, 0.043, 0.047, 0.05, 0.055, 0.06, 0.065, 0.07, 0.075, 0.08, 0.09, 0.1, 0.115, 0.13, 0.14, 0.15, 0.16, 0.17, 0.18, 0.188, 0.196, 0.204, 0.212, 0.22, 0.232, 0.244, 0.256, 0.268, 0.28, 0.29, 0.3, 0.31, 0.32, 0.33, 0.34, 0.35, 0.36, 0.37, 0.38, 0.39, 0.4, 0.41, 0.42, 0.43, 0.443, 0.455, 0.467, 0.48, 0.493, 0.507, 0.52, 0.54, 0.56, 0.6, 0.64, 0.652, 0.67, 0.68, 0.69, 0.699, 0.706, 0.713, 0.72, 0.725, 0.731, 0.735, 0.74, 0.743, 0.747, 0.749, 0.75, 0.751], "mid": [0.07, 0.08, 0.09, 0.1, 0.105, 0.11, 0.115, 0.12, 0.125, 0.13, 0.14, 0.15, 0.16, 0.17, 0.182, 0.194, 0.206, 0.218, 0.23, 0.24, 0.25, 0.26, 0.27, 0.28, 0.292, 0.304, 0.316, 0.328, 0.34, 0.352, 0.364, 0.376, 0.388, 0.4, 0.41, 0.42, 0.43, 0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5, 0.512, 0.525, 0.538, 0.55, 0.563, 0.577, 0.59, 0.61, 0.63, 0.68, 0.71, 0.731, 0.76, 0.78, 0.8, 0.82, 0.83, 0.84, 0.84, 0.85, 0.85, 0.86, 0.86, 0.86, 0.86, 0.87, 0.87, 0.87], "high": [0.12, 0.13, 0.14, 0.15, 0.157, 0.163, 0.17, 0.177, 0.183, 0.19, 0.21, 0.23, 0.25, 0.27, 0.29, 0.302, 0.315, 0.328, 0.34, 0.353, 0.365, 0.378, 0.39, 0.4, 0.415, 0.43, 0.44, 0.45, 0.47, 0.49, 0.5, 0.51, 0.52, 0.53, 0.54, 0.55, 0.56, 0.58, 0.59, 0.6, 0.61, 0.62, 0.64, 0.653, 0.667, 0.68, 0.69, 0.7, 0.72, 0.735, 0.75, 0.77, 0.79, 0.81, 0.813, 0.816, 0.82, 0.87, 0.9, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91, 0.91]}, "C_G": {"label": "generative cognitive", "gloss": "novel analysis, original writing, diagnosis", "low": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.003, 0.003, 0.003, 0.003, 0.003, 0.004, 0.005, 0.005, 0.005, 0.006, 0.007, 0.007, 0.007, 0.008, 0.008, 0.009, 0.009, 0.01, 0.01, 0.011, 0.012, 0.013, 0.014, 0.015, 0.017, 0.02, 0.022, 0.025, 0.03, 0.03, 0.035, 0.04, 0.05, 0.07, 0.1, 0.2, 0.3, 0.35, 0.42, 0.45, 0.48, 0.5, 0.52, 0.54, 0.56, 0.579, 0.593, 0.605, 0.616, 0.625, 0.634, 0.641, 0.648, 0.654], "mid": [0.005, 0.005, 0.006, 0.006, 0.006, 0.007, 0.007, 0.007, 0.008, 0.008, 0.009, 0.009, 0.009, 0.01, 0.011, 0.011, 0.012, 0.012, 0.013, 0.013, 0.013, 0.014, 0.014, 0.015, 0.017, 0.018, 0.019, 0.02, 0.021, 0.022, 0.023, 0.024, 0.025, 0.027, 0.028, 0.029, 0.03, 0.032, 0.034, 0.036, 0.038, 0.04, 0.04, 0.043, 0.045, 0.048, 0.05, 0.05, 0.055, 0.06, 0.08, 0.11, 0.17, 0.32, 0.43, 0.487, 0.57, 0.62, 0.67, 0.71, 0.74, 0.76, 0.78, 0.8, 0.81, 0.82, 0.83, 0.84, 0.85, 0.85, 0.86, 0.86], "high": [0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.031, 0.032, 0.033, 0.034, 0.035, 0.036, 0.037, 0.038, 0.039, 0.04, 0.041, 0.043, 0.044, 0.046, 0.047, 0.05, 0.055, 0.057, 0.06, 0.062, 0.064, 0.066, 0.069, 0.071, 0.073, 0.075, 0.08, 0.084, 0.087, 0.091, 0.095, 0.105, 0.113, 0.122, 0.13, 0.15, 0.175, 0.21, 0.26, 0.31, 0.4, 0.52, 0.62, 0.65, 0.658, 0.67, 0.79, 0.89, 0.94, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95]}, "P_A": {"label": "physical automation", "gloss": "factory assembly, CNC, plant lines", "low": [0.06, 0.067, 0.073, 0.08, 0.085, 0.09, 0.095, 0.1, 0.105, 0.11, 0.12, 0.13, 0.14, 0.15, 0.17, 0.18, 0.19, 0.2, 0.21, 0.22, 0.23, 0.24, 0.25, 0.27, 0.28, 0.29, 0.3, 0.31, 0.32, 0.33, 0.34, 0.348, 0.356, 0.364, 0.372, 0.38, 0.39, 0.4, 0.41, 0.42, 0.43, 0.44, 0.45, 0.46, 0.47, 0.48, 0.493, 0.507, 0.52, 0.535, 0.55, 0.563, 0.577, 0.59, 0.61, 0.614, 0.62, 0.635, 0.65, 0.665, 0.68, 0.692, 0.702, 0.711, 0.719, 0.726, 0.732, 0.737, 0.742, 0.746, 0.75, 0.754], "mid": [0.1, 0.11, 0.12, 0.13, 0.138, 0.147, 0.155, 0.163, 0.172, 0.18, 0.195, 0.21, 0.225, 0.24, 0.26, 0.273, 0.285, 0.297, 0.31, 0.32, 0.33, 0.338, 0.347, 0.355, 0.363, 0.372, 0.38, 0.39, 0.4, 0.41, 0.42, 0.428, 0.436, 0.444, 0.452, 0.46, 0.47, 0.48, 0.49, 0.5, 0.51, 0.522, 0.534, 0.546, 0.558, 0.57, 0.583, 0.597, 0.61, 0.63, 0.65, 0.663, 0.677, 0.69, 0.72, 0.733, 0.75, 0.77, 0.79, 0.8, 0.82, 0.83, 0.85, 0.87, 0.88, 0.89, 0.9, 0.91, 0.91, 0.92, 0.92, 0.92], "high": [0.15, 0.163, 0.177, 0.19, 0.202, 0.213, 0.225, 0.238, 0.252, 0.266, 0.28, 0.3, 0.315, 0.33, 0.36, 0.375, 0.39, 0.405, 0.42, 0.435, 0.45, 0.465, 0.48, 0.5, 0.51, 0.52, 0.535, 0.55, 0.565, 0.58, 0.594, 0.609, 0.623, 0.637, 0.651, 0.666, 0.68, 0.69, 0.705, 0.72, 0.735, 0.75, 0.76, 0.77, 0.78, 0.79, 0.8, 0.81, 0.82, 0.825, 0.83, 0.84, 0.84, 0.842, 0.845, 0.847, 0.85, 0.886, 0.913, 0.94, 0.965, 0.98, 0.99, 0.995, 0.998, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}, "Phi_S": {"label": "selective physical", "gloss": "route driving, warehouse picking", "low": [0.0, 0.0, 0.001, 0.001, 0.001, 0.001, 0.002, 0.002, 0.002, 0.002, 0.003, 0.003, 0.005, 0.006, 0.007, 0.007, 0.008, 0.008, 0.009, 0.009, 0.009, 0.01, 0.01, 0.011, 0.012, 0.013, 0.013, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.019, 0.02, 0.021, 0.022, 0.024, 0.026, 0.027, 0.028, 0.03, 0.034, 0.035, 0.037, 0.038, 0.04, 0.045, 0.07, 0.09, 0.11, 0.15, 0.2, 0.25, 0.3, 0.314, 0.33, 0.35, 0.37, 0.39, 0.41, 0.43, 0.45, 0.47, 0.49, 0.508, 0.519, 0.528, 0.536, 0.543, 0.55, 0.555], "mid": [0.005, 0.005, 0.006, 0.006, 0.007, 0.007, 0.008, 0.009, 0.009, 0.01, 0.013, 0.015, 0.02, 0.025, 0.028, 0.029, 0.03, 0.031, 0.032, 0.032, 0.033, 0.034, 0.035, 0.037, 0.038, 0.04, 0.041, 0.043, 0.044, 0.046, 0.048, 0.049, 0.051, 0.053, 0.055, 0.056, 0.058, 0.06, 0.062, 0.065, 0.068, 0.07, 0.078, 0.08, 0.083, 0.085, 0.09, 0.1, 0.14, 0.175, 0.21, 0.26, 0.31, 0.36, 0.4, 0.428, 0.46, 0.51, 0.56, 0.59, 0.62, 0.65, 0.67, 0.69, 0.7, 0.72, 0.73, 0.74, 0.74, 0.75, 0.75, 0.76], "high": [0.05, 0.052, 0.054, 0.056, 0.058, 0.06, 0.062, 0.064, 0.066, 0.068, 0.07, 0.072, 0.074, 0.076, 0.078, 0.08, 0.082, 0.084, 0.086, 0.088, 0.09, 0.093, 0.096, 0.099, 0.102, 0.105, 0.108, 0.111, 0.114, 0.117, 0.12, 0.124, 0.128, 0.132, 0.136, 0.14, 0.143, 0.145, 0.147, 0.15, 0.16, 0.17, 0.18, 0.193, 0.207, 0.22, 0.237, 0.253, 0.27, 0.305, 0.35, 0.41, 0.48, 0.53, 0.57, 0.575, 0.58, 0.66, 0.73, 0.78, 0.82, 0.845, 0.86, 0.87, 0.875, 0.88, 0.88, 0.88, 0.88, 0.88, 0.88, 0.88]}, "Phi_U": {"label": "unstructured physical", "gloss": "surgery, plumbing, home care", "low": [0.005, 0.005, 0.006, 0.006, 0.006, 0.007, 0.007, 0.007, 0.008, 0.008, 0.009, 0.009, 0.009, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.012, 0.014, 0.015, 0.016, 0.017, 0.018, 0.019, 0.019, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.023, 0.027, 0.03, 0.03, 0.03, 0.03, 0.03, 0.035, 0.04, 0.05, 0.06, 0.07, 0.073, 0.08, 0.09, 0.105, 0.12, 0.14, 0.16, 0.178, 0.195, 0.211, 0.226, 0.24, 0.253, 0.264, 0.273, 0.281, 0.288], "mid": [0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.02, 0.022, 0.024, 0.026, 0.028, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.032, 0.034, 0.036, 0.038, 0.04, 0.04, 0.04, 0.04, 0.043, 0.045, 0.048, 0.05, 0.06, 0.07, 0.085, 0.1, 0.13, 0.136, 0.15, 0.18, 0.22, 0.27, 0.32, 0.37, 0.42, 0.46, 0.5, 0.54, 0.57, 0.6, 0.62, 0.64, 0.65, 0.66], "high": [0.04, 0.041, 0.042, 0.043, 0.044, 0.045, 0.045, 0.046, 0.047, 0.048, 0.049, 0.05, 0.052, 0.053, 0.055, 0.057, 0.059, 0.061, 0.062, 0.064, 0.066, 0.068, 0.07, 0.072, 0.074, 0.077, 0.08, 0.082, 0.085, 0.088, 0.09, 0.093, 0.095, 0.098, 0.1, 0.103, 0.105, 0.108, 0.112, 0.116, 0.121, 0.125, 0.13, 0.135, 0.14, 0.145, 0.15, 0.155, 0.162, 0.168, 0.175, 0.185, 0.195, 0.205, 0.215, 0.217, 0.22, 0.3, 0.42, 0.55, 0.67, 0.75, 0.82, 0.87, 0.9, 0.925, 0.945, 0.96, 0.972, 0.982, 0.99, 0.995]}, "S_E": {"label": "system engineering", "gloss": "orchestration, platform engineering", "low": [0.0, 0.0, 0.001, 0.001, 0.001, 0.001, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.003, 0.003, 0.003, 0.004, 0.004, 0.005, 0.005, 0.006, 0.007, 0.007, 0.008, 0.009, 0.01, 0.011, 0.012, 0.013, 0.015, 0.017, 0.019, 0.021, 0.023, 0.024, 0.026, 0.028, 0.03, 0.032, 0.035, 0.038, 0.042, 0.045, 0.05, 0.055, 0.06, 0.065, 0.07, 0.08, 0.09, 0.105, 0.12, 0.135, 0.15, 0.18, 0.21, 0.22, 0.24, 0.27, 0.299, 0.324, 0.347, 0.367, 0.385, 0.401, 0.416, 0.429, 0.44, 0.451, 0.46, 0.468, 0.476, 0.482], "mid": [0.005, 0.005, 0.006, 0.006, 0.006, 0.007, 0.007, 0.007, 0.008, 0.008, 0.009, 0.01, 0.011, 0.012, 0.014, 0.015, 0.017, 0.018, 0.019, 0.021, 0.022, 0.024, 0.025, 0.027, 0.029, 0.032, 0.035, 0.037, 0.041, 0.045, 0.049, 0.052, 0.056, 0.059, 0.063, 0.066, 0.07, 0.074, 0.079, 0.084, 0.09, 0.095, 0.1, 0.105, 0.11, 0.12, 0.13, 0.14, 0.15, 0.165, 0.18, 0.195, 0.21, 0.25, 0.29, 0.311, 0.35, 0.42, 0.5, 0.55, 0.6, 0.63, 0.66, 0.69, 0.71, 0.73, 0.74, 0.75, 0.76, 0.77, 0.77, 0.78], "high": [0.03, 0.031, 0.033, 0.034, 0.035, 0.037, 0.038, 0.039, 0.041, 0.042, 0.043, 0.045, 0.046, 0.047, 0.049, 0.05, 0.051, 0.053, 0.054, 0.056, 0.057, 0.059, 0.06, 0.063, 0.067, 0.07, 0.075, 0.08, 0.087, 0.095, 0.1, 0.105, 0.11, 0.115, 0.12, 0.125, 0.13, 0.14, 0.148, 0.155, 0.163, 0.17, 0.185, 0.197, 0.208, 0.22, 0.235, 0.255, 0.275, 0.302, 0.33, 0.37, 0.41, 0.45, 0.47, 0.473, 0.48, 0.61, 0.73, 0.83, 0.89, 0.915, 0.925, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93, 0.93]}}};
+  var YRS = D.years, NOW = D.now, KEYS = Object.keys(D.vectors);
+  var grid = document.getElementById('dl-grid');
+  var slider = document.getElementById('dl-year'), read = document.getElementById('dl-read');
+  var NS = 'http://www.w3.org/2000/svg';
+  var W = 340, H = 238, L = 34, R = 328, T = 14, B = 206;
+  function X(i) { return L + (R - L) * i / (YRS.length - 1); }
+  function Y(v) { return B - (B - T) * v; }
+  function el(n, at, txt) {
+    var e = document.createElementNS(NS, n);
+    for (var k in at) e.setAttribute(k, at[k]);
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  var panels = {};
+  KEYS.forEach(function(key) {
+    var v = D.vectors[key];
+    var cell = document.createElement('div'); cell.className = 'dl-cell';
+    var lab = document.createElement('div'); lab.className = 'dl-lab';
+    lab.textContent = key.replace('Phi', 'Φ') + ' · ' + v.label;
+    var gl = document.createElement('div'); gl.className = 'dl-gloss'; gl.textContent = v.gloss;
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': v.label + ', 1970–2041' });
+    [0, 0.5, 1].forEach(function(g) {
+      svg.appendChild(el('line', { x1: L, x2: R, y1: Y(g), y2: Y(g), 'class': 'dl-grid-l' }));
+      svg.appendChild(el('text', { x: L - 6, y: Y(g) + 3.5, 'text-anchor': 'end', 'class': 'dl-tick' }, g.toFixed(1)));
+    });
+    [[1970, '1970', 'start'], [2000, '2000', 'middle'], [2026, 'now', 'middle'], [2041, '2041', 'end']].forEach(function(t) {
+      svg.appendChild(el('text', { x: X(YRS.indexOf(t[0])), y: B + 16, 'text-anchor': t[2], 'class': 'dl-tick' }, t[1]));
+    });
+    var iN = YRS.indexOf(NOW);
+    svg.appendChild(el('line', { x1: X(iN), x2: X(iN), y1: T, y2: B, 'class': 'dl-now' }));
+    var pts = '';
+    for (var i = 0; i < YRS.length; i++) pts += X(i).toFixed(1) + ',' + Y(v.high[i]).toFixed(1) + ' ';
+    for (var j = YRS.length - 1; j >= 0; j--) pts += X(j).toFixed(1) + ',' + Y(v.low[j]).toFixed(1) + ' ';
+    svg.appendChild(el('polygon', { points: pts.trim(), 'class': 'dl-band' }));
+    var d = '';
+    for (var m = 0; m < YRS.length; m++) d += (m ? 'L' : 'M') + X(m).toFixed(1) + ' ' + Y(v.mid[m]).toFixed(1);
+    svg.appendChild(el('path', { d: d, 'class': 'dl-mid' }));
+    var dot = el('circle', { r: 4.5, 'class': 'dl-dot' });
+    var val = el('text', { 'class': 'dl-val' });
+    var span = el('text', { 'class': 'dl-span' });
+    svg.appendChild(dot); svg.appendChild(val); svg.appendChild(span);
+    cell.appendChild(lab); cell.appendChild(gl); cell.appendChild(svg);
+    grid.appendChild(cell);
+    panels[key] = { v: v, dot: dot, val: val, span: span };
+  });
+  function fmt(n) { return Math.round(n * 1000) % 10 === 0 ? n.toFixed(2) : n.toFixed(3); }
+  function set(yr) {
+    read.textContent = yr;
+    var i = YRS.indexOf(yr);
+    KEYS.forEach(function(key) {
+      var p = panels[key], v = p.v;
+      var cx = X(i), cy = Y(v.mid[i]);
+      p.dot.setAttribute('cx', cx); p.dot.setAttribute('cy', cy);
+      var anchor = 'end', tx = cx - 9;
+      if (cx < L + 44) { anchor = 'start'; tx = cx + 9; }
+      var ty = cy - 9;
+      if (ty < T + 12) ty = cy + 20;
+      p.val.setAttribute('x', tx); p.val.setAttribute('y', ty); p.val.setAttribute('text-anchor', anchor);
+      p.val.textContent = v.mid[i].toFixed(2);
+      if (yr > NOW) {
+        p.span.setAttribute('x', tx); p.span.setAttribute('y', ty + 13); p.span.setAttribute('text-anchor', anchor);
+        p.span.textContent = fmt(v.low[i]) + '–' + fmt(v.high[i]);
+      } else p.span.textContent = '';
+    });
+  }
+  slider.addEventListener('input', function() { set(+slider.value); });
+  set(NOW);
+})();
+</script>
+</figure>
+<p>Unstructured physical capability — the wound, the crawlspace, the field — more than quadruples in the central case. Or it barely improves. Or it is essentially solved. That is the width of the evidence on one question: whether useful machine hands arrive at scale. Nearly half the world's working time waits on exactly that, so most of the model's forward uncertainty <em>is</em> that wager. The desk was software's problem; the world is hardware's. Chatbot and "agentic" progress, measured weekly in every feed, mostly moves the third of working time that is cognitive. The rest moves when machines can work in places that don't repeat.</p>
+<figure><img src='/essay/fig-6.png' alt='The employment-weighted median job&#x27;s technical replaceability, 1970–2041, under low, mid and high bands, against the five tier bands.' loading='lazy'><figcaption>The median job, 1970–2041, three bands; tier lines and mid-band crossings marked: 35 in 2028, 65 in 2033, ending 2041 at 86. Under the low band, 35 waits until 2036 and the 2041 endpoint is 42; the high band would put the 2026 median at 44 already.</figcaption></figure>
+<p>In the model's central case, the median job crosses the Collaborative line — machines able to do about half — in 2028, and the Supervised line in 2033. If we run the same arithmetic across all of world employment, the futures refuse to average: by 2041, the share of working people past that Supervised line is thirteen percent, ninety-eight, or one hundred, depending on the band. The forecasts do not narrow as they leave the present. They fork on the hardware question.</p>
+<figure><img src='/essay/fig-7.png' alt='Two panels: share of world employment past technical replaceability of 35, and past 65, from 2000 to 2041, under low, mid and high bands.' loading='lazy'><figcaption>Share of world employment past 35 (left) and past 65 (right), 2000–2041. Past the Supervised line by 2041: 12.8% under the low band, 98.1% under the mid, 100% under the high — while even in the mid band only 19.7% of employment passes 90. The bands fork.</figcaption></figure>
+<p>The same arithmetic redraws the territory map. Through the software decades, screen-heavy Money &amp; Data pulled away from hands-heavy Care &amp; Health; the gap peaks around 2028, then closes through 2041 as clerical exposure saturates and the physical vectors begin to move. The territories that look untouched today are precisely the ones riding on that question; their forward curves deserve the least confidence. And if the model's projections approximate machine progress, the 2028 crest may be the most consequential date in the dataset: the moment the story stops being about the desk.</p>
+<figure class="rc-fig">
+<div id="race">
+  <p class="rc-kick">Thirteen territories · mid band, 1970–2041</p>
+  <p class="rc-title">Money &amp; Data pulls away, then the field closes in</p>
+  <p id="rc-status" aria-live="polite"><em>hover or tap a curve</em></p>
+  <svg id="rc-svg" viewBox="0 0 1200 640" role="group" aria-label="Thirteen territory curves, 1970–2041 — select a curve to identify it"></svg>
+</div>
+<noscript><img src="/essay/fig-8.png" alt="Thirteen territory curves, 1970–2041, mid band, with Money &amp; Data and Care &amp; Health emphasized."></noscript>
+<figcaption>Territories under the mid band. The Money &amp; Data–Care &amp; Health gap: 3.1 points in 1990, 24.9 today, 27.6 at the 2028 peak, back to 10.3 by 2041. The steepest riser after 2026 is Land &amp; Sea, 17.4 → 85.6. <em>Tap a curve to name it.</em></figcaption>
+<script>
+(function() {
+  var D = {"years": [1970, 1971, 1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979, 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041], "territories": {"land_sea": {"name": "Land & Sea", "color": "#256333", "mid": [3.5, 3.6, 3.6, 3.6, 3.6, 3.6, 3.7, 3.7, 3.7, 3.7, 3.8, 3.8, 3.8, 3.9, 4.0, 4.0, 4.1, 4.2, 4.2, 4.3, 4.4, 4.4, 4.5, 4.6, 4.7, 4.7, 4.9, 5.0, 5.2, 5.3, 5.5, 5.6, 5.7, 5.8, 5.9, 6.0, 6.1, 6.2, 6.3, 6.5, 6.6, 6.8, 6.9, 7.0, 7.2, 7.3, 7.5, 7.7, 8.0, 8.3, 8.9, 9.6, 10.6, 12.1, 14.4, 15.5, 17.4, 21.3, 26.9, 33.2, 40.4, 47.8, 55.6, 61.9, 67.7, 73.2, 76.8, 80.1, 82.0, 83.9, 84.7, 85.6]}, "making_things": {"name": "Making Things", "color": "#e85e15", "mid": [2.5, 2.6, 2.7, 2.9, 3.0, 3.2, 3.3, 3.4, 3.6, 3.8, 4.1, 4.5, 4.9, 5.3, 6.0, 6.5, 7.0, 7.5, 8.1, 8.7, 9.2, 9.7, 10.3, 10.8, 11.4, 12.1, 12.7, 13.5, 14.3, 15.2, 16.1, 16.9, 17.7, 18.5, 19.3, 20.2, 21.2, 22.2, 23.3, 24.4, 25.5, 26.8, 28.1, 29.4, 30.7, 32.1, 33.6, 35.1, 36.6, 38.7, 40.8, 42.4, 44.2, 47.3, 51.8, 54.4, 58.4, 62.0, 65.7, 68.5, 71.4, 73.6, 76.2, 78.5, 80.3, 82.2, 83.7, 85.2, 86.0, 87.0, 87.4, 87.8]}, "building_things": {"name": "Building Things", "color": "#631b1a", "mid": [2.5, 2.5, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.7, 2.7, 2.7, 2.8, 2.8, 2.8, 2.8, 2.9, 2.9, 3.0, 3.0, 3.0, 3.1, 3.1, 3.2, 3.3, 3.4, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.9, 4.0, 4.1, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5.0, 5.2, 5.4, 5.7, 6.1, 6.8, 7.7, 9.5, 11.9, 13.2, 15.4, 18.3, 22.0, 26.3, 31.3, 36.9, 43.2, 48.9, 54.6, 60.5, 64.9, 69.1, 71.9, 74.5, 75.7, 77.0]}, "moving_things": {"name": "Moving Things", "color": "#6157d5", "mid": [2.3, 2.4, 2.4, 2.5, 2.5, 2.6, 2.6, 2.6, 2.7, 2.7, 2.8, 3.0, 3.1, 3.3, 3.4, 3.6, 3.7, 3.9, 4.0, 4.1, 4.3, 4.4, 4.6, 4.8, 4.9, 5.1, 5.3, 5.6, 5.8, 6.1, 6.3, 6.6, 6.8, 7.1, 7.3, 7.5, 7.8, 8.1, 8.3, 8.6, 8.9, 9.2, 9.6, 9.9, 10.3, 10.6, 11.0, 11.5, 12.9, 14.5, 16.4, 19.6, 23.7, 29.1, 34.3, 38.1, 42.9, 50.4, 58.1, 62.9, 67.6, 71.7, 74.6, 77.3, 78.7, 81.1, 82.2, 83.4, 83.6, 84.6, 84.7, 85.5]}, "buying_selling": {"name": "Buying & Selling", "color": "#d5ab0b", "mid": [4.6, 4.9, 5.2, 5.5, 5.7, 5.9, 6.1, 6.3, 6.5, 6.7, 7.1, 7.6, 8.0, 8.6, 9.3, 10.0, 10.8, 11.6, 12.5, 13.3, 14.1, 15.0, 15.9, 16.9, 18.1, 19.3, 20.7, 22.1, 23.5, 25.0, 26.6, 28.1, 29.7, 31.4, 32.7, 34.1, 35.5, 36.9, 38.3, 39.7, 41.1, 42.4, 43.8, 45.1, 46.6, 48.3, 49.8, 51.2, 52.7, 54.2, 55.6, 57.6, 59.5, 63.9, 67.1, 69.2, 72.3, 74.8, 77.5, 80.2, 82.5, 84.6, 86.5, 88.3, 89.7, 91.1, 92.0, 92.7, 93.2, 93.8, 94.0, 94.2]}, "money_data": {"name": "Money & Data", "color": "#2543c9", "mid": [2.2, 2.3, 2.4, 2.6, 2.7, 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.4, 3.6, 3.8, 4.1, 4.4, 4.7, 5.1, 5.4, 5.7, 6.1, 6.4, 6.8, 7.2, 7.6, 8.2, 8.7, 9.2, 9.8, 10.4, 11.0, 11.6, 12.3, 13.0, 13.5, 14.1, 14.7, 15.2, 15.8, 16.4, 17.0, 17.6, 18.2, 18.8, 19.5, 20.3, 21.0, 21.7, 22.4, 23.2, 24.0, 25.2, 26.9, 32.9, 40.5, 46.0, 55.7, 62.7, 69.8, 75.1, 78.8, 81.2, 83.2, 85.1, 86.1, 87.1, 87.8, 88.5, 89.1, 89.3, 89.9, 89.9]}, "thinking_leading": {"name": "Thinking & Leading", "color": "#6248a1", "mid": [1.1, 1.1, 1.1, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.3, 1.3, 1.3, 1.4, 1.4, 1.4, 1.5, 1.5, 1.6, 1.6, 1.7, 1.7, 1.8, 1.9, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4.1, 4.3, 4.4, 4.6, 4.8, 5.2, 5.7, 6.7, 11.7, 19.4, 25.4, 36.5, 45.5, 55.5, 62.8, 68.5, 72.0, 75.2, 78.2, 79.7, 81.2, 82.3, 83.3, 84.4, 84.6, 85.3, 85.6]}, "care_health": {"name": "Care & Health", "color": "#d50c70", "mid": [1.9, 1.9, 1.9, 2.0, 2.0, 2.0, 2.0, 2.1, 2.1, 2.1, 2.2, 2.2, 2.3, 2.4, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.3, 3.4, 3.5, 3.7, 3.9, 4.1, 4.3, 4.5, 4.7, 4.9, 5.1, 5.3, 5.5, 5.7, 5.9, 6.1, 6.3, 6.5, 6.7, 6.9, 7.2, 7.4, 7.6, 7.9, 8.2, 8.4, 8.7, 9.0, 9.5, 10.1, 11.2, 14.9, 20.2, 24.0, 30.8, 36.2, 42.2, 47.5, 52.2, 56.2, 60.3, 64.1, 67.2, 70.3, 72.7, 75.1, 76.8, 78.0, 79.0, 79.6]}, "learning_teaching": {"name": "Learning & Teaching", "color": "#0cbac9", "mid": [1.3, 1.4, 1.4, 1.4, 1.4, 1.5, 1.5, 1.5, 1.5, 1.5, 1.6, 1.6, 1.6, 1.7, 1.8, 1.8, 1.9, 1.9, 2.0, 2.1, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.2, 3.3, 3.4, 3.6, 3.7, 3.8, 3.9, 4.0, 4.1, 4.2, 4.4, 4.5, 4.6, 4.7, 4.9, 5.0, 5.2, 5.3, 5.5, 5.7, 6.0, 6.6, 7.8, 13.6, 22.5, 29.1, 40.6, 48.6, 56.7, 62.7, 67.2, 70.2, 73.1, 75.9, 77.8, 79.7, 81.3, 82.8, 84.0, 84.6, 85.5, 85.8]}, "making_meaning": {"name": "Making Meaning", "color": "#e882ab", "mid": [1.6, 1.6, 1.6, 1.6, 1.7, 1.7, 1.7, 1.7, 1.7, 1.7, 1.8, 1.8, 1.8, 1.9, 1.9, 2.0, 2.1, 2.1, 2.2, 2.2, 2.3, 2.4, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.5, 3.6, 3.7, 3.8, 3.9, 4.0, 4.1, 4.2, 4.4, 4.5, 4.6, 4.7, 4.9, 5.1, 5.2, 5.4, 5.6, 5.9, 6.3, 6.9, 8.0, 12.7, 19.7, 24.7, 33.6, 41.5, 50.2, 56.8, 62.2, 65.9, 69.5, 72.9, 75.2, 77.5, 79.3, 80.9, 82.2, 83.0, 83.8, 84.2]}, "governing_protecting": {"name": "Governing & Protecting", "color": "#186352", "mid": [1.7, 1.8, 1.8, 1.9, 1.9, 1.9, 1.9, 2.0, 2.0, 2.0, 2.1, 2.2, 2.3, 2.3, 2.5, 2.6, 2.7, 2.8, 3.0, 3.1, 3.2, 3.4, 3.5, 3.7, 3.9, 4.1, 4.3, 4.5, 4.8, 5.0, 5.3, 5.6, 5.8, 6.1, 6.3, 6.5, 6.8, 7.0, 7.3, 7.5, 7.8, 8.0, 8.3, 8.5, 8.8, 9.1, 9.4, 9.7, 10.0, 10.4, 10.9, 11.6, 12.5, 15.0, 18.1, 20.1, 23.3, 26.7, 30.8, 34.5, 38.3, 42.0, 46.1, 50.0, 53.7, 57.8, 60.9, 64.1, 66.3, 68.4, 69.5, 70.6]}, "feeding_hosting": {"name": "Feeding & Hosting", "color": "#a46e0b", "mid": [4.9, 5.0, 5.1, 5.2, 5.3, 5.3, 5.4, 5.5, 5.5, 5.6, 5.7, 5.9, 6.0, 6.2, 6.4, 6.7, 6.9, 7.2, 7.4, 7.7, 7.9, 8.2, 8.4, 8.7, 9.1, 9.4, 9.9, 10.3, 10.8, 11.2, 11.7, 12.1, 12.6, 13.0, 13.4, 13.7, 14.1, 14.5, 14.9, 15.3, 15.7, 16.1, 16.5, 16.9, 17.2, 17.7, 18.2, 18.6, 19.1, 19.5, 20.3, 21.2, 22.3, 24.7, 27.8, 29.2, 31.9, 35.6, 40.8, 46.7, 53.2, 59.8, 66.5, 71.8, 76.6, 80.9, 83.7, 86.2, 87.7, 89.1, 89.7, 90.3]}, "maintaining_fixing": {"name": "Maintaining & Fixing", "color": "#52c624", "mid": [3.5, 3.6, 3.7, 3.8, 3.9, 3.9, 4.0, 4.0, 4.1, 4.2, 4.3, 4.4, 4.6, 4.7, 4.9, 5.1, 5.3, 5.6, 5.8, 6.0, 6.3, 6.5, 6.7, 6.9, 7.2, 7.5, 7.9, 8.2, 8.6, 9.0, 9.3, 9.7, 10.0, 10.4, 10.6, 10.9, 11.2, 11.5, 11.8, 12.2, 12.5, 12.8, 13.2, 13.4, 13.8, 14.1, 14.5, 14.8, 15.2, 15.6, 16.2, 16.8, 17.6, 19.0, 21.0, 21.9, 23.3, 25.4, 28.2, 32.1, 36.7, 41.9, 47.7, 52.9, 58.2, 63.6, 67.7, 71.6, 74.1, 76.5, 77.6, 78.8]}}};
+  var YRS = D.years, LAST = YRS.length - 1;
+  var wrap = document.getElementById('race'), svg = document.getElementById('rc-svg'), status = document.getElementById('rc-status');
+  var HINT = '<em>hover or tap a curve</em>';
+  var NS = 'http://www.w3.org/2000/svg';
+  var W = 1200, L = 64, R = 1008, T = 56, B = 556;
+  function XI(i) { return L + (R - L) * i / LAST; }
+  function XY(yr) { return L + (R - L) * (yr - YRS[0]) / (YRS[LAST] - YRS[0]); }
+  function Y(v) { return B - (B - T) * v / 100; }
+  function el(n, at, txt) {
+    var e = document.createElementNS(NS, n);
+    for (var k in at) e.setAttribute(k, at[k]);
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  [0, 25, 50, 75, 100].forEach(function(g) {
+    svg.appendChild(el('line', { x1: L, x2: R, y1: Y(g), y2: Y(g), 'class': 'rc-grid' }));
+    svg.appendChild(el('text', { x: L - 10, y: Y(g) + 4, 'text-anchor': 'end', 'class': 'rc-tick' }, '' + g));
+  });
+  [1970, 1980, 1990, 2000, 2010, 2020, 2030, 2041].forEach(function(yr) {
+    svg.appendChild(el('text', { x: XY(yr), y: B + 24, 'text-anchor': yr === 1970 ? 'start' : yr === 2041 ? 'end' : 'middle', 'class': 'rc-tick' }, '' + yr));
+  });
+  svg.appendChild(el('text', { x: 20, y: 306, transform: 'rotate(-90 20 306)', 'text-anchor': 'middle', 'class': 'rc-ylab' }, 'territory technical replaceability'));
+  var xn = XY(2026);
+  svg.appendChild(el('line', { x1: xn, x2: xn, y1: T - 8, y2: B, 'class': 'rc-nowl' }));
+  svg.appendChild(el('text', { x: xn, y: T - 16, 'text-anchor': 'middle', 'class': 'rc-now' }, 'now'));
+  svg.appendChild(el('text', { x: (L + R) / 2, y: 622, 'text-anchor': 'middle', 'class': 'rc-note' }, 'employment-weighted mean of in-territory occupations · mid band'));
+  var pinned = null, groups = {}, labels = {};
+  function show(id) {
+    svg.classList.add('rc-focus');
+    Object.keys(groups).forEach(function(k) { groups[k].classList.toggle('rc-on', k === id); });
+    Object.keys(labels).forEach(function(k) { labels[k].classList.toggle('rc-on', k === id); });
+    var t = D.territories[id];
+    status.innerHTML = '<b>' + t.name + '</b> · ' + Math.round(t.mid[LAST]) + ' in 2041';
+  }
+  function clearAll() {
+    pinned = null;
+    svg.classList.remove('rc-focus');
+    Object.keys(groups).forEach(function(k) { groups[k].classList.remove('rc-on'); });
+    Object.keys(labels).forEach(function(k) { labels[k].classList.remove('rc-on'); });
+    status.innerHTML = HINT;
+  }
+  Object.keys(D.territories).forEach(function(id) {
+    var t = D.territories[id];
+    var d = '';
+    for (var i = 0; i < t.mid.length; i++) d += (i ? 'L' : 'M') + XI(i).toFixed(1) + ' ' + Y(t.mid[i]).toFixed(1);
+    var cls = id === 'money_data' ? 'rc-ink' : id === 'care_health' ? 'rc-ochre'
+            : (id === 'buying_selling' || id === 'land_sea') ? 'rc-named' : 'rc-dim';
+    var g = el('g', { 'class': 'rc-t ' + cls });
+    g.appendChild(el('path', { d: d, 'class': 'rc-line' }));
+    var hit = el('path', { d: d, 'class': 'rc-hit', tabindex: 0, role: 'button',
+      'aria-label': t.name + ' · ' + Math.round(t.mid[LAST]) + ' in 2041' });
+    g.appendChild(hit);
+    svg.appendChild(g);
+    groups[id] = g;
+    hit.addEventListener('pointerenter', function() { if (pinned) return; show(id); });
+    hit.addEventListener('pointerleave', function() { if (!pinned) clearAll(); });
+    hit.addEventListener('click', function(e) { e.stopPropagation(); show(id); pinned = id; });
+    hit.addEventListener('focus', function() { if (pinned) return; show(id); });
+    hit.addEventListener('blur', function() { if (!pinned) clearAll(); });
+    hit.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(id); pinned = id; } });
+  });
+  [['buying_selling', 'rc-lab-soft'], ['money_data', 'rc-lab-ink'], ['land_sea', 'rc-lab-soft'], ['care_health', 'rc-lab-ochre']].forEach(function(pair) {
+    var t = D.territories[pair[0]];
+    var tx = el('text', { x: R + 10, y: Y(t.mid[LAST]) + 4.5, 'class': 'rc-lab ' + pair[1] },
+      t.name + ' · ' + Math.round(t.mid[LAST]));
+    svg.appendChild(tx);
+    labels[pair[0]] = tx;
+  });
+  var i28 = YRS.indexOf(2028), gx = XI(i28);
+  var hiY = Y(D.territories.money_data.mid[i28]), loY = Y(D.territories.care_health.mid[i28]);
+  svg.appendChild(el('line', { x1: gx, x2: gx, y1: hiY + 8, y2: loY - 8, 'class': 'rc-arr' }));
+  svg.appendChild(el('polygon', { points: gx + ',' + (hiY + 1) + ' ' + (gx - 4) + ',' + (hiY + 9) + ' ' + (gx + 4) + ',' + (hiY + 9), 'class': 'rc-arrh' }));
+  svg.appendChild(el('polygon', { points: gx + ',' + (loY - 1) + ' ' + (gx - 4) + ',' + (loY - 9) + ' ' + (gx + 4) + ',' + (loY - 9), 'class': 'rc-arrh' }));
+  var my = (hiY + loY) / 2, ax = XY(2021.4);
+  svg.appendChild(el('line', { x1: ax + 4, x2: gx - 6, y1: my, y2: my, 'class': 'rc-lead' }));
+  svg.appendChild(el('text', { x: ax, y: my + 4, 'text-anchor': 'end', 'class': 'rc-ann' }, 'widest gap · 28 points · 2028'));
+  wrap.addEventListener('click', function(e) { if (!e.target.closest('.rc-hit')) clearAll(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && svg.classList.contains('rc-focus')) clearAll(); });
+})();
+</script>
+</figure>
+<figure class="wl-fig">
+<div id="wall">
+  <p id="wl-year">2041</p>
+  <p id="wl-sub">Care &amp; Health · the mid band · thirty-one occupations</p>
+  <div id="wl-grid" role="group" aria-label="Thirty-one Care &amp; Health occupations at 2041 — select a square for details"></div>
+  <div id="wl-panel"></div>
+</div>
+<noscript><img src="/essay/fig-wall.png" alt="Care &amp; Health at 2041 in the Mirror: thirty-one occupations as Albers studies in their own palettes, each with its technical replaceability, the Nurse's square outlined."></noscript>
+<figcaption>Care &amp; Health at 2041, the mid band: all thirty-one of its occupations, each in its own palette, a Nurse's square outlined among them. <a href="https://largelabormodel.com/mirror" target="_blank" rel="noopener">The Mirror</a> renders this wall live for any job's territory, any year. <em>Tap a square to name it.</em></figcaption>
+<script>
+(function() {
+  var D = {"territory": "Care & Health", "year": 2041, "band": "mid", "occupations": [{"name": "Nurse", "r": 80, "colors": ["#555606", "#2035ac", "#c4dec5"], "sides": [1.0, 0.9, 0.27], "you": true}, {"name": "Undertakers and Embalmers", "r": 64, "colors": ["#ac2048", "#bb6ecf", "#c4decc"], "sides": [1.0, 0.845, 0.281]}, {"name": "Dentist", "r": 60, "colors": ["#065613", "#7dac20", "#cf6eb6", "#d3c4de"], "sides": [1.0, 0.967, 0.696, 0.442]}, {"name": "Child Care Worker", "r": 75, "colors": ["#560652", "#3220ac", "#81cf6e"], "sides": [1.0, 0.896, 0.746]}, {"name": "Nursing Associate", "r": 82, "colors": ["#3b5606", "#ac5a20", "#766ecf"], "sides": [1.0, 0.888, 0.413]}, {"name": "Physiotherapist", "r": 83, "colors": ["#065256", "#20ac3e", "#cf7b6e"], "sides": [1.0, 0.821, 0.379]}, {"name": "Care Worker", "r": 72, "colors": ["#56063b", "#6620ac", "#6ecf96"], "sides": [1.0, 0.896, 0.777]}, {"name": "Dental Technician", "r": 76, "colors": ["#06564d", "#ac2048", "#cacf6e", "#c6c4de"], "sides": [1.0, 0.944, 0.452, 0.261]}, {"name": "Personal Trainer", "r": 79, "colors": ["#425606", "#2037ac", "#6ecf8e"], "sides": [1.0, 0.931, 0.426]}, {"name": "Massage Therapist", "r": 85, "colors": ["#065610", "#ac2720"], "sides": [1.0, 0.95]}, {"name": "Occupational Therapy Aide", "r": 85, "colors": ["#065056", "#20ac37"], "sides": [1.0, 0.853]}, {"name": "Health Specialist", "r": 79, "colors": ["#563f06", "#7920ac", "#d8dec4"], "sides": [1.0, 0.962, 0.273]}, {"name": "Surgeon", "r": 76, "colors": ["#06562e", "#ac207d", "#cfcf6e", "#c4d1de"], "sides": [1.0, 0.963, 0.511, 0.268]}, {"name": "Animal Care Worker", "r": 75, "colors": ["#060856", "#20a5ac", "#cfb36e", "#dec4c9"], "sides": [1.0, 0.823, 0.567, 0.344]}, {"name": "Psychologist", "r": 82, "colors": ["#ac2066"], "sides": [1.0]}, {"name": "Medical Assistant", "r": 78, "colors": ["#56063e", "#30ac20", "#cf936e", "#cec4de"], "sides": [1.0, 0.851, 0.509, 0.305]}, {"name": "Anatomist", "r": 77, "colors": ["#490656", "#202bac", "#96cf6e"], "sides": [1.0, 0.901, 0.549]}, {"name": "Paramedical Practitioner", "r": 76, "colors": ["#060f56", "#ac6120", "#cb6ecf", "#c4dedd"], "sides": [1.0, 0.935, 0.452, 0.369]}, {"name": "Social Workers & Counsellors", "r": 83, "colors": ["#0c0656", "#aca120", "#6ecf86"], "sides": [1.0, 0.928, 0.331]}, {"name": "Physician", "r": 72, "colors": ["#56061c", "#9020ac", "#6ecf9b", "#d0dec4"], "sides": [1.0, 0.832, 0.499, 0.385]}, {"name": "Nurse Midwife", "r": 83, "colors": ["#355606", "#ac7220", "#9e6ecf"], "sides": [1.0, 0.808, 0.442]}, {"name": "Beautician", "r": 89, "colors": ["#560623", "#205fac", "#6ecfab"], "sides": [1.0, 0.72, 0.322]}, {"name": "Barber", "r": 90, "colors": ["#425606", "#2b20ac", "#cf6ea6"], "sides": [1.0, 0.652, 0.264]}, {"name": "Lab Technician", "r": 86, "colors": ["#06561e", "#6bac20", "#cf6ea9"], "sides": [1.0, 0.79, 0.388]}, {"name": "Social Worker", "r": 85, "colors": ["#560627", "#2b20ac", "#dedec4"], "sides": [1.0, 0.814, 0.281]}, {"name": "Dietitian", "r": 88, "colors": ["#065646", "#ac8420"], "sides": [1.0, 0.906]}, {"name": "Health Records Technician", "r": 83, "colors": ["#270656", "#89ac20", "#6ecfa6"], "sides": [1.0, 0.826, 0.348]}, {"name": "Occupational Health & Safety Pros", "r": 91, "colors": ["#564d06", "#2048ac"], "sides": [1.0, 0.721]}, {"name": "Health Records Clerk", "r": 89, "colors": ["#064956", "#ac2020"], "sides": [1.0, 0.672]}, {"name": "Pharmacist", "r": 92, "colors": ["#390656", "#2048ac"], "sides": [1.0, 0.72]}, {"name": "Health Inspector", "r": 93, "colors": ["#1a5606", "#7220ac"], "sides": [1.0, 0.6]}]};
+  var grid = document.getElementById('wl-grid'), panel = document.getElementById('wl-panel');
+  function line(o) {
+    panel.innerHTML = '<b>' + o.name + '</b> · technical replaceability ' + o.r + '% · '
+      + D.territory + ', ' + D.year + ', ' + D.band + ' band';
+  }
+  var sel = null;
+  D.occupations.forEach(function(o, i) {
+    var cell = document.createElement('div');
+    cell.className = 'wl-cell' + (o.you ? ' wl-you' : '');
+    cell.tabIndex = 0; cell.setAttribute('role', 'button');
+    cell.setAttribute('aria-label', o.name + ' · technical replaceability ' + o.r + '%');
+    var sqw = document.createElement('div'); sqw.className = 'wl-sqw';
+    var sq = document.createElement('div'); sq.className = 'wl-sq';
+    sq.style.background = o.colors[0];
+    sq.style.transform = 'rotate(' + ((i % 5 - 2) * 1.2) + 'deg)';
+    var sides = (o.sides && o.sides.length === o.colors.length) ? o.sides : null;
+    var host = sq;
+    for (var k = 1; k < o.colors.length; k++) {
+      var inner = document.createElement('div');
+      inner.className = 'wl-in';
+      inner.style.background = o.colors[k];
+      if (sides) {
+        var f = sides[k] * 100, off = (100 - f) / 2;
+        inner.style.left = off + '%'; inner.style.top = off + '%';
+        inner.style.width = f + '%'; inner.style.height = f + '%';
+        sq.appendChild(inner);
+      } else {
+        host.appendChild(inner);
+        host = inner;
+      }
+    }
+    sqw.appendChild(sq);
+    var lab = document.createElement('div'); lab.className = 'wl-lab';
+    lab.textContent = (o.you ? 'you · ' : '') + o.r + '%';
+    cell.appendChild(sqw); cell.appendChild(lab);
+    function pick() {
+      if (sel) sel.classList.remove('wl-sel');
+      sel = cell; cell.classList.add('wl-sel');
+      line(o);
+    }
+    cell.addEventListener('click', pick);
+    cell.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+    grid.appendChild(cell);
+    if (o.you) pick();
+  });
+})();
+</script>
+</figure>
+<p>None of this is an employment forecast. Replaceability converts to modeled replacement through a separate, deliberately skeptical formula — steep discounts for adoption lag, regulation, human preference, hardware dependence — and under the central case the two numbers sit sixty points apart by 2041. That gap marks the model's limit: the technical frontier is computable from task lists and capability curves, while the social absorption of it can only be modeled.</p>
+<p>In January, Anthropic's chief executive, <a href="https://darioamodei.com/essay/the-adolescence-of-technology" target="_blank" rel="noopener">Dario Amodei</a>, argued that AI could displace half of all entry-level white-collar jobs within one to five years, even as it accelerates economic growth — and, asked whether any of that is visible in the labor data yet, agreed that it likely is not. In this dataset's terms, the claim runs the two numbers together: a replacement forecast on a replaceability clock, one horizon where the model holds three. But the urgency survives the sorting, and it is not his alone: Google DeepMind's <a href="https://www.theguardian.com/technology/2025/aug/04/demis-hassabis-ai-future-10-times-bigger-than-industrial-revolution-and-10-times-faster" target="_blank" rel="noopener">Demis Hassabis</a> expects a change "10 times bigger than the Industrial Revolution, and maybe 10 times faster." The harm depends on that speed, on how much faster the frontier moves than labor markets and institutions can adjust.</p>
+</section><section><p class='seckick'>IV</p><h2>The mirror</h2>
+<p>Today's emails draft themselves beautifully. The desk's numbers are the highest on the map and still climbing. What the data changes is the size of the question. Whether machines take <em>jobs</em> can be answered only in vague hypotheticals. The right measurement lives inside each job: where the line between the two kinds of tasks runs, and how fast it is moving.</p>
+<p>Somewhere in the 480 is the job you do, or the one you did before, or the one you are deciding about. <a href="https://largelabormodel.com/mirror" target="_blank" rel="noopener">The Mirror</a> will find it and lay out its two jobs: the hours a machine could already fill, the hours it can only speed up, the hours it cannot yet enter. In this first published version, the table is small and may at times run against your own memory of the work. Good. That is the model doing its job: task tables — the model's atoms — are an open invitation for contribution (<a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener">CC BY 4.0</a>, complete with a gapless changelog). Please reach out, so the next version knows what you know.</p>
+<p>The next confident headline will arrive within the week. A new model that ends white-collar work, a robot that catches fire mid-air, a projected date for the economic collapse. Underneath it will be a capability claim dressed as an employment claim, or the reverse.</p>
+<p>Two summers ago the machines couldn't count the letters in <em>strawberry</em>. This summer they touched mathematics that had resisted generations of hands and paper. That is one half of every job, moving. The other half held. Every job is two jobs — and it is worth knowing, precisely, which two are yours.</p></section>
+<footer><span>Lukas Seel · August 2026 · dataset <a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener">CC BY 4.0</a></span><span><a href="https://largelabormodel.com/mirror" target="_blank" rel="noopener">The Mirror →</a></span></footer>
+<div id="lb" hidden role="dialog" aria-modal="true" aria-label="Enlarged figure"><img alt=""></div>
+<script>
+(function() {
+  var lb = document.getElementById('lb'), li = lb.querySelector('img');
+  function close() { lb.hidden = true; document.body.style.overflow = ''; }
+  function open(im) { li.src = im.src; li.alt = im.alt; lb.hidden = false; document.body.style.overflow = 'hidden'; }
+  document.querySelectorAll('figure img').forEach(function(im) {
+    im.tabIndex = 0; im.setAttribute('role', 'button');
+    im.addEventListener('click', function() { open(im); });
+    im.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(im); } });
+  });
+  lb.addEventListener('click', close);
+  addEventListener('keydown', function(e) { if (e.key === 'Escape' && !lb.hidden) close(); });
+})();
+</script>
+</main>
+</body>
+</html>
