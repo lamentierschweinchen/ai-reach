@@ -228,6 +228,10 @@
   .ta-pop .ta-terr{font-size:12px;color:var(--ink-soft);}
   .ta-pop .ta-hit{font-size:11px;font-style:italic;color:var(--ink-soft);}
   .ta-pop .ta-head{padding:9px 14px 5px;font-family:'Inter';font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-soft);}
+  .ta-pop .ta-req{border-top:1px solid var(--rule);margin-top:4px;}
+  .ta-pop .ta-req-btn{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 14px;cursor:pointer;font-family:'Inter';font-size:13px;color:var(--ink-soft);}
+  .ta-pop .ta-req-btn:hover,.ta-pop .ta-req-btn:focus-visible{color:var(--ink);text-decoration:underline;}
+  .ta-pop .ta-req-done{display:block;padding:10px 14px;font-family:'Inter';font-size:13px;font-style:italic;color:var(--ink-soft);}
   .jobentry{position:relative;width:100%;max-width:360px;margin:22px auto 0;}
   .jobentry input{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-style:italic;font-size:18px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:12px 16px;width:100%;text-align:center;outline:none;}
   .jobentry input:focus{border-color:var(--ink);}
@@ -506,6 +510,17 @@ function searchOrSuggest(q){
   return {rows:[],suggest:true};
 }
 const ttEsc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+/* ===== "couldn't find my job" intake — request row shown whenever search falls back ===== */
+function taReqRow(q){
+  let done=false;try{done=!!sessionStorage.getItem('jobreq:'+q.toLowerCase());}catch(e){}
+  return done?'<li class="ta-req" role="none"><span class="ta-req-done">Requested — it enters the public review queue.</span></li>'
+    :`<li class="ta-req" role="none"><button type="button" class="ta-req-btn">Can’t find yours? Request “${esc(q)}” →</button></li>`;
+}
+function sendJobRequest(q,closest,el){
+  try{sessionStorage.setItem('jobreq:'+q.toLowerCase(),'1');}catch(e){}
+  fetch('/api/request-job',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({q:q,closest:closest,page:'desktop'})}).catch(function(){});
+  if(el&&el.parentElement)el.parentElement.innerHTML='<span class="ta-req-done">Requested — it enters the public review queue.</span>';
+}
 function attachTypeahead(input,onSelect){
   const wrap=input.parentElement;
   if(getComputedStyle(wrap).position==='static')wrap.style.position='relative';
@@ -518,9 +533,11 @@ function attachTypeahead(input,onSelect){
   function draw(q){
     const r=searchOrSuggest(q);rows=r.rows;active=-1;
     if(!(q||'').trim()){close();return;}
-    let h=r.suggest?'<li class="ta-head">No exact match — did you mean:</li>':'';
+    const rq=(q||'').trim();
+    let h=r.suggest?`<li class="ta-head">${rows.length?'No exact match — did you mean:':'Nothing close in the 480 occupations.'}</li>`:'';
     h+=rows.map((x,i)=>`<li class="ta-row" role="option" id="${pop.id}-${i}" data-i="${i}"><span class="ta-nm">${ttEsc(x.o.name)}</span><span class="ta-terr">· ${ttEsc(x.o.territory)}</span>${x.hit&&x.hit!==x.o.name.toLowerCase()?`<span class="ta-hit">“${ttEsc(x.hit)}”</span>`:''}</li>`).join('');
-    pop.innerHTML=h||'<li class="ta-head">No matches</li>';place();pop.hidden=false;input.setAttribute('aria-expanded','true');
+    if(r.suggest&&rq.length>=2)h+=taReqRow(rq);
+    pop.innerHTML=h;place();pop.hidden=false;input.setAttribute('aria-expanded','true');
   }
   function setActive(i){const opt=[...pop.querySelectorAll('.ta-row')];if(!opt.length)return;active=(i+opt.length)%opt.length;opt.forEach((el,j)=>el.classList.toggle('active',j===active));input.setAttribute('aria-activedescendant',opt[active].id);opt[active].scrollIntoView({block:'nearest'});}
   function choose(i){if(rows[i]){onSelect(rows[i].o);close();}}
@@ -532,7 +549,7 @@ function attachTypeahead(input,onSelect){
     else if(e.key==='Enter'){if(!pop.hidden){e.preventDefault();choose(active>=0?active:0);}}
     else if(e.key==='Escape')close();
   });
-  pop.addEventListener('mousedown',e=>{const li=e.target.closest('.ta-row');if(li){e.preventDefault();choose(+li.dataset.i);}});
+  pop.addEventListener('mousedown',e=>{const b=e.target.closest('.ta-req-btn');if(b){e.preventDefault();sendJobRequest((input.value||'').trim(),rows[0]?rows[0].o.name:'',b);return;}const li=e.target.closest('.ta-row');if(li){e.preventDefault();choose(+li.dataset.i);}});
   document.addEventListener('click',e=>{if(!wrap.contains(e.target))close();});
 }
 
