@@ -701,8 +701,7 @@ function tick(){
     if(year!==curYear)render(year,true);
     renderForm(0);
     headlineEl.style.opacity='1';rungsEl.style.opacity='1';plateMeta.style.opacity='1';scrubber.classList.remove('on');
-    if(p>0.03&&p<SWEEP_END-0.02){helper.textContent='Scroll: watch the capability grow, 1970 to 2041.';helper.style.opacity='1';}
-    else if(p>=SWEEP_END){helper.textContent='Projected capability, fifteen years out.';helper.style.opacity='1';}
+    if(p>=SWEEP_END){helper.textContent='Projected capability, fifteen years out.';helper.style.opacity='1';}
     else helper.style.opacity='0';
     cornerL.textContent='Your job · 01';
   }else if(p<MORPH_END){
