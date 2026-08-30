@@ -300,3 +300,7 @@ After the initial 2026-04-19 release, a spot-check surfaced a set of small-but-r
 - **Reproduction gate:** before emitting 2041, the extension script reproduced every stored 2040 field (480/480 within rounding). Zero 2040→2041 monotonicity violations.
 - Results: mean 2041 displacement 24.2 (range 9.6–48.7); employment-weighted mean 2041 replaceability 84.2; replaceability-vs-displacement gap at the horizon: 60.0 points. Methodology §5 range corrected 9–47 → 10–49; horizon rationale (2041 = now + 15) documented in §6.
 - Script: `v5-build/assembler/add_2041_checkpoint.py`.
+
+### August 28, 2026 — job-request intake, first alias corrections
+- The Mirror now takes requests for titles its search cannot place (`/api/request-job`; requests land publicly on the repo's issue #2). First triage from three days of live requests: **`delivery lead` and `delivery manager` added to IT Managers (1330) `common_titles`** — the nearest prior suggestion (Delivery Driver) was semantically wrong. Search metadata only; no scores changed (bundle rebuild verified Nurse r2026 = 29.5, all 4,811 task labels intact).
+- `Survey Scripter` / `Survey Programmer` logged as **new-occupation candidates for v6** rather than aliased: no existing task table honestly represents survey-instrument development, and a wrong table is worse than no match.

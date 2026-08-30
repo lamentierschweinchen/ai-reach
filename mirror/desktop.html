@@ -823,8 +823,7 @@ document.getElementById('jvjYear').addEventListener('input',e=>{jvjYear=+e.targe
 
 /* ===== reference legend (teaches the reading; palettes vary per study) ===== */
 const REF_RAMP=['#e9e2d2','#cdb98f','#b07e4a','#7e4a2e','#33231a']; // canvas core(Human) → dark edge(Autonomous)
-const refLegendHTML=()=>`<span class="cap">how to read · centre → edge</span>`+
-  BANDS.map((b,i)=>`<span class="ri"><span class="rs" style="background:${REF_RAMP[i]}"></span><span class="rn">${b.name}</span></span>`).join('');
+const refLegendHTML=()=>`<span class="cap">how to read · centre → edge · lighter = more human, darker = more machine</span><span class="rn">${BANDS.map(b=>b.name).join(' · ')}</span>`;
 
 /* ===== OUTRO (rebuilds per focal) ===== */
 function buildOutro(){
