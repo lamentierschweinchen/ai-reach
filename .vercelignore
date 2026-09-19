@@ -36,3 +36,5 @@ MOBILE_POLISH_BRIEF.md
 
 # superseded v2.5 schema doc — lives on GitHub for lineage, not on the site
 DATA_ARCHITECTURE.md
+# repo tooling, not site content
+scripts/
