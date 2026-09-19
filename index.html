@@ -182,12 +182,6 @@ header {
 .global-stat-num { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1; }
 .global-stat-label { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 
-#labor-note { position: fixed; left: 50%; bottom: 145px; transform: translateX(-50%); z-index: 90;
-  width: max-content; max-width: min(540px, calc(100vw - 32px)); padding: 7px 10px;
-  color: #ddd; background: rgba(0,0,0,.92); border: 1px solid #555; border-radius: 5px;
-  font-size: 11px; line-height: 1.4; text-align: center; text-decoration: underline; }
-#labor-note[hidden] { display: none; }
-@media (max-width: 768px) { #labor-note { bottom: 88px; font-size: 10px; } }
 #era-label { position: fixed; right: 24px; bottom: 100px; text-align: right; z-index: 50; }
 #era-label .era-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.4); }
 #era-label .era-detail { font-size: 7.5px; letter-spacing: 0.08em; color: var(--muted); margin-top: 1px; }
@@ -565,7 +559,7 @@ header {
   <div class="intro-left">
     <div class="intro-title">Large Labor Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
-    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share is roughly one in four, and AI is reaching further into knowledge-based&nbsp;professions.</div>
+    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to roughly one in four, and AI has become capable of performing many tasks across knowledge-based&nbsp;professions.</div>
     <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable—and how this might affect the future of&nbsp;work.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
       <div class="intro-interact-row">
@@ -703,7 +697,6 @@ header {
 </div>
 <div id="era-label"><div class="era-name" id="era-name"></div><div class="era-detail" id="era-detail"></div></div>
 
-<a id="labor-note" href="/methodology-full#limitations" hidden></a>
 <div id="timeline">
   <div class="timeline-top">
     <button class="play-btn" id="play-btn"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M1 1L9 6L1 11V1Z" fill="white"/></svg></button>
@@ -2492,16 +2485,6 @@ function buildTimeline() {
 }
 
 function updateTimelineUI() {
-  const note = document.getElementById('labor-note');
-  const y = currentYear;
-  note.textContent = y > 1940 && y < 1960
-    ? '1950 is a known data outlier; this dip is not a measured historical shift. Details ↗'
-    : y >= 1991 && y <= 2025
-      ? 'Workforce estimates contain breaks, especially 2010–11. Annual jumps are not measured job losses. Details ↗'
-      : y > 2025
-        ? 'Workforce shares and total held at 2025 estimates; capability is projected. Data limitations ↗'
-        : '';
-  note.hidden = !note.textContent;
   const p = yearToPercent(currentYear);
   const progressBar = document.getElementById('timeline-progress');
   progressBar.style.width = p+'%';

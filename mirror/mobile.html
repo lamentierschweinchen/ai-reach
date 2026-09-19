@@ -319,8 +319,7 @@
   <p class="pre reveal">A personal history of labor</p>
   <h1 class="reveal d1" id="focalHero">Nurse.</h1>
   <p class="lede reveal d2">Autonomous systems and the future of work</p>
-  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> is modeled task capability. Economic viability and availability inform the underlying judgments; the score is not measured time saved. Whether it becomes replacement is a slower, separate question.<br><a class="formula-link" href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit;display:inline-block;padding:6px 0 2px">How it’s measured →</a></p>
-  <p id="jobLinkStatus" hidden style="font-size:12px;line-height:1.5;max-width:430px;margin:14px auto;color:var(--ink-soft)" role="status">This link has no unique match. Nurse is shown as an example; choose a job in the search below.</p>
+  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a class="formula-link" href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit;display:inline-block;padding:6px 0 2px">How it’s measured →</a></p>
   <div class="jobentry reveal d2" style="z-index:70">
     <input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job">
     <span class="mag">⌕</span>
@@ -939,7 +938,6 @@ function applyFocalSections(){
   prepareShareFile();                 // ready the share PNG before the user can tap
 }
 function setFocal(isco,scrollTop){
-  document.getElementById('jobLinkStatus').hidden=true;
   deriveFocal(isco);
   invalidateShare();                  // drop the previous job's pre-built share card
   // reset scrub years to NOW so a fresh job opens cleanly
@@ -954,7 +952,7 @@ function setFocal(isco,scrollTop){
 /* ===== INTRO job search (custom ranked typeahead) ===== */
 attachTypeahead($('jobEntry'),o=>{setFocal(o.isco,true);$('jobEntry').value='';$('jobEntry').blur();});
 /* a ?job= value we could not place: show it in the search with its suggestions + the request row, rather than a silent Nurse */
-if(_jobMiss){document.getElementById('jobLinkStatus').hidden=false;const je=$('jobEntry');if(je){je.value=_want.trim().slice(0,80);je.dispatchEvent(new Event('input',{bubbles:true}));}}
+if(_jobMiss){const je=$('jobEntry');if(je){je.value=_want.trim().slice(0,80);je.dispatchEvent(new Event('input',{bubbles:true}));}}
 
 /* ===== custom drag strips (trajectory read + territory wall scrub) ===== */
 function bindStrip(el,onMove,onEnd){

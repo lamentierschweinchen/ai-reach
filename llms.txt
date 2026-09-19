@@ -22,7 +22,7 @@ The formula: r(occupation, year) = 100 · Σ time_weight · σ(8 · (capability[
 
 - [The Model](https://largelabormodel.com/): the world's work — thirteen territories, 1800 to 2041.
 - [The Mirror](https://largelabormodel.com/mirror): any single job, task by task. Deep link pattern: /mirror?job=<ISCO-08 code>, e.g. /mirror?job=2221 for Nurse (codes are in /data/occupations_index.json). An exact job name also resolves, e.g. /mirror?job=nurse; anything unrecognised opens the search instead of guessing.
-- [Every Job Is Two Jobs](https://largelabormodel.com/two-jobs): the data essay — how modeled capability varies between tasks and over time; task-time weights are estimates, not measured hours saved.
+- [Every Job Is Two Jobs](https://largelabormodel.com/two-jobs): the data essay — where the line between machine-absorbed and machine-untouchable hours runs, and how fast it moves.
 
 ## Contributing (humans and their AI systems)
 

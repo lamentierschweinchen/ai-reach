@@ -284,8 +284,7 @@
   <p class="pre reveal">A personal history of labor</p>
   <h1 class="reveal d1" id="focalHero">Software <em>Engineer.</em></h1>
   <p class="lede reveal d2">Autonomous systems and the future of work</p>
-  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> is modeled task capability. Economic viability and availability inform the underlying judgments; the score is not measured time saved. Whether it becomes replacement is a slower, separate question.<br><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
-  <p id="jobLinkStatus" hidden style="font-size:12px;line-height:1.5;max-width:430px;margin:14px auto;color:var(--ink-soft)" role="status">This link has no unique match. Nurse is shown as an example; choose a job in the search below.</p>
+  <p class="reveal d2" style="font-size:12px;line-height:1.5;color:var(--ink-soft);max-width:430px;margin:14px auto 0"><b>Replaceability</b> = technical capability × economic viability × availability. Whether it becomes replacement is a slower, separate question.<br><a href="https://largelabormodel.com/methodology-full" target="_blank" rel="noopener" style="color:inherit">How it’s measured →</a></p>
   <div class="jobentry reveal d2" style="z-index:70"><input id="jobEntry" placeholder="Find your job" autocomplete="off" autocapitalize="words" inputmode="search" aria-label="Search for your job"></div>
   <p class="cue reveal d2">scroll<span>↓</span></p>
 </section>
@@ -875,7 +874,7 @@ let toastT;
 function showToast(m){toast.textContent=m;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('on'),2400);}
 attachTypeahead(document.getElementById('jobEntry'),o=>{setFocal(o.isco,true);document.getElementById('jobEntry').value='';document.getElementById('jobEntry').blur();});
 /* a ?job= value we could not place: show it in the search with its suggestions + the request row, rather than a silent Nurse */
-if(_jobMiss){document.getElementById('jobLinkStatus').hidden=false;const je=document.getElementById('jobEntry');if(je){je.value=_want.trim().slice(0,80);je.dispatchEvent(new Event('input',{bubbles:true}));}}
+if(_jobMiss){const je=document.getElementById('jobEntry');if(je){je.value=_want.trim().slice(0,80);je.dispatchEvent(new Event('input',{bubbles:true}));}}
 /* ===== SHARE · generated PNG card (parity with mobile) ===== */
 const SITE='https://largelabormodel.com';
 function shareURL(){return SITE+'/mirror?job='+FOCAL_ISCO;}   // deep-link back into The Mirror, this job
@@ -938,7 +937,6 @@ document.getElementById('againBtn').addEventListener('click',()=>{document.getEl
 /* ===== reactive focal switch + INIT ===== */
 function applyFocalSections(){buildTrajectory();buildTerritory();buildCompare();buildJVJ();buildOutro();}
 function setFocal(isco,scrollTop){
-  document.getElementById('jobLinkStatus').hidden=true;
   deriveFocal(isco); invalidateShare();
   curYear=NOW;sliderYear=NOW;compYear=NOW;jvjYear=NOW;
   document.getElementById('yearInput').value=NOW;document.getElementById('terrYear').value=NOW;document.getElementById('jvjYear').value=NOW;

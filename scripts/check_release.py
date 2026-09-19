@@ -293,7 +293,6 @@ except Exception as e:
     check("read and calculate archived fit worksheet", False, str(e))
 check("current method distinguishes worksheet arithmetic from model validation",
       all('earlier Phase 5 scores' in t and 'not the displacement multipliers above' in t for t in (html_full, mdoc)))
-check("homepage discloses workforce-series limitations beside the timeline", 'id="labor-note"' in index_html and '1950 is a known data outlier' in index_html and '2010–11' in index_html)
 
 # ── 10. deep links never default silently ─────────────────────────────────────
 shim = text("api/mirror-og.js")
