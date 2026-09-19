@@ -2810,16 +2810,16 @@ XDATA_SCI,Data Scientists,"Document data lineage, feature definitions, and repro
 8350,Ships Deck Crews,"Maintaining and, in some cases, operating ship?s equipment, cargo gear, rigging, life-saving and fire- fighting appliances.",Phi_S,0.7,13.5,0.128
 8350,Ships Deck Crews,"Performing deck and hull cleaning, scraping, painting and other maintenance duties as required.",Phi_U,0.58,13.5,0.031
 8350,Ships Deck Crews,"Breaking out, rigging and stowing cargo-handling gear, stationary rigging and running gear.",Phi_S,0.55,13.5,0.327
-9112,Vehicle Cleaners,"Keep storage areas and carts well-stocked, clean, and tidy.",Phi_U,0.3,10.6,0.231
-9112,Vehicle Cleaners,"Carry linens, towels, toilet items, and cleaning supplies, using wheeled carts.",Phi_U,0.3,10.8,0.231
-9112,Vehicle Cleaners,"Service, clean, or supply restrooms.",Phi_U,0.3,10.6,0.231
-9112,Vehicle Cleaners,"Clean building floors by sweeping, mopping, scrubbing, or vacuuming.",Phi_U,0.58,10.6,0.031
-9112,Vehicle Cleaners,"Empty wastebaskets, empty and clean ashtrays, and transport other trash and waste to disposal areas.",Phi_U,0.3,10.6,0.231
-9112,Vehicle Cleaners,"Observe precautions required to protect hotel and guest property and report damage, theft, and found articles to supervisors.",Phi_U,0.42,10.4,0.103
-9112,Vehicle Cleaners,Follow procedures for the use of chemical cleaners and power equipment to prevent damage to floors and fixtures.,Phi_U,0.42,10.4,0.103
-9112,Vehicle Cleaners,"Sweeping or vacuum-cleaning, washing and polishing floors, furniture and other fixtures in buildings, coaches, buses, trams, trains and aircraft.",Phi_U,0.3,10.8,0.231
-9112,Vehicle Cleaners,"Making beds, cleaning bathrooms, supplying towels, soap and related items.",Phi_U,0.3,7.6,0.231
-9112,Vehicle Cleaners,"Cleaning kitchens and generally helping with kitchen work, including dishwashing.",Phi_U,0.3,7.6,0.231
+9112,Building Cleaners,"Keep storage areas and carts well-stocked, clean, and tidy.",Phi_U,0.3,10.6,0.231
+9112,Building Cleaners,"Carry linens, towels, toilet items, and cleaning supplies, using wheeled carts.",Phi_U,0.3,10.8,0.231
+9112,Building Cleaners,"Service, clean, or supply restrooms.",Phi_U,0.3,10.6,0.231
+9112,Building Cleaners,"Clean building floors by sweeping, mopping, scrubbing, or vacuuming.",Phi_U,0.58,10.6,0.031
+9112,Building Cleaners,"Empty wastebaskets, empty and clean ashtrays, and transport other trash and waste to disposal areas.",Phi_U,0.3,10.6,0.231
+9112,Building Cleaners,"Observe precautions required to protect hotel and guest property and report damage, theft, and found articles to supervisors.",Phi_U,0.42,10.4,0.103
+9112,Building Cleaners,Follow procedures for the use of chemical cleaners and power equipment to prevent damage to floors and fixtures.,Phi_U,0.42,10.4,0.103
+9112,Building Cleaners,"Sweeping or vacuum-cleaning, washing and polishing floors, furniture and other fixtures in buildings, coaches, buses, trams, trains and aircraft.",Phi_U,0.3,10.8,0.231
+9112,Building Cleaners,"Making beds, cleaning bathrooms, supplying towels, soap and related items.",Phi_U,0.3,7.6,0.231
+9112,Building Cleaners,"Cleaning kitchens and generally helping with kitchen work, including dishwashing.",Phi_U,0.3,7.6,0.231
 9211,Crop Farm Workers,"Record information about crops, such as pesticide use, yields, or costs.",C_R,0.43,11.1,0.933
 9211,Crop Farm Workers,"Participate in the inspection, grading, sorting, storage, and post-harvest treatment of crops.",Phi_U,0.43,10.8,0.096
 9211,Crop Farm Workers,"Repair and maintain farm vehicles, implements, and mechanical equipment.",Phi_U,0.58,10.3,0.031

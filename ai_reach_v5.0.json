@@ -34,11 +34,16 @@
    "barrier_multipliers": {
     "NONE": 1.2,
     "ECONOMIC": 1.0,
-    "HUMAN_PREFERENCE": 0.562,
-    "REGULATORY": 0.405,
+    "HUMAN_PREFERENCE": 0.7,
+    "REGULATORY": 0.5,
     "HUMANOID_DEPENDENT": 0.15
    },
-   "recalibration_note": "Phase 11: REGULATORY multiplier 0.5 → 0.405, HUMAN_PREFERENCE 0.7 → 0.562. Phase 5 r26 was rescored to pure task-math (removing implicit regulatory/preference discounts); barrier multipliers strengthened proportionally to keep displacement aligned with Anthropic Economic Index observed-coverage empirical anchor."
+   "recalibration_note": "Corrected 2026-09-19. These are the parameters that produced every stored displacement_* field (all 2,400 occupation x checkpoint values reproduce within 0.1). Phase 11 proposed strengthening REGULATORY 0.5 -> 0.405 and HUMAN_PREFERENCE 0.7 -> 0.562 after r2026 was rescored to pure task-math, and this block advertised those values; but the recompute that wrote the displacement fields read the Phase 6 parameter file, so the proposal never reached the data. The shipped values are canonical for v5; whether to adopt the Phase 11 proposal is an open question for the v6 re-fit (it would change 161 occupations at 2041, mean 24.2 -> 23.6).",
+   "equation": "displacement_y = 100 * ( conversion_rate * max(0, r_y - r_2026)/100 + lag_schedule[y] * barrier_multipliers[primary_barrier] * (r_2026/100) * (1 - already_absorbed_era[era]) ), rounded to 0.1; era = post_2022 if barrier is NONE, y2015_2022 if REGULATORY or HUMAN_PREFERENCE, else pre_2015. The barrier multiplier applies to the lag term only.",
+   "phase11_proposed_not_applied": {
+    "HUMAN_PREFERENCE": 0.562,
+    "REGULATORY": 0.405
+   }
   },
   "capability_trajectories_summary": {
    "C_R": {
@@ -186,6 +191,12 @@
   "phase12b_2025_anchor": {
    "applied": "2026-08-15",
    "scope": "2025 capability values re-anchored by a three-instance research protocol (two model families; one instance under a de-biased ordinal-first brief), reconciled per-band minimum; territory 2025 records recomputed. 2026 anchors and all forward values unchanged. Protocol record: phase12 trajectory meta + v5-build/phase12b_2025_anchor/."
+  },
+  "historical_aggregate_count": 2,
+  "territory_count_note": "13 modern territories carry occupations and replaceability scores. territory_metadata and labor also hold 2 historical aggregates (macro_industry, macro_services) used for 1800-1860, before sectoral data allows the 13-way split.",
+  "revision_2026_09_19": {
+   "applied": "2026-09-19",
+   "note": "Display-name fix (9112), replacement-formula metadata reconciled to the shipped calculation, territory counts stated explicitly, pre-1870 Land & Sea workforce share normalised (was 100.0). No replaceability or displacement score changed. See docs/v5_changelog.md."
   }
  },
  "territory_metadata": {
@@ -50805,16 +50816,18 @@
    "isco_verification_status": "CORRECTED_FROM_V32",
    "isco_parent": null,
    "occupation_name": "Cleaners and helpers in offices, hotels and other establishments",
-   "display_name": "Vehicle Cleaners",
+   "display_name": "Building Cleaners",
    "common_titles": [
     "chambermaid",
-    "aircraft cleaner",
     "building custodian",
     "building services technician",
     "building services worker",
     "cleaner",
     "cottage attendant",
-    "environmental services aide"
+    "environmental services aide",
+    "office cleaner",
+    "hotel cleaner",
+    "room attendant"
    ],
    "territory": "Maintaining & Fixing",
    "territory_id": "maintaining_fixing",
@@ -102729,8 +102742,8 @@
     "B"
    ],
    "global_workers_millions": 341.0,
-   "global_workforce_share_pct": 100.0,
-   "share_of_employed_pct": 100.0,
+   "global_workforce_share_pct": 79.118,
+   "share_of_employed_pct": 79.118,
    "data_quality": "LOW",
    "granularity": "territory",
    "data_type": "historical_macro",
@@ -102814,8 +102827,8 @@
     "B"
    ],
    "global_workers_millions": 398.5,
-   "global_workforce_share_pct": 100.0,
-   "share_of_employed_pct": 100.0,
+   "global_workforce_share_pct": 77.379,
+   "share_of_employed_pct": 77.379,
    "data_quality": "LOW",
    "granularity": "territory",
    "data_type": "historical_macro",
@@ -102899,8 +102912,8 @@
     "B"
    ],
    "global_workers_millions": 456.0,
-   "global_workforce_share_pct": 100.0,
-   "share_of_employed_pct": 100.0,
+   "global_workforce_share_pct": 76.127,
+   "share_of_employed_pct": 76.127,
    "data_quality": "LOW",
    "granularity": "territory",
    "data_type": "historical_macro",
