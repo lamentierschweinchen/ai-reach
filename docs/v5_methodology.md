@@ -51,7 +51,7 @@ Replacement-side drags (Phase 6 lag multipliers, not Phase 5 scores):
 - **Regulatory** — licensing, statute, malpractice, named-human mandates.
 - **Human preference** — customer rejection of AI substitute even when tech and economics allow.
 
-Phase 11 corrected a looser framing that had bundled regulatory and preference into replaceability via a coarse "would swap today work?" test. Under the corrected framing, 162 occupations carrying REGULATORY or HUMAN_PREFERENCE barriers had their Phase 5 r26 scores re-computed to pure task-math; the Phase 6 HUMAN_PREFERENCE and REGULATORY multipliers were strengthened proportionally (0.70 → 0.562 and 0.50 → 0.405) so that the replacement projections stayed aligned with the Anthropic Economic Index empirical anchor.
+Phase 11 corrected a looser framing that had bundled regulatory and preference into replaceability via a coarse "would swap today work?" test. Under the corrected framing, 161 occupations carrying REGULATORY or HUMAN_PREFERENCE barriers (69 + 92) had their Phase 5 r26 scores re-computed to pure task-math. Phase 11 also proposed strengthening the Phase 6 HUMAN_PREFERENCE and REGULATORY multipliers (0.70 → 0.562 and 0.50 → 0.405) to keep the replacement projections aligned with the Anthropic Economic Index anchor; that proposal never reached the displacement fields, which use 0.70 and 0.50 — see *Replacement formula* below. *[Corrected 2026-09-19: this paragraph previously presented the proposal as applied, and counted 162.]*
 
 ---
 
@@ -105,7 +105,7 @@ displacement(t) = conversion_rate × max(0, replaceability_t − replaceability_
                 + lag(t) × barrier_multiplier × pending
 ```
 
-where `pending = replaceability_2026 × (1 − already_absorbed_era)`. The barrier multiplier acts on the lag term only; values are rounded to 0.1. This equation with the parameters below reproduces every stored `displacement_*` field (480 occupations × 5 checkpoints, all within 0.1), and the same parameters ship in `metadata.replacement_formula_v5`. *Corrected 2026-09-19: an earlier version applied the multiplier to both terms and listed multipliers that were never applied to the data — see the changelog.*
+where `pending = replaceability_2026 × (1 − already_absorbed_era)`, and the era follows the primary barrier: NONE → post-2022; REGULATORY or HUMAN_PREFERENCE → 2015–2022; ECONOMIC or HUMANOID_DEPENDENT → pre-2015. The barrier multiplier acts on the lag term only; values are rounded to 0.1. This equation with the parameters below reproduces every stored `displacement_*` field (480 occupations × 5 checkpoints, all within 0.1), and the same parameters ship in `metadata.replacement_formula_v5`. *Corrected 2026-09-19: an earlier version applied the multiplier to both terms and listed multipliers that were never applied to the data — see the changelog.*
 
 Parameters:
 
@@ -127,7 +127,7 @@ Parameters:
 
   v3.2 used a uniform 0.15. Historical cases (telephone operators at Δt = 93 years reaching 0.99 absorbed; bank tellers at Δt = 39 years reaching ~0.50) falsify the uniform assumption; v5 stratifies explicitly.
 
-Parameters were set from the 7 historical cases and a 28-occupation cross-section from the Anthropic Economic Index (Massenkoff & McCrory, March 2026). The cross-section measures observed task *coverage* by Claude — a usage proxy that includes augmentation, not observed job loss. Against it, a single-slope fit on replaceability gives in-sample R² = 0.61 (0.56 through the origin); stratifying by barrier type raises it to 0.78. These are in-sample fits on 28 points, not out-of-sample validation of employment effects. *Corrected 2026-09-19: this document previously reported "0.85+" and attributed it to the historical cases; that figure does not reproduce from the archived fit table, and the statistic belongs to the cross-section.*
+Parameters were set from the 7 historical cases and a 28-occupation cross-section from the Anthropic Economic Index (Massenkoff & McCrory, March 2026). The cross-section measures observed task *coverage* by Claude — a usage proxy that includes augmentation, not observed job loss. Against it, a single-slope fit on replaceability gives in-sample R² = 0.61 (0.56 through the origin); stratifying by barrier type raises it to 0.78 (centred R² throughout). These are in-sample fits on 28 points, not out-of-sample validation of employment effects. *Corrected 2026-09-19: this document previously reported "0.85+" and attributed it to the historical cases; that figure does not reproduce from the archived fit table, and the statistic belongs to the cross-section.*
 
 ---
 
@@ -140,12 +140,12 @@ The `primary_barrier` enum has five values. Under the corrected Replaceability �
 | **NONE** | — | No structural barrier. Only diffusion time. | 42 |
 | **ECONOMIC** | **Replaceability-side** | Unit economics break the swap today. Affects r26 directly. | 154 |
 | **HUMANOID_DEPENDENT** | **Replaceability-side** | Product or service not commercially available for the physical task (humanoid hardware gap). Affects r26 directly via Phi_U capability. | 123 |
-| **HUMAN_PREFERENCE** | **Replacement-side** | Customers reject the AI substitute even when tech and economics allow. Lag multiplier 0.562 ×. | 93 |
-| **REGULATORY** | **Replacement-side** | Licensing, statute, named-human mandates, malpractice liability. Lag multiplier 0.405 ×. | 69 |
+| **HUMAN_PREFERENCE** | **Replacement-side** | Customers reject the AI substitute even when tech and economics allow. Lag multiplier 0.70 ×. | 92 |
+| **REGULATORY** | **Replacement-side** | Licensing, statute, named-human mandates, malpractice liability. Lag multiplier 0.50 ×. | 69 |
 
 Occupations may carry multiple `barrier_types` in the secondary enum; `primary_barrier` captures the dominant constraint.
 
-The v3.2 → v5 distribution shifted substantially (HUMAN_PREFERENCE 170 → 93; ECONOMIC 65 → 154; NONE 2 → 42). Many v3.2 HUMAN_PREFERENCE defaults were really ECONOMIC (unit-economics failures), and many NONE cases that v3.2 buried under preference are now explicit. This was a consequence of tighter Phase 5 / Phase 11 editorial definitions, not a scoring artifact.
+The v3.2 → v5 distribution shifted substantially (HUMAN_PREFERENCE 170 → 92; ECONOMIC 65 → 154; NONE 2 → 42). Many v3.2 HUMAN_PREFERENCE defaults were really ECONOMIC (unit-economics failures), and many NONE cases that v3.2 buried under preference are now explicit. This was a consequence of tighter Phase 5 / Phase 11 editorial definitions, not a scoring artifact.
 
 ---
 
@@ -184,7 +184,7 @@ The trajectory shows:
 - C_G is near-zero for most of 1970–2020; the entire rise from ~0.05 to 0.57 happens between 2017 (Transformer paper) and 2026.
 - Phi_U stays near zero throughout — humanoid hardware is still in pilots.
 
-Ordering through the historical period (C_R ≥ P_A > Phi_S ≈ S_E > C_G > Phi_U) reverses in the 2020s as C_G overtakes S_E, then Phi_S, consistent with the LLM-transformer era shift.
+Ordering through the historical period (P_A ≥ C_R > Phi_S ≈ S_E > C_G > Phi_U) reverses in the 2020s as C_G overtakes S_E, then Phi_S, consistent with the LLM-transformer era shift.
 
 **Crossover function.** Historical per-occupation replaceability is computed via logistic crossover — `1 / (1 + exp(-8 · (capability − difficulty)))` — rather than the strict threshold used for near-term projections. This gives partial credit as capability approaches task-difficulty thresholds, which is the right behaviour when capability is low (the strict-threshold model collapses to zero across most occupations at 1970's capability values, which would be false). The logistic form matches the emergent-automation intuition: POS systems gave real-if-partial cashier replaceability in 2005 even though the C_R capability was below full task thresholds.
 
@@ -247,6 +247,7 @@ This is a structured estimate, not a forecast. The honest statement of what the 
 12. **Historical backfill uses current task decompositions and current within-territory employment weights.** Phase 12 produces honest historical capability values; it applies them against today's occupation task lists, weighted by today's in-territory employment shares. This gives "what share of today's labor would have been technically replaceable at that year's capability" — not "what share of 1985's actual labor force was technically replaceable by 1985 technology." Reconstructing historical occupation-level task compositions and employment weights at the 481-occupation granularity would require a separate research project (ILOSTAT's occupation series begins only in 1991). This is a known editorial caveat for the historical series, documented at `metadata.phase12_historical_backfill`.
 
 13. **Pre-1970 has no territory replaceability series.** Capability evidence pre-1970 is too thin (industrial robot density pre-1993 is estimated, digital-computing business deployment is mostly-qualitative) to support per-territory numbers with the same discipline as 1970+. Pre-1970 shows labor composition via `historical_occupations` macro aggregates (land_sea / macro_industry / macro_services) but no territory-level replaceability scores. The UI renders historical composition in the period.
+14. **The workforce-share series has breaks.** The annual 1991–2025 shares are built occupation-up from ILOSTAT modelled estimates and carry classification breaks — the largest at 2010→2011, where Land & Sea drops 7.0 points and Maintaining & Fixing gains 4.8 in a single year — followed by roughly ±2-point year-to-year noise. The 1950 cross-section, from a source with thinner country coverage, puts Land & Sea at 25% between 54% (1940) and 48% (1960). Both are artefacts of data assembly, not events, and are queued for v6. The 2025 shares that weight the headline figures come from the post-2011 regime. *Added 2026-09-19: until that date the homepage held every territory at its 1990 share, which hid these breaks.*
 
 ---
 

@@ -165,8 +165,9 @@
   "task_short": {
    "added": "phase16",
    "field": "task_short",
-   "covers": "4818/4818",
-   "note": "Concise display label for task_decomposition[].task_name. Additive; task_name unchanged and canonical."
+   "covers": "4811/4811",
+   "note": "Concise display label for task_decomposition[].task_name. Additive; task_name unchanged and canonical.",
+   "covers_note": "4,818 tasks were labelled in Phase 16; the Phase 17 duplicate cleanup removed 7 (corrected 2026-09-19)."
   },
   "phase17_polish": {
    "applied": "2026-06-08",
@@ -102755,7 +102756,7 @@
    ],
    "access_date": "2026-04-16",
    "raw_data_file": "raw/bairoch_1971_table2_labor_structure_extract.csv",
-   "notes": "Primary-sector active population from Bairoch Table II. Pre-1870 records are macro aggregates only, not full modern-territory records."
+   "notes": "Primary-sector active population from Bairoch Table II. Pre-1870 records are macro aggregates only, not full modern-territory records. Share normalised 2026-09-19 to this year's three macro records' own worker counts (it was stored as 100.0)."
   },
   {
    "year": 1800,
@@ -102840,7 +102841,7 @@
    ],
    "access_date": "2026-04-16",
    "raw_data_file": "raw/bairoch_1971_table2_labor_structure_extract.csv",
-   "notes": "Primary-sector active population from Bairoch Table II. Pre-1870 records are macro aggregates only, not full modern-territory records."
+   "notes": "Primary-sector active population from Bairoch Table II. Pre-1870 records are macro aggregates only, not full modern-territory records. Share normalised 2026-09-19 to this year's three macro records' own worker counts (it was stored as 100.0)."
   },
   {
    "year": 1830,
@@ -102925,7 +102926,7 @@
    ],
    "access_date": "2026-04-16",
    "raw_data_file": "raw/bairoch_1971_table2_labor_structure_extract.csv",
-   "notes": "Primary-sector active population from Bairoch Table II. Pre-1870 records are macro aggregates only, not full modern-territory records."
+   "notes": "Primary-sector active population from Bairoch Table II. Pre-1870 records are macro aggregates only, not full modern-territory records. Share normalised 2026-09-19 to this year's three macro records' own worker counts (it was stored as 100.0)."
   },
   {
    "year": 1860,

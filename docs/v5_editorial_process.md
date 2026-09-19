@@ -1,5 +1,7 @@
 # Large Labor Model v5.0 — Editorial Process Record
 
+> **Correction, 2026-09-19.** This is a record of the build as it was understood at the time and is left as written. Two statements in it are now known to be wrong: the "R² 0.85+" fit (the archived cross-section table reproduces 0.78, and the statistic describes a 28-occupation usage cross-section, not the historical cases), and the Phase 11 multiplier change 0.70 → 0.562 / 0.50 → 0.405 (proposed, but never applied to the displacement fields, which use 0.70 / 0.50; the affected count is 161, not 162). See `v5_changelog.md`, September 19, 2026.
+
 **Build window:** 2026-04-11 → 2026-04-19. **Reviewer:** Lukas (project owner). **Architect:** Claude Opus 4.6 / 4.7 instances across phases, with scorers/forecasters/auditors from Opus 4.6, Opus 4.7 (1M context), GPT 5.3 Codex, GPT 5.4 Codex, GPT 5.2 Codex Max, Sonnet 4.6, and Antigravity. **Purpose:** painstaking record for future v5.1 / v6 review — specifically, a full accounting of Phase 11 emergency interventions.
 
 ---

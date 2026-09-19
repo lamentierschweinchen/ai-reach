@@ -621,15 +621,16 @@ const _want=new URLSearchParams(location.search).get('job');
 /* ?job= deep link: an ISCO code, else an exact display name, else an alias that names exactly ONE occupation.
    Anything else is a miss — never a silent default: the search opens on it (see _jobMiss, below the intro typeahead). */
 function resolveJobParam(v){
-  if(!v)return null; const occ=DATA.occupations, raw=String(v).trim();
-  const byCode=occ.find(o=>o.isco===raw); if(byCode)return byCode.isco;
-  const q=raw.toLowerCase().replace(/[-_+]+/g,' ').replace(/\s+/g,' ').trim(); if(!q)return null;
-  const byName=occ.filter(o=>o.name.toLowerCase()===q); if(byName.length===1)return byName[0].isco;
-  const byAlias=occ.filter(o=>(o.common_titles||[]).some(t=>t.toLowerCase()===q)); if(byAlias.length===1)return byAlias[0].isco;
+  if(!v)return null; const occ=DATA.occupations, raw=String(v).trim(); if(!raw)return null;
+  const byCode=occ.find(o=>o.isco.toLowerCase()===raw.toLowerCase()); if(byCode)return byCode.isco;
+  const norm=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();   // same folding on BOTH sides: "Cabinet-maker" ≡ "cabinet maker"
+  const q=norm(raw); if(!q)return null;
+  const byName=occ.filter(o=>norm(o.name)===q); if(byName.length===1)return byName[0].isco;
+  const byAlias=occ.filter(o=>(o.common_titles||[]).some(t=>norm(t)===q)); if(byAlias.length===1)return byAlias[0].isco;
   return null;
 }
 const _resolved=resolveJobParam(_want), _jobMiss=!!(_want&&_want.trim())&&!_resolved;
-if(_resolved&&_resolved!==_want){try{history.replaceState(null,'',location.pathname+'?job='+encodeURIComponent(_resolved)+location.hash);}catch(e){}}
+if(_resolved&&_resolved!==_want){try{const _qs=new URLSearchParams(location.search);_qs.set('job',_resolved);history.replaceState(null,'',location.pathname+'?'+_qs.toString()+location.hash);}catch(e){}}
 let FOCAL_ISCO=_resolved||'2221';  // no ?job= → Nurse
 let FOCAL, TERR, SE_SEED, SE_PAL, THUE, curYear=NOW, sliderYear=NOW;
 function deriveFocal(isco){

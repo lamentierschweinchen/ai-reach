@@ -6,7 +6,7 @@ The formula: r(occupation, year) = 100 · Σ time_weight · σ(8 · (capability[
 
 ## Data (machine-readable, CORS-open)
 
-- [Full dataset](https://largelabormodel.com/ai_reach_v5.0.json): everything — occupations, task decompositions, capability trajectories, events, sources. ~7.8 MB.
+- [Full dataset](https://largelabormodel.com/ai_reach_v5.0.json): everything — occupations, task decompositions, capability trajectories, events, sources. ~9 MB.
 - [Task tables, flat](https://largelabormodel.com/data/task_tables.csv): one row per task (occupation, task, vector, difficulty, time weight, 2026 machine credit). The unit of contribution — check a job you have done.
 - [Occupation index](https://largelabormodel.com/data/occupations_index.json): one record per occupation — name, territory, employment weight, 2026 and 2041 replaceability with bands, modeled displacement, primary barrier. Small enough for context windows.
 

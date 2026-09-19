@@ -27,26 +27,39 @@ function escapeHTML(s) {
 
 /* ?job= accepts an ISCO code or an exact display name ("nurse"). Names that more
    than one occupation shares are left unresolved — a share card must never guess. */
-const NAME_TO_ISCO = (() => {
-  const idx = {}, dup = new Set();
-  for (const [isco, e] of Object.entries(manifest)) {
-    const k = String(e.n).trim().toLowerCase();
-    if (idx[k]) dup.add(k); else idx[k] = isco;
-  }
+const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);   // `?job=constructor` must not reach Object.prototype
+const norm = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();   // same folding as the Mirror pages
+const CODE_INDEX = Object.create(null);
+for (const isco of Object.keys(manifest)) CODE_INDEX[isco.toLowerCase()] = isco;
+function nameIndex(pairs) {           // name -> isco, dropping any name more than one occupation shares
+  const idx = Object.create(null), dup = new Set();
+  for (const [name, isco] of pairs) { const k = norm(name); if (!k) continue; if (k in idx && idx[k] !== isco) dup.add(k); else idx[k] = isco; }
   for (const k of dup) delete idx[k];
   return idx;
-})();
+}
+const NAME_TO_ISCO = nameIndex(Object.entries(manifest).map(([isco, e]) => [e.n, isco]));
+let DATASET_NAMES = null;             // the dataset's own (plural) display names — loaded only when the fast paths miss
+function datasetNames() {
+  if (DATASET_NAMES) return DATASET_NAMES;
+  try {
+    const idx = require('../data/occupations_index.json');
+    DATASET_NAMES = nameIndex((idx.occupations || []).map(o => [o.name, String(o.isco_code)]).filter(([, c]) => own(manifest, c)));
+  } catch (_) { DATASET_NAMES = Object.create(null); }
+  return DATASET_NAMES;
+}
 function resolveJob(job) {
   if (!job) return null;
-  if (manifest[job]) return job;
-  const q = String(job).trim().toLowerCase().replace(/[-_+]+/g, ' ').replace(/\s+/g, ' ');
-  return NAME_TO_ISCO[q] || null;
+  const raw = String(job).trim().slice(0, 120);
+  if (own(manifest, raw)) return raw;
+  const byCode = CODE_INDEX[raw.toLowerCase()]; if (byCode) return byCode;
+  const q = norm(raw); if (!q) return null;
+  return NAME_TO_ISCO[q] || datasetNames()[q] || null;
 }
 
 /** Builds the <head> meta block — generic or per-job — as a string. */
 function buildMeta(rawJob) {
   const job = resolveJob(rawJob);
-  const entry = job ? manifest[job] : null;
+  const entry = job && own(manifest, job) ? manifest[job] : null;
 
   if (!entry) {
     // Unknown/absent job: the existing generic meta, byte-for-byte as in mirror/index.html.
