@@ -196,7 +196,7 @@
   "territory_count_note": "13 modern territories carry occupations and replaceability scores. territory_metadata and labor also hold 2 historical aggregates (macro_industry, macro_services) used for 1800-1860, before sectoral data allows the 13-way split.",
   "revision_2026_09_19": {
    "applied": "2026-09-19",
-   "note": "Display-name fix (9112), replacement-formula metadata reconciled to the shipped calculation, territory counts stated explicitly, pre-1870 Land & Sea workforce share normalised (was 100.0). No replaceability or displacement score changed. See docs/v5_changelog.md."
+   "note": "Display-name fix (9112 -> 'Commercial Cleaners'), replacement-formula metadata reconciled to the shipped calculation, territory counts stated explicitly, pre-1870 Land & Sea workforce share normalised (was 100.0). No replaceability or displacement score changed. See docs/v5_changelog.md."
   }
  },
  "territory_metadata": {
@@ -50816,7 +50816,7 @@
    "isco_verification_status": "CORRECTED_FROM_V32",
    "isco_parent": null,
    "occupation_name": "Cleaners and helpers in offices, hotels and other establishments",
-   "display_name": "Building Cleaners",
+   "display_name": "Commercial Cleaners",
    "common_titles": [
     "chambermaid",
     "building custodian",
@@ -50827,7 +50827,8 @@
     "environmental services aide",
     "office cleaner",
     "hotel cleaner",
-    "room attendant"
+    "room attendant",
+    "commercial cleaner"
    ],
    "territory": "Maintaining & Fixing",
    "territory_id": "maintaining_fixing",
