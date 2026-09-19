@@ -182,6 +182,12 @@ header {
 .global-stat-num { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1; }
 .global-stat-label { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 
+#labor-note { position: fixed; left: 50%; bottom: 145px; transform: translateX(-50%); z-index: 90;
+  width: max-content; max-width: min(540px, calc(100vw - 32px)); padding: 7px 10px;
+  color: #ddd; background: rgba(0,0,0,.92); border: 1px solid #555; border-radius: 5px;
+  font-size: 11px; line-height: 1.4; text-align: center; text-decoration: underline; }
+#labor-note[hidden] { display: none; }
+@media (max-width: 768px) { #labor-note { bottom: 88px; font-size: 10px; } }
 #era-label { position: fixed; right: 24px; bottom: 100px; text-align: right; z-index: 50; }
 #era-label .era-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.4); }
 #era-label .era-detail { font-size: 7.5px; letter-spacing: 0.08em; color: var(--muted); margin-top: 1px; }
@@ -559,7 +565,7 @@ header {
   <div class="intro-left">
     <div class="intro-title">Large Labor Model</div>
     <div class="intro-subtitle">WHEN WILL AI REACH YOUR JOB?</div>
-    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share has fallen to less than one in four, and AI has become capable of performing most tasks across knowledge-based&nbsp;professions.</div>
+    <div class="intro-body">This model traces human labor, what people do for a living and how many people do it, from the first point at which it can be measured at global scale to the furthest point at which it can be reasonably projected. In 1800, roughly four in five people worked the land. In 2026, that share is roughly one in four, and AI is reaching further into knowledge-based&nbsp;professions.</div>
     <div class="intro-body intro-body-secondary">By placing rapidly advancing artificial systems in the context of labor history, this model attempts to make visible what is technically replaceable—and how this might affect the future of&nbsp;work.</div>
     <div style="margin-top: 0; margin-bottom: 0;">
       <div class="intro-interact-row">
@@ -677,7 +683,7 @@ header {
   <div class="panel-note" id="panel-note"></div>
   <div class="panel-stats">
     <div><div class="panel-stat-label">Replaceability</div><div class="panel-stat-value" id="panel-reach-num">—</div></div>
-    <div><div class="panel-stat-label">Workforce Share</div><div class="panel-stat-value" id="panel-share-num">—</div></div>
+    <div><div class="panel-stat-label">Workers</div><div class="panel-stat-value" id="panel-share-num">—</div></div>
     <div class="reach-bar-wrap"><div class="reach-bar-fill" id="panel-reach-bar"></div></div>
   </div>
   <div class="panel-section">
@@ -697,6 +703,7 @@ header {
 </div>
 <div id="era-label"><div class="era-name" id="era-name"></div><div class="era-detail" id="era-detail"></div></div>
 
+<a id="labor-note" href="/methodology-full#limitations" hidden></a>
 <div id="timeline">
   <div class="timeline-top">
     <button class="play-btn" id="play-btn"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M1 1L9 6L1 11V1Z" fill="white"/></svg></button>
@@ -1168,8 +1175,22 @@ function getWorkforce(year) {
   return interp(workforceLookup, year);
 }
 
-// Get share for any shape ID (territory or macro)
+function emergenceProgress(id, year) {
+  if (id === 'land_sea') return 1;
+  return smoothstep((year - TERRITORY_EMERGENCE[id] + MORPH_HALF_WIDTH) / (2 * MORPH_HALF_WIDTH));
+}
+
+// A macro contains the parts of its children that have not emerged visually.
+// Bridge the final macro observation (1860) to the first 13-territory one (1870).
+// This aggregates existing shares; it does not smooth or rescore the labor series.
 function getShareForId(id, year) {
+  const macro = MACRO_SHAPES.find(m => m.id === id);
+  if (macro && year > 1860) {
+    const remaining = y => macro.children.reduce((sum, child) =>
+      sum + interp(laborLookup[child], y) * (1 - emergenceProgress(child, y)), 0);
+    if (year < 1870) return interp({1860: laborLookup[id][1860], 1870: remaining(1870)}, year);
+    return remaining(year);
+  }
   if (laborLookup[id]) {
     return interp(laborLookup[id], year);
   }
@@ -1406,6 +1427,12 @@ function render() {
 function drawAllShapes() {
   const year = currentYear;
   const totalReachWeighted = {sum:0, weight:0};
+  // The headline uses all 13 territories, including those still drawn in a macro.
+  TERRITORIES.forEach(t => {
+    const share = getTerritoryShare(t, year);
+    totalReachWeighted.sum += getTerritoryReach(t, year) * share;
+    totalReachWeighted.weight += share;
+  });
 
   // Collect all shapes to draw: real territories + macros
   const shapesToDraw = [];
@@ -1416,24 +1443,19 @@ function drawAllShapes() {
     if (emergeYear === undefined) return;
 
     const morphStart = emergeYear - MORPH_HALF_WIDTH;
-    const morphEnd = emergeYear + MORPH_HALF_WIDTH;
 
     if (year < morphStart) return; // not yet emerged
 
-    let morphProgress = 1;
-    if (year < morphEnd) {
-      morphProgress = smoothstep((year - morphStart) / (morphEnd - morphStart));
-    }
+    const morphProgress = emergenceProgress(t.id, year);
+    if (morphProgress <= 0) return;
 
-    const share = Math.max(0.3, getShareForId(t.id, year));
+    const share = getShareForId(t.id, year);
     const reach = getTerritoryReach(t, year);
-
-    totalReachWeighted.sum += reach * share;
-    totalReachWeighted.weight += share;
 
     shapesToDraw.push({
       territory: t,
       share,
+      areaShare: share * morphProgress,
       reach,
       morphProgress,
       isMacro: false,
@@ -1463,6 +1485,7 @@ function drawAllShapes() {
       shapesToDraw.push({
         territory: m,
         share: macroShare,
+        areaShare: macroShare,
         reach: 0,
         morphProgress,
         isMacro: true,
@@ -1472,11 +1495,11 @@ function drawAllShapes() {
 
   // 3. Compute sizes and positions
   const canvasArea = W * H * 0.88;
-  const totalShare = shapesToDraw.reduce((s,x) => s + x.share, 0) || 1;
+  const totalShare = shapesToDraw.reduce((s,x) => s + x.areaShare, 0) || 1;
 
   const items = shapesToDraw.map(s => {
     const t = s.territory;
-    const areaFrac = s.share / totalShare;
+    const areaFrac = s.areaShare / totalShare;
     const area = canvasArea * areaFrac;
     const aspect = 1.1 + (hashStr(t.id) % 20) / 100;
     const baseH = Math.sqrt(area / aspect);
@@ -1808,7 +1831,7 @@ function drawAllShapes() {
   const avgReach = totalReachWeighted.weight > 0 ?
     Math.round(totalReachWeighted.sum / totalReachWeighted.weight) : 0;
   document.getElementById('global-reach-num').textContent =
-    currentYear < 1960 ? '—' : avgReach + '%';
+    currentYear < 1970 ? '—' : avgReach + '%';
 }
 
 function getSubShapes(territoryId, currentYear) {
@@ -2235,7 +2258,7 @@ function updatePanel(id) {
     const panelNoteEl = document.getElementById('panel-note');
     if (panelNoteEl) panelNoteEl.textContent = macroPanelNote;
 
-    document.getElementById('panel-reach-num').textContent = '0%';
+    document.getElementById('panel-reach-num').textContent = '—';
     document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
 
     const bar = document.getElementById('panel-reach-bar');
@@ -2251,7 +2274,7 @@ function updatePanel(id) {
   }
 
   const reach = Math.round(getTerritoryReach(t, currentYear));
-  const share = getTerritoryShare(t, Math.max(1950, currentYear));
+  const share = getTerritoryShare(t, currentYear);
   const wf = getWorkforce(currentYear);
   const workers = Math.round(share / 100 * wf);
 
@@ -2266,7 +2289,7 @@ function updatePanel(id) {
   const panelNoteEl = document.getElementById('panel-note');
   if (panelNoteEl) panelNoteEl.textContent = panelNote;
 
-  document.getElementById('panel-reach-num').textContent = reach + '%';
+  document.getElementById('panel-reach-num').textContent = currentYear < 1970 ? '—' : reach + '%';
   document.getElementById('panel-share-num').textContent = workers >= 1000 ? (workers/1000).toFixed(1)+'B' : workers+'M';
 
   const bar = document.getElementById('panel-reach-bar');
@@ -2469,6 +2492,16 @@ function buildTimeline() {
 }
 
 function updateTimelineUI() {
+  const note = document.getElementById('labor-note');
+  const y = currentYear;
+  note.textContent = y > 1940 && y < 1960
+    ? '1950 is a known data outlier; this dip is not a measured historical shift. Details ↗'
+    : y >= 1991 && y <= 2025
+      ? 'Workforce estimates contain breaks, especially 2010–11. Annual jumps are not measured job losses. Details ↗'
+      : y > 2025
+        ? 'Workforce shares and total held at 2025 estimates; capability is projected. Data limitations ↗'
+        : '';
+  note.hidden = !note.textContent;
   const p = yearToPercent(currentYear);
   const progressBar = document.getElementById('timeline-progress');
   progressBar.style.width = p+'%';

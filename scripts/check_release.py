@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 """Release check — run before every deploy:  python3 scripts/check_release.py
 
-Every figure the docs state is derived here from the dataset and compared with
-what the docs, the Mirror bundle, the public extracts, the share-card manifest
-and the homepage loader actually say. Exit code 1 on any failure. Stdlib only;
-reads repo files only. If `node` is on PATH the Mirror's deep-link resolver is
-also executed against the real bundle; without node that one check is skipped
-and says so.
+Checks selected published figures and release invariants against the dataset,
+docs, Mirror bundle, public extracts, share-card manifest and homepage loader.
+It does not validate scientific assumptions or replace browser checks. Exit code 1 on any failure.
+Uses the Python stdlib and Node; reads repo files only. Node is required to execute
+the Mirror's deep-link resolver and the homepage's historical-share functions.
 
 Written 2026-09-19 after an audit found the homepage drawing 1990 workforce
 shares for every later year, a published replacement formula that did not
 produce the published numbers, and counts that had drifted across five files.
 Hardened the same day after an independent reviewer showed 21 ways the first
-version could pass while something was wrong. Known limit: the R² figures on the
-methodology page come from a fit table that lives outside this repo
-(v5-build/phase6) and cannot be re-derived here.
+version could pass while something was wrong. The archived fit worksheet is
+included to reproduce its arithmetic, not to authenticate its source mappings.
 """
 import collections, csv, hashlib, json, math, pathlib, re, shutil, subprocess, sys
 
@@ -80,6 +78,15 @@ check("occupations_index.json built from this dataset (sha256)", (idx.get("sourc
 ix = {str(o.get("isco_code")): o for o in idx.get("occupations", [])}
 check("occupations_index.json: one record per occupation, names and scores equal the dataset",
       set(ix) == set(by_code) and all(ix[c].get("name") == o["display_name"] and ix[c].get("replaceability_2026") == o["replaceability_2026"] for c, o in by_code.items()))
+index_fields = {"name": "display_name", "replaceability_2041": "replaceability_2041_moderate",
+                "displacement_2026": "displacement_2026_moderate", "displacement_2041": "displacement_2041_moderate"}
+for k in ("isco_code", "territory_id", "employment_weight_pct", "primary_barrier", "replaceability_2026",
+          "replaceability_2026_low", "replaceability_2026_high", "replaceability_2041_low", "replaceability_2041_high"):
+    index_fields[k] = k
+check("occupation index: every exported field matches, with no duplicate or missing rows",
+      len(idx.get("occupations", [])) == len(occ) and set(ix) == set(by_code) and
+      all(all(ix[c].get(k) == o.get(src) for k, src in index_fields.items()) and
+          ix[c].get("task_count") == len(o["task_decomposition"]) for c, o in by_code.items()))
 try:
     rows = list(csv.DictReader((ROOT / "data/task_tables.csv").open()))
 except Exception as e:
@@ -92,10 +99,31 @@ per = collections.Counter(r["isco_code"] for r in rows)
 check("task_tables.csv task counts per occupation equal the dataset", all(per[c] == len(o["task_decomposition"]) for c, o in by_code.items()))
 
 CT = bundle["capability_trajectory"]; VEC = ["C_R", "C_G", "P_A", "Phi_S", "Phi_U", "S_E"]
+expected_csv = []
+for o in occ:
+    for t in o["task_decomposition"]:
+        credit = round(1 / (1 + math.exp(-8 * (CT[t["vector"]]["2026"]["mid"] - t["difficulty_threshold"]))), 3)
+        expected_csv.append(dict(isco_code=str(o["isco_code"]), occupation=o["display_name"], task=t["task_name"],
+                                 vector=t["vector"], difficulty_threshold=str(t["difficulty_threshold"]),
+                                 time_weight_pct=str(t["time_weight_pct"]), machine_credit_2026=str(credit)))
+check("task CSV: every task and numeric cell equals the canonical inputs", rows == expected_csv)
 def reach(o, year="2026"):
     tw = sum(t["weight"] for t in o["tasks"])
     return sum(t["weight"] / (1 + math.exp(-8 * (CT[t["vector"]][year]["mid"] - t["diff"]))) for t in o["tasks"]) / tw
 b_by = {o["isco"]: o for o in bundle["occupations"]}
+check("bundle has exactly one record for every canonical occupation", len(bundle["occupations"]) == len(occ) and set(b_by) == set(by_code))
+bundle_bad = []
+for c, o in by_code.items():
+    b = b_by.get(c, {})
+    expected_tasks = [dict(name=t["task_name"], short=t.get("task_short"), vector=t["vector"],
+                           diff=t["difficulty_threshold"], weight=t["time_weight_pct"]) for t in o["task_decomposition"]]
+    expected = dict(tasks=expected_tasks, territory_id=o["territory_id"], employment_weight_pct=o["employment_weight_pct"],
+                    barrier=o["primary_barrier"], barrier_note=o.get("key_barrier_note"))
+    for y in (2026, 2030, 2035, 2040):
+        expected[f"r{y}"] = o[f"replaceability_{y}" + ("" if y == 2026 else "_moderate")]
+        expected[f"disp{y}"] = o[f"displacement_{y}_moderate"]
+    if any(b.get(k) != v for k, v in expected.items()): bundle_bad.append(c)
+check("bundle task inputs, scores, weights and barriers equal the dataset", not bundle_bad, str(bundle_bad[:5]))
 bad_og = [k for k in b_by if k not in og or og[k].get("n") != b_by[k]["name"] or og[k].get("r") != js_round(100 * reach(b_by[k]))]
 check("OG manifest: every occupation present, name and % equal the bundle's task math", not bad_og and len(og) == len(b_by), f"{len(bad_og)} wrong, e.g. {bad_og[:4]}")
 check("bundle task math reproduces the dataset's 2026 scores", all(abs(round(100 * reach(b_by[c]), 1) - o["replaceability_2026"]) <= 0.1001 for c, o in by_code.items()))
@@ -132,6 +160,8 @@ check(f"the homepage admits a {newest} share for every modern territory", modern
 
 # ── 6. the documented replacement formula reproduces the stored fields ────────
 rf = md["replacement_formula_v5"]
+metadata_equation = "displacement_y = 100 * ( conversion_rate * max(0, r_y - r_2026)/100 + lag_schedule[y] * barrier_multipliers[primary_barrier] * (r_2026/100) * (1 - already_absorbed_era[era]) ), rounded to 0.1"
+check("metadata equation states the calculation being checked", rf.get("equation", "").startswith(metadata_equation))
 def era(b): return "post_2022" if b == "NONE" else ("y2015_2022" if b in ("REGULATORY", "HUMAN_PREFERENCE") else "pre_2015")
 CHK = {2026: "replaceability_2026", 2030: "replaceability_2030_moderate", 2035: "replaceability_2035_moderate",
        2040: "replaceability_2040_moderate", 2041: "replaceability_2041_moderate"}
@@ -191,6 +221,8 @@ check("CITATION.cff: root type is dataset", bool(re.search(r"^type: dataset$", c
 check("CITATION.cff: dataset licence is CC-BY-4.0 (SPDX), not MIT", bool(re.search(r"^license: CC-BY-4\.0$", cff, re.M)) and not re.search(r"^license: MIT$", cff, re.M))
 check("CITATION.cff: preferred-citation.type is a valid reference type ('data')", bool(re.search(r"preferred-citation:\n\s+type: data\n", cff)))
 check(f"CITATION.cff abstract says {len(modern)} territories", f"across {len(modern)} territories of work" in cff)
+check("citation identifies this dataset revision in both citation blocks",
+      cff.count(f'version: "{md.get("citation_version")}"') == 2 and 'date-released: "2026-09-19"' in cff)
 
 mults = rf["barrier_multipliers"]; ORDER = ["NONE", "ECONOMIC", "HUMAN_PREFERENCE", "REGULATORY", "HUMANOID_DEPENDENT"]
 check("methodology-full prints the shipped barrier multipliers", "<br>".join(f"{k}: {mults[k]:.2f}" for k in ORDER) in html_full)
@@ -201,6 +233,12 @@ check("methodology-full prints the shipped absorbed fractions", f"{ab['pre_2015'
 EQ1, EQ2 = "conversion_rate × max(0, replaceability_t − replaceability_2026)", "pending = replaceability_2026 × (1 − already_absorbed"
 check("methodology-full prints the shipped equation", EQ1 in html_full and "lag(t) × barrier_multiplier(primary_barrier) × pending" in html_full and EQ2 in html_full)
 check("v5_methodology.md prints the shipped equation and era rule", EQ1 in mdoc and "lag(t) × barrier_multiplier × pending" in mdoc and "NONE → post-2022" in mdoc)
+check("Markdown prints the shipped conversion and lag parameters",
+      f'conversion_rate = {rf["conversion_rate"]:.2f}' in mdoc and
+      all(f'{round(100*v)}% in {y}' in mdoc for y,v in rf["lag_schedule"].items()))
+check("current scoring descriptions consistently use logistic credit",
+      'strict threshold used for near-term projections' not in mdoc and
+      'continuous capability credit' in text('methodology.html'))
 check("v5_methodology.md prints the shipped barrier multipliers, in prose and in the taxonomy table",
       all(f"{k}: {mults[k]:.2f} ×" in mdoc for k in ("HUMAN_PREFERENCE", "REGULATORY")) and all(f"Lag multiplier {mults[k]:.2f} ×" in mdoc for k in ("HUMAN_PREFERENCE", "REGULATORY")))
 prop = rf.get("phase11_proposed_not_applied") or {}
@@ -238,6 +276,25 @@ for w in ([x.strip() for x in ex.group(1).split(",")] if ex else []):
     check(f"'below 10' example '{w}' scores below 10", bool(hit) and all(o["replaceability_2026"] < 10 for o in hit), f"{[(o['display_name'], o['replaceability_2026']) for o in hit]}")
 check("methodology-full names ISCO 9112 by its current display name", f'is now "{by_code["9112"]["display_name"]}"' in html_full)
 
+# The worksheet predates current task scores: verify only its stated, centred R².
+try:
+    fit = list(csv.DictReader((ROOT / "docs/fit_worksheet_2026-04-17.csv").open()))
+    x = [float(r["phase5_replaceability"]) for r in fit]; y = [float(r["worksheet_coverage"]) for r in fit]
+    xm, ym = sum(x)/len(x), sum(y)/len(y)
+    slope = sum((a-xm)*(b-ym) for a,b in zip(x,y))/sum((a-xm)**2 for a in x)
+    origin = sum(a*b for a,b in zip(x,y))/sum(a*a for a in x)
+    fm = dict(NONE=.82, HUMAN_PREFERENCE=.47, REGULATORY=.38, HUMANOID_DEPENDENT=.05)
+    predictions = [[ym+slope*(a-xm) for a in x], [origin*a for a in x],
+                   [a*fm[r["barrier"]] for a,r in zip(x,fit)]]
+    r2 = [1-sum((a-b)**2 for a,b in zip(y,p))/sum((a-ym)**2 for a in y) for p in predictions]
+    check("archived worksheet reproduces the three stated centred R² values",
+          len(fit) == 28 and [round(v,2) for v in r2] == [.61,.56,.78], str(r2))
+except Exception as e:
+    check("read and calculate archived fit worksheet", False, str(e))
+check("current method distinguishes worksheet arithmetic from model validation",
+      all('earlier Phase 5 scores' in t and 'not the displacement multipliers above' in t for t in (html_full, mdoc)))
+check("homepage discloses workforce-series limitations beside the timeline", 'id="labor-note"' in index_html and '1950 is a known data outlier' in index_html and '2010–11' in index_html)
+
 # ── 10. deep links never default silently ─────────────────────────────────────
 shim = text("api/mirror-og.js")
 check("OG shim guards manifest lookups against prototype keys", "hasOwnProperty.call" in shim and "own(manifest, job)" in shim)
@@ -265,5 +322,14 @@ for rel in ["mirror/desktop.html", "mirror/mobile.html"]:
     except Exception as e:
         bad = [f"{type(e).__name__}: {e}"]
     check(f"{rel}: resolver executed — code, name, any-case, hyphenated name resolve; ambiguous alias and junk do not", not bad, f"{bad}")
+
+if node:
+    try:
+        result = subprocess.run([node, str(ROOT / "scripts/check_homepage.cjs")], capture_output=True, text=True, timeout=30)
+        check("homepage functions: historical partition, macro transitions and workforce regression", result.returncode == 0, result.stderr[-1000:])
+    except Exception as e:
+        check("homepage function execution", False, str(e))
+else:
+    check("node is required for homepage and resolver release checks", False)
 
 finish()

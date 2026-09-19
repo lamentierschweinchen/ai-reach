@@ -6,7 +6,8 @@ The formula: r(occupation, year) = 100 · Σ time_weight · σ(8 · (capability[
 
 ## Data (machine-readable, CORS-open)
 
-- [Full dataset](https://largelabormodel.com/ai_reach_v5.0.json): everything — occupations, task decompositions, capability trajectories, events, sources. ~9 MB.
+- [Full dataset](https://largelabormodel.com/ai_reach_v5.0.json): occupations, task decompositions, territory scores, events, sources and capability summaries (the full annual trajectories are in the Mirror bundle below). ~9 MB.
+- [Mirror data bundle](https://largelabormodel.com/mirror/mirror_data.js): task inputs and full annual low/mid/high capability trajectories, 1970–2041; JavaScript assignment to `window.MIRROR_DATA`.
 - [Task tables, flat](https://largelabormodel.com/data/task_tables.csv): one row per task (occupation, task, vector, difficulty, time weight, 2026 machine credit). The unit of contribution — check a job you have done.
 - [Occupation index](https://largelabormodel.com/data/occupations_index.json): one record per occupation — name, territory, employment weight, 2026 and 2041 replaceability with bands, modeled displacement, primary barrier. Small enough for context windows.
 
@@ -21,7 +22,7 @@ The formula: r(occupation, year) = 100 · Σ time_weight · σ(8 · (capability[
 
 - [The Model](https://largelabormodel.com/): the world's work — thirteen territories, 1800 to 2041.
 - [The Mirror](https://largelabormodel.com/mirror): any single job, task by task. Deep link pattern: /mirror?job=<ISCO-08 code>, e.g. /mirror?job=2221 for Nurse (codes are in /data/occupations_index.json). An exact job name also resolves, e.g. /mirror?job=nurse; anything unrecognised opens the search instead of guessing.
-- [Every Job Is Two Jobs](https://largelabormodel.com/two-jobs): the data essay — where the line between machine-absorbed and machine-untouchable hours runs, and how fast it moves.
+- [Every Job Is Two Jobs](https://largelabormodel.com/two-jobs): the data essay — how modeled capability varies between tasks and over time; task-time weights are estimates, not measured hours saved.
 
 ## Contributing (humans and their AI systems)
 

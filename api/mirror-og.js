@@ -49,7 +49,7 @@ function datasetNames() {
 }
 function resolveJob(job) {
   if (!job) return null;
-  const raw = String(job).trim().slice(0, 120);
+  const raw = String(job).trim();
   if (own(manifest, raw)) return raw;
   const byCode = CODE_INDEX[raw.toLowerCase()]; if (byCode) return byCode;
   const q = norm(raw); if (!q) return null;

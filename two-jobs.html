@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Every Job Is Two Jobs</title>
-<meta name="description" content="Machines have mastered half of human work at a speed the market hasn&#x27;t metabolized yet. A model of how tomorrow&#x27;s work might work.">
+<meta name="description" content="Machines are moving toward mastery of knowledge work. Much of physical work still escapes them—for now. A model of how tomorrow&#x27;s work might work.">
 <link rel="canonical" href="https://largelabormodel.com/two-jobs">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Every Job Is Two Jobs">
-<meta property="og:description" content="Machines have mastered half of human work at a speed the market hasn&#x27;t metabolized yet. A model of how tomorrow&#x27;s work might work.">
+<meta property="og:description" content="Machines are moving toward mastery of knowledge work. Much of physical work still escapes them—for now. A model of how tomorrow&#x27;s work might work.">
 <meta property="og:url" content="https://largelabormodel.com/two-jobs">
 <meta property="og:image" content="https://largelabormodel.com/essay/og.png">
 <meta property="og:image:width" content="1200">
@@ -170,7 +170,7 @@ figure img { cursor:zoom-in; }
 </style>
 <main>
 <header><p class='kick'>Large Labor Model · a data deep-dive</p><h1>Every Job Is Two Jobs</h1>
-<p class='dek'>Machines have mastered half of human work at a speed the market hasn't metabolized yet. A model of how tomorrow's work might work.</p>
+<p class='dek'>Machines are moving toward mastery of knowledge work. Much of physical work still escapes them—for now. A model of how tomorrow's work might work.</p>
 </header>
 <figure><img src='/essay/fig-worldwall.png' alt='The wall of all 480 occupations as squares in their own palettes, sorted by 2026 technical replaceability — mostly-cream untouched squares at the top, fully saturated squares at the bottom.' loading='lazy'><figcaption>480 occupations, sorted by how much of their work today's machines can do.</figcaption></figure>
 <p>At some point this morning, a nurse cleaned and dressed a wound. It is delicate work. The judgment lives in her fingertips, in the look of skin, in a patient who flinches or doesn't. None of it repeats. An hour earlier, at a station down the hall, the same nurse wrote up a patient's health-education plan: structured, documented, screen-shaped work. The kind software has learned to do startlingly well.</p>
@@ -287,7 +287,7 @@ figure img { cursor:zoom-in; }
 </script>
 </figure>
 <p>The territories where the most people work run overwhelmingly on unstructured physical time: Land &amp; Sea, Maintaining &amp; Fixing, and Building Things all spend roughly three-quarters of their hours there. The territories that run on cognition are, by world standards, small. A taxonomy is a lens. This one is ground so that the vague question — <em>what can machines do to work?</em> — resolves into a precise one: which kind of time does each territory run on? And that question has answers.</p>
-<p>Every task carries three properties: which of six machine capabilities the work leans on, from routine cognition to unstructured physical work; how difficult it is; and how many working hours it claims. Behind the tasks sits a registry of several thousand sources — task statements, employment series, robot-density counts, deployment reports. The model calculates technical replaceability like this:</p>
+<p>The task-time weights and capability credits are estimates, not measurements of hours saved. Every task carries three properties: which of six machine capabilities the work leans on, from routine cognition to unstructured physical work; how difficult it is; and how many working hours it claims. Behind the tasks sits a registry of several thousand sources — task statements, employment series, robot-density counts, deployment reports. The model calculates technical replaceability like this:</p>
 <blockquote><strong>r(occupation, year) = 100 · Σ time_weight · σ(8 · (capability[vector][year] − difficulty)) ÷ Σ time_weight</strong></blockquote>
 <p>Compare the year's machine capability with each task's difficulty; the logistic σ turns the gap into partial credit; weight by working time and sum — for every year from 1970 to 2041. The odd endpoint is deliberate: 2041 is now plus fifteen, past which projection would shade into speculation. Five tiers give the numbers words: Human (a machine makes no meaningful contribution yet), Augmented (a machine makes you faster), Collaborative (a machine can do about half), Supervised (a machine does most of it; you check the work), Autonomous (end to end, no human needed).</p>
 <p>The atlas reaches further back than the scores do. Open the <a href="https://largelabormodel.com" target="_blank" rel="noopener">map</a> in 1800 and the thirteen territories collapse into three masses — the land, industry, services — which split apart as the modern division of labor emerges; run time forward and exposure migrates across them. Labor, at work.</p>
@@ -533,7 +533,7 @@ figure img { cursor:zoom-in; }
 })();
 </script>
 </figure>
-<p>This is not an employment forecast. Replaceability converts to modeled replacement through a separate, deliberately skeptical formula — steep discounts for adoption lag, regulation, human preference, hardware dependence — and under the central case the two numbers sit sixty points apart by 2041. That gap marks the model's limit: the technical frontier is computable from task lists and capability curves, while the social absorption of it can only be modeled.</p>
+<p>This is not a forecast of net employment. Replaceability feeds a separate calculation of modeled replacement, with assumptions about adoption lag, regulation, human preference and hardware dependence. Under the central case the two workforce-weighted numbers sit roughly sixty points apart by 2041. That gap follows from the model's assumptions; it is not a measured reserve of protected jobs. Neither calculation accounts for new occupations, changing demand or the extra work of checking machines.</p>
 <figure class="wl-fig">
 <div id="wall">
   <p id="wl-year">2041</p>

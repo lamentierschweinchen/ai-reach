@@ -1,0 +1,29 @@
+isco,name,phase5_replaceability,worksheet_coverage,barrier
+2514,Computer Programmers,81,75,NONE
+4222,Customer Service Reps,99,70,NONE
+4132,Data Entry Keyers,95,67,NONE
+3344,Medical Record Specialists,57,67,NONE
+2431,Market Research Analysts,61,65,NONE
+3322,Commercial Sales Reps,88,63,NONE
+2413,Financial Analysts,74,57,REGULATORY
+2511,Software QA Analysts,70,52,NONE
+2522,Information Security Analysts,61,49,NONE
+3512,Computer Support Specialists,86,47,NONE
+2512,Software Developers,76,60,NONE
+2120,Mathematicians/Statisticians,83,50,NONE
+2643,Translators/Interpreters,71,45,HUMAN_PREFERENCE
+2359,Educational Instructors/Tutors,68,30,HUMAN_PREFERENCE
+2631,Economists,74,40,NONE
+2411,Accountants,74,28,REGULATORY
+2212,Physicians (Psychiatry/GP),43,25,REGULATORY
+2161,Architects,67,12,REGULATORY
+2641,Authors/Writers,66,14,HUMAN_PREFERENCE
+2611,Lawyers,41,15,REGULATORY
+3142,Food Science Technicians,56,15,REGULATORY
+2222,Midwives,31,10,REGULATORY
+2264,Physiotherapists,40,10,HUMANOID_DEPENDENT
+5132,Bartenders,55,0,HUMANOID_DEPENDENT
+5120,Cooks,20,0,HUMANOID_DEPENDENT
+7231,Motor Vehicle Mechanics,6,0,HUMANOID_DEPENDENT
+9412,Kitchen Helpers,13,0,HUMANOID_DEPENDENT
+5419,Protective Services NEC,39,0,HUMANOID_DEPENDENT
