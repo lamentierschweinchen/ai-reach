@@ -791,11 +791,17 @@ function buildLookupTables() {
   // Initialize structures
   ['conservative','moderate','accelerated'].forEach(s => { laborProjected[s] = {}; });
 
+  // Record types that carry a whole-territory workforce share for their year.
+  // v5 stores 1991–2025 as 'derived_from_occupation'; leaving it out froze every
+  // territory at its 1990 share (fixed 2026-09-19). 'modelled' records are additive
+  // components (the 1988–89 armed-forces patch), never whole shares or totals.
+  const LABOR_SHARE_TYPES = new Set(['historical', 'historical_macro', 'interpolated', 'derived_from_occupation']);
+
   V2.labor.forEach(rec => {
     const tid = rec.territory_id;
     const year = rec.year;
 
-    if (rec.data_type === 'historical' || rec.data_type === 'historical_macro' || rec.data_type === 'interpolated') {
+    if (LABOR_SHARE_TYPES.has(rec.data_type)) {
       // For macro categories, store in macroLookup
       if (tid === 'macro_industry' || tid === 'macro_services') {
         if (!macroLookup[tid]) macroLookup[tid] = {};
@@ -826,7 +832,7 @@ function buildLookupTables() {
   // For each year, sum global_workers_millions from non-overlapping records
   const yearWorkers = {};
   V2.labor.forEach(rec => {
-    if (rec.data_type === 'projected') return; // handle projected separately
+    if (!LABOR_SHARE_TYPES.has(rec.data_type)) return; // projected handled below; 'modelled' patches are not yearly totals
     const year = rec.year;
     if (!yearWorkers[year]) yearWorkers[year] = { territories: {}, macros: {} };
     if (rec.territory_id === 'macro_industry' || rec.territory_id === 'macro_services') {
