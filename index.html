@@ -797,11 +797,20 @@ function buildLookupTables() {
   // components (the 1988–89 armed-forces patch), never whole shares or totals.
   const LABOR_SHARE_TYPES = new Set(['historical', 'historical_macro', 'interpolated', 'derived_from_occupation']);
 
+  // Shares are drawn at one cadence for the whole timeline: a point per decade plus the newest
+  // year. Before 1991 that is all the data holds. The annual 1991–2025 records carry assembly
+  // breaks (Land & Sea −7 points in 2010→11) that would play as events, and the 1950
+  // cross-section is an outlier (Land & Sea 54 → 25 → 48). Both stay in the dataset and in
+  // the workforce totals below; see the methodology's known limitations.
+  const LAST_SHARE_YEAR = Math.max(...V2.labor.filter(r => LABOR_SHARE_TYPES.has(r.data_type)).map(r => r.year));
+  const drawsShare = year => year === LAST_SHARE_YEAR || (year % 10 === 0 && year !== 1950);
+
   V2.labor.forEach(rec => {
     const tid = rec.territory_id;
     const year = rec.year;
 
     if (LABOR_SHARE_TYPES.has(rec.data_type)) {
+      if (!drawsShare(year)) return;
       // For macro categories, store in macroLookup
       if (tid === 'macro_industry' || tid === 'macro_services') {
         if (!macroLookup[tid]) macroLookup[tid] = {};

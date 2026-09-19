@@ -253,7 +253,7 @@ This is a structured estimate, not a forecast. The honest statement of what the 
 
 ## Versioning and reproducibility
 
-The September 19 reconciliation is cited as **5.0-rev.20260919**; the scientific model remains v5.0. The dataset carries the citation identifier in `metadata.citation_version`. The homepage retains raw annual workforce shares and holds both shares and total workforce at the 2025 endpoint for subsequent years; the known breaks in that series are listed under limitations above. Historical macro shapes aggregate children as they emerge; this is a display partition, not a new labor estimate.
+The September 19 reconciliation is cited as **5.0-rev.20260919**; the scientific model remains v5.0. The dataset carries the citation identifier in `metadata.citation_version`. The homepage draws workforce shares at one cadence for the whole timeline — a point per decade plus the 2025 endpoint, skipping the 1950 outlier — and holds both shares and total workforce at 2025 for subsequent years. The annual 1991–2025 records and the 1950 cross-section remain in the dataset; their known breaks are listed under limitations above. Historical macro shapes aggregate children as they emerge; this is a display partition, not a new labor estimate.
 
 v5.0 is built by an 11-phase pipeline. Each phase has a canonical output, a reviewer-signed checkpoint, and archived inputs/outputs for audit:
 
