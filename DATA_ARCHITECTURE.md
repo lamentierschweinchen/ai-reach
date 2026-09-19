@@ -1,5 +1,7 @@
 # AI Reach — Data Architecture Overview
 
+> **Superseded.** This document describes the v2.5 schema (March 2026) and its counts are out of date. For v5 see [`docs/v5_methodology.md`](docs/v5_methodology.md), [`docs/v5_changelog.md`](docs/v5_changelog.md) and [`llms.txt`](llms.txt). Kept for lineage.
+
 **Version:** 2.5 · **Date:** 2026-03-29 · **Repo:** `lamentierschweinchen/ai-reach`
 
 ---

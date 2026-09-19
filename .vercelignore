@@ -33,3 +33,6 @@ v4_*.json
 LLM_Copy_Audit*.xlsx
 DESIGN_POLISH_BRIEF.md
 MOBILE_POLISH_BRIEF.md
+
+# superseded v2.5 schema doc — lives on GitHub for lineage, not on the site
+DATA_ARCHITECTURE.md

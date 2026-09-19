@@ -101,12 +101,11 @@ Occupation-level bands are computed deterministically. Each task's vector × dif
 v5 uses a single structured formula to convert replaceability into displacement over time:
 
 ```
-displacement(t) = (conversion_rate × (replaceability_t − replaceability_2026)
-                   + lag(t) × pending)
-                 × barrier_multiplier
+displacement(t) = conversion_rate × max(0, replaceability_t − replaceability_2026)
+                + lag(t) × barrier_multiplier × pending
 ```
 
-where `pending = replaceability_2026 × (1 − already_absorbed_era)`.
+where `pending = replaceability_2026 × (1 − already_absorbed_era)`. The barrier multiplier acts on the lag term only; values are rounded to 0.1. This equation with the parameters below reproduces every stored `displacement_*` field (480 occupations × 5 checkpoints, all within 0.1), and the same parameters ship in `metadata.replacement_formula_v5`. *Corrected 2026-09-19: an earlier version applied the multiplier to both terms and listed multipliers that were never applied to the data — see the changelog.*
 
 Parameters:
 
@@ -115,11 +114,11 @@ Parameters:
 - **`barrier_multiplier`** stratifies displacement by barrier type:
   - NONE: 1.20 × — no barrier; adoption is slightly faster than baseline.
   - ECONOMIC: 1.00 × — baseline.
-  - HUMAN_PREFERENCE: 0.562 × — customers resist even when tech and economics allow.
-  - REGULATORY: 0.405 × — licensing and statute keep the gap open.
+  - HUMAN_PREFERENCE: 0.70 × — customers resist even when tech and economics allow.
+  - REGULATORY: 0.50 × — licensing and statute keep the gap open.
   - HUMANOID_DEPENDENT: 0.15 × — humanoid readiness is the rate limit.
 
-  The HUMAN_PREFERENCE and REGULATORY multipliers were strengthened from Phase 6's original values (0.70 and 0.50) during Phase 11 to preserve empirical fit against the Anthropic Economic Index cross-section after Phase 5 r26 scores were rescored to pure task-math. Barrier-type stratification was validated empirically: cross-section R² rises from 0.61 (plain conversion × lag) to 0.85+ when barrier type is a categorical predictor.
+  These are the Phase 6 values. Phase 11 proposed strengthening HUMAN_PREFERENCE to 0.562 and REGULATORY to 0.405 after Phase 5 r26 scores were rescored to pure task-math, but the recompute that wrote the displacement fields read the Phase 6 parameter file, so the proposal never reached the data. The shipped values are canonical for v5; adopting the proposal is an open question for the v6 re-fit (it would change 161 occupations at 2041 and move the mean from 24.2 to 23.6).
 
 - **`already_absorbed_era`** stratifies by capability-era tag:
   - Pre-2015 (ATMs, online booking, ERP, calculators): 0.30 — 20+ years of diffusion already priced in.
@@ -128,7 +127,7 @@ Parameters:
 
   v3.2 used a uniform 0.15. Historical cases (telephone operators at Δt = 93 years reaching 0.99 absorbed; bank tellers at Δt = 39 years reaching ~0.50) falsify the uniform assumption; v5 stratifies explicitly.
 
-Parameters were fit against the 7 historical cases and the 28-occupation cross-section from the Anthropic Economic Index (Massenkoff & McCrory, March 2026). Historical-case R² under the fitted formula is 0.85+; plain (no-barrier, uniform-absorbed) R² is 0.61.
+Parameters were set from the 7 historical cases and a 28-occupation cross-section from the Anthropic Economic Index (Massenkoff & McCrory, March 2026). The cross-section measures observed task *coverage* by Claude — a usage proxy that includes augmentation, not observed job loss. Against it, a single-slope fit on replaceability gives in-sample R² = 0.61 (0.56 through the origin); stratifying by barrier type raises it to 0.78. These are in-sample fits on 28 points, not out-of-sample validation of employment effects. *Corrected 2026-09-19: this document previously reported "0.85+" and attributed it to the historical cases; that figure does not reproduce from the archived fit table, and the statistic belongs to the cross-section.*
 
 ---
 
@@ -171,11 +170,11 @@ Key reconciled trajectory values (mid band):
 | Year | C_R  | C_G  | P_A  | Phi_S | Phi_U | S_E  |
 |------|------|------|------|-------|-------|------|
 | 1970 | 0.07 | 0.005| 0.10 | 0.005 | 0.02  | 0.005|
-| 1985 | 0.16 | 0.009| 0.25 | 0.02  | 0.02  | 0.011|
+| 1985 | 0.19 | 0.011 | 0.27 | 0.03  | 0.02  | 0.015 |
 | 2000 | 0.36 | 0.02 | 0.42 | 0.05  | 0.03  | 0.05 |
 | 2010 | 0.47 | 0.04 | 0.51 | 0.07  | 0.04  | 0.09 |
 | 2020 | 0.59 | 0.08 | 0.65 | 0.21  | 0.06  | 0.18 |
-| 2025 | 0.74 | 0.56 | 0.74 | 0.44  | 0.14  | 0.33 |
+| 2025 | 0.73 | 0.49 | 0.73 | 0.43  | 0.14  | 0.31 |
 | 2026 | 0.76 | 0.57 | 0.75 | 0.46  | 0.15  | 0.35 |
 
 The trajectory shows:

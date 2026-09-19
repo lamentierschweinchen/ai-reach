@@ -17,7 +17,7 @@ Created by Lukas Seel and Enya Trenholm-Jensen. Open source. April 2026.
 
 ## What it is
 
-The Large Labor Model traces human labor across **15 territories of work** (13 modern + 2 historical aggregates) from 1800 to 2041. It maps two things:
+The Large Labor Model traces human labor across **13 territories of work** from 1800 to 2041 (before 1870 the record only supports three groupings, so the dataset also carries two historical aggregates, Industry and Services). It maps two things:
 
 **Labor shares** — how many people work in each territory, globally, based on ILO data and historical reconstructions.
 
@@ -73,14 +73,14 @@ Two principles shape how occupations are placed into territories:
 
 | Layer | Records | Coverage |
 |---|---|---|
-| Labor shares | 635 | 1800–2041 |
+| Labor shares | 635 | 1800–2025 (the visualization holds 2025 shares constant to 2041; v5 does not project workforce shares) |
 | Replaceability scores (territory-level) | 936 | 1970–2041 (585 historical 1970–2014 + 351 modern 2015–2041) |
-| Occupations (per-occupation scores) | 480 | ISCO-08 4-digit + 9 specialized splits, searchable |
-| Tasks (per-occupation task decomposition) | 4,818 | 2–14 tasks per occupation, 6-vector classified with difficulty + time weight |
+| Occupations (per-occupation scores) | 480 | 411 plain ISCO-08 4-digit codes + 66 specialised splits across 51 base codes (e.g. `2512-ml`) + 3 occupations with no ISCO-08 equivalent (`XDATA_SCI`, `XCYBERSEC`, `XCONTMOD`), searchable |
+| Tasks (per-occupation task decomposition) | 4,811 | 3–14 tasks per occupation, 6-vector classified with difficulty + time weight |
 | Displayed occupations (canvas) | 104 | 8 per modern territory |
-| Technology events | 77 | 1764–2026 |
+| Technology events | 94 | 1769–2026 |
 | Historical occupations | 24 | 8 per historical aggregate (3 categories) |
-| Sources | 6,687 | Per-record citation |
+| Sources | 6,704 | Per-record citation |
 
 **Source architecture:**
 - **ILOSTAT** modeled estimates (1991–2025, primary modern labor)
@@ -127,7 +127,7 @@ ai-reach/
 ├── methodology.html              # Short methodology page (linked from the site)
 ├── methodology-full.html         # Full methodology + changelog
 ├── ai_reach_v5.0.json            # Current dataset (the only file index.html fetches)
-├── DATA_ARCHITECTURE.md          # Schema and rendering pipeline reference
+├── DATA_ARCHITECTURE.md          # v2.5 schema reference (March 2026) — superseded, kept for lineage
 ├── LICENSE                       # MIT (code) + CC BY 4.0 (data)
 ├── CONTRIBUTING.md               # How to propose corrections and additions
 ├── CITATION.cff                  # Citation metadata
