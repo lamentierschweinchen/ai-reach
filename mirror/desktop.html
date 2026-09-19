@@ -475,7 +475,19 @@ function bandShares(o,year,band='mid'){const s=[0,0,0,0,0];let T=0;for(const tk 
 const byIsco=Object.fromEntries(DATA.occupations.map(o=>[o.isco,o]));
 const TERRITORY_HUES={building_things:28,buying_selling:8,care_health:172,feeding_hosting:40,governing_protecting:222,land_sea:200,learning_teaching:262,maintaining_fixing:50,making_meaning:330,making_things:14,money_data:150,moving_things:190,thinking_leading:288};
 const _want=new URLSearchParams(location.search).get('job');
-let FOCAL_ISCO=(_want&&DATA.occupations.some(o=>o.isco===_want))?_want:'2221';  // ?job= deep-link; default Nurses
+/* ?job= deep link: an ISCO code, else an exact display name, else an alias that names exactly ONE occupation.
+   Anything else is a miss — never a silent default: the search opens on it (see _jobMiss, below the intro typeahead). */
+function resolveJobParam(v){
+  if(!v)return null; const occ=DATA.occupations, raw=String(v).trim();
+  const byCode=occ.find(o=>o.isco===raw); if(byCode)return byCode.isco;
+  const q=raw.toLowerCase().replace(/[-_+]+/g,' ').replace(/\s+/g,' ').trim(); if(!q)return null;
+  const byName=occ.filter(o=>o.name.toLowerCase()===q); if(byName.length===1)return byName[0].isco;
+  const byAlias=occ.filter(o=>(o.common_titles||[]).some(t=>t.toLowerCase()===q)); if(byAlias.length===1)return byAlias[0].isco;
+  return null;
+}
+const _resolved=resolveJobParam(_want), _jobMiss=!!(_want&&_want.trim())&&!_resolved;
+if(_resolved&&_resolved!==_want){try{history.replaceState(null,'',location.pathname+'?job='+encodeURIComponent(_resolved)+location.hash);}catch(e){}}
+let FOCAL_ISCO=_resolved||'2221';  // no ?job= → Nurse
 let FOCAL, TERR, SE_SEED, SE_PAL, THUE;
 function deriveFocal(isco){
   FOCAL=DATA.occupations.find(o=>o.isco===isco)||DATA.occupations.find(o=>o.isco==='2221');
@@ -860,6 +872,8 @@ const toast=document.getElementById('toast');
 let toastT;
 function showToast(m){toast.textContent=m;toast.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('on'),2400);}
 attachTypeahead(document.getElementById('jobEntry'),o=>{setFocal(o.isco,true);document.getElementById('jobEntry').value='';document.getElementById('jobEntry').blur();});
+/* a ?job= value we could not place: show it in the search with its suggestions + the request row, rather than a silent Nurse */
+if(_jobMiss){const je=document.getElementById('jobEntry');if(je){je.value=_want.trim().slice(0,80);je.dispatchEvent(new Event('input',{bubbles:true}));}}
 /* ===== SHARE · generated PNG card (parity with mobile) ===== */
 const SITE='https://largelabormodel.com';
 function shareURL(){return SITE+'/mirror?job='+FOCAL_ISCO;}   // deep-link back into The Mirror, this job

@@ -5,7 +5,7 @@
    Same device-router shell as mirror/index.html (router script that preserves
    ?job=/#hash and forwards to /mirror/mobile or /mirror/desktop; noscript
    link; favicon; canonical), but with per-job Open Graph / Twitter meta when
-   ?job=<isco> matches an entry in mirror/og/manifest.json. Unknown or absent
+   ?job=<isco or exact display name> resolves in mirror/og/manifest.json. Unknown or absent
    job falls back to the exact same generic meta mirror/index.html has today
    (og-mirror.png).
 
@@ -25,8 +25,27 @@ function escapeHTML(s) {
   return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 }
 
+/* ?job= accepts an ISCO code or an exact display name ("nurse"). Names that more
+   than one occupation shares are left unresolved — a share card must never guess. */
+const NAME_TO_ISCO = (() => {
+  const idx = {}, dup = new Set();
+  for (const [isco, e] of Object.entries(manifest)) {
+    const k = String(e.n).trim().toLowerCase();
+    if (idx[k]) dup.add(k); else idx[k] = isco;
+  }
+  for (const k of dup) delete idx[k];
+  return idx;
+})();
+function resolveJob(job) {
+  if (!job) return null;
+  if (manifest[job]) return job;
+  const q = String(job).trim().toLowerCase().replace(/[-_+]+/g, ' ').replace(/\s+/g, ' ');
+  return NAME_TO_ISCO[q] || null;
+}
+
 /** Builds the <head> meta block — generic or per-job — as a string. */
-function buildMeta(job) {
+function buildMeta(rawJob) {
+  const job = resolveJob(rawJob);
   const entry = job ? manifest[job] : null;
 
   if (!entry) {
