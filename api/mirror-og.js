@@ -17,7 +17,7 @@ const { URL } = require('url');
 const manifest = require('../mirror/og/manifest.json');
 
 const SITE = 'https://largelabormodel.com';
-const GENERIC_OG_IMAGE = `${SITE}/mirror/og-mirror.png`;
+const GENERIC_OG_IMAGE = `${SITE}/mirror/og-mirror.png?v=20260919`;
 const GENERIC_OG_IMAGE_ALT = 'The Mirror — how much of your job AI can technically do, across 480 jobs from 1970 to 2041.';
 const SITE_DESCRIPTION = 'How much of your job can AI technically do? Look up any of 480 occupations — replaceability, not replacement.';
 

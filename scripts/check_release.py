@@ -301,8 +301,11 @@ node = shutil.which("node")
 for rel in ["mirror/desktop.html", "mirror/mobile.html"]:
     h = text(rel)
     fn = re.search(r"function resolveJobParam\(v\)\{.*?\n\}", h, re.S)
-    check(f"{rel}: resolver present, Nurse only when no ?job= is given", bool(fn) and "let FOCAL_ISCO=_resolved||'2221'" in h and "if(_jobMiss){" in h and "?_want:'2221'" not in h)
-    if not (fn and node):
+    miss = re.search(r"const _resolved=resolveJobParam\(_want\), _jobMiss=([^;]+);", h)
+    check(f"{rel}: resolver present; Nurse is the default focal job; an unresolved ?job= opens the search holding the typed text",
+          bool(fn) and bool(miss) and "let FOCAL_ISCO=_resolved||'2221'" in h and "?_want:'2221'" not in h
+          and "if(_jobMiss){" in h and "je.value=_want.trim().slice(0,80)" in h and "je.dispatchEvent(new Event('input'" in h)
+    if not (fn and miss and node):
         if not node: skipped.append(f"{rel} resolver execution (node not found)")
         continue
     nm = collections.Counter(fold(o["name"]) for o in bundle["occupations"])
@@ -314,13 +317,17 @@ for rel in ["mirror/desktop.html", "mirror/mobile.html"]:
     cases = {"2221": "2221", "nurse": "2221", "NURSE": "2221", "xdata_sci": "XDATA_SCI", uniq["name"]: uniq["isco"], amb: None, "zzzz-not-a-job": None, "": None}
     js = ("const DATA=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8').replace(/^[^=]*=/,'').trim().replace(/;$/,''));\n"
           + fn.group(0) + "\nconst C=" + json.dumps(cases) + ";const bad=Object.entries(C).filter(([k,v])=>resolveJobParam(k)!==v).map(([k,v])=>k+'→'+resolveJobParam(k)+' (want '+v+')');"
+          # the page's own miss flag, executed: only a non-blank value that does not resolve counts as a miss
+          "const MISS=_want=>{const _resolved=resolveJobParam(_want);return " + miss.group(1) + ";};"
+          "const M=" + json.dumps([[None, False], ["2221", False], ["nurse", False], [uniq["name"], False], [amb, True], ["zzzz-not-a-job", True], ["", False], ["   ", False]]) + ";"
+          "M.filter(([w,m])=>MISS(w)!==m).forEach(([w,m])=>bad.push('miss('+JSON.stringify(w)+')='+MISS(w)+' (want '+m+')'));"
           "console.log(JSON.stringify(bad));")
     try:
         out = subprocess.run([node, "-e", js, str(ROOT / "mirror/mirror_data.js")], capture_output=True, text=True, timeout=60)
         bad = json.loads(out.stdout.strip() or json.dumps(["no output: " + out.stderr.strip()[:80]]))
     except Exception as e:
         bad = [f"{type(e).__name__}: {e}"]
-    check(f"{rel}: resolver executed — code, name, any-case, hyphenated name resolve; ambiguous alias and junk do not", not bad, f"{bad}")
+    check(f"{rel}: resolver executed — code, name, any-case, hyphenated name resolve; ambiguous alias and junk do not, and only those two count as a miss", not bad, f"{bad}")
 
 if node:
     try:
